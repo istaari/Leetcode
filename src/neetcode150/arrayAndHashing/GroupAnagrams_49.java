@@ -15,15 +15,10 @@ public class GroupAnagrams_49 {
     public static List<List<String>> groupAnagrams(String[] strs) {
         Map<String, List<String>> map = new HashMap<>();
         for (String word : strs) {
+
             char[] wordChar = word.toCharArray();
             Arrays.sort(wordChar);   // This will take O(nlogn) time complexity
             String key = new String(wordChar);
-
-            // char[] charCount = new char[26];
-            // for (char c : word.toCharArray())
-            // charCount[c - 'a']++; // this stores in unicode point like '\u0000'
-
-            //String key = new String(charCount);
 
             map.computeIfAbsent(key, k -> new ArrayList<>()).add(word);
         }

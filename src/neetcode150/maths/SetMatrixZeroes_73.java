@@ -15,6 +15,7 @@ public class SetMatrixZeroes_73 {
                 if (matrix[row][col] == 0) {
                     if (row == 0) firstRow = 0;
                     if (col == 0) firstCol = 0;
+
                     matrix[0][col] = 0;
                     matrix[row][0] = 0;
                 }

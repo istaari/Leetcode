@@ -54,9 +54,13 @@ public class SearchInRotatedArray_33 {
 
         // The usual binary search and accounting for rotation.
         while (low <= high) {
+
             int mid = (low + high) / 2;
             int realMidValue = (mid + rot) % n;
-            if (nums[realMidValue] == target) return realMidValue;
+
+            if (nums[realMidValue] == target) {
+                return realMidValue;
+            }
             if (nums[realMidValue] < target) {
                 low = mid + 1;
             } else {

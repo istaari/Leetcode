@@ -11,7 +11,8 @@ public class InsertIntervals_57 {
         List<int[]> result = new ArrayList<>();
 
         for (int[] current : intervals) {
-            // adding the current item in list
+
+            // don't overlap
             if (newInterval == null || current[1] < newInterval[0]) {
                 result.add(current);
             // adding new interval before the current item
