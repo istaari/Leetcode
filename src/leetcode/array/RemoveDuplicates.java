@@ -2,27 +2,71 @@ package leetcode.array;
 
 public class RemoveDuplicates {
 
+
     // https://leetcode.com/problems/remove-duplicates-from-sorted-array/description/
-    // Two pointers, Creating a boundary to separate element
-    // j: The fast pointer scans through the array starting from the second element
-    // i: The slow pointer tracks the position where the next unique element should be written
+
     public static int removeDuplicates(int[] nums) {
-        if (nums.length == 0) return 0;
 
-        int j = 0; // creates boundary for unique element
-        for (int i = 1; i < nums.length; i++) {
-            if (nums[j] != nums[i]) {
-                j = j + 1;
-                nums[j] = nums[i];
-            }
-        }
+        return 1;
 
-        return j + 1;
     }
 
+
+    // https://leetcode.com/problems/remove-duplicates-from-sorted-array-ii/description/
+
+    public static int removeDuplicates2(int[] nums) {
+        return 0;
+    }
+
+
     public static void main(String[] args) {
-        int[] nums = {0, 0, 1, 1, 1, 2, 2, 3, 3, 4};
-        System.out.println(removeDuplicates(nums));
+
+        // Test cases for removeDuplicates (each element only once)
+        int[] nums1 = {0, 0, 1, 1, 1, 2, 2, 3, 3, 4};
+        int newLength1 = removeDuplicates(nums1);
+        System.out.println("removeDuplicates:");
+        System.out.println("New Length: " + newLength1);
+        System.out.print("Array after removing duplicates: ");
+        for (int i = 0; i < newLength1; i++) {
+            System.out.print(nums1[i] + " ");
+        }
+        System.out.println("\n");
+
+
+        // Additional test case for removeDuplicates
+        int[] nums2 = {1, 1, 2};
+        int newLength2 = removeDuplicates(nums2);
+        System.out.println("New Length: " + newLength2);
+        System.out.print("Array after removing duplicates: ");
+        for (int i = 0; i < newLength2; i++) {
+            System.out.print(nums2[i] + " ");
+        }
+        System.out.println("\n");
+
+
+        // Test cases for removeDuplicates2 (each element at most twice)
+        int[] nums3 = {0, 0, 1, 1, 1, 2, 2, 3, 3, 4};
+        int newLength3 = removeDuplicates2(nums3);
+        System.out.println("removeDuplicates2:");
+        System.out.println("New Length: " + newLength3);
+        System.out.print("Array after removing duplicates (at most twice): ");
+        for (int i = 0; i < newLength3; i++) {
+            System.out.print(nums3[i] + " ");
+        }
+        System.out.println("\n");
+
+
+        // Additional test case for removeDuplicates2
+        int[] nums4 = {1, 1, 1, 2, 2, 3};
+        int newLength4 = removeDuplicates2(nums4);
+        System.out.println("New Length: " + newLength4);
+        System.out.print("Array after removing duplicates (at most twice): ");
+        for (int i = 0; i < newLength4; i++) {
+            System.out.print(nums4[i] + " ");
+        }
+
+        System.out.println("\n");
+
     }
 
 }

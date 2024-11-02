@@ -13,12 +13,12 @@ public class Subsets_78 {
      * For example, for an array [1, 2, 3], the total number of possible subsets is 2^3 = 8 subsets.
      * The subsets are:
      * 000 -> []
-     * 001 -> [3]
+     * 001 -> [1]
      * 010 -> [2]
-     * 011 -> [2, 3]
-     * 100 -> [1]
-     * 101 -> [1, 3]
-     * 110 -> [1, 2]
+     * 011 -> [1, 2]
+     * 100 -> [3]
+     * 101 -> [3, 1]
+     * 110 -> [3, 2]
      * 111 -> [1, 2, 3]
      *
      * @param nums   input array
@@ -30,12 +30,13 @@ public class Subsets_78 {
 
         for (int i = 0; i < totalSubset; i++) {
             List<Integer> subset = new ArrayList<>();
+
             for (int j = 0; j < n; j++) {
-                System.out.println((i >> j) & 1);
                 if (((i >> j) & 1) == 1) {
                     subset.add(nums[j]);
                 }
             }
+
             result.add(subset);
         }
     }
@@ -110,14 +111,14 @@ public class Subsets_78 {
         List<List<Integer>> result = new ArrayList<>();
         Arrays.sort(nums);
         //backtrack(nums, new ArrayList<>(), result, 0);
-        //bitwise(nums, result);
+        bitwise(nums, result);
         //iterative(nums, result);
-        picking(nums, new ArrayList<>(), result, 0);
+        //picking(nums, new ArrayList<>(), result, 0);
         return result;
     }
 
     public static void main(String[] args) {
-        int[] nums = {1, 2, 3};
+        int[] nums = {9, 5, 7};
         System.out.println(subsets(nums));
     }
 

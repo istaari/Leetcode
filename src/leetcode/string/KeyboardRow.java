@@ -6,9 +6,6 @@ import java.util.List;
 
 public class KeyboardRow {
 
-
-    // https://leetcode.com/problems/keyboard-row/description/
-
     public static String[] findWords(String[] words) {
         String row1 = "qwertyuiop";
         String row2 = "asdfghjkl";
