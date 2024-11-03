@@ -26,3 +26,9 @@
 # Leetcode Problems
 
 https://leetcode.com/problems/find-if-path-exists-in-graph/description/
+
+https://leetcode.com/problems/reverse-linked-list-ii/
+
+https://leetcode.com/problems/remove-duplicates-from-sorted-array/description/
+
+https://leetcode.com/problems/remove-duplicates-from-sorted-array-ii/description/

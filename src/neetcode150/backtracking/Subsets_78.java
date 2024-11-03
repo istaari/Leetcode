@@ -118,7 +118,7 @@ public class Subsets_78 {
     }
 
     public static void main(String[] args) {
-        int[] nums = {9, 5, 7};
+        int[] nums = {1, 2, 2};
         System.out.println(subsets(nums));
     }
 
