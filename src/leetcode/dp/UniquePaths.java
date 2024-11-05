@@ -1,6 +1,7 @@
 package alogorithm.dp;
 
 public class UniquePaths {
+
     public static int uniquePaths(int m, int n) {
         // Create a 2D problems.array to store the number of unique paths
         int[][] dp = new int[m][n];
