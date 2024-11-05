@@ -34,9 +34,6 @@ public class MinimumPathSum {
 
 
     public static void main(String[] args) {
-        Stack<Integer> stack = new Stack<>();
-
-
         int[][] grid1 = {
                 {1, 3, 1},
                 {1, 5, 1},

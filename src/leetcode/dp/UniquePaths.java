@@ -1,6 +1,7 @@
-package alogorithm.dp;
+package leetcode.dp;
 
 public class UniquePaths {
+
 
     public static int uniquePaths(int m, int n) {
         // Create a 2D problems.array to store the number of unique paths
@@ -25,9 +26,11 @@ public class UniquePaths {
         return dp[m - 1][n - 1];
     }
 
+
+
     public static void main(String[] args) {
         int m = 3;
-        int n = 7;
+        int n = 3;
         int paths = uniquePaths(m, n);
         System.out.println("Number of unique paths: " + paths);
     }

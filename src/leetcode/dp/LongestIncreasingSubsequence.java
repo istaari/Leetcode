@@ -1,4 +1,4 @@
-package alogorithm.dp;
+package leetcode.dp;
 
 import java.util.Arrays;
 
