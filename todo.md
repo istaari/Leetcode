@@ -48,49 +48,49 @@
 
 ### Mathematical Algorithms Todos
 
-## 1. **Prime Number Operations**
-- [ ] **Sieve of Eratosthenes**: Generate primes up to n
-- [ ] **Prime Factorization**: Decompose numbers into prime factors
-- [ ] **Miller-Rabin Primality Test**: Fast primality testing for large numbers
-    - **Common Use Cases**:
-        - Factor-based problems
-        - Prime counting
-        - Number theory challenges
+1. **Prime Number Operations**
+    - [ ] **Sieve of Eratosthenes**: Generate primes up to n
+    - [ ] **Prime Factorization**: Decompose numbers into prime factors
+    - [ ] **Miller-Rabin Primality Test**: Fast primality testing for large numbers
+        - **Common Use Cases**:
+            - Factor-based problems
+            - Prime counting
+            - Number theory challenges
 
-## 2. **Matrix Operations**
-- [ ] **Matrix Multiplication** and **Fast Matrix Exponentiation**
-    - **Common Use Cases**:
-        - Fibonacci sequence problems
-        - Path counting in graphs
-        - State transition problems
-        - Dynamic programming optimization
+2. **Matrix Operations**
+    - [ ] **Matrix Multiplication** and **Fast Matrix Exponentiation**
+        - **Common Use Cases**:
+            - Fibonacci sequence problems
+            - Path counting in graphs
+            - State transition problems
+            - Dynamic programming optimization
 
-## 3. **Number Theory Utilities**
-- [ ] **Extended GCD**: Find GCD and coefficients for Bézout's identity
-- [ ] **Modular Inverse**: Find multiplicative inverse modulo m
-- [ ] **Chinese Remainder Theorem (CRT)**: Solve system of modular equations
-- [ ] **Euler's Totient Function**: Count numbers coprime to n
-    - **Common Use Cases**:
-        - Modular arithmetic problems
-        - Cryptography-related problems
-        - Linear congruence equations
+3. **Number Theory Utilities**
+    - [ ] **Extended GCD**: Find GCD and coefficients for Bézout's identity
+    - [ ] **Modular Inverse**: Find multiplicative inverse modulo m
+    - [ ] **Chinese Remainder Theorem (CRT)**: Solve system of modular equations
+    - [ ] **Euler's Totient Function**: Count numbers coprime to n
+        - **Common Use Cases**:
+            - Modular arithmetic problems
+            - Cryptography-related problems
+            - Linear congruence equations
 
-## 4. **Combinatorics**
-- [ ] **Pascal's Triangle**: Compute combinations efficiently
-- [ ] **nCr Calculations with Modulo**
-- [ ] **Catalan Numbers**: Count various structures
-    - **Common Use Cases**:
-        - Counting problems
-        - Path/structure enumeration
-        - Tree/bracket sequence problems
+4. **Combinatorics**
+    - [ ] **Pascal's Triangle**: Compute combinations efficiently
+    - [ ] **nCr Calculations with Modulo**
+    - [ ] **Catalan Numbers**: Count various structures
+        - **Common Use Cases**:
+            - Counting problems
+            - Path/structure enumeration
+            - Tree/bracket sequence problems
 
-## 5. **Fast Fourier Transform (FFT)**
-- [ ] **Polynomial Multiplication in \( O(n \log n) \)**
-- [ ] **Large Number Multiplication**
-    - **Common Use Cases**:
-        - String matching
-        - Large number operations
-        - Signal processing problems
+5. **Fast Fourier Transform (FFT)**
+    - [ ] **Polynomial Multiplication in \( O(n \log n) \)**
+    - [ ] **Large Number Multiplication**
+        - **Common Use Cases**:
+            - String matching
+            - Large number operations
+            - Signal processing problems
 
 
 ### Revisit Problems
