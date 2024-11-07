@@ -1,5 +1,3 @@
----
-
 ### System Design Todos
 
 - [ ] LLD (Low-Level Design) and Design Patterns implementations
@@ -8,8 +6,6 @@
 - [ ] Distributed Systems
 - [ ] Microservices
 - [ ] Security
-
----
 
 ### DSA (Data Structures & Algorithms) Todos
 
@@ -48,14 +44,11 @@
         - Bipartite matching
         - Min cut problems
         - Network flow scenarios
+      
 
----
+### Mathematical Algorithms Todos
 
-# Mathematical Algorithms Todos
-
-Here's a summary of key mathematical algorithms commonly used in LeetCode problems:
-
-### 1. **Prime Number Operations**
+## 1. **Prime Number Operations**
 - [ ] **Sieve of Eratosthenes**: Generate primes up to n
 - [ ] **Prime Factorization**: Decompose numbers into prime factors
 - [ ] **Miller-Rabin Primality Test**: Fast primality testing for large numbers
@@ -64,7 +57,7 @@ Here's a summary of key mathematical algorithms commonly used in LeetCode proble
         - Prime counting
         - Number theory challenges
 
-### 2. **Matrix Operations**
+## 2. **Matrix Operations**
 - [ ] **Matrix Multiplication** and **Fast Matrix Exponentiation**
     - **Common Use Cases**:
         - Fibonacci sequence problems
@@ -72,7 +65,7 @@ Here's a summary of key mathematical algorithms commonly used in LeetCode proble
         - State transition problems
         - Dynamic programming optimization
 
-### 3. **Number Theory Utilities**
+## 3. **Number Theory Utilities**
 - [ ] **Extended GCD**: Find GCD and coefficients for Bézout's identity
 - [ ] **Modular Inverse**: Find multiplicative inverse modulo m
 - [ ] **Chinese Remainder Theorem (CRT)**: Solve system of modular equations
@@ -82,7 +75,7 @@ Here's a summary of key mathematical algorithms commonly used in LeetCode proble
         - Cryptography-related problems
         - Linear congruence equations
 
-### 4. **Combinatorics**
+## 4. **Combinatorics**
 - [ ] **Pascal's Triangle**: Compute combinations efficiently
 - [ ] **nCr Calculations with Modulo**
 - [ ] **Catalan Numbers**: Count various structures
@@ -91,7 +84,7 @@ Here's a summary of key mathematical algorithms commonly used in LeetCode proble
         - Path/structure enumeration
         - Tree/bracket sequence problems
 
-### 5. **Fast Fourier Transform (FFT)**
+## 5. **Fast Fourier Transform (FFT)**
 - [ ] **Polynomial Multiplication in \( O(n \log n) \)**
 - [ ] **Large Number Multiplication**
     - **Common Use Cases**:
