@@ -1,9 +1,9 @@
-package neetcode150.backtracking;
+package leetcode.dp;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PalindromePartitioning_131 {
+public class PalindromePartitioning {
 
     //  Can be improved with dp
     public static boolean isPalindrome(String s) {
@@ -39,17 +39,16 @@ public class PalindromePartitioning_131 {
 
     }
 
+
     public static List<List<String>> partition(String s) {
         List<List<String>> result = new ArrayList<>();
         helper(s, new ArrayList<>(), result);
         return result;
     }
 
-
     public static void main(String[] args) {
-        String str = "abcd";
-        partition(str);
+        String s = "aaaab";
+        System.out.println(partition(s));
     }
-
 
 }

@@ -1,4 +1,4 @@
-package alogorithm.sorting;
+package alogorithm;
 
 import java.util.ArrayList;
 import java.util.List;
