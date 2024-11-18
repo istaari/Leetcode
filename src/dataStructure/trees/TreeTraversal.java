@@ -59,22 +59,6 @@ public class TreeTraversal {
         inorderRecursion(node.right);
     }
 
-    /**
-     * Depth First Search iterative
-     * Preorder
-     **/
-    public static void preorderIterative(TreeNode root) {
-        Stack<TreeNode> stack = new Stack<>();
-        stack.add(root);
-
-        while (!stack.isEmpty()) {
-            TreeNode x = stack.pop();
-            System.out.print(x.val + " ");
-            if (x.right != null) stack.add(x.right);
-            if (x.left != null) stack.add(x.left);
-        }
-    }
-
 
     /**
      * Depth-First Search iterative
@@ -97,6 +81,23 @@ public class TreeTraversal {
             current = stack.pop();
             System.out.print(current.val + " ");
             current = current.right;
+        }
+    }
+
+
+    /**
+     * Depth First Search iterative
+     * Preorder
+     **/
+    public static void preorderIterative(TreeNode root) {
+        Stack<TreeNode> stack = new Stack<>();
+        stack.add(root);
+
+        while (!stack.isEmpty()) {
+            TreeNode x = stack.pop();
+            System.out.print(x.val + " ");
+            if (x.right != null) stack.add(x.right);
+            if (x.left != null) stack.add(x.left);
         }
     }
 
