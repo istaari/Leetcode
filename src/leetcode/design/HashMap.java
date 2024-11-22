@@ -32,7 +32,7 @@ public class HashMap {
     public void put(int key, int val) {
         remove(key);
         int h = hash(key);
-        ListNode node = new ListNode(key, val, hashTable[h]);
+        ListNode node = new ListNode(key, val, hashTable[h]); // inserting at head
         hashTable[h] = node;
     }
 
