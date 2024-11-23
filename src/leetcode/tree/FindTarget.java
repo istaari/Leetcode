@@ -5,10 +5,6 @@ import java.util.List;
 
 public class FindTarget {
 
-    //
-    // Can be solved using binary search on BST
-    // https://leetcode.com/problems/two-sum-iv-input-is-a-bst/solutions/106059/java-c-three-simple-methods-choose-one-you-like/
-
     public static boolean helper(TreeNode root, int k, List<Integer> remaining) {
         if (root == null) return false;
 
