@@ -24,7 +24,7 @@ import java.util.List;
 public class KruskalMST {
 
     public static List<DirectedEdge> kruskalMST(List<DirectedEdge> edges, int V) {
-        Collections.sort(edges, (edge1, edge2) -> edge1.weight - edge2.weight);
+        edges.sort((edge1, edge2) -> edge1.weight - edge2.weight);
 
         List<DirectedEdge> minSpanningTree = new ArrayList<>();
         DisjointSet disjointSet = new DisjointSet(V);
