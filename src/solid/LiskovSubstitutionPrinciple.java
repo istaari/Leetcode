@@ -12,27 +12,33 @@ public class LiskovSubstitutionPrinciple {
 
     /*
 
-    public class Green {
+
+    class Green {
         public void getColor() {
             System.out.println("Green");
         }
     }
 
-    public class Blue extends Green {
+    class Blue extends Green {
         public void getColor() {
             System.out.println("Blue");
         }
     }
 
-    public static void main(String[] args) {
+
+    public void main0() {
         // violate LSP because color of green object is blue
         Green green = new Blue();
         green.getColor();
         //output: Blue
     }
 
-     */
+    public static void main(String[] args){
+        new LiskovSubstitutionPrinciple().main0();
+    }
 
+
+     */
 
     /**
      * To fix the above issue, we can use interface instead of inheritance.

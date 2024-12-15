@@ -1,5 +1,9 @@
 ### System Design Todos
 
+https://leetcode.com/discuss/interview-question/system-design/5324660/Top-25-HLD-Questions-List
+
+https://leetcode.com/discuss/interview-question/system-design/5328221/Frequently-Asked-Low-Level-Design-(LLD)-Questions
+
 - [ ] LLD (Low-Level Design) and Design Patterns implementations
 - [ ] High-Level Design
 - [ ] SQL

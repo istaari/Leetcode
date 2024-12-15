@@ -2,8 +2,6 @@ package leetcode.greedy;
 
 public class CanPlaceFlowers {
 
-    // https://leetcode.com/problems/can-place-flowers/description/
-    // Compares current with prev and next element and handles the base case if there are two elements
     public static boolean canPlaceFlowers(int[] flowerbed, int n) {
 
         for (int i = 0; i < flowerbed.length - 1; i++) {
