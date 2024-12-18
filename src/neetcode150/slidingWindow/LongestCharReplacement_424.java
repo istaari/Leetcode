@@ -29,8 +29,8 @@ public class LongestCharReplacement_424 {
     }
 
     public static void main(String[] args) {
-        String s = "ABAB";
-        int k = 2;
+        String s = "AABABBA";
+        int k = 1;
         System.out.println(characterReplacement(s, k));
     }
 }
