@@ -15,5 +15,4 @@ public class CreditCardPaymentProcessor implements PaymentProcessor {
         return payment;
     }
 
-
 }

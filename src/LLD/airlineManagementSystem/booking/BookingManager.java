@@ -18,8 +18,11 @@ public class BookingManager {
 
     PaymentProcessor paymentProcessor;
 
-    public BookingManager(PaymentProcessor paymentProcessor) {
+    public BookingManager() {
         this.bookingMap = new HashMap<>();
+    }
+
+    public void setPaymentStrategy(PaymentProcessor paymentProcessor) {
         this.paymentProcessor = paymentProcessor;
     }
 
