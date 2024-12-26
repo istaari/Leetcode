@@ -1,18 +1,9 @@
 package designPatterns;
 
-
-// Asset can be visited
+// Base interface for all assets
 interface Asset {
-    void accept(TaxVisitor visitor);
+    double accept(AssetVisitor visitor);
 }
-
-// Visitor interface defines operations
-interface TaxVisitor {
-    double visit(House house);
-
-    double visit(Car car);
-}
-
 
 // Different types of assets
 class House implements Asset {
@@ -27,11 +18,10 @@ class House implements Asset {
     }
 
     @Override
-    public void accept(TaxVisitor visitor) {
-        visitor.visit(this);
+    public double accept(AssetVisitor visitor) {
+        return visitor.visit(this);
     }
 }
-
 
 class Car implements Asset {
     private final double value;
@@ -45,65 +35,66 @@ class Car implements Asset {
     }
 
     @Override
-    public void accept(TaxVisitor visitor) {
-        visitor.visit(this);
+    public double accept(AssetVisitor visitor) {
+        return visitor.visit(this);
     }
 }
 
+// Generic visitor interface
+interface AssetVisitor {
+    double visit(House house);
+    double visit(Car car);
+}
 
-// Concrete Visitor for Tax Calculation
-class TaxCalculationVisitor implements TaxVisitor {
+// Concrete visitor for tax calculations
+class TaxCalculationVisitor implements AssetVisitor {
     @Override
     public double visit(House house) {
-        // Specific tax calculation for house
+        // Property tax: 1% of house value
         return house.getValue() * 0.01;
     }
 
     @Override
     public double visit(Car car) {
-        // Specific tax calculation for car
+        // Vehicle tax: 2% of car value
         return car.getValue() * 0.02;
     }
 }
 
-
-// Another Visitor for Insurance Valuation
-class InsuranceVisitor implements TaxVisitor {
+// Concrete visitor for insurance calculations
+class InsuranceCalculationVisitor implements AssetVisitor {
     @Override
     public double visit(House house) {
-        // Different calculation for house insurance
+        // House insurance premium: 0.5% of value
         return house.getValue() * 0.005;
     }
 
     @Override
     public double visit(Car car) {
-        // Different calculation for car insurance
+        // Car insurance premium: 3% of value
         return car.getValue() * 0.03;
     }
 }
 
-// Main demonstration
+// Main class demonstrating the visitor pattern
 public class Visitor {
     public static void main(String[] args) {
-        Asset[] assets = {new House(500000), new Car(50000)};
+        // Create assets
+        Asset house = new House(200000);  // $200,000 house
+        Asset car = new Car(30000);       // $30,000 car
 
-        // Tax Calculation
-        TaxVisitor taxVisitor = new TaxCalculationVisitor();
-        double totalTax = 0;
-        for (Asset asset : assets) {
-            asset.accept(taxVisitor);
-            totalTax += taxVisitor.visit((House) asset);
-        }
-        System.out.println("Total Tax: $" + totalTax);
+        // Create visitors
+        AssetVisitor taxCalculator = new TaxCalculationVisitor();
+        AssetVisitor insuranceCalculator = new InsuranceCalculationVisitor();
 
+        // Calculate and display tax for each asset
+        System.out.println("Tax Calculations:");
+        System.out.printf("House Tax: $%.2f%n", house.accept(taxCalculator));
+        System.out.printf("Car Tax: $%.2f%n", car.accept(taxCalculator));
 
-        // Insurance Valuation (without changing asset classes!)
-        TaxVisitor insuranceVisitor = new InsuranceVisitor();
-        double totalInsurance = 0;
-        for (Asset asset : assets) {
-            asset.accept(insuranceVisitor);
-            totalInsurance += insuranceVisitor.visit((House) asset);
-        }
-        System.out.println("Total Insurance: $" + totalInsurance);
+        // Calculate and display insurance for each asset
+        System.out.println("\nInsurance Calculations:");
+        System.out.printf("House Insurance Premium: $%.2f%n", house.accept(insuranceCalculator));
+        System.out.printf("Car Insurance Premium: $%.2f%n", car.accept(insuranceCalculator));
     }
 }

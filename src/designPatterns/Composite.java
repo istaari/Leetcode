@@ -23,7 +23,7 @@ interface FileComponent {
     void display();
 }
 
-// Leaf
+
 class File implements FileComponent {
     private final String name;
 
@@ -32,17 +32,17 @@ class File implements FileComponent {
     }
 
     public void display() {
-        System.out.println("File: " + name);
+        System.out.println("\tFile: " + name);
     }
 }
 
-// Composite
 class Directory implements FileComponent {
     private final String name;
-    private final List<FileComponent> components = new ArrayList<>();
+    private final List<FileComponent> components;
 
     public Directory(String name) {
         this.name = name;
+        this.components = new ArrayList<>();
     }
 
     public void add(FileComponent component) {
@@ -54,26 +54,31 @@ class Directory implements FileComponent {
     }
 
     public void display() {
-        System.out.println("Directory: " + name);
+        System.out.println("Folder: " + name);
+
         for (FileComponent component : components) {
             component.display();
         }
     }
+
 }
 
 // Usage
 public class Composite {
     public static void main(String[] args) {
-        FileComponent file1 = new File("Document.txt");
-        FileComponent file2 = new File("Photo.jpg");
-        FileComponent file3 = new File("Presentation.ppt");
+        Directory folder1 = new Directory("Folder1");
+        folder1.add(new File("Document1.txt"));
+        folder1.add(new File("Document2.txt"));
+        folder1.add(new File("Document3.txt"));
 
-        Directory folder = new Directory("MyFolder");
-        folder.add(file1);
-        folder.add(file2);
-        folder.add(file3);
+        Directory folder2 = new Directory("Folder2");
+        folder2.add(new File("Photo1.jpg"));
+        folder2.add(new File("Photo2.jpg"));
+        folder2.add(new File("Photo3.jpg"));
 
-        folder.display();
+        folder1.add(folder2);
+
+        folder1.display();
     }
 }
 

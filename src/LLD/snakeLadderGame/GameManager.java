@@ -21,7 +21,6 @@ public class GameManager {
     // Double Locking
     public static GameManager getInstance() {
         if (Instance == null) {
-
             synchronized (GameManager.class) {
                 if (Instance == null) {
                     Instance = new GameManager();

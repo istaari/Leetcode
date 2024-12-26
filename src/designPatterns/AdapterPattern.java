@@ -5,6 +5,20 @@ interface MediaPlayer {
     void play(String audioType, String fileName);
 }
 
+
+class AudioPlayer implements MediaPlayer {
+    @Override
+    public void play(String audioType, String fileName) {
+        if (audioType.equalsIgnoreCase("mp3")) {
+            System.out.println("Playing MP3 file: " + fileName);
+        } else {
+            MediaPlayer adapter = new MediaAdapter(audioType); // passing audio type
+            adapter.play(audioType, fileName);
+        }
+    }
+}
+
+
 interface AdvancedMediaPlayer {
     void playAdvanced(String fileName);
 }
@@ -25,6 +39,7 @@ class Mp4Player implements AdvancedMediaPlayer {
     }
 
 }
+
 
 class MediaAdapter implements MediaPlayer {
 
@@ -48,19 +63,6 @@ class MediaAdapter implements MediaPlayer {
     }
 
 }
-
-class AudioPlayer implements MediaPlayer {
-    @Override
-    public void play(String audioType, String fileName) {
-        if (audioType.equalsIgnoreCase("mp3")) {
-            System.out.println("Playing MP3 file: " + fileName);
-        } else {
-            MediaPlayer adapter = new MediaAdapter(audioType);
-            adapter.play(audioType, fileName);
-        }
-    }
-}
-
 
 public class AdapterPattern {
 
