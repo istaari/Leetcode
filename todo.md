@@ -5,10 +5,6 @@
 
 ---
 
-Here’s the revised version with checkboxes for the **DSA Todos** section:
-
----
-
 ### **DSA Todos**
 
 - [ ] Sliding Window
