@@ -1,110 +1,40 @@
-### System Design Todos
+### **System Design Todos**
 
-https://leetcode.com/discuss/interview-question/system-design/5324660/Top-25-HLD-Questions-List
+- [Top 25 HLD Questions List](https://leetcode.com/discuss/interview-question/system-design/5324660/Top-25-HLD-Questions-List)
+- [Frequently Asked Low-Level Design (LLD) Questions](https://leetcode.com/discuss/interview-question/system-design/5328221/Frequently-Asked-Low-Level-Design-(LLD)-Questions)
 
-https://leetcode.com/discuss/interview-question/system-design/5328221/Frequently-Asked-Low-Level-Design-(LLD)-Questions
+---
 
-- [ ] LLD (Low-Level Design) and Design Patterns implementations
-- [ ] High-Level Design
-- [ ] SQL
-- [ ] Distributed Systems
-- [ ] Microservices
-- [ ] Security
+Here’s the revised version with checkboxes for the **DSA Todos** section:
 
-### DSA (Data Structures & Algorithms) Todos
+---
 
-- [ ] **B and B+ Trees**
-- [ ] **AVL Trees**
-- [ ] **Red-Black Trees**
-- [ ] **Segment Trees**
-- [ ] **Fenwick Trees**
-- [ ] **Hamiltonian Cycle, Hamiltonian Path, Hamiltonian Graph**
-- [ ] **Euler Cycle, Euler Path, Euler Graph**
-- [ ] **Knuth-Morris-Pratt (KMP) and Rabin-Karp Algorithm**
-- [ ] **Bipartite Graph**
-- [ ] **Strongly Connected Components (Kosaraju's Algorithm)**
-- [ ] **Multi-state DP (Dynamic Programming)**
-- [ ] **Suffix Array, LCP Arrays (Longest Common Prefix arrays), and Suffix Trees**
-- [ ] **Line Sweep**
-- [ ] **Radix Sort**
-- [ ] **Fast Modular Exponentiation (modpow)**
-    - Efficiently computes `(base^exp) % modulus` in \( O(\log \text{exp}) \) time.
-    - Essential for crypto problems and large number calculations.
+### **DSA Todos**
 
-- [ ] **Segment Tree with Lazy Propagation**
-    - Handles range updates and queries in \( O(\log n) \) time.
-    - Perfect for problems involving range sum/min/max with updates.
-    - Lazy propagation allows efficient range updates.
+- [ ] Sliding Window
+- [ ] Stack
+- [ ] Trie
+- [ ] DP
+- [ ] Graph
+- [ ] Design and Concurrency
+- [ ] Bitwise
+- [ ] B and B+ Trees
+- [ ] AVL Tree
+- [ ] Red Black Trees
+- [ ] Segment Trees
+- [ ] KMP and Rabin Karp
+- [ ] Start Codeforces
 
-- [ ] **Heavy-Light Decomposition (HLD)**
-    - Decomposes a tree into a set of paths.
-    - Useful for path queries on trees in \( O(\log n) \) time.
-    - Common in problems involving tree paths and Lowest Common Ancestor (LCA).
+---
 
-- [ ] **Dinic's Maximum Flow**
-    - Finds maximum flow in a network.
-    - Time complexity: \( O(V^2 E) \) for general graphs.
-    - Used in:
-        - Bipartite matching
-        - Min cut problems
-        - Network flow scenarios
-      
+### **Revisit Problems**
 
-### Mathematical Algorithms Todos
-
-1. **Prime Number Operations**
-    - [ ] **Sieve of Eratosthenes**: Generate primes up to n
-    - [ ] **Prime Factorization**: Decompose numbers into prime factors
-    - [ ] **Miller-Rabin Primality Test**: Fast primality testing for large numbers
-        - **Common Use Cases**:
-            - Factor-based problems
-            - Prime counting
-            - Number theory challenges
-
-2. **Matrix Operations**
-    - [ ] **Matrix Multiplication** and **Fast Matrix Exponentiation**
-        - **Common Use Cases**:
-            - Fibonacci sequence problems
-            - Path counting in graphs
-            - State transition problems
-            - Dynamic programming optimization
-
-3. **Number Theory Utilities**
-    - [ ] **Extended GCD**: Find GCD and coefficients for Bézout's identity
-    - [ ] **Modular Inverse**: Find multiplicative inverse modulo m
-    - [ ] **Chinese Remainder Theorem (CRT)**: Solve system of modular equations
-    - [ ] **Euler's Totient Function**: Count numbers coprime to n
-        - **Common Use Cases**:
-            - Modular arithmetic problems
-            - Cryptography-related problems
-            - Linear congruence equations
-
-4. **Combinatorics**
-    - [ ] **Pascal's Triangle**: Compute combinations efficiently
-    - [ ] **nCr Calculations with Modulo**
-    - [ ] **Catalan Numbers**: Count various structures
-        - **Common Use Cases**:
-            - Counting problems
-            - Path/structure enumeration
-            - Tree/bracket sequence problems
-
-5. **Fast Fourier Transform (FFT)**
-    - [ ] **Polynomial Multiplication in \( O(n \log n) \)**
-    - [ ] **Large Number Multiplication**
-        - **Common Use Cases**:
-            - String matching
-            - Large number operations
-            - Signal processing problems
-
-
-### Revisit Problems
-
-- https://leetcode.com/problems/find-if-path-exists-in-graph/description/
-- https://leetcode.com/problems/reverse-linked-list-ii/
-- https://leetcode.com/problems/remove-duplicates-from-sorted-array/description/
-- https://leetcode.com/problems/remove-duplicates-from-sorted-array-ii/description/
-- https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/description/
-- https://leetcode.com/problems/populating-next-right-pointers-in-each-node-ii/solutions/37811/simple-solution-using-constant-space/
-- https://leetcode.com/problems/unique-binary-search-trees-ii/
+1. [Find if Path Exists in Graph](https://leetcode.com/problems/find-if-path-exists-in-graph/description/)
+2. [Reverse Linked List II](https://leetcode.com/problems/reverse-linked-list-ii/)
+3. [Remove Duplicates from Sorted Array](https://leetcode.com/problems/remove-duplicates-from-sorted-array/description/)
+4. [Remove Duplicates from Sorted Array II](https://leetcode.com/problems/remove-duplicates-from-sorted-array-ii/description/)
+5. [Construct Binary Tree from Preorder and Inorder Traversal](https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/description/)
+6. [Populating Next Right Pointers in Each Node II (Simple Solution Using Constant Space)](https://leetcode.com/problems/populating-next-right-pointers-in-each-node-ii/solutions/37811/simple-solution-using-constant-space/)
+7. [Unique Binary Search Trees II](https://leetcode.com/problems/unique-binary-search-trees-ii/)
 
 ---

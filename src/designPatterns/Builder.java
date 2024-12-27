@@ -33,6 +33,8 @@ package designPatterns;
  *
  * <p>This class demonstrates the Builder design pattern.</p>
  */
+
+@SuppressWarnings("all")
 class House0 {
     private final String foundation;
     private final String structure;
