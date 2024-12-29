@@ -4,8 +4,6 @@ import java.util.Stack;
 
 public class BaseballGame {
 
-    // https://leetcode.com/problems/baseball-game/description/
-    // Solved using stack
     public static int calPoints(String[] operations) {
         Stack<Integer> stack = new Stack<>();
 

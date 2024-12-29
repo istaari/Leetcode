@@ -19,6 +19,7 @@ public class SimplifyPath {
             } else {
                 stack.push(currentPath);
             }
+
         }
 
         if (stack.isEmpty()) {

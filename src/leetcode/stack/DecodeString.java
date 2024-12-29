@@ -8,7 +8,6 @@ public class DecodeString {
     public static String decodeString(String s) {
         Stack<Integer> countStack = new Stack<>();
         Stack<String> stringStack = new Stack<>();
-
         String result = "";
 
         for (int i = 0; i < s.length(); ) {

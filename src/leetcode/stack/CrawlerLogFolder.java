@@ -6,19 +6,16 @@ public class CrawlerLogFolder {
         int counter = 0;
 
         for (String op : logs) {
-            if (op.equals("./")) {
-            } else if (op.equals("../")) {
-
+            if (op.equals("../")) {
                 if (counter > 0) {
                     counter--;
                 }
-
-            } else {
+            } else if (!op.equals("./")) {
                 counter++;
             }
         }
 
-        return Math.max(counter, 0);
+        return counter;
     }
 
 
@@ -26,4 +23,5 @@ public class CrawlerLogFolder {
         String[] logs = {"./", "wz4/", "../", "mj2/", "../", "../", "ik0/", "il7/"};
         System.out.println(minOperations(logs));
     }
+
 }

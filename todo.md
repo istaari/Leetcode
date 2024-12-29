@@ -10,9 +10,9 @@
 - [ ] Sliding Window
 - [ ] Stack
 - [ ] Trie
+- [ ] Design and Concurrency
 - [ ] DP
 - [ ] Graph
-- [ ] Design and Concurrency
 - [ ] Bitwise
 - [ ] B and B+ Trees
 - [ ] AVL Tree
