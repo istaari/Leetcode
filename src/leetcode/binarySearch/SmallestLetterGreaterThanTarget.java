@@ -9,7 +9,6 @@ public class SmallestLetterGreaterThanTarget {
         int h = letters.length - 1;
 
         while (l <= h) {
-
             int mid = l + (h - l) / 2;
 
             if (target < letters[mid]) {

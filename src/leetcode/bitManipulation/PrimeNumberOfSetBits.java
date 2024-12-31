@@ -2,8 +2,6 @@ package leetcode.bitManipulation;
 
 public class PrimeNumberOfSetBits {
 
-    // https://leetcode.com/problems/prime-number-of-set-bits-in-binary-representation/description/
-    // bit manipulation
     public static boolean isPrime(int number) {
         // Check for numbers less than 2
         if (number <= 1) {
