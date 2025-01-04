@@ -150,14 +150,22 @@
 **Serialize and Deserialize**
 
 
+**B and B+ Tree**  
+
+
 **AVL Tree**  
 
 
 **Red-Black Tree**  
 
 
-
 **Segment Tree**  
+
+
+---
+### Heap
+
+
 
 
 ---
@@ -497,8 +505,6 @@ public boolean haveOppositeSigns(int a, int b) {
 }
 
 ```
-
-</br>
 
 ### Matrix
 
