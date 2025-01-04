@@ -19,13 +19,26 @@
 
 ## Dynamic Programming
 
-- [ ] Knapsack Problem
-- [ ] Longest Increasing Subsequence
-- [ ] Longest Common Subsequence
-- [ ] Matrix Chain Multiplication
-- [ ] Coin Change Problem
-- [ ] Edit Distance
-- [ ] Subset Sum Problem
+ **1D DP** 
+
+
+ **Grids(Path Problem)**
+ 
+
+ **Subsequences(Kanpsack, Subset, Coin Change, Partition)** 
+
+
+ **String(Subsequence, Substring, Edit Distance)** 
+
+
+ **Longest Increasing Subsequence** 
+
+
+ **Stock Optimizations**  
+
+
+ **Matrix Chain Multiplication**   
+ 
 
 ## Graph Algorithms
 

@@ -1,6 +1,277 @@
-# Bit Manipulation
 
-### Bitwise effects on numbers
+# Algorithms and Data Structures
+
+### Sorting
+
+**Bubble Sort**
+
+Compare adjacent elements and swap them if they are in the wrong order.
+In a single pass, the smallest or largest element reaches at the end of the array, its in sorted order.
+
+**Selection Sort**
+
+Find the smallest or largest element in array and swap it with the first element. Which becomes sorted.
+
+**Insertion Sort**
+
+Pick an element(2nd element) and compare it with the previous element, if it is smaller than the previous element, 
+then move the prev element to the next position, at last insert the picked element at the correct position.
+
+[Leetcode Insertion Sort Linked List](https://leetcode.com/problems/insertion-sort-list/description/)
+
+**Merge Sort**
+
+- Recursively Divide the array until it has only one element.
+- Then in the merge step, first create two array from left to mid and mid+1 to right.
+- Copy from original array to these two arrays.
+- Then merge these two arrays in sorted order.
+
+[Leetcode Sort Linked List](https://leetcode.com/problems/sort-list/description/)
+
+**Quick Sort**
+
+- Select a pivot element, either first, last or random element.
+- then partition the array such that all elements less than pivot are on left and greater are on right.
+- The pivot element is at its sorted position.
+- Recursively apply the same steps to the left and right subarrays.
+
+**Heap Sort**
+
+
+**Counting Sort**
+
+
+**Bucket Sort**
+
+
+**Radix Sort**
+
+---
+
+### Array
+
+
+
+---
+
+### String
+
+
+
+
+---
+### Binary Search
+
+
+
+
+---
+### Linked List
+
+
+
+
+---
+### Stack and Queue
+
+
+
+---
+### Sliding Window
+
+
+
+---
+### Greedy
+
+
+
+
+---
+### Trees
+
+**Binary Tree Traversal (In-order, Pre-order, Post-order, Level Order)**  
+
+
+**BST Operations**  
+
+
+**Depth/Height** 
+
+
+**Path problems** 
+
+
+**Comparison on Two Trees**
+
+
+**Counting nodes in Tree**
+
+
+**Ancestor**
+
+
+**Top, Bottom, Right, Left, Vertical & Diagonal view of tree**
+
+
+**Tree construction** 
+
+
+**Serialize and Deserialize**
+
+
+**AVL Tree**  
+
+
+**Red-Black Tree**  
+
+
+
+**Segment Tree**  
+
+
+---
+### Backtracking
+
+
+
+
+
+
+---
+### Dynamic Programming
+
+ **1D DP** 
+
+
+ **Grids(Path Problem)**
+ 
+
+ **Subsequences(Kanpsack, Subset, Coin Change, Partition)** 
+
+
+ **String(Subsequence, Substring, Edit Distance)** 
+
+
+ **Longest Increasing Subsequence** 
+
+
+ **Stock Optimizations**  
+
+
+ **Matrix Chain Multiplication**  
+
+
+ **Graph DP**   
+
+
+ **Bitmasking + DP**   
+
+
+---
+### Graph
+
+
+### **Traversal & Basic Operations**
+
+**Depth-First Search (DFS)**  
+
+**Breadth-First Search (BFS)** 
+
+**Number of Connected Components** 
+
+**Shortest Path - BFS**  
+
+**Grid-Based Problems** (e.g., shortest path in a grid, number of islands).  
+
+
+### **Cycle Detection**
+
+**Detect Cycle in an Undirected Graph**  
+
+**Detect Cycle in a Directed Graph**  
+
+**Detect Negative Weight Cycle** (using Bellman-Ford).  
+
+
+### **Topological Sort & Directed Acyclic Graphs (DAG)**
+
+**Topological Sort**  
+
+**Kahn’s Algorithm** 
+
+**Longest Path in a DAG**  
+
+
+### **Minimum Spanning Tree (MST)**
+
+**Kruskal's Algorithm**  
+
+**Prim's Algorithm** 
+
+**Borůvka's Algorithm** (another MST algorithm).  
+
+
+### **Shortest Path Algorithms**
+
+**Dijkstra's Algorithm** 
+
+**Bellman-Ford Algorithm** 
+
+**Floyd-Warshall Algorithm** 
+
+**Shortest Path in Weighted DAG** 
+
+
+###  **Graph Coloring**
+
+**M-Coloring Problem** (Can the graph be colored with M colors?). 
+
+**Check Bipartite Graph** (using graph coloring).  
+
+**Chromatic Number** (Minimum number of colors to color the graph).  
+
+
+### **Connectivity and Bridges**
+
+**Articulation Points** (Nodes whose removal increases connected components).  
+
+**Bridges in a Graph** (Edges whose removal increases connected components).  
+
+**Strongly Connected Components (SCC)** (Kosaraju, Tarjan’s algorithms).  
+
+**2-Edge Connected Components**.  
+
+
+### **Flow and Matching Problems**
+
+**Ford-Fulkerson Algorithm** (Maximum Flow).  
+
+**Edmonds-Karp Algorithm** (Optimized Maximum Flow). 
+
+**Dinic’s Algorithm** (Efficient Maximum Flow).  
+
+**Bipartite Graph Check** (using DFS/BFS).  
+
+**Maximum Bipartite Matching** (Hungarian Algorithm).  
+
+---
+### Trie
+
+
+
+
+---
+### Maths
+
+
+
+
+---
+
+### Bit Manipulation
+
+**Bitwise effects on numbers**
 
 ```java
 
@@ -15,9 +286,7 @@ int y = x << 2; // Shift left by 2 positions
 
 // Multiplication by powers of 2
 /*  5 * 2^2 = 20 **/
-    System.out.
-
-println(y); // Output: 20
+    System.out.println(y); // Output: 20
 
 /*
  * Right Shift (>>):
@@ -31,14 +300,12 @@ int b = a >> 2; // Shift right by 2 positions
 
 // Division by powers of 2
 /*  20 / 2^2 = 5 **/
-    System.out.
-
-println(b); // Output: 5
+    System.out.println(b); // Output: 5
 
 ```
 
 
-### Toggle a Specific Bit
+**Toggle a Specific Bit**
 
 `It means doing NOT operation at a specific bit position(using XOR ^)`
 
@@ -62,7 +329,7 @@ public int toggleBit(int number, int bitPosition) {
 
 ```
 
-### Set a Specific Bit
+**Set a Specific Bit**
 
 `It means setting 1 at a specific bit position (using OR | )`
 
@@ -85,7 +352,7 @@ public int setBit(int number, int bitPosition) {
 
 ```
 
-### clear a Specific Bit
+**clear a Specific Bit**
 
 `It means setting 0 at a specific bit position (using AND and Complement )`
 
@@ -108,7 +375,7 @@ public int clearBit(int number, int bitPosition) {
 
 ```
 
-### Count the Number of Set Bits (Hamming Weight)
+**Count the Number of Set Bits (Hamming Weight)**
 
 ```java
 
@@ -132,7 +399,7 @@ public int countSetBits(int number) {
 
 ```
 
-### Find the Position of the Rightmost Set Bit
+**Find the Position of the Rightmost Set Bit**
 
 ```java
 
@@ -153,7 +420,7 @@ public int findRightmostSetBit(int number) {
 
 ```
 
-### Check if a Number is a Power of Two
+**Check if a Number is a Power of Two**
 
 ```java
 
@@ -174,7 +441,7 @@ public boolean isPowerOfTwo(int number) {
 
 ```
 
-### Swap Two Numbers Without Using a Temporary Variable
+**Swap Two Numbers Without Using a Temporary Variable**
 
 ```java
 
@@ -203,7 +470,7 @@ public void swap(int[] arr, int i, int j) {
 
 ```
 
-### Reverse Bits of an Integer
+**Reverse Bits of an Integer**
 
 ```java
 
@@ -228,7 +495,7 @@ public int reverseBits(int number) {
 
 ```
 
-### Determine if Two Integers Have Opposite Signs
+**Determine if Two Integers Have Opposite Signs**
 
 ```java
 
@@ -252,26 +519,25 @@ public boolean haveOppositeSigns(int a, int b) {
 
 ```
 
-
 </br>
 
-# Matrix
+### Matrix
 
-### Basic Directions (left, right, top, down)
+**Basic Directions (left, right, top, down)**
 
 - `{0, 1}` : Represents movement to the right
 - `{0, -1}`: Represents movement to the left
 - `{1, 0}` : Represents movement downwards
 - `{-1, 0}`: Represents movement upwards
 
-### Additional diagonal movements
+**Additional diagonal movements**
 
 - `{1, 1}` : Represents movement diagonally down and to the right
 - `{1, -1}` : Represents movement diagonally down and to the left
 - `{-1, 1}` : Represents movement diagonally up and to the right
 - `{-1, -1}`: Represents movement diagonally up and to the left
 
-### Matrix Conversion
+**Matrix Conversion**
 
 Convert `n * m` matrix to an array : `a[row * m + col] = matrix[row][col]`
 
@@ -301,7 +567,7 @@ public static int[][] arrayToMatrix(int[] array, int n, int m) {
 }
 ```
 
-### Grid Number in matrix
+**Grid Number in matrix**
 
 gridNumber = `(row / 3) * 3 + (col / 3)`
 

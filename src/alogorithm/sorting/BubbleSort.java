@@ -7,10 +7,10 @@ public class BubbleSort {
 
     //In a single pass of the bubble sort algorithm, the largest unsorted element is guaranteed to move to its correct position at the end of the array.
     static void bubbleSort(int[] array) {
-        int size = array.length;
-        for (int i = 0; i < size - 1; i++) {
+        int len = array.length - 1;
+        for (int i = 0; i < len; i++) {
             // (size - 1) - i to reduce the comparison space, at each iteration last element moves to sorted postion
-            for (int j = 0; j < (size - 1) - i; j++) {
+            for (int j = 0; j < len - i; j++) {
                 if (array[j] > array[j + 1]) {
                     int temp = array[j];
                     array[j] = array[j + 1];

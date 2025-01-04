@@ -67,7 +67,7 @@ public class MergeSort {
 
     public static void main(String[] args) {
         MergeSort mergeSort = new MergeSort();
-        int[] arr = {12, 11, 13, 1, 5};
+        int[] arr = {12, 11};
 
         System.out.println("Given Array");
         Arrays.stream(arr).forEach(i -> System.out.print(i + " "));

@@ -1,25 +1,24 @@
-### **System Design Todos**
-
-- [Top 25 HLD Questions List](https://leetcode.com/discuss/interview-question/system-design/5324660/Top-25-HLD-Questions-List)
-- [Frequently Asked Low-Level Design (LLD) Questions](https://leetcode.com/discuss/interview-question/system-design/5328221/Frequently-Asked-Low-Level-Design-(LLD)-Questions)
-
----
-
 ### **DSA Todos**
 
-- [ ] Sliding Window
+- [ ] CheatSheet, Notes, Revision
 - [ ] Stack
 - [ ] Trie
 - [ ] Design and Concurrency
 - [ ] DP
 - [ ] Graph
 - [ ] Bitwise
+- [ ] Maths
+
+---
+
+### **Future DSA Todos**
+
+- [ ] Start Codeforces
 - [ ] B and B+ Trees
 - [ ] AVL Tree
 - [ ] Red Black Trees
 - [ ] Segment Trees
 - [ ] KMP and Rabin Karp
-- [ ] Start Codeforces
 
 ---
 
