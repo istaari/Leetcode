@@ -3,58 +3,90 @@
 
 ### Sorting
 
-**Bubble Sort**
+**1. Bubble Sort**
 
-Compare adjacent elements and swap them if they are in the wrong order.
-In a single pass, the smallest or largest element reaches at the end of the array, its in sorted order.
+> Compare adjacent elements and swap them if they are in the wrong order.
+> In a single pass, the smallest or largest element reaches at the end of the array, its in sorted order.
 
-**Selection Sort**
+**2. Selection Sort**
 
-Find the smallest or largest element in array and swap it with the first element. Which becomes sorted.
+> Find the smallest or largest element in array and swap it with the first element. Which becomes sorted.
 
-**Insertion Sort**
+**3. Insertion Sort**
 
-Pick an element(2nd element) and compare it with the previous element, if it is smaller than the previous element, 
-then move the prev element to the next position, at last insert the picked element at the correct position.
+> Pick an element(2nd element) and compare it with the previous element, if it is smaller than the previous element, 
+> then move the prev element to the next position, at last insert the picked element at the correct position.
 
 [Leetcode Insertion Sort Linked List](https://leetcode.com/problems/insertion-sort-list/description/)
 
-**Merge Sort**
+**4. Merge Sort**
 
-- Recursively Divide the array until it has only one element.
-- Then in the merge step, first create two array from left to mid and mid+1 to right.
-- Copy from original array to these two arrays.
-- Then merge these two arrays in sorted order.
+> - Recursively Divide the array until it has only one element.
+> - Then in the merge step, first create two array from left to mid and mid+1 to right.
+> - Copy from original array to these two arrays.
+> - Then merge these two arrays in sorted order.
 
 [Leetcode Sort Linked List](https://leetcode.com/problems/sort-list/description/)
 
-**Quick Sort**
+**5. Quick Sort**
 
-- Select a pivot element, either first, last or random element.
-- then partition the array such that all elements less than pivot are on left and greater are on right.
-- The pivot element is at its sorted position.
-- Recursively apply the same steps to the left and right subarrays.
+> - Select a pivot element, either first, last or random element.
+> - then partition the array such that all elements less than pivot are on left and greater are on right.
+> - The pivot element is at its sorted position.
+> - Recursively apply the same steps to the left and right subarrays.
 
-**Heap Sort**
-
-
-**Counting Sort**
+**6. Heap Sort**
 
 
-**Bucket Sort**
+**7. Counting Sort**
 
 
-**Radix Sort**
-
----
-
-### Array
+**8. Bucket Sort**
 
 
+**9. Radix Sort**
 
 ---
 
 ### String
+
+**1. Basic String Manipulation or Processing** : Problems involve operations such as reversing, concatenating, or modifying strings.
+
+[Shortest Distance to a Character](https://leetcode.com/problems/shortest-distance-to-a-character/description/)
+
+> Store the index of target character in `Treeset`, then for each character find the floor and ceil value of the current index.
+> Calculate min distace of current character till target  `Math.min(treeSet.ceiling(i) - i,  i - treeSet.floor(i))`
+
+
+**2. Substring and Subsequence Problems** : These involve finding or working with substrings or subsequences, `can be solved using sliding window or DP`.
+
+
+**3. Frequency Analysis** : These problems involve analyzing character frequencies, like Anagrams, Anagrams Groups, character count, etc. `can be solved using Hashmap`.
+
+
+**4. Palindrome Problems** : These involve checking or forming palindromes. can be solved using two-pointer technique.
+
+
+**5. Two-Pointer/String Traversal Problems** : These involve using two pointers or iterating over the string efficiently.
+
+
+**6. String Compression and Encoding** : Problems involve compressing or encoding strings.
+
+
+**7. Greedy/String Optimization** : Problems solved by making optimal local decisions.
+
+
+**8. Character Rearrangement** : These involve rearranging characters to meet certain conditions.
+
+
+**9. Nested String Parsing** : Problems involving parsing nested strings or brackets.
+
+
+**10 Pattern Matching and Regular Expressions** : These problems often involve checking or generating patterns.
+
+---
+
+### Array
 
 
 
@@ -83,8 +115,6 @@ then move the prev element to the next position, at last insert the picked eleme
 
 ---
 ### Greedy
-
-
 
 
 ---
@@ -281,12 +311,11 @@ then move the prev element to the next position, at last insert the picked eleme
  * Each bit is shifted to the left by the specified amount, and zeros are added to the right.
  */
 int x = 5; // Binary representation: 000...0000101
-int y = x << 2; // Shift left by 2 positions
-// After shifting left by 2 positions, the binary representation becomes: 000...0010100
+int y = x << 2; // Shift left by 2 positions : 000...0010100
 
 // Multiplication by powers of 2
 /*  5 * 2^2 = 20 **/
-    System.out.println(y); // Output: 20
+System.out.println(y); // Output: 20
 
 /*
  * Right Shift (>>):
@@ -295,15 +324,13 @@ int y = x << 2; // Shift left by 2 positions
  */
 
 int a = 20; // Binary representation: 000...0010100
-int b = a >> 2; // Shift right by 2 positions
-// After shifting right by 2 positions, the binary representation becomes: 000...0000101
+int b = a >> 2; // Shift right by 2 positions : 000...0000101
 
 // Division by powers of 2
 /*  20 / 2^2 = 5 **/
-    System.out.println(b); // Output: 5
+System.out.println(b); // Output: 5
 
 ```
-
 
 **Toggle a Specific Bit**
 
@@ -311,16 +338,10 @@ int b = a >> 2; // Shift right by 2 positions
 
 ```java
 
-// Input Examples:
 // toggleBit(5, 1):
 // 5 in binary: 0101
 // 1 << 1 (shift left by 1): 0010
 // 5 ^ 2: 0101 ^ 0010 = 0111 (result is 7)
-
-// toggleBit(8, 3):
-// 8 in binary: 1000
-// 1 << 3 (shift left by 3): 1000
-// 8 ^ 8: 1000 ^ 1000 = 0000 (result is 0)
 
 public int toggleBit(int number, int bitPosition) {
     return number ^ (1 << bitPosition);
@@ -335,16 +356,10 @@ public int toggleBit(int number, int bitPosition) {
 
 ```java
 
-// Input Examples:
 // setBit(5, 2):
 // 5 in binary: 0101
 // 1 << 2 (shift left by 2): 0100
 // 5 | 4: 0101 | 0100 = 0101 (result is 7)
-
-// setBit(10, 1):
-// 10 in binary: 1010
-// 1 << 1 (shift left by 1): 0010
-// 10 | 2: 1010 | 0010 = 1010 (result is 10)
 
 public int setBit(int number, int bitPosition) {
     return number | (1 << bitPosition);
@@ -358,16 +373,10 @@ public int setBit(int number, int bitPosition) {
 
 ```java
 
-// Input Examples:
 // clearBit(7, 1):
 // 7 in binary: 0111
 // ~(1 << 1) (shift left by 1 and complement): ~0010 = 1101
 // 7 & 1101: 0111 & 1101 = 0101 (result is 5)
-
-// clearBit(15, 3):
-// 15 in binary: 1111
-// ~(1 << 3) (shift left by 3 and complement): ~1000 = 0111
-// 15 & 0111: 1111 & 0111 = 0111 (result is 7)
 
 public int clearBit(int number, int bitPosition) {
     return number & ~(1 << bitPosition);
@@ -379,14 +388,9 @@ public int clearBit(int number, int bitPosition) {
 
 ```java
 
-// Input Examples:
 // countSetBits(7):
 // 7 in binary: 0111
 // Number of 1's: 3
-
-// countSetBits(10):
-// 10 in binary: 1010
-// Number of 1's: 2
 
 public int countSetBits(int number) {
     int count = 0;
@@ -403,16 +407,10 @@ public int countSetBits(int number) {
 
 ```java
 
-// Input Examples:
 // findRightmostSetBit(12):
 // 12 in binary: 1100
 // -12 in binary (two's complement): 0011 (inverting 1100) + 1 = 0100
 // 12 & -12: 1100 & 0100 = 0100 (result is 4)
-
-// findRightmostSetBit(18):
-// 18 in binary: 10010
-// -18 in binary: 01101 (inverting 10010) + 1 = 01110
-// 18 & -18: 10010 & 01110 = 00110 (result is 2)
 
 public int findRightmostSetBit(int number) {
     return number & -number;
@@ -424,16 +422,10 @@ public int findRightmostSetBit(int number) {
 
 ```java
 
-// Input Examples:
 // isPowerOfTwo(4):
 // 4 in binary: 0100
 // 4 - 1 = 3 (binary: 0011)
 // 4 & 3: 0100 & 0011 = 0000 (result is 0, so 4 is a power of two)
-
-// isPowerOfTwo(6):
-// 6 in binary: 0110
-// 6 - 1 = 5 (binary: 0101)
-// 6 & 5: 0110 & 0101 = 0100 (result is not 0, so 6 is not a power of two)
 
 public boolean isPowerOfTwo(int number) {
     return (number > 0) && ((number & (number - 1)) == 0);
@@ -445,20 +437,12 @@ public boolean isPowerOfTwo(int number) {
 
 ```java
 
-// Input Examples:
 // arr = [3, 5]; swap(arr, 0, 1);
 // Before swap: [3, 5]
 // 3 ^ 5 = 6 (0110)
 // 5 ^ 6 = 3
 // 6 ^ 3 = 5
 // After swap: [5, 3]
-
-// arr = [7, 2]; swap(arr, 0, 1);
-// Before swap: [7, 2]
-// 7 ^ 2 = 5 (0101)
-// 2 ^ 5 = 7
-// 5 ^ 7 = 2
-// After swap: [2, 7]
 
 public void swap(int[] arr, int i, int j) {
     if (i != j) {
@@ -474,14 +458,9 @@ public void swap(int[] arr, int i, int j) {
 
 ```java
 
-// Input Examples:
 // reverseBits(5):
 // 5 in binary: 00000101
 // Reversed: 10100000 (result is 160)
-
-// reverseBits(15):
-// 15 in binary: 00001111
-// Reversed: 11110000 (result is 240)
 
 public int reverseBits(int number) {
     int result = 0;
