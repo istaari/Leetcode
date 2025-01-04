@@ -3,23 +3,23 @@
 
 ### Sorting
 
-**1. Bubble Sort**
+**Bubble Sort**
 
 > Compare adjacent elements and swap them if they are in the wrong order.
 > In a single pass, the smallest or largest element reaches at the end of the array, its in sorted order.
 
-**2. Selection Sort**
+**Selection Sort**
 
 > Find the smallest or largest element in array and swap it with the first element. Which becomes sorted.
 
-**3. Insertion Sort**
+**Insertion Sort**
 
 > Pick an element(2nd element) and compare it with the previous element, if it is smaller than the previous element, 
 > then move the prev element to the next position, at last insert the picked element at the correct position.
 
 [Leetcode Insertion Sort Linked List](https://leetcode.com/problems/insertion-sort-list/description/)
 
-**4. Merge Sort**
+**Merge Sort**
 
 > - Recursively Divide the array until it has only one element.
 > - Then in the merge step, first create two array from left to mid and mid+1 to right.
@@ -28,29 +28,29 @@
 
 [Leetcode Sort Linked List](https://leetcode.com/problems/sort-list/description/)
 
-**5. Quick Sort**
+**Quick Sort**
 
 > - Select a pivot element, either first, last or random element.
 > - then partition the array such that all elements less than pivot are on left and greater are on right.
 > - The pivot element is at its sorted position.
 > - Recursively apply the same steps to the left and right subarrays.
 
-**6. Heap Sort**
+**Heap Sort**
 
 
-**7. Counting Sort**
+**Counting Sort**
 
 
-**8. Bucket Sort**
+**Bucket Sort**
 
 
-**9. Radix Sort**
+**Radix Sort**
 
 ---
 
 ### String
 
-**1. Basic String Manipulation or Processing** : Problems involve operations such as reversing, concatenating, or modifying strings.
+**Basic String Manipulation or Processing** : Problems involve operations such as reversing, concatenating, or modifying strings.
 
 [Shortest Distance to a Character](https://leetcode.com/problems/shortest-distance-to-a-character/description/)
 
@@ -58,31 +58,31 @@
 > Calculate min distace of current character till target  `Math.min(treeSet.ceiling(i) - i,  i - treeSet.floor(i))`
 
 
-**2. Substring and Subsequence Problems** : These involve finding or working with substrings or subsequences, `can be solved using sliding window or DP`.
+**Substring and Subsequence Problems** : These involve finding or working with substrings or subsequences, `can be solved using sliding window or DP`.
 
 
-**3. Frequency Analysis** : These problems involve analyzing character frequencies, like Anagrams, Anagrams Groups, character count, etc. `can be solved using Hashmap`.
+**Frequency Analysis** : These problems involve analyzing character frequencies, like Anagrams, Anagrams Groups, character count, etc. `can be solved using Hashmap`.
 
 
-**4. Palindrome Problems** : These involve checking or forming palindromes. can be solved using two-pointer technique.
+**Palindrome Problems** : These involve checking or forming palindromes. can be solved using two-pointer technique.
 
 
-**5. Two-Pointer/String Traversal Problems** : These involve using two pointers or iterating over the string efficiently.
+**Two-Pointer/String Traversal Problems** : These involve using two pointers or iterating over the string efficiently.
 
 
-**6. String Compression and Encoding** : Problems involve compressing or encoding strings.
+**String Compression and Encoding** : Problems involve compressing or encoding strings.
 
 
-**7. Greedy/String Optimization** : Problems solved by making optimal local decisions.
+**Greedy/String Optimization** : Problems solved by making optimal local decisions.
 
 
-**8. Character Rearrangement** : These involve rearranging characters to meet certain conditions.
+**Character Rearrangement** : These involve rearranging characters to meet certain conditions.
 
 
-**9. Nested String Parsing** : Problems involving parsing nested strings or brackets.
+**Nested String Parsing** : Problems involving parsing nested strings or brackets.
 
 
-**10 Pattern Matching and Regular Expressions** : These problems often involve checking or generating patterns.
+**Pattern Matching and Regular Expressions** : These problems often involve checking or generating patterns.
 
 ---
 
@@ -170,7 +170,6 @@
 
 ---
 ### Backtracking
-
 
 
 
@@ -302,8 +301,15 @@
 ---
 ### Maths
 
+**1. Sieve of Eratosthenes**
 
+**2. Euclidean Algorithm for GCD**
 
+**3. Fast Exponentiation**
+
+**4. Prime Factorization**
+
+**5. Modular Arithmetic**
 
 ---
 
