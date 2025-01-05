@@ -25,7 +25,7 @@ public class Sqrt {
     }
 
     public static void main(String[] args) {
-        int x = 4;
+        int x = 5;
         System.out.println(mySqrt(x));
     }
 

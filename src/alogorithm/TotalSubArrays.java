@@ -4,8 +4,12 @@ package alogorithm;
 public class TotalSubArrays {
 
     public static void main(String[] args) {
+        int[] arr = {1, 4, 5, 3};
+        // Output the result
+        System.out.println("Sum of all subarrays: " + new TotalSubArrays().sumOfAllSubarrays(arr));
+    }
 
-        int[] arr = {1, 4, 2, 5, 3};
+    int sumOfAllSubarrays(int[] arr) {
         int n = arr.length;
         int sum = 0;
 
@@ -14,7 +18,8 @@ public class TotalSubArrays {
             sum += arr[i] * subarrayCount;
         }
 
-        // Output the result
-        System.out.println("Sum of all subarrays: " + sum);
+        return sum;
     }
+
+
 }

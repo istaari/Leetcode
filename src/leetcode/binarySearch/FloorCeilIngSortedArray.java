@@ -45,7 +45,7 @@ public class FloorCeilIngSortedArray {
 
     public static void main(String[] args) {
         int[] nums = {1, 2, 8, 10, 11, 12, 19};
-        int x = 9;
+        int x = 0;
         System.out.println("floor " + findFloor(nums, x));
         System.out.println("ceil " + findCeil(nums, x));
     }

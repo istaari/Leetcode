@@ -19,14 +19,14 @@ public class QuickSort {
     // Partitioning method to find the correct position of the pivot
     public static int partition(int[] array, int low, int high) {
         // Choose the rightmost element as the pivot
-        int pivotLast = array[high];
+        int pivot = array[high]; // last element
 
         // Keeps track of the boundary between elements that are less than or equal to the pivot and elements that are greater than the pivot.
         // 0 ... boundary ->  lower elements than pivot element,  boundary + 1 -> greater elements  than pivot element
         int boundary = low - 1;
 
         for (int j = low; j < high; j++) {
-            if (array[j] <= pivotLast) {
+            if (array[j] <= pivot) {
                 boundary++;
                 swap(array, boundary, j);
             }
