@@ -67,7 +67,7 @@
   - Store the index of target character in `Treeset`
   - Compute the distance to both the floor and ceiling indices `Math.min(Treeset.ceiling(i) - i,  i - Treeset.floor(i))`
 
-- [Shortest Distance to a Character](https://leetcode.com/problems/top-k-frequent-words/description/?envType=problem-list-v2&envId=bucket-sort)
+- [Top K Frequent Words](https://leetcode.com/problems/top-k-frequent-words/description/?envType=problem-list-v2&envId=bucket-sort)
   
   - Use a `HashMap` to store the frequency of each word.
   - Use a `PriorityQueue` to store the words based on frequency and lexicographical order with custom comparator.
