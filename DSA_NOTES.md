@@ -370,9 +370,11 @@
 **Examples:**
 - [Daily Temperatures](https://leetcode.com/problems/daily-temperatures/) - Find the number of days until a warmer temperature.
 
-- [Next Greater Element I](https://leetcode.com/problems/next-greater-element-i/) - Find the next greater element for each element in an array.
-
 - [Largest Rectangle in Histogram](https://leetcode.com/problems/largest-rectangle-in-histogram/) - Find the largest rectangular area in a histogram using a monotonic stack.
+
+- [Sum of Subarray Ranges](https://leetcode.com/problems/sum-of-subarray-ranges/) - Calculate the sum of the range (difference between maximum and minimum) of all subarrays.  
+
+- [Sum of Subarray Minimums](https://leetcode.com/problems/sum-of-subarray-minimums/) - Calculate the sum of the minimum elements of all subarrays.
 
 
 ---
@@ -504,16 +506,9 @@
 **Segment Tree**  
 
 
----
-### Heap
-
-
-
 
 ---
 ### Backtracking
-
-
 
 
 
