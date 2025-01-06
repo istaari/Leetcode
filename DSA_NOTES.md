@@ -133,8 +133,6 @@
 
 **1. Classic Binary Search**
 
-- **Key Idea:** Check the middle element, adjust search bounds (left or right), repeat.
-
 **Examples:**
 
 - [Find First and Last Occurences of Element in Sorted Array](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/)
@@ -171,13 +169,17 @@
 
 **2. Binary Search on the Result**
 
-- **Key Idea:** Apply binary search to a range of possible answers (not the array), then validate a condition for each midpoint.
-
 **Examples:**
 
-- [Minimum Number of Days to Make m Bouquets](https://leetcode.com/problems/split-array-largest-sum/) - Find the minimum number of days required to make m bouquets
+- [Minimum Number of Days to Make m Bouquets](https://leetcode.com/problems/minimum-number-of-days-to-make-m-bouquets/description/) - Find the minimum number of days required to make m bouquets
 
-- [Koko Eating Bananas](https://leetcode.com/problems/koko-eating-bananas/) - Minimize the speed at which Koko eats bananas to finish in time.
+  - Apply binary search on the range of days, then validate if it is possible to make m bouquets in `mid` days.
+  - Only adjacent flowers can be used to make a bouquet, so reset the count of flowers when `bloomDay > day`
+
+- [Koko Eating Bananas](https://leetcode.com/problems/koko-eating-bananas/) - Minimize the speed k at which Koko eats bananas to finish in time.
+
+  - Consider the range like max value in array, then apply `modified binary search on the range(1...N)`
+  - Validate the condition, if it is possible to eat all bananas in `mid` speed(k).
 
 - [Capacity to Ship Packages Within D Days](https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/) - Minimize the capacity needed to ship packages in a given time.
 
@@ -222,8 +224,6 @@
 
 
 **4. Searching in Monotonic Functions**
-
-- **Key Idea:** Exploit the monotonic property of the function (increasing, decreasing, or peaks).
 
 **Examples:**
 - [Find Peak Element](https://leetcode.com/problems/find-peak-element/) – Find a local maximum in the array.
@@ -423,22 +423,27 @@
 
 **Examples:**
 
+- [Merge Intervals](https://leetcode.com/problems/merge-intervals/) - Merge overlapping intervals.
+
+- [Insert Interval](https://leetcode.com/problems/insert-interval/) - Insert a new interval into a list of non-overlapping intervals.
+
 - [Non-overlapping Intervals](https://leetcode.com/problems/non-overlapping-intervals/) - Minimize the number of intervals to remove to make the remaining intervals non-overlapping.
 
-- [Meeting Rooms II](https://leetcode.com/problems/meeting-rooms-ii/) - Find the minimum number of meeting rooms required.
+- [Minimum Number of Arrows to Burst Balloons](https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/) - Find the minimum arrows needed to burst all balloons based on overlapping intervals.
 
-- [Erase Overlap Intervals](https://leetcode.com/problems/non-overlapping-intervals/) - Same as Non-overlapping Intervals but focuses on removal count.
+- [Meeting Rooms I](https://leetcode.com/problems/meeting-rooms/) - Find the minimum number of meeting rooms required.
+
+- [Meeting Rooms II](https://leetcode.com/problems/meeting-rooms-ii/) - Find the minimum number of meeting rooms required.
 
 
 **2. Scheduling Problems**
 
+- Scheduling a task optimally with with gap of n intervals.
+
 **Examples:**
 - [Task Scheduler](https://leetcode.com/problems/task-scheduler/) - Greedily assign tasks while considering cooldown periods.
-
-- [Minimum Number of Arrows to Burst Balloons](https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/) - Find the minimum arrows needed to burst all balloons based on overlapping intervals.
-
-- [Maximum Profit in Job Scheduling](https://leetcode.com/problems/maximum-profit-in-job-scheduling/) - Maximize profit from non-overlapping jobs using greedy and binary search.
-
+  - Formula : `minimumIntervals = (maxFreq − 1 ) × (n + 1 ) + maxCount`, where  maxFreq = max frequency of task, maxCount = number of tasks with max frequency, n = cooldown period. 
+  - Can be done with priority queue
 
 **3. Greedy for Arrays**
 

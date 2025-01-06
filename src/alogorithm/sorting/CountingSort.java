@@ -1,13 +1,15 @@
 package alogorithm.sorting;
 
+import java.util.Arrays;
+
 public class CountingSort {
 
-    // 1. find the max value, calculate then length
-    // 2. count the occurrences
-    // 3. store the cumulative count
-    // 4. from the last take the elements find the right index
+    // 1. Find the max value, calculate then length
+    // 2. Count the occurrences
+    // 3. Store the cumulative count
+    // 4. From the last take the elements find the right index and place it in the output array
 
-    public static void countingSort(int[] nums) {
+    public static int[] countingSort(int[] nums) {
         int max = 0;
 
         for (int val : nums) {
@@ -24,19 +26,19 @@ public class CountingSort {
         }
 
         int[] result = new int[nums.length];
-
-        for (int i = 0; i < nums.length; i++) {
-            int index = count[nums[i]] - 1;
-            result[index] = nums[i];
-            count[nums[i]]--;
+        for (int num : nums) {
+            int index = count[num] - 1;
+            result[index] = num;
+            count[num]--;
         }
 
+        return result;
     }
 
 
     public static void main(String[] args) {
         int[] nums = {4, 2, 2, 8, 3, 3, 1};
-        countingSort(nums);
+        System.out.println(Arrays.toString(countingSort(nums)));
     }
 
 
