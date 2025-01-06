@@ -442,7 +442,7 @@
 
 **Examples:**
 - [Task Scheduler](https://leetcode.com/problems/task-scheduler/) - Greedily assign tasks while considering cooldown periods.
-  - Formula : `minimumIntervals = (maxFreq − 1 ) × (n + 1 ) + maxCount`, where  maxFreq = max frequency of task, maxCount = number of tasks with max frequency, n = cooldown period. 
+  - Formula : `minimumIntervals = (maxFreq − 1 ) × (n + 1 ) + maxCount`, where ` maxFreq = max frequency of task, maxCount = no. of tasks with max frequency, n = cooldown period` 
   - Can be done with priority queue
 
 **3. Greedy for Arrays**
@@ -637,7 +637,51 @@
 ---
 ### Trie
 
+**Examples:**
 
+**1. Basic Trie Implementation**
+
+- [Implement Trie (Prefix Tree)](https://leetcode.com/problems/implement-trie-prefix-tree/) - Build a Trie with insert, search, and prefix-check operations.
+
+- [Design Add and Search Words Data Structure](https://leetcode.com/problems/design-add-and-search-words-data-structure/) - Implement a Trie that supports adding words and searching words with `.` as a wildcard.
+
+- [Implement Trie II (Prefix Tree)](https://leetcode.com/problems/implement-trie-ii-prefix-tree/) - Extend the basic Trie to support counting words and prefixes.
+
+
+**2. Word Search and Prefix Matching**
+
+- [Word Search II](https://leetcode.com/problems/word-search-ii/) - Find all valid words in a grid using a word dictionary (Trie + DFS).
+
+- [Concatenated Words](https://leetcode.com/problems/concatenated-words/) - Find all words that can be formed by concatenating two or more dictionary words.
+
+- [Replace Words](https://leetcode.com/problems/replace-words/) - Replace words in a sentence with the shortest prefix found in a dictionary.
+
+- [Short Encoding of Words](https://leetcode.com/problems/short-encoding-of-words/) - Find the minimum encoding length of a list of words using Trie (suffix encoding).
+
+
+**3. Autocomplete and Suggestions**
+
+- [Design Search Autocomplete System](https://leetcode.com/problems/design-search-autocomplete-system/) - Build an autocomplete system that suggests hot sentences based on user input.
+
+- [Search Suggestions System](https://leetcode.com/problems/search-suggestions-system/) - Given a list of products, return lexicographically sorted product suggestions based on a search prefix.
+
+
+**4. Dictionary and Word Manipulation**
+
+- [Longest Word in Dictionary](https://leetcode.com/problems/longest-word-in-dictionary/) - Find the longest word that can be built one character at a time using a given list of words.
+
+- [Prefix and Suffix Search](https://leetcode.com/problems/prefix-and-suffix-search/) - Design a data structure that finds words matching a given prefix and suffix.
+
+- [677. Map Sum Pairs](https://leetcode.com/problems/map-sum-pairs/) - Implement a Trie-based key-value mapping where keys share prefixes.
+
+
+**5. Number Manipulation Using Trie**
+
+- [Maximum XOR of Two Numbers in an Array](https://leetcode.com/problems/maximum-xor-of-two-numbers-in-an-array/) - Find the maximum XOR value for two numbers in an array using a binary Trie.
+
+- [Maximum XOR With an Element From Array](https://leetcode.com/problems/maximum-xor-with-an-element-from-array/) - Find the maximum XOR value of queries with constraints using a Trie.
+
+- [Count Pairs With XOR in a Range](https://leetcode.com/problems/count-pairs-with-xor-in-a-range/) - Count pairs in an array whose XOR lies within a given range using a Trie.
 
 
 ---
