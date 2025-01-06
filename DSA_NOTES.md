@@ -43,6 +43,11 @@
 
 **7. Counting Sort**
 
+- Find the max value, calculate then length
+- Count the occurrences
+- Store the cumulative count
+- From the last take the elements find the right index and place it in the output array
+
 **8. Bucket Sort**
 
 **9. Radix Sort**
@@ -61,6 +66,21 @@
 
   - Store the index of target character in `Treeset`
   - Compute the distance to both the floor and ceiling indices `Math.min(Treeset.ceiling(i) - i,  i - Treeset.floor(i))`
+
+- [Shortest Distance to a Character](https://leetcode.com/problems/top-k-frequent-words/description/?envType=problem-list-v2&envId=bucket-sort)
+  
+  - Use a `HashMap` to store the frequency of each word.
+  - Use a `PriorityQueue` to store the words based on frequency and lexicographical order with custom comparator.
+     ```java
+      Queue<String>  queue = new PriorityQueue<>((a, b) -> {
+        int frequency =  map.get(b) - map.get(a) ;
+        if( frequency == 0 ) {
+          return a.compareTo(b); // Sort alphabetically in ascending order
+        }else{
+          return frequency; // Sort by frequency in descending order
+        }
+      } );
+     ```
   
 **2. Palindrome Problems** 
 
