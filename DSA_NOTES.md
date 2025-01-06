@@ -109,7 +109,7 @@
 - `low + (high - low) / 2`  - Selects lower middle, if there are even elments 
 - `low + high / 2`  - Selects lower middle, if there are even elments 
 - `low + (high - low + 1) / 2`  - Selects upper middle, if there are even elments 
--  In Modified Binary Bearch, `The loop exits when low = high`
+
 
 **1. Classic Binary Search**
 
@@ -233,17 +233,23 @@
 
 **1. Stack Simulation**
 
-- **Key Idea:** Use a stack to simulate dynamic processes, interactions, or conditions, such as handling nested structures, resolving collisions, or maintaining a specific order.
-
-- [Simplify Path](https://leetcode.com/problems/simplify-path/) - Simplify a Unix-style path by simulating directory navigation with a stack.
-
 - [Decode String](https://leetcode.com/problems/decode-string/) -  Use a stack to decode nested encoded strings (e.g., `"3[a2[c]]"` becomes `"accaccacc"`).
+
+  - Use two stacks, one for numbers and one for strings.
+  - when digit is encountered, push into number stack
+  - When an open bracket is encountered, initialize a string variable
+  - When character is encountered, append to the string variable
+  - when close bracket is encountered, pop the number and repeat the string that many times.
 
 - [Remove All Adjacent Duplicates in String II](https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string-ii/) -  Use a stack to remove adjacent duplicates in a string when they occur \( k \) times consecutively.
 
 - [Asteroid Collision](https://leetcode.com/problems/asteroid-collision/) - Simulate collisions between asteroids using stack mechanics.
-
+  
+  - Push and pop into stack based on conditions
+  
 - [Remove K Digits](https://leetcode.com/problems/remove-k-digits/) - Simulate the removal of digits to achieve the smallest possible number using a monotonic stack.
+
+  - Push and pop into stack based on conditions
 
 - [Car Fleet](https://leetcode.com/problems/car-fleet/) - Simulate car fleets merging using a stack based on their speeds and positions. 
 
@@ -251,7 +257,14 @@
 
 **2. Valid Parentheses and Expressions Evaluation**
 
-- **Key Idea:** Use a stack to match opening and closing characters or to evaluate expressions.
+- **Infix Expression**: The operators are written between the operands. Example: `A + B, (A + B) * C`.  
+  **How to Solve**: Follow operator precedence and evaluate step by step.
+
+- **Postfix Expression (Reverse Polish Notation)**: The operators are written after the operands. Example: `AB+, AB+C*`.  
+  **How to Solve**: Use a stack, push operands, and apply operators in left-to-right order.
+
+- **Prefix Expression (Polish Notation)**: The operators are written before the operands. Example: `+AB, *+ABC`.  
+  **How to Solve**: Use a stack, push operands, and apply operators in right-to-left order.
 
 **Examples:**
 - [Valid Parentheses](https://leetcode.com/problems/valid-parentheses/) - Check if parentheses are balanced in a string.
@@ -263,16 +276,81 @@
 - [Basic Calculator](https://leetcode.com/problems/basic-calculator/) - Handle parentheses and operators in infix expressions.
 
 - [Basic Calculator II](https://leetcode.com/problems/basic-calculator-ii/) - Evaluate an infix arithmetic expression.
-
+  
 
 **3. Monotonic Stack Problems**
 
-- **Key Idea:** Use a stack to maintain a monotonic increasing or decreasing order for elements to solve range-based problems.
+```java
+
+    // Increasing Stack (from bottom to top)
+    int[] findPreviousSmallest(int[] arr) {
+        int[] result = new int[arr.length];
+        Stack<Integer> stack = new Stack<>();
+
+        for (int i = 0; i < arr.length; i++) {
+            while (!stack.isEmpty() && stack.peek() >= arr[i]) {
+                stack.pop();
+            }
+            result[i] = stack.isEmpty() ? -1 : stack.peek();
+            stack.push(arr[i]);
+        }
+        return result;
+    }
+
+    // Increasing Stack (from bottom to top)
+    int[] findNextSmallest(int[] arr) {
+        int[] result = new int[arr.length];
+        Stack<Integer> stack = new Stack<>();
+
+        for (int i = arr.length - 1; i >= 0; i--) {
+            while (!stack.isEmpty() && stack.peek() >= arr[i]) {
+                stack.pop();
+            }
+            result[i] = stack.isEmpty() ? -1 : stack.peek();
+            stack.push(arr[i]);
+        }
+
+        return result;
+    }
+
+    // Decreasing Stack (from bottom to top)
+    int[] findPreviousLargest(int[] arr) {
+        int[] result = new int[arr.length];
+        Stack<Integer> stack = new Stack<>();
+
+        for (int i = 0; i < arr.length; i++) {
+            while (!stack.isEmpty() && stack.peek() <= arr[i]) {
+                stack.pop();
+            }
+            result[i] = stack.isEmpty() ? -1 : stack.peek();
+            stack.push(arr[i]);
+        }
+
+        return result;
+    }
+
+   // Decreasing Stack (from bottom to top)
+    int[] findNextLargest(int[] arr) {
+        int[] result = new int[arr.length];
+        Stack<Integer> stack = new Stack<>();
+
+        for (int i = arr.length - 1; i >= 0; i--) {
+            while (!stack.isEmpty() && stack.peek() <= arr[i]) {
+                stack.pop();
+            }
+            result[i] = stack.isEmpty() ? -1 : stack.peek();
+            stack.push(arr[i]);
+        }
+
+        return result;
+    }
+
+```
 
 **Examples:**
 - [Daily Temperatures](https://leetcode.com/problems/daily-temperatures/) - Find the number of days until a warmer temperature.
 
-- [Next Greater Element I/II](https://leetcode.com/problems/next-greater-element-i/) - Find the next greater element for each element in an array.
+- [Next Greater Element I](https://leetcode.com/problems/next-greater-element-i/) - Find the next greater element for each element in an array.
 
 - [Largest Rectangle in Histogram](https://leetcode.com/problems/largest-rectangle-in-histogram/) - Find the largest rectangular area in a histogram using a monotonic stack.
 
@@ -281,55 +359,47 @@
 
 ### Sliding Window
 
-**1. Longest/Shortest Subarrays/Substrings with Conditions**
+### **Examples:**
 
-- **Key Idea:** Adjust the window size dynamically to find the longest or shortest subarray or substring that satisfies a condition.
+**1. Variable Window Size**
 
-**Examples:**
-- [Longest Subarray of Ones After Deleting One Element](https://leetcode.com/problems/longest-subarray-of-1s-after-deleting-one-element/) - Find the longest subarray of 1's after deleting at most one element.
+- [Maximum Points From Cards](https://leetcode.com/problems/maximum-points-you-can-obtain-from-cards/) - Pick cards from either the beginning or the end to maximize the total points.
 
-- [Max Consecutive Ones III](https://leetcode.com/problems/max-consecutive-ones-iii/) - Find the longest subarray with at most \( k \) 0's.
+- [Permutations in String](https://leetcode.com/problems/permutation-in-string/) - Check if `s2` contains any permutation of `s1`.
 
-- [Longest Substring with At Most Two Distinct Characters](https://leetcode.com/problems/longest-substring-with-at-most-two-distinct-characters/) - Find the longest substring containing at most two distinct characters.
 
-- [Longest Continuous Subarray With Absolute Diff Less Than or Equal to Limit](https://leetcode.com/problems/longest-continuous-subarray-with-absolute-diff-less-than-or-equal-to-limit/) - Find the longest subarray satisfying an absolute difference condition.
+**1. Longest/Shortest Subarrays**
 
-- [Maximum Size Subarray Sum Equals K](https://leetcode.com/problems/maximum-size-subarray-sum-equals-k/) - Find the longest subarray with a sum equal to \( k \).
+- [Longest Subarray K Frequency](https://leetcode.com/problems/length-of-longest-subarray-with-at-most-k-frequency/description/) - Find the longest subarray with exactly `k` distinct elements.
 
-- [Fruit Into Baskets](https://leetcode.com/problems/fruit-into-baskets/) - Find the longest subarray containing at most two types of fruits.
+- [Max Consecutive 1s III](https://leetcode.com/problems/max-consecutive-ones-iii/) - Find the maximum number of consecutive 1's in a binary array after flipping at most `k` 0's to 1's.
 
-- [Longest Substring with At Most K Distinct Characters](https://leetcode.com/problems/longest-substring-with-at-most-k-distinct-characters/) - Find the longest substring containing at most \( k \) distinct characters.
 
-- [Character Replacement](https://leetcode.com/problems/longest-repeating-character-replacement/) - Find the length of the longest substring that can be made uniform with at most \( k \) replacements.
+**2. Longest/Shortest Substrings**
 
-- [Number of Substrings Containing All Three Characters](https://leetcode.com/problems/number-of-substrings-containing-all-three-characters/) - Count substrings that contain all three characters (a, b, c).
+- [Longest Repeating Character Replacement](https://leetcode.com/problems/longest-repeating-character-replacement/) - Given a string, replace up to `k` characters to find the longest substring with the same character.
 
-- [Minimum Window Substring](https://leetcode.com/problems/minimum-window-substring/) - Find the smallest substring covering all characters of another string.
+- [Minimum Window Substring](https://leetcode.com/problems/minimum-window-substring/) - Find the smallest substring in `s` that contains all characters from `t`.
 
-- [Shortest Subarray with Sum at Least K](https://leetcode.com/problems/shortest-subarray-with-sum-at-least-k/) - Find the shortest subarray whose sum is at least \( k \).
+**3. Number of Subarrays**
 
-- [Longest Subarray With Sum Divisible by K](https://leetcode.com/problems/longest-subarray-with-sum-divisible-by-k/) - Find the longest subarray whose sum is divisible by \( k \).
+- [Nice Subarrays](https://leetcode.com/problems/count-number-of-nice-subarrays/description/) - Find the number of subarrays where the number of odd integers is exactly `k`.
 
-- [Find All Anagrams in a String](https://leetcode.com/problems/find-all-anagrams-in-a-string/) - Find the starting indices of all anagrams of a given string.
+- [Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/) - Find the maximum value in each sliding window of size `k`.
 
-- [Longest Substring Without Repeating Characters](https://leetcode.com/problems/longest-substring-without-repeating-characters/) - Find the length of the longest substring without repeating characters.
 
-- [Permutations in String](https://leetcode.com/problems/permutation-in-string/) - Check if a string contains a permutation of another string.
+**4. Number of Substrings**
 
-- [Minimum Size Subarray Sum](https://leetcode.com/problems/minimum-size-subarray-sum/) - Find the smallest subarray with a sum greater than or equal to \( s \).
+- [Substrings Containing 3 Characters](https://leetcode.com/problems/number-of-substrings-containing-all-three-characters/description/) - Find the number of substrings that contain exactly 3 distinct characters.
 
-- [Subarrays with K Different Integers](https://leetcode.com/problems/subarrays-with-k-different-integers/) - Count the subarrays containing exactly \( k \) distinct integers.
+- [Subarrays K Different Integers](https://leetcode.com/problems/subarrays-with-k-different-integers/) - Find the number of subarrays with exactly `k` different integers.
 
-- [Maximum Sum of Subarray of Size K](https://leetcode.com/problems/maximum-sum-of-subarray-of-size-k/) - Find the maximum sum of a subarray of size \( k \).
-
-- [Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/) - Find the maximum value in each subarray of size \( k \).
 
 ---
 ### Greedy
 
 **1. Interval Scheduling**
 
-- **Key Idea:** Sort intervals by their start or end times, then iteratively select non-overlapping intervals based on a greedy strategy.
 
 **Examples:**
 
@@ -342,8 +412,6 @@
 
 **2. Scheduling Problems**
 
-- **Key Idea:** Use a greedy strategy to maximize or minimize results while considering constraints like deadlines or weights.
-
 **Examples:**
 - [Task Scheduler](https://leetcode.com/problems/task-scheduler/) - Greedily assign tasks while considering cooldown periods.
 
@@ -353,8 +421,6 @@
 
 
 **3. Greedy for Arrays**
-
-- **Key Idea:** Make greedy choices based on array properties like sorting or element values.
 
 **Examples:**
 - [Partition Labels](https://leetcode.com/problems/partition-labels/) - Partition a string into as many parts as possible such that each letter appears in only one part.
