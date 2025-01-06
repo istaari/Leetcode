@@ -278,13 +278,13 @@
 **2. Valid Parentheses and Expressions Evaluation**
 
 - **Infix Expression**: The operators are written between the operands. Example: `A + B, (A + B) * C`.  
-  **How to Solve**: Follow operator precedence and evaluate step by step.
+  **How to Solve**: 
 
 - **Postfix Expression (Reverse Polish Notation)**: The operators are written after the operands. Example: `AB+, AB+C*`.  
-  **How to Solve**: Use a stack, push operands, and apply operators in left-to-right order.
+  **How to Solve**: 
 
 - **Prefix Expression (Polish Notation)**: The operators are written before the operands. Example: `+AB, *+ABC`.  
-  **How to Solve**: Use a stack, push operands, and apply operators in right-to-left order.
+  **How to Solve**: 
 
 **Examples:**
 - [Valid Parentheses](https://leetcode.com/problems/valid-parentheses/) - Check if parentheses are balanced in a string.
