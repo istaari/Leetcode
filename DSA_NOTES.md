@@ -186,7 +186,6 @@
 
 **3. Rotated Sorted Arrays**
 
-- **Key Idea:** Identify the rotated section, then apply binary search in the appropriate part.
 - Use Modified Binary Search, find smallest or pivot `if(nums[mid] <= nums[high])`, then apply Binary Search on left or right part.
 - Normal Binary Search `mid = (low + high) / 2 , realMidValue = (mid + rotationPoint) % n`
 
@@ -234,8 +233,6 @@
 
 
 **5. Searching in Multi-Dimensional Arrays**
-- **Key Idea:** Treat the matrix as a sorted structure and adapt binary search.
-- **Variants:**
   - Treat the matrix as a flat array `matrix[mid / n][mid % n]`, where n is column length
   - Exploit row/column properties.
 
