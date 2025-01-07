@@ -141,7 +141,7 @@
     - When target is found for last occurrence, move `left = mid+1`
 
 
-- Floor and Ceil of a number in a sorted array.
+- Floor and Ceil of a number in a sorted array
 
     - If `target > mid`, then ` floor = mid and low = mid + 1`
     - If `target < mid`, then ` ceil = mid and high = mid - 1`
@@ -260,13 +260,14 @@
 
 - [Remove All Adjacent Duplicates in String II](https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string-ii/) -  Use a stack to remove adjacent duplicates in a string when they occur \( k \) times consecutively.
 
+   - `Solution 1` : Use Two Stack one to store Cumulative frequency and one to store character, when TOP is K, then pop the K times from both the stack
+   - `Solution 2` : Use pair to store the char and total frequency, when count of TOP is K, then pop from stack
+
 - [Asteroid Collision](https://leetcode.com/problems/asteroid-collision/) - Simulate collisions between asteroids using stack mechanics.
-  
-  - Push and pop into stack based on conditions
+
+  - Asteroid Collision happens when `stack.peek() > 0 && asteroid[i] < 0`
   
 - [Remove K Digits](https://leetcode.com/problems/remove-k-digits/) - Simulate the removal of digits to achieve the smallest possible number using a monotonic stack.
-
-  - Push and pop into stack based on conditions
 
 - [Car Fleet](https://leetcode.com/problems/car-fleet/) - Simulate car fleets merging using a stack based on their speeds and positions. 
 
@@ -417,6 +418,10 @@
 ---
 ### Greedy
 
+- **Greedy Choice Property**: Make a choice that seems the best at the moment without worrying about the future consequences.
+- **Optimal Substructure**: A problem exhibits this property if an optimal solution to the problem contains `optimal solutions to its subproblems`.
+-  Used for optimization problems where the goal is to minimize or maximize a particular value
+
 **1. Interval Scheduling**
 
 
@@ -424,15 +429,46 @@
 
 - [Merge Intervals](https://leetcode.com/problems/merge-intervals/) - Merge overlapping intervals.
 
+  - Sort intervals by `start time`, put first interval in list, compare other intervals to last interval from list for overlapp, then remove-merge or add in list
+
+- [Non-overlapping Intervals](https://leetcode.com/problems/non-overlapping-intervals/) - Minimum number of intervals to remove to make the remaining intervals non-overlapping.
+
+  -  Sort intervals by `start time`, Take the `End of First Interval` and compare the `Next Start of Interval` for overlapp
+  -  If overlapps then update the `End = Math.min(intervals[i][1], End)` min end time of both intervals, If does not overlaps `End = intervals[i][1]`
+
+
 - [Insert Interval](https://leetcode.com/problems/insert-interval/) - Insert a new interval into a list of non-overlapping intervals.
 
-- [Non-overlapping Intervals](https://leetcode.com/problems/non-overlapping-intervals/) - Minimize the number of intervals to remove to make the remaining intervals non-overlapping.
+  - wfwfw
 
 - [Minimum Number of Arrows to Burst Balloons](https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/) - Find the minimum arrows needed to burst all balloons based on overlapping intervals.
 
-- [Meeting Rooms I](https://leetcode.com/problems/meeting-rooms/) - Find the minimum number of meeting rooms required.
+- [Meeting Rooms I](https://leetcode.com/problems/meeting-rooms/) - Given intervals, Determine if a person could attend all meeting
 
-- [Meeting Rooms II](https://leetcode.com/problems/meeting-rooms-ii/) - Find the minimum number of meeting rooms required.
+  -  Sort intervals by `start time`, Take the `End of 1st Interval` and compare the `next Start of Interval` for overlap then return true or false
+
+- [Meeting Rooms II](https://leetcode.com/problems/meeting-rooms-ii/) - Find the minimum number of meeting rooms required to hold all meetings
+
+  - ```java
+        int minMeetingRooms(int[][] intervals) {
+            // Sort the intervals by their start times
+            Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
+            PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+            minHeap.add(intervals[0][1]); // first meeting's end time
+    
+            for (int i = 1; i < intervals.length; i++) {
+                // If there is no overlap
+                if (intervals[i][0] >= minHeap.peek()) {
+                    minHeap.poll();
+                }
+    
+                // update current meeting's end time in heap
+                minHeap.add(intervals[i][1]);
+            }
+            // The size of the heap tells us the minimum rooms required
+            return minHeap.size();
+        }
+    ```
 
 
 **2. Scheduling Problems**
@@ -441,21 +477,60 @@
 
 **Examples:**
 - [Task Scheduler](https://leetcode.com/problems/task-scheduler/) - Greedily assign tasks while considering cooldown periods.
-  - Formula : `minimumIntervals = (maxFreq − 1 ) × (n + 1 ) + maxCount`, where ` maxFreq = max frequency of task, maxCount = no. of tasks with max frequency, n = cooldown period` 
+  
+  - Formula : `minimumIntervals = (maxFreq − 1 ) × (n + 1 ) + maxCount`
   - Can be done with priority queue
 
 **3. Greedy for Arrays**
 
 **Examples:**
-- [Partition Labels](https://leetcode.com/problems/partition-labels/) - Partition a string into as many parts as possible such that each letter appears in only one part.
-
-- [Candy](https://leetcode.com/problems/candy/) - Distribute candies to children such that each child has at least one candy and children with higher ratings get more candies.
-
-- [Jump Game II](https://leetcode.com/problems/jump-game-ii/) - Minimize the number of jumps needed to reach the last index.
 
 - [Jump Game](https://leetcode.com/problems/jump-game/) - Determine if you can reach the last index by making greedy jumps.
 
+  - Calculate max jump so far from current index, from privious index
+     
+     ```java
+        boolean canJump(int[] nums) {
+            int far = 0;
+            int n = nums.length;
+    
+            for (int i = 0; i < n; i++) {
+                if (i > far) return false;
+                far = Math.max(i + nums[i], far);
+            }
+    
+            return true;   
+        }
+     ```
+
+- [Jump Game II](https://leetcode.com/problems/jump-game-ii/) - Minimum number of jumps needed to reach the last index.
+
+   -  When you reached prev jump, then increament the count
+  
+       ```java
+          public int jump(int[] nums) {
+              int far = 0;
+              int reached = 0;
+              int count = 0;
+              int n = nums.length;
+      
+              for (int i = 0; i < n - 1; i++) {
+                  far = Math.max(i + nums[i], far);
+                  if (i == reached) {
+                      count++;
+                      reached = far;
+                  }
+              }
+      
+              return count;
+          }
+        ```
+   
 - [Frog Jump](https://leetcode.com/problems/frog-jump/) - Find if a frog can reach the final stone.
+
+- [Partition Labels](https://leetcode.com/problems/partition-labels/) - Partition a string into as many parts as possible such that each letter appears in only one part.
+
+- [Candy](https://leetcode.com/problems/candy/) - Distribute candies to children such that each child has at least one candy and children with higher ratings get more candies.
 
 ---
 
