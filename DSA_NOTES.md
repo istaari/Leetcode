@@ -92,20 +92,9 @@
 **1. Subarrays** 
 
 - Total Subarrays = `n * (n + 1) / 2`
-
-- ```java
-    int sumOfAllSubarrays(int[] arr) {
-        int n = arr.length;
-        int sum = 0;
-
-        for (int i = 0; i < n; i++) {
-            int contribution = (i + 1) * (n - i); // How many times arr[i] will appear in subarrays
-            sum += arr[i] * contribution; // Add arr[i] * contribution to sum
-        }
-
-        return sum;
-    }
-   ```
+- `Kadane's algorithm` is used to solve the `maximum subarray sum` in array 
+- Sum Of All Subarrays : `contribution = (i + 1) * (n - i)` and `sum += arr[i] * contribution`
+- Sum Odd Length Subarrays : `contribution = ( (i + 1) * (n - i) + 1 ) / 2` and `sum += arr[i] * contribution`
 
  - ```java
     int sumOddLengthSubarrays(int[] arr) {
