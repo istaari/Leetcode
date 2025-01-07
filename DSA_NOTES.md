@@ -379,36 +379,94 @@
 
 ### Sliding Window
 
+- Window Size = `j - 1 + 1`
+- Digits - `count = new int[10]`, Small Aphabets - `count = new int[26]`, Big Aphabets - `count = new int[128]`
+
 ### **Examples:**
 
-**1. Variable Window Size**
+**1. Fixed Window Size**
 
 - [Maximum Points From Cards](https://leetcode.com/problems/maximum-points-you-can-obtain-from-cards/) - Pick cards from either the beginning or the end to maximize the total points.
 
-- [Permutations in String](https://leetcode.com/problems/permutation-in-string/) - Check if `s2` contains any permutation of `s1`.
+  - In one step, you can take one card from the beginning or from the end of the row. You have to take exactly k cards.
+  - Calculate total sum, then calculate `remaining window sum and size(arr.length - k)`, find sum of fixed remaining window size, deduct from total sum which give sum of k window size
+  - ```java
+       int maxScore(int[] cardPoints, int k) {
+          int totalSum = 0;
+          for (int point : cardPoints) {
+              totalSum += point;
+          }
+  
+          int remWindowSize = cardPoints.length - k;
+          int remWindowSum = 0;
+  
+          for (int i = 0; i < remWindowSize; i++) {
+              remWindowSum += cardPoints[i];
+          }
+  
+          int result = Math.max(0, totalSum - remWindowSum);
+  
+          for (int i = remWindowSize; i < cardPoints.length; i++) {
+              remWindowSum += cardPoints[i] - (cardPoints[i - remWindowSize]);
+              result = Math.max(result, totalSum - remWindowSum);
+          }
+  
+          return result;
+      }
+    ```
+
+**2. Variable Window Size**
+
+- [Permutations in String](https://leetcode.com/problems/permutation-in-string/) - Check if `s2` contains any permutation of `s1`,  s1 = "ab",  s2 = "eidbaooo"
+
+   - ```java
+        boolean checkInclusion(String s1, String s2) {
+          int left = 0;
+          int[] count = new int[26];
+  
+          for (int i = 0; i < s1.length(); i++) {
+              count[s1.charAt(i) - 'a']++;
+          }
+  
+          for (int right = 0; right < s2.length(); right++) {
+              char current = s2.charAt(right);
+              count[current - 'a']--;
+  
+              while (count[current - 'a'] < 0) { // negative means s2 does not contain in s1
+                  count[s2.charAt(left) - 'a']++;
+                  left++;
+              }
+  
+              if (right - left + 1 == s1.length()) return true;
+          }
+  
+          return false;
+      }
+     ```
+      
 
 
-**1. Longest/Shortest Subarrays**
+**3. Longest/Shortest Subarrays**
 
 - [Longest Subarray K Frequency](https://leetcode.com/problems/length-of-longest-subarray-with-at-most-k-frequency/description/) - Find the longest subarray with exactly `k` distinct elements.
 
 - [Max Consecutive 1s III](https://leetcode.com/problems/max-consecutive-ones-iii/) - Find the maximum number of consecutive 1's in a binary array after flipping at most `k` 0's to 1's.
 
 
-**2. Longest/Shortest Substrings**
+**4. Longest/Shortest Substrings**
 
 - [Longest Repeating Character Replacement](https://leetcode.com/problems/longest-repeating-character-replacement/) - Given a string, replace up to `k` characters to find the longest substring with the same character.
 
 - [Minimum Window Substring](https://leetcode.com/problems/minimum-window-substring/) - Find the smallest substring in `s` that contains all characters from `t`.
 
-**3. Number of Subarrays**
+**5. Number of Subarrays**
 
 - [Nice Subarrays](https://leetcode.com/problems/count-number-of-nice-subarrays/description/) - Find the number of subarrays where the number of odd integers is exactly `k`.
 
 - [Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/) - Find the maximum value in each sliding window of size `k`.
 
 
-**4. Number of Substrings**
+**6. Number of Substrings**
 
 - [Substrings Containing 3 Characters](https://leetcode.com/problems/number-of-substrings-containing-all-three-characters/description/) - Find the number of substrings that contain exactly 3 distinct characters.
 
