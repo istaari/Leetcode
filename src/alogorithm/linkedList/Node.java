@@ -1,4 +1,4 @@
-package dataStructure.linkedList;
+package alogorithm.linkedList;
 
 public class Node {
     int data;

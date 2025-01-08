@@ -1,4 +1,4 @@
-package dataStructure.trie;
+package alogorithm.trie;
 
 import java.util.HashMap;
 

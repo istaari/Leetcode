@@ -1,13 +1,15 @@
 package alogorithm.graph.edge;
 
-// Base Edge class
-public abstract class Edge {
+
+public class Edge {
+    public int src;
     public int dest;
     public int weight;
 
-    // Constructor for destination and weight
-    public Edge(int dest, int weight) {
+    public Edge(int src, int dest, int weight) {
+        this.src = src;
         this.dest = dest;
         this.weight = weight;
     }
+
 }

@@ -1,4 +1,4 @@
-package dataStructure.trees;
+package alogorithm.trees;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -73,6 +73,7 @@ public class TreeTraversal {
         TreeNode current = root;
 
         while (current != null || !stack.isEmpty()) {
+
             while (current != null) {
                 stack.push(current);
                 current = current.left;

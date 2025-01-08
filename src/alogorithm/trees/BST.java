@@ -1,4 +1,4 @@
-package dataStructure.trees;
+package alogorithm.trees;
 
 class BST {
 
@@ -10,11 +10,11 @@ class BST {
             return new TreeNode(key);
         }
         if (key < root.val) {
-            root.left = insertHelper(root.left, key);
+            root.left = insertHelper(root.left, key); // Fill the new node
         } else if (key > root.val) {
-            root.right = insertHelper(root.right, key);
+            root.right = insertHelper(root.right, key); // // Fill the new node
         }
-        return root;
+        return root; // Return the root, means fill the left and right child of parent node
     }
 
     // Inserts and return the root
@@ -31,6 +31,7 @@ class BST {
         if (key == root.val) {
             return true;
         }
+
         return key < root.val ? containsHelper(root.left, key) : containsHelper(root.right, key);
     }
 
@@ -41,31 +42,25 @@ class BST {
 
     //----------------------- Deletion --------------------------//
     private TreeNode deleteHelper(TreeNode root, int key) {
-        // Base Case: If the tree is empty
         if (root == null) return null;
 
-        // Otherwise, recur down the tree
         if (key < root.val)
-            root.left = deleteHelper(root.left, key);
+            root.left = deleteHelper(root.left, key); // If no child,  null is filled, if one node filled either one left or right node
         else if (key > root.val)
             root.right = deleteHelper(root.right, key);
         else {
-            // node with only one child or no child
-            if (root.left == null)
-                return root.right;
-            else if (root.right == null)
-                return root.left;
+            // Node with only one child or no child
+            if (root.left == null) return root.right;
+            else if (root.right == null)  return root.left;
 
-            // node with two children: get the inorder successor (smallest in the right subtree)
-            root.val = minValue(root.right);
-            // delete the inorder successor
-            root.right = deleteHelper(root.right, root.val);
+            root.val = inorderSuccessor(root.right); // Replace with Inorder Successor
+            root.right = deleteHelper(root.right, root.val); // Delete the inorder successor
         }
 
         return root;
     }
 
-    private int minValue(TreeNode root) {
+    private int inorderSuccessor(TreeNode root) {
         int min = root.val;
         while (root.left != null) {
             min = root.left.val;

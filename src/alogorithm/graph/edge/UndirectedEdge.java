@@ -1,10 +1,12 @@
 package alogorithm.graph.edge;
 
 // Concrete class for Edge without a source node (adjacency list style)
-public class UndirectedEdge extends Edge {
+public class UndirectedEdge {
+    public int dest;
+    public int weight;
 
-    // Constructor for destination and weight
     public UndirectedEdge(int dest, int weight) {
-        super(dest, weight);
+        this.dest = dest;
+        this.weight = weight;
     }
 }
