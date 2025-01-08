@@ -56,7 +56,7 @@
 
 ---
 
-### String
+## String
 
 **1. Basic String Manipulation or Processing** 
 
@@ -87,7 +87,7 @@
 
 ---
 
-### Array
+## Array
 
 **1. Subarrays** 
 
@@ -113,7 +113,7 @@
 
 
 ---
-### Binary Search
+## Binary Search
 
 - `low + (high - low) / 2`  - Selects lower middle, if there are even elments 
 - `low + high / 2`  - Selects lower middle, if there are even elments 
@@ -230,12 +230,12 @@
 - [Search a 2D Matrix II](https://leetcode.com/problems/search-a-2d-matrix-ii/) – Search in a matrix with sorted rows and columns.
   
 ---
-### Linked List
+## Linked List
 
 
 
 ---
-### Stack
+## Stack
 
 **1. Stack Simulation**
 
@@ -366,7 +366,7 @@
 
 ---
 
-### Sliding Window
+## Sliding Window
 
 - Window Size = `j - 1 + 1`
 - Digits - `count = new int[10]`, Small Aphabets - `count = new int[26]`, Big Aphabets - `count = new int[128]`
@@ -463,14 +463,14 @@
 
 
 ---
-### Greedy
+## Greedy
 
 - **Greedy Choice Property**: Make a choice that seems the best at the moment without worrying about the future consequences.
 - **Optimal Substructure**: A problem exhibits this property if an optimal solution to the problem contains `optimal solutions to its subproblems`.
 -  Used for optimization problems where the goal is to minimize or maximize a particular value
 
-**1. Interval Scheduling**
 
+**1. Interval Scheduling**
 
 **Examples:**
 
@@ -583,11 +583,70 @@
 
 ### Trees
 
-**Binary Tree Traversal (In-order, Pre-order, Post-order, Level Order)**  
+- `Inorder successor(smallest element in left subtree from right node)` is next node element in inorder traversal(Sorted Element in BST)
 
+**Inorder Iterative(Left-Root-Right)**  
+
+`Note : Visualize with three nodes`
+
+- Initialize `current variable` with root, push left node until its null
+- Pop last left node process it, then initialize current variable with right node
+
+**Preorder Iterative(Left-Root-Right)**
+
+`Note : Visualize with three nodes`
+
+- First add root to stack
+- While stack is not empty pop from stack process the element, then push right node and then left node
+
+**Postorder Iterative(Left-Root-Right)**
+
+`Note : Visualize with three nodes`
+
+- Create two stack input and output
+- Push root to a input stack, the pop from stack, then push the element to ouput stack
+- Push left node to input stack and right node to input stack
 
 **BST Operations**  
 
+- Insertions
+
+  ```java
+      TreeNode insert(TreeNode root, int key) {
+          if (root == null) {
+              return new TreeNode(key);
+          }
+          if (key < root.val) {
+              root.left = insertHelper(root.left, key); // Fill the new node
+          } else if (key > root.val) {
+              root.right = insertHelper(root.right, key); // // Fill the new node
+          }
+          return root; // return or propagate the root, means fill the left and right child of parent node
+      }
+  ```
+
+- Deletions 
+
+  ```java
+    TreeNode delete(TreeNode root, int key) {
+        if (root == null) return null;
+
+        if (key < root.val)
+            root.left = deleteHelper(root.left, key); // If no child,  null is filled, if one node filled either one left or right node
+        else if (key > root.val)
+            root.right = deleteHelper(root.right, key);
+        else {
+            // Node with only one child or no child
+            if (root.left == null) return root.right;
+            else if (root.right == null)  return root.left;
+
+            root.val = inorderSuccessor(root.right); // Replace with Inorder Successor
+            root.right = deleteHelper(root.right, root.val); // Delete the inorder successor
+        }
+
+        return root;
+    }
+  ```
 
 **Depth/Height** 
 
@@ -627,12 +686,12 @@
 
 
 ---
-### Backtracking
+## Backtracking
 
 
 
 ---
-### Dynamic Programming
+## Dynamic Programming
 
  **1D DP** 
 
@@ -662,7 +721,7 @@
 
 
 ---
-### Graph
+## Graph
 
 
 ### **Traversal & Basic Operations**
@@ -749,7 +808,7 @@
 **Maximum Bipartite Matching** (Hungarian Algorithm).  
 
 ---
-### Trie
+## Trie
 
 **Examples:**
 
@@ -799,7 +858,7 @@
 
 
 ---
-### Maths
+## Maths
 
 **1. Sieve of Eratosthenes**
 
@@ -813,7 +872,7 @@
 
 ---
 
-### Bit Manipulation
+## Bit Manipulation
 
 **Bitwise effects on numbers**
 
@@ -1012,55 +1071,29 @@ public boolean haveOppositeSigns(int a, int b) {
 
 ```
 
-### Matrix
+## Matrix
 
 **Basic Directions (left, right, top, down)**
 
-- `{0, 1}` : Represents movement to the right
-- `{0, -1}`: Represents movement to the left
-- `{1, 0}` : Represents movement downwards
-- `{-1, 0}`: Represents movement upwards
+- `{0, 1}` :  movement to the right
+- `{0, -1}`:  movement to the left
+- `{1, 0}` :  movement downwards
+- `{-1, 0}`:  movement upwards
 
 **Additional diagonal movements**
 
-- `{1, 1}` : Represents movement diagonally down and to the right
-- `{1, -1}` : Represents movement diagonally down and to the left
-- `{-1, 1}` : Represents movement diagonally up and to the right
-- `{-1, -1}`: Represents movement diagonally up and to the left
+- `{1, 1}` :  movement diagonally down and to the right
+- `{1, -1}` :  movement diagonally down and to the left
+- `{-1, 1}` :  movement diagonally up and to the right
+- `{-1, -1}`:  movement diagonally up and to the left
 
-**Matrix Conversion**
+**Matrix Formula**
 
-Convert `n * m` matrix to an array : `a[row * m + col] = matrix[row][col]`
+- Convert `n * m` matrix to an array : `a[row * m + col] = matrix[row][col]` where `n = matrix.length` and `m = matrix[0].length`
 
-```java
-    public static int[] matrixToArray(int[][] matrix) {
-    int m = matrix.length;
-    int n = matrix[0].length;
-    int[] array = new int[m * n];
+- Convert array to `n * m` matrix : `matrix[i / m][i % m] = a[i]` where `n = matrix.length` and `m = matrix[0].length`
 
-    for (int row = 0; row < m; row++) {
-        System.arraycopy(matrix[row], 0, array, row * n + 0, n);
-    }
-    return array;
-}
-```
-
-Convert array to `n * m` matrix : `matrix[x / m][x % m] = a[x]`;
-
-```java
-public static int[][] arrayToMatrix(int[] array, int n, int m) {
-    int[][] matrix = new int[n][m];
-
-    for (int x = 0; x < array.length; x++) {
-        matrix[x / m][x % m] = array[x];
-    }
-    return matrix;
-}
-```
-
-**Grid Number in matrix**
-
-gridNumber = `(row / 3) * 3 + (col / 3)`
+- Grid Number = `(row / 3) * 3 + (col / 3)`
 
 
 # Number System conversion
@@ -1069,12 +1102,12 @@ gridNumber = `(row / 3) * 3 + (col / 3)`
 
 #### (a) Binary to Decimal
 
-- **Explanation**: To convert binary to decimal, multiply each bit by 2 raised to the power of its position, starting
+- To convert binary to decimal, multiply each bit by 2 raised to the power of its position, starting
   from 0 on the right.
 
-- **Example**: Convert binary `1011` to decimal.
-
   ```
+  // Convert binary `1011` to decimal.
+
   1011 (binary) = 1*2^3 + 0*2^2 + 1*2^1 + 1*2^0
                = 8 + 0 + 2 + 1
                = 11 (decimal)
@@ -1082,12 +1115,12 @@ gridNumber = `(row / 3) * 3 + (col / 3)`
 
 #### (b) Binary to Octal
 
-- **Explanation**: Group the binary digits into sets of 3 bits from the right, then convert each group into its octal
+-  Group the binary digits into sets of 3 bits from the right, then convert each group into its octal
   equivalent.
 
-- **Example**: Convert binary `101110` to octal.
-
   ```
+  // Convert binary `101110` to octal.
+
   Grouping: 101 110
   101 (binary) = 5 (octal)
   110 (binary) = 6 (octal)
@@ -1097,12 +1130,12 @@ gridNumber = `(row / 3) * 3 + (col / 3)`
 
 #### (c) Binary to Hexadecimal
 
-- **Explanation**: Group the binary digits into sets of 4 bits from the right, then convert each group into its
+- Group the binary digits into sets of 4 bits from the right, then convert each group into its
   hexadecimal equivalent.
 
-- **Example**: Convert binary `10111101` to hexadecimal.
-
   ```
+  // Convert binary `10111101` to hexadecimal.
+
   Grouping: 1011 1101
   1011 (binary) = B (hex)
   1101 (binary) = D (hex)
@@ -1116,12 +1149,12 @@ gridNumber = `(row / 3) * 3 + (col / 3)`
 
 #### (a) Decimal to Binary
 
-- **Explanation**: Divide the decimal number by 2, record the remainder, and repeat until the quotient is 0. The binary
+- Divide the decimal number by 2, record the remainder, and repeat until the quotient is 0. The binary
   result is the remainders read from bottom to top.
 
-- **Example**: Convert decimal `23` to binary.
-
   ```
+  // Convert decimal `23` to binary.
+
   23 ÷ 2 = 11 remainder 1
   11 ÷ 2 = 5 remainder 1
   5 ÷ 2 = 2 remainder 1
@@ -1133,11 +1166,11 @@ gridNumber = `(row / 3) * 3 + (col / 3)`
 
 #### (b) Decimal to Octal
 
-- **Explanation**: Divide the decimal number by 8, record the remainder, and repeat until the quotient is 0.
-
-- **Example**: Convert decimal `83` to octal.
+- Divide the decimal number by 8, record the remainder, and repeat until the quotient is 0.
 
   ```
+  // Convert decimal `83` to octal.
+
   83 ÷ 8 = 10 remainder 3
   10 ÷ 8 = 1 remainder 2
   1 ÷ 8 = 0 remainder 1
@@ -1147,11 +1180,11 @@ gridNumber = `(row / 3) * 3 + (col / 3)`
 
 #### (c) Decimal to Hexadecimal
 
-- **Explanation**: Divide the decimal number by 16, record the remainder, and repeat until the quotient is 0.
-
-- **Example**: Convert decimal `255` to hexadecimal.
+- Divide the decimal number by 16, record the remainder, and repeat until the quotient is 0.
 
   ```
+  // Convert decimal `255` to hexadecimal
+
   255 ÷ 16 = 15 remainder 15
   15 ÷ 16 = 0 remainder 15
   
@@ -1165,11 +1198,11 @@ gridNumber = `(row / 3) * 3 + (col / 3)`
 
 #### (a) Octal to Binary
 
-- **Explanation**: Convert each octal digit into its 3-bit binary equivalent.
-
-- **Example**: Convert octal `75` to binary.
+- Convert each octal digit into its 3-bit binary equivalent.
 
   ```
+  // Convert octal `75` to binary
+
   7 (octal) = 111 (binary)
   5 (octal) = 101 (binary)
   
@@ -1178,11 +1211,11 @@ gridNumber = `(row / 3) * 3 + (col / 3)`
 
 #### (b) Octal to Decimal
 
-- **Explanation**: Multiply each digit by 8 raised to the power of its position from the right (starting from 0).
-
-- **Example**: Convert octal `342` to decimal.
+- Multiply each digit by 8 raised to the power of its position from the right (starting from 0).
 
   ```
+  // Convert octal `342` to decimal.
+
   342 (octal) = 3*8^2 + 4*8^1 + 2*8^0
               = 3*64 + 4*8 + 2*1
               = 192 + 32 + 2
@@ -1191,12 +1224,12 @@ gridNumber = `(row / 3) * 3 + (col / 3)`
 
 #### (c) Octal to Hexadecimal
 
-- **Explanation**: First convert the octal number to binary, then group the binary digits into sets of 4 to convert to
+- First convert the octal number to binary, then group the binary digits into sets of 4 to convert to
   hexadecimal.
 
-- **Example**: Convert octal `27` to hexadecimal.
-
   ```
+  // Convert octal `27` to hexadecimal.
+
   2 (octal) = 010 (binary)
   7 (octal) = 111 (binary)
   So, 27 (octal) = 010 111 (binary)
@@ -1214,11 +1247,11 @@ gridNumber = `(row / 3) * 3 + (col / 3)`
 
 #### (a) Hexadecimal to Binary
 
-- **Explanation**: Convert each hexadecimal digit to its 4-bit binary equivalent.
-
-- **Example**: Convert hexadecimal `2A7` to binary.
+- Convert each hexadecimal digit to its 4-bit binary equivalent.
 
   ```
+  // Convert hexadecimal `2A7` to binary.
+
   2 (hex) = 0010 (binary)
   A (hex) = 1010 (binary)
   7 (hex) = 0111 (binary)
@@ -1228,11 +1261,11 @@ gridNumber = `(row / 3) * 3 + (col / 3)`
 
 #### (b) Hexadecimal to Decimal
 
-- **Explanation**: Multiply each hex digit by 16 raised to the power of its position (starting from 0 from the right).
-
-- **Example**: Convert hexadecimal `3F` to decimal.
+- Multiply each hex digit by 16 raised to the power of its position (starting from 0 from the right).
 
   ```
+  // Convert hexadecimal 3F to decimal.
+
   3F (hex) = 3*16^1 + 15*16^0
            = 3*16 + 15*1
            = 48 + 15
@@ -1241,11 +1274,11 @@ gridNumber = `(row / 3) * 3 + (col / 3)`
 
 #### (c) Hexadecimal to Octal
 
-- **Explanation**: First convert hexadecimal to binary, then group binary digits in sets of 3 to convert to octal.
-
-- **Example**: Convert hexadecimal `4B` to octal.
+- First convert hexadecimal to binary, then group binary digits in sets of 3 to convert to octal.
 
   ```
+  // Convert hexadecimal 4B to octal.
+
   4 (hex) = 0100 (binary)
   B (hex) = 1011 (binary)
   
