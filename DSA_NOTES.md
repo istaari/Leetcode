@@ -488,8 +488,6 @@
 
   - wfwfw
 
-- [Minimum Number of Arrows to Burst Balloons](https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/) - Find the minimum arrows needed to burst all balloons based on overlapping intervals.
-
 - [Meeting Rooms I](https://leetcode.com/problems/meeting-rooms/) - Given intervals, Determine if a person could attend all meeting
 
   -  Sort intervals by `start time`, Take the `End of 1st Interval` and compare the `next Start of Interval` for overlap then return true or false
