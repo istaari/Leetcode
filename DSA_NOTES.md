@@ -581,33 +581,31 @@
 
 ---
 
-### Trees
+## Trees
 
 - `Inorder successor(smallest element in left subtree from right node)` is next node element in inorder traversal(Sorted Element in BST)
 
-**Inorder Iterative(Left-Root-Right)**  
+**1. Traversal**
 
-`Note : Visualize with three nodes`
+`Note : Visualize with 3 nodes`
 
-- Initialize `current variable` with root, push left node until its null
-- Pop last left node process it, then initialize current variable with right node
+  1. **Inorder Iterative(Left-Root-Right)**  
 
-**Preorder Iterative(Left-Root-Right)**
+  - Initialize `current variable` with root, push left node until its null
+  - Pop last left node process it, then initialize current variable with right node
 
-`Note : Visualize with three nodes`
+  2. **Preorder Iterative(Left-Root-Right)**
 
-- First add root to stack
-- While stack is not empty pop from stack process the element, then push right node and then left node
+  - First add root to stack
+  - While stack is not empty pop from stack process the element, then push right node and then left node
 
-**Postorder Iterative(Left-Root-Right)**
+  3. **Postorder Iterative(Left-Root-Right)**
+  
+  - Create two stack input and output
+  - Push root to a input stack, the pop from stack, then push the element to ouput stack
+  - Push left node to input stack and right node to input stack
 
-`Note : Visualize with three nodes`
-
-- Create two stack input and output
-- Push root to a input stack, the pop from stack, then push the element to ouput stack
-- Push left node to input stack and right node to input stack
-
-**BST Operations**  
+**2. BST Operations**  
 
 - Insertions
 
@@ -648,41 +646,182 @@
     }
   ```
 
-**Depth/Height** 
+**3. Depth/Height** 
+
+- [Diameter of Binary Tree](https://leetcode.com/problems/diameter-of-binary-tree/description/)
+
+  ```java
+    int diameter = 0;
+
+    int maxDepth(TreeNode root) {
+        if (root == null) return 0;
+
+        int left = maxDepth(root.left);
+        int right = maxDepth(root.right);
+
+        diameter = Math.max(diameter, left + right);
+
+        return Math.max(left, right) + 1;
+    }
+  ```
+
+- [Max Depth of binary Tree](https://leetcode.com/problems/maximum-depth-of-binary-tree/description/)
+
+  ```java 
+    int maxDepth(TreeNode root) {
+       if (root == null) {
+            return 0;
+        }
+        int left = maxDepth(root.left);
+        int right = maxDepth(root.right);
+        return Math.max(left , right) + 1;   
+    }
+  ```
+
+- [Maximum Depth of N-ary Tree](https://leetcode.com/problems/maximum-depth-of-n-ary-tree/description/)
+
+  ```java
+    int maxDepth(Node root) {
+        if (root == null) return 0;
+
+        if (root.children.isEmpty()) return 1;
+
+        int depth = 0;
+        for (Node child : root.children) {
+            depth = Math.max(depth, maxDepth(child)); // This find max depth for each children
+        }
+
+        return depth + 1; // max depth of a child and including root  
+    }
+  ```  
 
 
-**Path problems** 
+**4. Path problem binary tree** 
+
+- Path from root to leaf for target sum
+
+  ```java
+    boolean hasPathSum(TreeNode root, int targetSum) {
+        if (root == null) return false;
+        
+        if ( root.left == null && root.right == null) {
+            return targetSum == root.val;
+        }
+
+        return hasPathSum(root.left, targetSum - root.val) || hasPathSum(root.right, targetSum - root.val);  
+    }
+  ```
+
+**5. Comparison on Two Trees**
+
+- In [Symmetric Tree](https://leetcode.com/problems/symmetric-tree/description/) Compare two subtree parallely.
+   
+  ```java
+    boolean helper(TreeNode p, TreeNode q) {
+        if (p == null && q == null) return true;
+
+        if (p == null || q == null) return false;
+
+        return (p.val == q.val) && helper(p.left, q.right) && helper(p.right, q.left);
+    }
+  ```
+
+**6. Counting nodes in Tree**
 
 
-**Comparison on Two Trees**
+**Examples**
+
+- [Count Good Nodes in Binary Tree](https://leetcode.com/problems/count-good-nodes-in-binary-tree/description/)
+   
+   - In function call keep one variable contains max value in tree path, then compare max value with root value, count good node and update the max value.
+
+   ```java
+      int good;
+      void DFS(TreeNode root, int max) {
+          if (root == null)
+              return;
+
+          if (root.val >= max)
+              good++;
+
+          max = Math.max(max, root.val);
+          DFS(root.left, max);
+          DFS(root.right, max);
+      }
+   ```  
 
 
-**Counting nodes in Tree**
+**7. Ancestor**
+
+- [Lowest Common Ancestor](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/) in BST
+
+  ```Java 
+      TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+          int small = Math.min(p.val, q.val);
+          int large = Math.max(p.val, q.val);
+          while (root != null) {
+              if (root.val > large) // p, q belong to the left subtree
+                  root = root.left;
+              else if (root.val < small) // p, q belong to the right subtree
+                  root = root.right;
+              else // Now, small <= root.val <= large -> This root is the LCA between p and q
+                  return root;
+          }
+          return null;
+      }
+  ```
+
+**8. Different view of tree**
+
+**Examples:**
+
+- [Binary Tree Right Side View](https://leetcode.com/problems/binary-tree-right-side-view/)
+  
+  - Process one node(right) at each level, maintain level parameter in function call
+
+  ```java
+     void helper(List<Integer> result, TreeNode root, int level) {
+          if (root == null) return;
+
+          if (level == result.size()) result.add(root.val);
+
+          helper(result, root.right, level + 1);
+          helper(result, root.left, level + 1);
+    }
+  ```  
+
+**9. Tree construction** 
+
+**Examples:**
+
+- [Construct Unique Binary Search Trees](https://leetcode.com/problems/unique-binary-search-trees-ii/description/)
+
+- [Number of Unique Binary Search Trees](https://leetcode.com/problems/unique-binary-search-trees/description/)
+
+- [Construct Binary Tree from Preorder and Inorder Traversal](https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/description/)
+
+- [Construct Binary Tree from Inorder and Postorder Traversal](https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/description/)
+   
+
+**10 Serialize and Deserialize**
+
+**Examples:**
+
+- [Verify Preorder Serialization of a Binary Tree](https://leetcode.com/problems/verify-preorder-serialization-of-a-binary-tree/description/) - Serialized tree "9,3,4,#,#,1,#,#,2,#,6,#,#"
+
+   - Use stack to collapse the nodes if prev 3 nodes are `4,#,#` pattern into single hash `#`
+   - If stack size is 1 and its `#` value then return true else false
+
+**11. B and B+ Tree**  
 
 
-**Ancestor**
+**12. AVL Tree**  
 
 
-**Top, Bottom, Right, Left, Vertical & Diagonal view of tree**
+**13. Red-Black Tree**  
 
 
-**Tree construction** 
-
-
-**Serialize and Deserialize**
-
-
-**B and B+ Tree**  
-
-
-**AVL Tree**  
-
-
-**Red-Black Tree**  
-
-
-**Segment Tree**  
-
+**14. Segment Tree**  
 
 
 ---
