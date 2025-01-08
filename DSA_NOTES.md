@@ -463,6 +463,10 @@
 
 
 ---
+## Prefix Sum
+
+
+---
 ## Greedy
 
 - **Greedy Choice Property**: Make a choice that seems the best at the moment without worrying about the future consequences.
