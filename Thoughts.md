@@ -13,6 +13,9 @@
 
 ## Recursion
 
+- Think of the `bases cases and smallest input`
+- Use `Nested Recursion`, Solution to one recursive call depends on the solution of another recursive call, or nested structure
+
 ## Tree
 
 ## Graph

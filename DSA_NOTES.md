@@ -376,7 +376,10 @@
 ## Sliding Window
 
 - Window Size = `j - 1 + 1`
+- Remove first element from window `i - k` k is window size
 - Digits - `count = new int[10]`, Small Aphabets - `count = new int[26]`, Big Aphabets - `count = new int[128]`
+- When `two strings` are invloved first create a map of frequency of first string, then compare with second string
+- When `one string or array` is involved, Inside the loop increment and decrement the count of that element in map
 
 ### **Examples:**
 
@@ -384,7 +387,6 @@
 
 - [Maximum Points From Cards](https://leetcode.com/problems/maximum-points-you-can-obtain-from-cards/) - Pick cards from either the beginning or the end to maximize the total points.
 
-  - In one step, you can take one card from the beginning or from the end of the row. You have to take exactly k cards.
   - Calculate total sum, then calculate `remaining window sum and size(arr.length - k)`, find sum of fixed remaining window size, deduct from total sum which give sum of k window size
   - ```java
        int maxScore(int[] cardPoints, int k) {
@@ -446,29 +448,118 @@
 
 - [Longest Subarray K Frequency](https://leetcode.com/problems/length-of-longest-subarray-with-at-most-k-frequency/description/) - Find the longest subarray with exactly `k` distinct elements.
 
-- [Max Consecutive 1s III](https://leetcode.com/problems/max-consecutive-ones-iii/) - Find the maximum number of consecutive 1's in a binary array after flipping at most `k` 0's to 1's.
+    - Loop and put into a map, expand the window until map size is <= k, then remove the count from map from left side and shrink the window if exceeds k, at last update the max length
 
+    ```java
+        int maxSubarrayLength(int[] nums, int k) {
+          Map<Integer, Integer> count = new HashMap<>();
+
+          int left = 0;
+          int result = 0;
+
+          for (int right = 0; right < nums.length; right++) {
+
+              count.put(nums[right], count.getOrDefault(nums[right], 0) + 1);
+
+              while (count.get(nums[right]) > k) {
+                  count.put(nums[left], count.get(nums[left]) - 1);
+                  left++;
+              }
+
+              result = Math.max(result, right - left + 1);
+          }
+
+          return result;
+      }
+    ```
 
 **4. Longest/Shortest Substrings**
 
 - [Longest Repeating Character Replacement](https://leetcode.com/problems/longest-repeating-character-replacement/) - Given a string, replace up to `k` characters to find the longest substring with the same character.
 
+   - Calculate the most frequent character and reduce the window if its satisfies `(right - left + 1) - mostFrequent > k`
+
 - [Minimum Window Substring](https://leetcode.com/problems/minimum-window-substring/) - Find the smallest substring in `s` that contains all characters from `t`.
+
+   - Similiar concept to `Permutations in String`, Keep track of starting index and min length of window.
 
 **5. Number of Subarrays**
 
 - [Nice Subarrays](https://leetcode.com/problems/count-number-of-nice-subarrays/description/) - Find the number of subarrays where the number of odd integers is exactly `k`.
 
+  - `subarrayAtMostK(nums, k) - subarrayAtMostK(nums, k - 1)` - Total Subarrays with atmost k - Total Subarrays with atmost k-1
+
+  ```java
+    int subarrayAtMostK(int[] nums, int K) {
+        int result = 0;
+        int left = 0;
+        int right = 0;
+        int count = 0;
+
+        while (right < nums.length) {
+            if (nums[right] % 2 == 1)  count++;
+          
+            while (count > K) {
+                if (nums[left] % 2 == 1)  count--;
+                left++;
+            }
+
+            result += right - left + 1; // Total Subarrays
+            right++;
+        }
+
+        return result;
+    }
+
+    int numberOfSubarrays(int[] nums, int k) {
+        return subarrayAtMostK(nums, k) - subarrayAtMostK(nums, k - 1);
+    }
+  ```
+
 - [Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/) - Find the maximum value in each sliding window of size `k`.
 
+   ```java
+      int[] maxSlidingWindow(int[] nums, int k) {
+        int n = nums.length;
+        int[] result = new int[n - k + 1];
+        int index = 0;
+        Deque<Integer> deque = new ArrayDeque<>();
+
+        for (int i = 0; i < n; i++) {
+            // Check if the element exceeds the maximum size in deque
+            // i - k remove last element from window if its exceeds size
+            if (!deque.isEmpty() && deque.peekFirst() <= i - k) {
+                deque.removeFirst();
+            }
+
+            // Create a decreasing monotonic queue, like [5, 4, 3, 1]
+            while (!deque.isEmpty() && nums[deque.peekLast()] <= nums[i]) {
+                deque.removeLast();
+            }
+
+            deque.addLast(i);
+
+            // add all the elements of window
+            // First valid window i >= k - 1
+            if (i >= k - 1 && !deque.isEmpty()) {
+                result[index++] = nums[deque.peekFirst()];
+            }
+        }
+
+        return result;
+    }
+   ```
+
+- [Subarrays K Different Integers](https://leetcode.com/problems/subarrays-with-k-different-integers/) - Find the number of subarrays with exactly `k` different integers.
+
+  - `countAtMostKSubarrays(nums, k) - countAtMostKSubarrays(nums, k - 1)` - Total Subarrays with atmost k - Total Subarrays with atmost k-1
 
 **6. Number of Substrings**
 
 - [Substrings Containing 3 Characters](https://leetcode.com/problems/number-of-substrings-containing-all-three-characters/description/) - Find the number of substrings that contain exactly 3 distinct characters.
 
-- [Subarrays K Different Integers](https://leetcode.com/problems/subarrays-with-k-different-integers/) - Find the number of subarrays with exactly `k` different integers.
-
-
+   - `s.length() − right` total substrings can be formed including `[left-right] to N`
+    
 ---
 ## Prefix Sum
 
