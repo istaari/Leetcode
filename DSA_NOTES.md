@@ -1,6 +1,13 @@
 
 # Algorithms and Data Structures
 
+## Formulas
+
+- Number of subarrays and substrings = `n(n+1) / 2`
+- Number of subsequences = `2^n - 1`
+- Number of subsets = `2^n`
+- Number of contiguous subarrays with size `k` = `n - k + 1`
+
 ## Sorting
 
 **1. Bubble Sort**
@@ -466,13 +473,87 @@
 ## Prefix Sum
 
 
+**1. Basic Prefix Sum Applications**
+These problems involve calculating cumulative sums and using them for efficient range queries or comparisons.
+
+#### **Examples:**
+
+1. [Range Sum Query - Immutable (LeetCode 303)](https://leetcode.com/problems/range-sum-query-immutable/)
+2. [Range Sum Query 2D - Immutable (LeetCode 304)](https://leetcode.com/problems/range-sum-query-2d-immutable/)
+3. [Find Pivot Index (LeetCode 724)](https://leetcode.com/problems/find-pivot-index/)
+4. [Subarray Sum Equals K (LeetCode 560)](https://leetcode.com/problems/subarray-sum-equals-k/)
+
+
+**2. Subarray Problems with Prefix Sum**
+
+Prefix sums are used to efficiently find subarray sums that satisfy a condition.
+
+#### **Examples:**
+1. [Maximum Size Subarray Sum Equals k (LeetCode 325)](https://leetcode.com/problems/maximum-size-subarray-sum-equals-k/)
+2. [Longest Subarray with Sum Divisible by K (LeetCode 974)](https://leetcode.com/problems/subarray-sums-divisible-by-k/)
+3. [Continuous Subarray Sum (LeetCode 523)](https://leetcode.com/problems/continuous-subarray-sum/)
+4. [Minimum Size Subarray Sum (LeetCode 209)](https://leetcode.com/problems/minimum-size-subarray-sum/)
+
+
+**3. Prefix Sum with Modulo or Parity**
+Problems in this category use prefix sums combined with modular arithmetic or parity analysis.
+
+**Examples:**
+1. [Subarray Sums Divisible by K (LeetCode 974)](https://leetcode.com/problems/subarray-sums-divisible-by-k/)
+2. [Count Number of Nice Subarrays (LeetCode 1248)](https://leetcode.com/problems/count-number-of-nice-subarrays/)
+3. [Binary Subarrays with Sum (LeetCode 930)](https://leetcode.com/problems/binary-subarrays-with-sum/)
+4. [Longest Subarray with Binary Ones After Deleting One Element (LeetCode 1493)](https://leetcode.com/problems/longest-subarray-of-1s-after-deleting-one-element/)
+
+
+**4. 2D Prefix Sum Problems**
+For problems involving matrices, prefix sums can be extended to two dimensions to handle range queries efficiently.
+
+#### **Examples:**
+1. [Range Sum Query 2D - Immutable (LeetCode 304)](https://leetcode.com/problems/range-sum-query-2d-immutable/)
+2. [Matrix Block Sum (LeetCode 1314)](https://leetcode.com/problems/matrix-block-sum/)
+3. [Submatrix Sum Equals Target (LeetCode 1074)](https://leetcode.com/problems/number-of-submatrices-that-sum-to-target/)
+
+
+**5. Sliding Window with Prefix Sum**
+Prefix sums can be combined with the sliding window technique to find ranges or subarrays satisfying constraints.
+
+**Examples:**
+1. [Minimum Size Subarray Sum (LeetCode 209)](https://leetcode.com/problems/minimum-size-subarray-sum/)
+2. [Sliding Window Maximum (LeetCode 239)](https://leetcode.com/problems/sliding-window-maximum/)
+3. [Maximum Number of Vowels in a Substring (LeetCode 1456)](https://leetcode.com/problems/maximum-number-of-vowels-in-a-substring-of-given-length/)
+
+
+**6. Prefix Sum with XOR**
+Prefix sums can be used for XOR-related problems, especially in cases involving subarrays with XOR properties.
+
+**Examples:**
+1. [XOR Queries of a Subarray (LeetCode 1310)](https://leetcode.com/problems/xor-queries-of-a-subarray/)
+2. [Count Triplets That Can Form Two Arrays of Equal XOR (LeetCode 1442)](https://leetcode.com/problems/count-triplets-that-can-form-two-arrays-of-equal-xor/)
+3. [Maximum XOR of Two Numbers in an Array (LeetCode 421)](https://leetcode.com/problems/maximum-xor-of-two-numbers-in-an-array/)
+
+
+**7. Counting and Frequency with Prefix Sums**
+Prefix sums can be used with hash maps or frequency arrays to count occurrences of sums or patterns.
+
+**Examples:**
+1. [Subarray Sum Equals K (LeetCode 560)](https://leetcode.com/problems/subarray-sum-equals-k/)
+2. [Number of Subarrays with Bounded Maximum (LeetCode 795)](https://leetcode.com/problems/number-of-subarrays-with-bounded-maximum/)
+3. [Find Total Time Taken for a Task to Be Completed (Custom variations)](similar to LeetCode 2368 tasks).
+
+
+**8. Advanced Combinatorial Prefix Sum**
+Prefix sums are used to calculate combinations or advanced range properties.
+
+**Examples:**
+1. [Sum of Subarray Minimums (LeetCode 907)](https://leetcode.com/problems/sum-of-subarray-minimums/)
+2. [Sum of All Odd Length Subarrays (LeetCode 1588)](https://leetcode.com/problems/sum-of-all-odd-length-subarrays/)
+3. [Maximum Sum Obtained of Any Permutation (LeetCode 1589)](https://leetcode.com/problems/maximum-sum-obtained-of-any-permutation/)
+
+
 ---
 ## Greedy
 
-- **Greedy Choice Property**: Make a choice that seems the best at the moment without worrying about the future consequences.
-- **Optimal Substructure**: A problem exhibits this property if an optimal solution to the problem contains `optimal solutions to its subproblems`.
--  Used for optimization problems where the goal is to minimize or maximize a particular value
-
+- Greedy problem exhibits `Greedy Choice and Optimal Substructure` properties.
 
 **1. Interval Scheduling**
 
