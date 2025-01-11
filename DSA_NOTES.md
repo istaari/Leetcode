@@ -563,82 +563,22 @@
 ---
 ## Prefix Sum
 
-
-**1. Basic Prefix Sum Applications**
-These problems involve calculating cumulative sums and using them for efficient range queries or comparisons.
-
-#### **Examples:**
-
-1. [Range Sum Query - Immutable (LeetCode 303)](https://leetcode.com/problems/range-sum-query-immutable/)
-2. [Range Sum Query 2D - Immutable (LeetCode 304)](https://leetcode.com/problems/range-sum-query-2d-immutable/)
-3. [Find Pivot Index (LeetCode 724)](https://leetcode.com/problems/find-pivot-index/)
-4. [Subarray Sum Equals K (LeetCode 560)](https://leetcode.com/problems/subarray-sum-equals-k/)
+- `prefix[j] - prefix[i - 1] = k` sum of a subarray from index i to j is equal to k
+- `prefix[i - 1] = prefix[j] - k` , till prefix[i - 1] is valid subarray with sum k
+- Subarray sum multuple of k, `prefix[j] % k = prefix[i - 1] % k` 
 
 
-**2. Subarray Problems with Prefix Sum**
-
-Prefix sums are used to efficiently find subarray sums that satisfy a condition.
+**1. Subarray Problems with Prefix Sum**
 
 #### **Examples:**
-1. [Maximum Size Subarray Sum Equals k (LeetCode 325)](https://leetcode.com/problems/maximum-size-subarray-sum-equals-k/)
-2. [Longest Subarray with Sum Divisible by K (LeetCode 974)](https://leetcode.com/problems/subarray-sums-divisible-by-k/)
-3. [Continuous Subarray Sum (LeetCode 523)](https://leetcode.com/problems/continuous-subarray-sum/)
-4. [Minimum Size Subarray Sum (LeetCode 209)](https://leetcode.com/problems/minimum-size-subarray-sum/)
 
+- [Range Sum Query 2D - Immutable](https://leetcode.com/problems/range-sum-query-2d-immutable/)
 
-**3. Prefix Sum with Modulo or Parity**
-Problems in this category use prefix sums combined with modular arithmetic or parity analysis.
+- [Subarray Sum Equals K](https://leetcode.com/problems/subarray-sum-equals-k/)
 
-**Examples:**
-1. [Subarray Sums Divisible by K (LeetCode 974)](https://leetcode.com/problems/subarray-sums-divisible-by-k/)
-2. [Count Number of Nice Subarrays (LeetCode 1248)](https://leetcode.com/problems/count-number-of-nice-subarrays/)
-3. [Binary Subarrays with Sum (LeetCode 930)](https://leetcode.com/problems/binary-subarrays-with-sum/)
-4. [Longest Subarray with Binary Ones After Deleting One Element (LeetCode 1493)](https://leetcode.com/problems/longest-subarray-of-1s-after-deleting-one-element/)
+- [Continuous Subarray Sum](https://leetcode.com/problems/continuous-subarray-sum/)
 
-
-**4. 2D Prefix Sum Problems**
-For problems involving matrices, prefix sums can be extended to two dimensions to handle range queries efficiently.
-
-#### **Examples:**
-1. [Range Sum Query 2D - Immutable (LeetCode 304)](https://leetcode.com/problems/range-sum-query-2d-immutable/)
-2. [Matrix Block Sum (LeetCode 1314)](https://leetcode.com/problems/matrix-block-sum/)
-3. [Submatrix Sum Equals Target (LeetCode 1074)](https://leetcode.com/problems/number-of-submatrices-that-sum-to-target/)
-
-
-**5. Sliding Window with Prefix Sum**
-Prefix sums can be combined with the sliding window technique to find ranges or subarrays satisfying constraints.
-
-**Examples:**
-1. [Minimum Size Subarray Sum (LeetCode 209)](https://leetcode.com/problems/minimum-size-subarray-sum/)
-2. [Sliding Window Maximum (LeetCode 239)](https://leetcode.com/problems/sliding-window-maximum/)
-3. [Maximum Number of Vowels in a Substring (LeetCode 1456)](https://leetcode.com/problems/maximum-number-of-vowels-in-a-substring-of-given-length/)
-
-
-**6. Prefix Sum with XOR**
-Prefix sums can be used for XOR-related problems, especially in cases involving subarrays with XOR properties.
-
-**Examples:**
-1. [XOR Queries of a Subarray (LeetCode 1310)](https://leetcode.com/problems/xor-queries-of-a-subarray/)
-2. [Count Triplets That Can Form Two Arrays of Equal XOR (LeetCode 1442)](https://leetcode.com/problems/count-triplets-that-can-form-two-arrays-of-equal-xor/)
-3. [Maximum XOR of Two Numbers in an Array (LeetCode 421)](https://leetcode.com/problems/maximum-xor-of-two-numbers-in-an-array/)
-
-
-**7. Counting and Frequency with Prefix Sums**
-Prefix sums can be used with hash maps or frequency arrays to count occurrences of sums or patterns.
-
-**Examples:**
-1. [Subarray Sum Equals K (LeetCode 560)](https://leetcode.com/problems/subarray-sum-equals-k/)
-2. [Number of Subarrays with Bounded Maximum (LeetCode 795)](https://leetcode.com/problems/number-of-subarrays-with-bounded-maximum/)
-3. [Find Total Time Taken for a Task to Be Completed (Custom variations)](similar to LeetCode 2368 tasks).
-
-
-**8. Advanced Combinatorial Prefix Sum**
-Prefix sums are used to calculate combinations or advanced range properties.
-
-**Examples:**
-1. [Sum of Subarray Minimums (LeetCode 907)](https://leetcode.com/problems/sum-of-subarray-minimums/)
-2. [Sum of All Odd Length Subarrays (LeetCode 1588)](https://leetcode.com/problems/sum-of-all-odd-length-subarrays/)
-3. [Maximum Sum Obtained of Any Permutation (LeetCode 1589)](https://leetcode.com/problems/maximum-sum-obtained-of-any-permutation/)
+- [Longest Subarray with Sum Divisible by K](https://leetcode.com/problems/subarray-sums-divisible-by-k/)
 
 
 ---
@@ -747,13 +687,15 @@ Prefix sums are used to calculate combinations or advanced range properties.
           }
         ```
    
-- [Frog Jump](https://leetcode.com/problems/frog-jump/) - Find if a frog can reach the final stone.
-
 - [Partition Labels](https://leetcode.com/problems/partition-labels/) - Partition a string into as many parts as possible such that each letter appears in only one part.
+
+   - Store the last index of each character, then iterate the string and find the last index of each character, if it is equal to current index then partition the string
 
 - [Candy](https://leetcode.com/problems/candy/) - Distribute candies to children such that each child has at least one candy and children with higher ratings get more candies.
 
----
+   - Traverse from left to right, check if left neighbour is greater than current element, If yes then add prev candies plus 1
+   - Traverse from right to left, check if right neighbour is greater than current element, If yes then add max of current candy or next candies plus 1
+   - Can be done in one pass using [Up-Down-Peak Method](https://leetcode.com/problems/candy/solutions/4037646/99-20-greedy-two-one-pass/)
 
 ## Trees
 
@@ -1027,7 +969,9 @@ Prefix sums are used to calculate combinations or advanced range properties.
  **Matrix Chain Multiplication**  
 
 
- **Graph DP**   
+ **DP With Path Traversal**
+
+  - [Frog Jump](https://leetcode.com/problems/frog-jump/) - Find if a frog can reach the final stone.   
 
 
  **Bitmasking + DP**   

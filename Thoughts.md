@@ -32,4 +32,6 @@
 
 ## Math
 
+- Normalizing modulo to be always positive `mod = (mod + k) % k`
+
 ## Bit Manipulation
