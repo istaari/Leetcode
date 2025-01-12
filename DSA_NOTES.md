@@ -57,6 +57,8 @@
 
 **8. Bucket Sort**
 
+- The input is uniformly distributed over a range
+
 **9. Radix Sort**
 
 **10. Cyclic**
@@ -296,7 +298,7 @@
 
 ```java
 
-    // Increasing Stack (from bottom to top)
+    // Increasing Stack (from bottom to top) [1, 2, 3, 4]
     int[] findPreviousSmallest(int[] arr) {
         int[] result = new int[arr.length];
         Stack<Integer> stack = new Stack<>();
@@ -311,7 +313,7 @@
         return result;
     }
 
-    // Increasing Stack (from bottom to top)
+    // Increasing Stack (from bottom to top) [1, 2, 3, 4]
     int[] findNextSmallest(int[] arr) {
         int[] result = new int[arr.length];
         Stack<Integer> stack = new Stack<>();
@@ -327,7 +329,7 @@
         return result;
     }
 
-    // Decreasing Stack (from bottom to top)
+    // Decreasing Stack (from bottom to top) [4, 3, 2, 1]
     int[] findPreviousLargest(int[] arr) {
         int[] result = new int[arr.length];
         Stack<Integer> stack = new Stack<>();
@@ -343,7 +345,7 @@
         return result;
     }
 
-   // Decreasing Stack (from bottom to top)
+   // Decreasing Stack (from bottom to top) [4, 3, 2, 1]
     int[] findNextLargest(int[] arr) {
         int[] result = new int[arr.length];
         Stack<Integer> stack = new Stack<>();
@@ -949,6 +951,70 @@
 ## Dynamic Programming
 
  **1D DP** 
+
+ **Examples:**
+
+ Here’s a question list for **1D Dynamic Programming** problems:
+
+---
+
+### **1D Dynamic Programming Questions**
+
+- **[Climbing Stairs](https://leetcode.com/problems/climbing-stairs/)**  
+
+   Recurrence Relation: `f(n) = f(n-1) + f(n-2)`  
+
+   Base Cases: `f(1) = 1, f(2) = 2`  
+
+
+- **[Min Cost Climbing Stairs](https://leetcode.com/problems/min-cost-climbing-stairs/)**  
+
+   Recurrence Relation: `f(n) = cost[n] + min(f(n-1), f(n-2))`  
+
+   Base Cases: `f(0) = cost[0], f(1) = cost[1]`  
+
+
+- **[House Robber](https://leetcode.com/problems/house-robber/)**  
+
+   Recurrence Relation: `f(n) = max(f(n-1), f(n-2) + nums[n])`  
+
+   Base Cases: `f(0) = nums[0], f(1) = max(nums[0], nums[1])`  
+
+
+- **[House Robber II](https://leetcode.com/problems/house-robber-ii/)**  
+
+   Recurrence Relation:  
+   - Case 1: `f_1(n) = max(f_1(n-1), f_1(n-2) + nums[n])` (houses 0 to n-2)  
+   - Case 2: `f_2(n) = max(f_2(n-1), f_2(n-2) + nums[n])` (houses 1 to n-1)  
+
+   Base Cases:  
+   - Case 1: `f_1(0) = nums[0], f_1(1) = max(nums[0], nums[1])`  
+   - Case 2: `f_2(1) = nums[1], f_2(2) = max(nums[1], nums[2])`  
+
+
+- **[Decode Ways](https://leetcode.com/problems/decode-ways/)**  
+
+   Recurrence Relation:  
+   - `f(n) = f(n-1)` if the single-digit (1-9) is valid  
+   - `f(n) = f(n-2)` if the two-digit (10-26) is valid  
+   - `f(n) = f(n-1) + f(n-2)` if both are valid  
+
+   Base Cases: `f(0) = 1` (empty string), `f(1) = 1` (if valid single digit)  
+
+
+- **[Jump Game](https://leetcode.com/problems/jump-game/)**  
+
+   Recurrence Relation:  
+   - Top-Down: `f(i) = true` if any `f(j) = true` and `j + nums[j] >= i` for all `j < i`  
+
+   Iterative Greedy: Track the farthest reachable index 
+
+- **[Jump Game II](https://leetcode.com/problems/jump-game-ii/)**  
+
+   Recurrence Relation:  
+   - Top-Down: `f(i) = min(f(j) + 1)` for all `j` such that `j + nums[j] >= i`  
+
+   Iterative Greedy: Track the current farthest reachable index and jumps needed  
 
 
  **Grids(Path Problem)**

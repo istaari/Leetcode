@@ -28,7 +28,9 @@
 
 ## Dynamic Programming
 
--  Considers all possible choices
+- Considers all possible choices
+- Always initialize the base case to make recurrence relation valid
+- Think of smallest input like size is empty or 1, or string is empty
 
 ## Math
 
