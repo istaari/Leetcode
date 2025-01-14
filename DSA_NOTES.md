@@ -1197,7 +1197,7 @@
 
 ## Bit Manipulation
 
-**Bitwise effects on numbers**
+**1. Bitwise effects on numbers**
 
 ```java
 
@@ -1228,7 +1228,7 @@ System.out.println(b); // Output: 5
 
 ```
 
-**Toggle a Specific Bit**
+**2. Toggle a Specific Bit**
 
 `It means doing NOT operation at a specific bit position(using XOR ^)`
 
@@ -1246,7 +1246,7 @@ public int toggleBit(int number, int bitPosition) {
 
 ```
 
-**Set a Specific Bit**
+**3. Set a Specific Bit**
 
 `It means setting 1 at a specific bit position (using OR | )`
 
@@ -1263,7 +1263,7 @@ public int setBit(int number, int bitPosition) {
 
 ```
 
-**clear a Specific Bit**
+**4. clear a Specific Bit**
 
 `It means setting 0 at a specific bit position (using AND and Complement )`
 
@@ -1280,7 +1280,7 @@ public int clearBit(int number, int bitPosition) {
 
 ```
 
-**Count the Number of Set Bits (Hamming Weight)**
+**4. Count the Number of Set Bits (Hamming Weight)**
 
 ```java
 
@@ -1299,7 +1299,7 @@ public int countSetBits(int number) {
 
 ```
 
-**Find the Position of the Rightmost Set Bit**
+**6. Find the Position of the Rightmost Set Bit**
 
 ```java
 
@@ -1314,7 +1314,7 @@ public int findRightmostSetBit(int number) {
 
 ```
 
-**Check if a Number is a Power of Two**
+**7. Check if a Number is a Power of Two**
 
 ```java
 
@@ -1325,71 +1325,6 @@ public int findRightmostSetBit(int number) {
 
 public boolean isPowerOfTwo(int number) {
     return (number > 0) && ((number & (number - 1)) == 0);
-}
-
-```
-
-**Swap Two Numbers Without Using a Temporary Variable**
-
-```java
-
-// arr = [3, 5]; swap(arr, 0, 1);
-// Before swap: [3, 5]
-// 3 ^ 5 = 6 (0110)
-// 5 ^ 6 = 3
-// 6 ^ 3 = 5
-// After swap: [5, 3]
-
-public void swap(int[] arr, int i, int j) {
-    if (i != j) {
-        arr[i] ^= arr[j];
-        arr[j] ^= arr[i];
-        arr[i] ^= arr[j];
-    }
-}
-
-```
-
-**Reverse Bits of an Integer**
-
-```java
-
-// reverseBits(5):
-// 5 in binary: 00000101
-// Reversed: 10100000 (result is 160)
-
-public int reverseBits(int number) {
-    int result = 0;
-    while (number > 0) {
-        result = (result << 1) | (number & 1);
-        number >>= 1;
-    }
-    return result;
-}
-
-
-```
-
-**Determine if Two Integers Have Opposite Signs**
-
-```java
-
-// Input Examples:
-// haveOppositeSigns(5, -3):
-// 5 in binary: 00000000000000000000000000000101
-// -3 in binary (two's complement): 11111111111111111111111111111101
-// 5 ^ -3: 00000000000000000000000000000101 ^ 11111111111111111111111111111101 = 11111111111111111111111111111000 (negative result)
-// Result: true (opposite signs)
-
-// haveOppositeSigns(-7, -8):
-// -7 in binary: 11111111111111111111111111111001
-// -8 in binary: 11111111111111111111111111111000
-// -7 ^ -8: 11111111111111111111111111111001 ^ 11111111111111111111111111111000 = 00000000000000000000000000000001 (positive result)
-// Result: false (same signs)
-
-
-public boolean haveOppositeSigns(int a, int b) {
-    return (a ^ b) < 0;
 }
 
 ```
