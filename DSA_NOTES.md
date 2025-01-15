@@ -1004,18 +1004,26 @@
 
 - **[Jump Game](https://leetcode.com/problems/jump-game/)**  
 
-   Recurrence Relation:  
-   - Top-Down: `f(i) = true` if any `f(j) = true` and `j + nums[j] >= i` for all `j < i`  
+   - For dp recursive solution check from each index, for all possible jumps, if any of the jump reaches the end then return true
+   - For iterative solution, base case `dp[n - 1] = true` from `n-2` check till the end, if any of the jump reaches the end then update the dp array
 
-   Iterative Greedy: Track the farthest reachable index 
 
 - **[Jump Game II](https://leetcode.com/problems/jump-game-ii/)**  
+   
+   ```java
+    int jump(int[] nums, int pos) {
+        if (pos >= nums.length - 1) {
+            return 0; // Base case: we've reached or exceeded the last index
+        }
 
-   Recurrence Relation:  
-   - Top-Down: `f(i) = min(f(j) + 1)` for all `j` such that `j + nums[j] >= i`  
-
-   Iterative Greedy: Track the current farthest reachable index and jumps needed  
-
+        int minJumps = 10001;
+        for (int j = 1; j <= nums[pos]; j++) {
+            // Explore all possible jump sizes from current position
+            minJumps = Math.min(minJumps, 1 + jump(nums, pos + j));
+        }
+        return minJumps;
+    }
+   ```
 
  **Grids(Path Problem)**
  
@@ -1179,20 +1187,6 @@
 
 - [Count Pairs With XOR in a Range](https://leetcode.com/problems/count-pairs-with-xor-in-a-range/) - Count pairs in an array whose XOR lies within a given range using a Trie.
 
-
----
-## Maths
-
-**1. Sieve of Eratosthenes**
-
-**2. Euclidean Algorithm for GCD**
-
-**3. Fast Exponentiation**
-
-**4. Prime Factorization**
-
-**5. Modular Arithmetic**
-
 ---
 
 ## Bit Manipulation
@@ -1354,7 +1348,7 @@ public boolean isPowerOfTwo(int number) {
 - Grid Number = `(row / 3) * 3 + (col / 3)`
 
 
-# Number System conversion
+## Number System conversion
 
 ### 1. **Convert from Binary to Decimal, Octal, and Hexadecimal**
 
