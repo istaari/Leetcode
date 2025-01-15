@@ -946,19 +946,12 @@
 ## Backtracking
 
 
-
 ---
 ## Dynamic Programming
 
- **1D DP** 
+ **1. 1D DP** 
 
  **Examples:**
-
- Here’s a question list for **1D Dynamic Programming** problems:
-
----
-
-### **1D Dynamic Programming Questions**
 
 - **[Climbing Stairs](https://leetcode.com/problems/climbing-stairs/)**  
 
@@ -1025,31 +1018,481 @@
     }
    ```
 
- **Grids(Path Problem)**
+ **2. Grids(Path Problem)**
+
+ **Examples:**
+
+- **[Unique Paths](https://leetcode.com/problems/unique-paths/)**  
+
+  Recurrence Relation: `dp[i][j] = dp[i-1][j] + dp[i][j-1]` 
+
+  Base Case: `dp[0][j] = 1, dp[i][0] = 1`  
+
+- **[Unique Paths II](https://leetcode.com/problems/unique-paths-ii/)**  
+
+  Recurrence Relation: `dp[i][j] = 0 if obstacleGrid[i][j] == 1 else dp[i-1][j] + dp[i][j-1]`  
+
+  Base Case: `dp[0][0] = 1 if obstacleGrid[0][0] == 0 else 0`  
+
+- **[Unique Paths III](https://leetcode.com/problems/unique-paths-iii/)**  
+
+  Key Idea: Use backtracking to traverse all paths and count those that cover all non-obstacle squares.  
+
+  Base Case: Valid path must visit all non-obstacle squares exactly once.  
+
+- **[Minimum Path Sum](https://leetcode.com/problems/minimum-path-sum/)**  
+
+  Recurrence Relation: `dp[i][j] = grid[i][j] + min(dp[i-1][j], dp[i][j-1])`  
+
+  Base Case: `dp[0][0] = grid[0][0]`  
+
+- **[Shortest Path in a Grid with Obstacles Elimination](https://leetcode.com/problems/shortest-path-in-a-grid-with-obstacles-elimination/)**  
+
+  Key Idea: Use BFS with states defined as `(x, y, obstacles_remaining)`.  
+
+  Base Case: Start from `(0, 0)` with the allowed obstacle eliminations.  
+
+- **[Check if There is a Valid Path in a Grid](https://leetcode.com/problems/check-if-there-is-a-valid-path-in-a-grid/)**  
+
+  Key Idea: Use DFS or BFS to verify if a valid path exists from `(0, 0)` to `(m-1, n-1)` based on grid rules.  
+
+  Base Case: Ensure compatibility of path segments at each grid cell.  
+
+- **[Find the Safest Path in a Grid](https://leetcode.com/problems/find-the-safest-path-in-a-grid/)**  
+
+  Key Idea: Use Dijkstra's algorithm or BFS with safety factors as weights.  
+
+  Base Case: Start from the top-left corner `(0, 0)` and maximize safety at each step.
  
 
- **Subsequences(Kanpsack, Subset, Coin Change, Partition)** 
+ **3. Subsequences(Kanpsack, Subset, Coin Change, Partition)** 
+
+ **Examples:**
+
+- **[Partition Equal Subset Sum](https://leetcode.com/problems/partition-equal-subset-sum/)**  
+
+  Recurrence Relation: `dp[i][j] = dp[i-1][j] or dp[i-1][j-nums[i-1]]`  
+
+  Base Case: `dp[i][0] = True (empty subset)`  
+
+- **[Coin Change](https://leetcode.com/problems/coin-change/)**  
+
+  Recurrence Relation: `dp[i][j] = min(dp[i-1][j], dp[i][j-coins[i-1]] + 1)`  
+
+  Base Case: `dp[0][j] = inf, dp[i][0] = 0`  
+
+- **[Combination Sum IV](https://leetcode.com/problems/combination-sum-iv/)**  
+
+  Recurrence Relation: `dp[i] += dp[i-num] for num in nums`  
+
+  Base Case: `dp[0] = 1`  
+
+- **[Target Sum](https://leetcode.com/problems/target-sum/)**  
+
+  Recurrence Relation: `dp[i][sum] = dp[i-1][sum-nums[i-1]] + dp[i-1][sum+nums[i-1]]`  
+
+  Base Case: `dp[0][0] = 1`  
+
+- **[Knapsack Problem (0/1)](https://www.geeksforgeeks.org/0-1-knapsack-problem-dp-10/)**  
+
+  Recurrence Relation: `dp[i][j] = max(dp[i-1][j], dp[i-1][j-weight[i-1]] + value[i-1])`  
+
+  Base Case: `dp[i][0] = 0, dp[0][j] = 0`  
+
+- **[Count of Subsets with Given Sum](https://practice.geeksforgeeks.org/problems/perfect-sum-problem5633/1)**  
+
+  Recurrence Relation: `dp[i][j] = dp[i-1][j] + dp[i-1][j-arr[i-1]]`  
+
+  Base Case: `dp[i][0] = 1, dp[0][j] = 0 for j > 0`  
+
+- **[Longest Increasing Subsequence](https://leetcode.com/problems/longest-increasing-subsequence/)**  
+
+  Recurrence Relation: `dp[i] = max(dp[j] + 1 for all j where nums[j] < nums[i])`  
+
+  Base Case: `dp[i] = 1 for all i`  
 
 
- **String(Subsequence, Substring, Edit Distance)** 
+ **4. String(Subsequence, Substring, Edit Distance)** 
+
+ **Examples:**
+
+- **[Longest Common Subsequence](https://leetcode.com/problems/longest-common-subsequence/)**  
+
+  Recurrence Relation:  
+  `dp[i][j] = dp[i-1][j-1] + 1 if text1[i-1] == text2[j-1] else max(dp[i-1][j], dp[i][j-1])`  
+
+  Base Case: `dp[i][0] = 0, dp[0][j] = 0`  
+
+- **[Longest Palindromic Subsequence](https://leetcode.com/problems/longest-palindromic-subsequence/)**  
+
+  Recurrence Relation:  
+  `dp[i][j] = dp[i+1][j-1] + 2 if s[i] == s[j] else max(dp[i+1][j], dp[i][j-1])`  
+
+  Base Case: `dp[i][i] = 1`  
+
+- **[Edit Distance (Levenshtein Distance)](https://leetcode.com/problems/edit-distance/)**  
+
+  Recurrence Relation:  
+  `dp[i][j] = min(dp[i-1][j-1] + cost, dp[i-1][j] + 1, dp[i][j-1] + 1)`  
+  where `cost = 0 if word1[i-1] == word2[j-1] else 1`  
+
+  Base Case: `dp[i][0] = i, dp[0][j] = j`  
+
+- **[Longest Palindromic Substring](https://leetcode.com/problems/longest-palindromic-substring/)**  
+
+  Recurrence Relation:  
+  `dp[i][j] = dp[i+1][j-1] and s[i] == s[j]`  
+
+  Base Case: `dp[i][i] = True, dp[i][i+1] = (s[i] == s[i+1])`  
+
+- **[Distinct Subsequences](https://leetcode.com/problems/distinct-subsequences/)**  
+
+  Recurrence Relation:  
+  `dp[i][j] = dp[i-1][j-1] + dp[i-1][j] if s[i-1] == t[j-1] else dp[i-1][j]`  
+
+  Base Case: `dp[i][0] = 1, dp[0][j] = 0 for j > 0`  
+
+- **[Minimum Insertion Steps to Make a String Palindrome](https://leetcode.com/problems/minimum-insertion-steps-to-make-a-string-palindrome/)**  
+
+  Recurrence Relation:  
+  `dp[i][j] = dp[i+1][j-1] if s[i] == s[j] else min(dp[i+1][j], dp[i][j-1]) + 1`  
+
+  Base Case: `dp[i][i] = 0`  
+
+- **[Interleaving String](https://leetcode.com/problems/interleaving-string/)**  
+
+  Recurrence Relation:  
+  `dp[i][j] = (dp[i-1][j] and s1[i-1] == s3[i+j-1]) or (dp[i][j-1] and s2[j-1] == s3[i+j-1])`  
+
+  Base Case: `dp[0][0] = True`  
+
+- **[Regular Expression Matching](https://leetcode.com/problems/regular-expression-matching/)**  
+
+  Recurrence Relation:  
+  `dp[i][j] = dp[i-1][j-1] if s[i-1] == p[j-1] or p[j-1] == '.'`  
+  For `'*'`:  
+  `dp[i][j] = dp[i][j-2] or (dp[i-1][j] if s[i-1] == p[j-2] or p[j-2] == '.')`  
+
+  Base Case: `dp[0][j] = True if p[:j] matches empty string`  
+
+- **[Wildcard Matching](https://leetcode.com/problems/wildcard-matching/)**  
+
+  Recurrence Relation:  
+  `dp[i][j] = dp[i-1][j-1] if s[i-1] == p[j-1] or p[j-1] == '?'`  
+  For `'*'`:  
+  `dp[i][j] = dp[i-1][j] or dp[i][j-1]`  
+
+  Base Case: `dp[0][0] = True, dp[i][0] = False for i > 0, dp[0][j] = dp[0][j-1] if p[j-1] == '*'`  
 
 
- **Longest Increasing Subsequence** 
+ **5. Longest Increasing Subsequence** 
 
 
- **Stock Optimizations**  
+ **Examples:**
+
+- **[Longest Increasing Subsequence](https://leetcode.com/problems/longest-increasing-subsequence/)**  
+
+  Recurrence Relation:  
+  `dp[i] = max(dp[j] + 1 for all j where nums[j] < nums[i])`  
+
+  Base Case: `dp[i] = 1 for all i`  
+
+- **[Number of Longest Increasing Subsequences](https://leetcode.com/problems/number-of-longest-increasing-subsequence/)**  
+
+  Approach: Use two arrays:  
+  - `length[i]` to store the length of the LIS ending at index `i`.  
+  - `count[i]` to store the number of LISs ending at index `i`.  
+
+  Steps:  
+  - Update `length[i]` as `max(length[j] + 1)` for all `j` where `nums[j] < nums[i]`.  
+  - Update `count[i]` accordingly.  
+
+- **[Longest Bitonic Subsequence](https://practice.geeksforgeeks.org/problems/longest-bitonic-subsequence0824/1)**  
+
+  Approach:  
+  - Find LIS for each index from left to right.  
+  - Find LIS for each index from right to left.  
+  - Combine to find the maximum length of the bitonic sequence as `LIS_left[i] + LIS_right[i] - 1`.  
+
+- **[Maximum Sum Increasing Subsequence](https://practice.geeksforgeeks.org/problems/maximum-sum-increasing-subsequence4749/1)**  
+
+  Recurrence Relation:  
+  `dp[i] = max(dp[j] + nums[i] for all j where nums[j] < nums[i])`  
+
+  Base Case: `dp[i] = nums[i] for all i` 
 
 
- **Matrix Chain Multiplication**  
+ **6. Stock Optimizations** 
 
 
- **DP With Path Traversal**
+**Examples:**
+
+- **[Best Time to Buy and Sell Stock](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/)**  
+
+  Recurrence Relation:  
+  `dp[i] = max(dp[i-1], prices[i] - min_price)`  
+  where `min_price` is the lowest price encountered up to day `i`.  
+
+  Base Case: `dp[0] = 0` (no profit on the first day).  
+
+- **[Best Time to Buy and Sell Stock II](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/)**  
+
+  Recurrence Relation:  
+  `dp[i] = max(dp[i-1], dp[i-1] + prices[i] - prices[i-1])`  
+  Keep adding the profit from every transaction, i.e., every price increase.  
+
+  Base Case: `dp[0] = 0` (no profit on the first day).  
+
+- **[Best Time to Buy and Sell Stock III](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/)**  
+
+  Recurrence Relation:  
+  `dp[i][k] = max(dp[i-1][k], prices[i] - min_price[k])`  
+  where `min_price[k]` is the minimum price encountered for the `k`th transaction.  
+
+  Base Case: `dp[0][0] = 0`  
+
+- **[Best Time to Buy and Sell Stock IV](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/)**  
+
+  Recurrence Relation:  
+  `dp[i][k] = max(dp[i-1][k], prices[i] - min_price[k])`  
+  where `min_price[k]` represents the minimum price encountered for the `k`th transaction.  
+
+  Base Case: `dp[0][0] = 0`  
+
+- **[Best Time to Buy and Sell Stock with Cooldown](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/)**  
+
+  Recurrence Relation:  
+  `dp[i][0] = max(dp[i-1][0], dp[i-1][1] + prices[i])`  
+  `dp[i][1] = max(dp[i-1][1], dp[i-1][0] - prices[i])`  
+
+  Base Case:  
+  `dp[0][0] = 0` (no stock on day 0).  
+  `dp[0][1] = -prices[0]` (buy stock on day 0).  
+
+- **[Best Time to Buy and Sell Stock V](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-v/) (Stock Transaction Fee)**  
+
+  Recurrence Relation:  
+  `dp[i] = max(dp[i-1], prices[i] - min_price + fee)`  
+  where `fee` is the transaction fee.  
+
+  Base Case: `dp[0] = -prices[0]` (initially buying stock on the first day).  
+
+- **[Stock Buy and Sell to Maximize Profit](https://leetcode.com/problems/stock-buy-and-sell-to-maximize-profit/) (Multiple Transactions)**  
+
+  Recurrence Relation:  
+  `dp[i] = max(dp[i-1], prices[i] - prices[j] + dp[j-1])`  
+  where `j` is the index before `i`.  
+
+  Base Case: `dp[0] = 0` (no profit on the first day).  
+
+- **[Maximum Profit in Stock Trading with Unlimited Transactions](https://www.geeksforgeeks.org/maximum-profit-in-stock-trading-with-unlimited-transactions/) (Same as Best Time to Buy and Sell Stock II)**  
+
+  Recurrence Relation:  
+  `dp[i] = dp[i-1] + (prices[i] - prices[i-1])` (Add profits from every rise in prices).  
+
+  Base Case: `dp[0] = 0`.  
+
+
+ **7. Matrix Chain Multiplication**  
+
+**Examples:**
+
+- **[Matrix Chain Multiplication](https://leetcode.com/problems/matrix-chain-multiplication/)**  
+
+  Recurrence Relation:  
+  `dp[i][j] = min(dp[i][k] + dp[k+1][j] + p[i-1]*p[k]*p[j])`  
+  where `p` is the array of matrix dimensions, and `k` is the splitting point between matrices `i` and `j`.  
+
+  Base Case: `dp[i][i] = 0` (multiplying a single matrix requires no operations).  
+
+- **[Boolean Parenthesization](https://www.geeksforgeeks.org/boolean-parenthesization-problem-dp-37/)**  
+
+  Recurrence Relation:  
+  `dp[i][j] = min(dp[i][k] + dp[k+1][j] + cost of combining results of two partitions)`  
+  For each partition, consider every possible boolean operation (`AND`, `OR`, `XOR`).  
+
+  Base Case: `dp[i][i] = True or False` depending on the Boolean value at index `i`.  
+
+- **[Optimal Binary Search Tree](https://leetcode.com/problems/optimal-binary-search-tree/)**  
+
+  Recurrence Relation:  
+  `dp[i][j] = min(dp[i][k] + dp[k+1][j] + sum of frequencies from i to j)`  
+  where `k` is the root of the subtree, and the sum of frequencies is the cost of searching the tree.  
+
+  Base Case: `dp[i][i] = freq[i]` (cost of searching a single node).  
+
+- **[Matrix Multiplication](https://practice.geeksforgeeks.org/problems/matrix-multiplication/0)**  
+
+  Recurrence Relation:  
+  `dp[i][j] = min(dp[i][k] + dp[k+1][j] + matrix multiplication cost)`  
+  where the cost is `dim[i-1] * dim[k] * dim[j]`.  
+
+  Base Case: `dp[i][i] = 0` (no cost for a single matrix).  
+
+- **[Palindrome Partitioning](https://practice.geeksforgeeks.org/problems/palindromic-patitioning4845/1)**  
+
+  Recurrence Relation:  
+  `dp[i][j] = min(dp[i][k] + dp[k+1][j] + cost of palindrome check for substring[i..j])`  
+
+  Base Case: `dp[i][i] = 0` (a single character is always a palindrome).  
+
+
+ **8. DP With Path Traversal**
 
   - [Frog Jump](https://leetcode.com/problems/frog-jump/) - Find if a frog can reach the final stone.   
 
 
- **Bitmasking + DP**   
+ **9. Bitmasking + DP**  
 
+**Examples:**
+
+- **[Traveling Salesman Problem (TSP)](https://leetcode.com/problems/starting-city/)**  
+
+  Problem: Find the minimum cost to visit every city exactly once and return to the starting city.  
+
+  Recurrence Relation:  
+  `dp[mask][i] = min(dp[mask ^ (1 << i)][j] + dist[j][i])`  
+  where `mask` represents the set of cities visited so far, and `i` is the current city.  
+
+  Base Case: `dp[1 << start][start] = 0`, where `start` is the starting city.  
+
+- **[Subset Sum Problem](https://www.geeksforgeeks.org/subset-sum-problem-dp-25/)**  
+
+  Problem: Given a set of positive integers, check if there exists a subset with a given sum.  
+
+  Recurrence Relation:  
+  `dp[mask] = dp[mask ^ (1 << i)] || arr[i] == sum`  
+  where `mask` represents a bitmask that covers all subsets, and `i` iterates over elements.  
+
+  Base Case: `dp[0] = 0` (empty subset).  
+
+
+- **[Partition to K Equal Sum Subsets](https://leetcode.com/problems/partition-to-k-equal-sum-subsets/)**  
+
+  Problem: Partition a set of numbers into `k` subsets where each subset has the same sum.  
+
+  Recurrence Relation:  
+  `dp[mask] = dp[mask ^ (1 << i)] + nums[i] == target`  
+  where `mask` represents the subset, and `i` iterates over elements.  
+
+  Base Case: `dp[0] = 0` (empty subset).  
+
+
+- **[Word Masking](https://leetcode.com/problems/word-subsets/)**  
+
+  Problem: Find all words in a list that can be formed by characters of other words.  
+
+  Recurrence Relation:  
+  `dp[mask] = dp[mask ^ (1 << i)]`  
+  where `mask` represents the inclusion of each letter and `i` iterates over characters.  
+
+  Base Case: `dp[0] = 1` (empty word).  
+
+
+- **[Minimum Cost to Hire K Workers](https://leetcode.com/problems/minimum-cost-to-hire-k-workers/)**  
+
+  Problem: Given a set of workers with their quality and wage, find the minimum cost to hire exactly `K` workers such that the ratio of quality to wage is the same.  
+
+  Recurrence Relation:  
+  `dp[mask] = min(dp[mask ^ (1 << i)] + wage[i])`  
+  where `mask` represents a subset of workers chosen.  
+
+  Base Case: `dp[0] = 0` (no workers hired).  
+
+
+- **[Job Assignment Problem](https://leetcode.com/problems/job-scheduling-with-intervals/)**  
+
+  Problem: Assign jobs to workers such that the total cost of the assignment is minimized, and each worker can do at most one job.  
+
+  Recurrence Relation:  
+  `dp[mask] = min(dp[mask ^ (1 << i)] + cost[i])`  
+  where `mask` represents the jobs that have been assigned.  
+
+  Base Case: `dp[0] = 0` (no jobs assigned).  
+
+
+- **[Number of Ways to Arrange Coins](https://leetcode.com/problems/coin-arrangement/)**  
+
+  Problem: Count the number of ways to arrange `n` coins in rows such that each row has one or more coins.  
+
+  Recurrence Relation:  
+  `dp[mask] = dp[mask ^ (1 << i)] + 1`  
+  where `mask` represents the subset of coins arranged.  
+
+  Base Case: `dp[0] = 1` (no coins arranged).  
+
+
+- **[Maximum XOR of Two Numbers in an Array](https://leetcode.com/problems/maximum-xor-of-two-numbers-in-an-array/)**  
+
+  Problem: Find the maximum XOR of two numbers from a given set of numbers.  
+
+  Recurrence Relation:  
+  `dp[mask] = max(dp[mask ^ (1 << i)] ^ arr[i])`  
+  where `mask` represents the binary digits of the numbers.  
+
+  Base Case: `dp[0] = 0` (initial value).  
+
+
+- **[Word Break II](https://leetcode.com/problems/word-break-ii/)**  
+
+  Problem: Given a string and a dictionary, find all possible word breaks such that the string is split into dictionary words.  
+
+  Recurrence Relation:  
+  `dp[mask] = dp[mask ^ (1 << i)] + words[i]`  
+  where `mask` represents the current substring and `i` iterates over the words.  
+
+  Base Case: `dp[0] = ""` (empty string). 
+
+---
+
+## Trie
+
+**Examples:**
+
+**1. Basic Trie Implementation**
+
+- [Implement Trie (Prefix Tree)](https://leetcode.com/problems/implement-trie-prefix-tree/) - Build a Trie with insert, search, and prefix-check operations.
+
+- [Design Add and Search Words Data Structure](https://leetcode.com/problems/design-add-and-search-words-data-structure/) - Implement a Trie that supports adding words and searching words with `.` as a wildcard.
+
+- [Implement Trie II (Prefix Tree)](https://leetcode.com/problems/implement-trie-ii-prefix-tree/) - Extend the basic Trie to support counting words and prefixes.
+
+
+**2. Word Search and Prefix Matching**
+
+- [Word Search II](https://leetcode.com/problems/word-search-ii/) - Find all valid words in a grid using a word dictionary (Trie + DFS).
+
+- [Concatenated Words](https://leetcode.com/problems/concatenated-words/) - Find all words that can be formed by concatenating two or more dictionary words.
+
+- [Replace Words](https://leetcode.com/problems/replace-words/) - Replace words in a sentence with the shortest prefix found in a dictionary.
+
+- [Short Encoding of Words](https://leetcode.com/problems/short-encoding-of-words/) - Find the minimum encoding length of a list of words using Trie (suffix encoding).
+
+
+**3. Autocomplete and Suggestions**
+
+- [Design Search Autocomplete System](https://leetcode.com/problems/design-search-autocomplete-system/) - Build an autocomplete system that suggests hot sentences based on user input.
+
+- [Search Suggestions System](https://leetcode.com/problems/search-suggestions-system/) - Given a list of products, return lexicographically sorted product suggestions based on a search prefix.
+
+
+**4. Dictionary and Word Manipulation**
+
+- [Longest Word in Dictionary](https://leetcode.com/problems/longest-word-in-dictionary/) - Find the longest word that can be built one character at a time using a given list of words.
+
+- [Prefix and Suffix Search](https://leetcode.com/problems/prefix-and-suffix-search/) - Design a data structure that finds words matching a given prefix and suffix.
+
+- [677. Map Sum Pairs](https://leetcode.com/problems/map-sum-pairs/) - Implement a Trie-based key-value mapping where keys share prefixes.
+
+
+**5. Number Manipulation Using Trie**
+
+- [Maximum XOR of Two Numbers in an Array](https://leetcode.com/problems/maximum-xor-of-two-numbers-in-an-array/) - Find the maximum XOR value for two numbers in an array using a binary Trie.
+
+- [Maximum XOR With an Element From Array](https://leetcode.com/problems/maximum-xor-with-an-element-from-array/) - Find the maximum XOR value of queries with constraints using a Trie.
+
+- [Count Pairs With XOR in a Range](https://leetcode.com/problems/count-pairs-with-xor-in-a-range/) - Count pairs in an array whose XOR lies within a given range using a Trie.
+ 
 
 ---
 ## Graph
@@ -1137,55 +1580,6 @@
 **Bipartite Graph Check** (using DFS/BFS).  
 
 **Maximum Bipartite Matching** (Hungarian Algorithm).  
-
----
-## Trie
-
-**Examples:**
-
-**1. Basic Trie Implementation**
-
-- [Implement Trie (Prefix Tree)](https://leetcode.com/problems/implement-trie-prefix-tree/) - Build a Trie with insert, search, and prefix-check operations.
-
-- [Design Add and Search Words Data Structure](https://leetcode.com/problems/design-add-and-search-words-data-structure/) - Implement a Trie that supports adding words and searching words with `.` as a wildcard.
-
-- [Implement Trie II (Prefix Tree)](https://leetcode.com/problems/implement-trie-ii-prefix-tree/) - Extend the basic Trie to support counting words and prefixes.
-
-
-**2. Word Search and Prefix Matching**
-
-- [Word Search II](https://leetcode.com/problems/word-search-ii/) - Find all valid words in a grid using a word dictionary (Trie + DFS).
-
-- [Concatenated Words](https://leetcode.com/problems/concatenated-words/) - Find all words that can be formed by concatenating two or more dictionary words.
-
-- [Replace Words](https://leetcode.com/problems/replace-words/) - Replace words in a sentence with the shortest prefix found in a dictionary.
-
-- [Short Encoding of Words](https://leetcode.com/problems/short-encoding-of-words/) - Find the minimum encoding length of a list of words using Trie (suffix encoding).
-
-
-**3. Autocomplete and Suggestions**
-
-- [Design Search Autocomplete System](https://leetcode.com/problems/design-search-autocomplete-system/) - Build an autocomplete system that suggests hot sentences based on user input.
-
-- [Search Suggestions System](https://leetcode.com/problems/search-suggestions-system/) - Given a list of products, return lexicographically sorted product suggestions based on a search prefix.
-
-
-**4. Dictionary and Word Manipulation**
-
-- [Longest Word in Dictionary](https://leetcode.com/problems/longest-word-in-dictionary/) - Find the longest word that can be built one character at a time using a given list of words.
-
-- [Prefix and Suffix Search](https://leetcode.com/problems/prefix-and-suffix-search/) - Design a data structure that finds words matching a given prefix and suffix.
-
-- [677. Map Sum Pairs](https://leetcode.com/problems/map-sum-pairs/) - Implement a Trie-based key-value mapping where keys share prefixes.
-
-
-**5. Number Manipulation Using Trie**
-
-- [Maximum XOR of Two Numbers in an Array](https://leetcode.com/problems/maximum-xor-of-two-numbers-in-an-array/) - Find the maximum XOR value for two numbers in an array using a binary Trie.
-
-- [Maximum XOR With an Element From Array](https://leetcode.com/problems/maximum-xor-with-an-element-from-array/) - Find the maximum XOR value of queries with constraints using a Trie.
-
-- [Count Pairs With XOR in a Range](https://leetcode.com/problems/count-pairs-with-xor-in-a-range/) - Count pairs in an array whose XOR lies within a given range using a Trie.
 
 ---
 
@@ -1323,36 +1717,12 @@ public boolean isPowerOfTwo(int number) {
 
 ```
 
-## Matrix
-
-**Basic Directions (left, right, top, down)**
-
-- `{0, 1}` :  movement to the right
-- `{0, -1}`:  movement to the left
-- `{1, 0}` :  movement downwards
-- `{-1, 0}`:  movement upwards
-
-**Additional diagonal movements**
-
-- `{1, 1}` :  movement diagonally down and to the right
-- `{1, -1}` :  movement diagonally down and to the left
-- `{-1, 1}` :  movement diagonally up and to the right
-- `{-1, -1}`:  movement diagonally up and to the left
-
-**Matrix Formula**
-
-- Convert `n * m` matrix to an array : `a[row * m + col] = matrix[row][col]` where `n = matrix.length` and `m = matrix[0].length`
-
-- Convert array to `n * m` matrix : `matrix[i / m][i % m] = a[i]` where `n = matrix.length` and `m = matrix[0].length`
-
-- Grid Number = `(row / 3) * 3 + (col / 3)`
-
 
 ## Number System conversion
 
 ### 1. **Convert from Binary to Decimal, Octal, and Hexadecimal**
 
-#### (a) Binary to Decimal
+####  Binary to Decimal
 
 - To convert binary to decimal, multiply each bit by 2 raised to the power of its position, starting
   from 0 on the right.
@@ -1365,22 +1735,22 @@ public boolean isPowerOfTwo(int number) {
                = 11 (decimal)
   ```
 
-#### (b) Binary to Octal
+#### Binary to Octal
 
 -  Group the binary digits into sets of 3 bits from the right, then convert each group into its octal
   equivalent.
 
-  ```
-  // Convert binary `101110` to octal.
+    ```
+    // Convert binary `101110` to octal.
 
-  Grouping: 101 110
-  101 (binary) = 5 (octal)
-  110 (binary) = 6 (octal)
-  
-  So, 101110 (binary) = 56 (octal)
-  ```
+    Grouping: 101 110
+    101 (binary) = 5 (octal)
+    110 (binary) = 6 (octal)
+    
+    So, 101110 (binary) = 56 (octal)
+    ```
 
-#### (c) Binary to Hexadecimal
+#### Binary to Hexadecimal
 
 - Group the binary digits into sets of 4 bits from the right, then convert each group into its
   hexadecimal equivalent.
@@ -1399,7 +1769,7 @@ public boolean isPowerOfTwo(int number) {
 
 ### 2. **Convert from Decimal to Binary, Octal, and Hexadecimal**
 
-#### (a) Decimal to Binary
+#### Decimal to Binary
 
 - Divide the decimal number by 2, record the remainder, and repeat until the quotient is 0. The binary
   result is the remainders read from bottom to top.
@@ -1416,7 +1786,7 @@ public boolean isPowerOfTwo(int number) {
   So, 23 (decimal) = 10111 (binary)
   ```
 
-#### (b) Decimal to Octal
+#### Decimal to Octal
 
 - Divide the decimal number by 8, record the remainder, and repeat until the quotient is 0.
 
@@ -1430,7 +1800,7 @@ public boolean isPowerOfTwo(int number) {
   So, 83 (decimal) = 123 (octal)
   ```
 
-#### (c) Decimal to Hexadecimal
+#### Decimal to Hexadecimal
 
 - Divide the decimal number by 16, record the remainder, and repeat until the quotient is 0.
 
@@ -1448,7 +1818,7 @@ public boolean isPowerOfTwo(int number) {
 
 ### 3. **Convert from Octal to Binary, Decimal, and Hexadecimal**
 
-#### (a) Octal to Binary
+#### Octal to Binary
 
 - Convert each octal digit into its 3-bit binary equivalent.
 
@@ -1461,7 +1831,7 @@ public boolean isPowerOfTwo(int number) {
   So, 75 (octal) = 111101 (binary)
   ```
 
-#### (b) Octal to Decimal
+#### Octal to Decimal
 
 - Multiply each digit by 8 raised to the power of its position from the right (starting from 0).
 
@@ -1474,7 +1844,7 @@ public boolean isPowerOfTwo(int number) {
               = 226 (decimal)
   ```
 
-#### (c) Octal to Hexadecimal
+#### Octal to Hexadecimal
 
 - First convert the octal number to binary, then group the binary digits into sets of 4 to convert to
   hexadecimal.
@@ -1497,7 +1867,7 @@ public boolean isPowerOfTwo(int number) {
 
 ### 4. **Convert from Hexadecimal to Binary, Decimal, and Octal**
 
-#### (a) Hexadecimal to Binary
+####  Hexadecimal to Binary
 
 - Convert each hexadecimal digit to its 4-bit binary equivalent.
 
@@ -1511,7 +1881,7 @@ public boolean isPowerOfTwo(int number) {
   So, 2A7 (hex) = 001010100111 (binary)
   ```
 
-#### (b) Hexadecimal to Decimal
+####  Hexadecimal to Decimal
 
 - Multiply each hex digit by 16 raised to the power of its position (starting from 0 from the right).
 
@@ -1524,7 +1894,7 @@ public boolean isPowerOfTwo(int number) {
            = 63 (decimal)
   ```
 
-#### (c) Hexadecimal to Octal
+#### Hexadecimal to Octal
 
 - First convert hexadecimal to binary, then group binary digits in sets of 3 to convert to octal.
 
@@ -1546,3 +1916,27 @@ public boolean isPowerOfTwo(int number) {
   ```
 
 ---
+
+## Matrix Tricks
+
+**Basic Directions (left, right, top, down)**
+
+- `{0, 1}` :  movement to the right
+- `{0, -1}`:  movement to the left
+- `{1, 0}` :  movement downwards
+- `{-1, 0}`:  movement upwards
+
+**Additional diagonal movements**
+
+- `{1, 1}` :  movement diagonally down and to the right
+- `{1, -1}` :  movement diagonally down and to the left
+- `{-1, 1}` :  movement diagonally up and to the right
+- `{-1, -1}`:  movement diagonally up and to the left
+
+**Matrix Formula**
+
+- Convert `n * m` matrix to an array : `a[row * m + col] = matrix[row][col]` where `n = matrix.length` and `m = matrix[0].length`
+
+- Convert array to `n * m` matrix : `matrix[i / m][i % m] = a[i]` where `n = matrix.length` and `m = matrix[0].length`
+
+- Grid Number = `(row / 3) * 3 + (col / 3)`

@@ -28,9 +28,10 @@
 
 ## Dynamic Programming
 
-- Considers all possible choices
-- Always initialize the base case to make recurrence relation valid
+- Think solution to smallest subproblems, `smallest problem is almost always a problem of size 0 or 1 or empty string`
+- Combine Smallest subproblems to solve bigger problems
 - Think of smallest input like size is empty or 1, or string is empty
+- Some DP problems are about maximizing/minimizing a value subject to some constraints
 
 ## Math
 
