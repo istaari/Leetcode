@@ -38,3 +38,7 @@
 - Normalizing modulo to be always positive `mod = (mod + k) % k`
 
 ## Bit Manipulation
+
+- A `bitmask` is typically an integer where each bit (from right to left) represents a state or an element
+
+- `Bitwise manipulations` refer to operations that directly manipulate the individual bits of an integer using logical operators like AND, OR, XOR, NOT, and bit shifts.

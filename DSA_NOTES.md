@@ -703,6 +703,21 @@
 
 - `Inorder successor(smallest element in left subtree from right node)` is next node element in inorder traversal(Sorted Element in BST)
 
+
+**0. Tree Representations in array**
+
+- For 1-based indexing:
+
+  - **Left child** of node at index `i`: `2 * i`
+  - **Right child** of node at index `i`: `2 * i + 1`
+  - **Parent** of node at index `i`: `i // 2` (only if `i > 1`)
+
+- For 0-based indexing:
+
+  - **Left child** of node at index `i`: `2 * i + 1`
+  - **Right child** of node at index `i`: `2 * i + 2`
+  - **Parent** of node at index `i`: `(i - 1) // 2` (only if `i > 0`)
+
 **1. Traversal**
 
 `Note : Visualize with 3 nodes`
@@ -906,7 +921,33 @@
           helper(result, root.right, level + 1);
           helper(result, root.left, level + 1);
     }
-  ```  
+  ```
+- [Binary Tree Left Side View](https://leetcode.com/problems/binary-tree-right-side-view/solutions/3125913/java-all-tree-views-easy-fast/)
+
+  - Process one node(left) at each level, maintain level parameter in function call
+
+- [Binary Tree Top Side View](https://leetcode.com/problems/binary-tree-right-side-view/solutions/3125913/java-all-tree-views-easy-fast/)
+
+  - Use `level order traversal`, create pair of node and horizontal distance.
+  - Assign horizontal distance to each node, like root is 0, left child is -1, right child is +1
+  ```
+          1(0)
+        /     \
+      2(-1)    3(+1)
+    /  \     /   \
+  4(-2) 5(0) 6(0)  7(+2)
+
+  ```
+  - If distance does not exist in TreeMap, then add the node to TreeMap, Top view node will have unique distance
+
+- [Binary Tree Bottom Side View](https://leetcode.com/problems/binary-tree-right-side-view/solutions/3125913/java-all-tree-views-easy-fast/)
+
+  - Similar to top view, the only difference is that we need to replace the node in TreeMap with the same distance
+
+- [Binary Tree Diagonal View]()  
+
+  - start with root 0, for left node assign same distance and for right node assign distance + 1
+
 
 **9. Tree construction** 
 
@@ -930,10 +971,15 @@
    - Use stack to collapse the nodes if prev 3 nodes are `4,#,#` pattern into single hash `#`
    - If stack size is 1 and its `#` value then return true else false
 
+- [Serialize and Deserialize Binary Tree](https://leetcode.com/problems/serialize-and-deserialize-binary-tree/description/) 
+
+   - Use `preorder traversal` to serialize the tree
+   - Use `preorder traversal` to deserialize the tree 
+
 **11. B and B+ Tree**  
 
 
-**12. AVL Tree**  
+**12. AVL Tree**   
 
 
 **13. Red-Black Tree**  
@@ -1018,52 +1064,37 @@
     }
    ```
 
+- **[Minimum Cost to Hire K Workers](https://leetcode.com/problems/minimum-cost-to-hire-k-workers/)**  
+
  **2. Grids(Path Problem)**
 
  **Examples:**
 
-- **[Unique Paths](https://leetcode.com/problems/unique-paths/)**  
+- **[Unique Paths](https://leetcode.com/problems/unique-paths/)** 
+   
+  - [Solution](https://leetcode.com/problems/unique-paths/solutions/1581998/c-python-5-simple-solutions-w-explanation-optimization-from-brute-force-to-dp-to-math/)
 
-  Recurrence Relation: `dp[i][j] = dp[i-1][j] + dp[i][j-1]` 
-
-  Base Case: `dp[0][j] = 1, dp[i][0] = 1`  
+  - Can be space optimized using `2-row array`, alternating between 0 and 1 row `i & 1` or `i % 2`
 
 - **[Unique Paths II](https://leetcode.com/problems/unique-paths-ii/)**  
 
   Recurrence Relation: `dp[i][j] = 0 if obstacleGrid[i][j] == 1 else dp[i-1][j] + dp[i][j-1]`  
-
   Base Case: `dp[0][0] = 1 if obstacleGrid[0][0] == 0 else 0`  
 
-- **[Unique Paths III](https://leetcode.com/problems/unique-paths-iii/)**  
-
-  Key Idea: Use backtracking to traverse all paths and count those that cover all non-obstacle squares.  
-
-  Base Case: Valid path must visit all non-obstacle squares exactly once.  
-
-- **[Minimum Path Sum](https://leetcode.com/problems/minimum-path-sum/)**  
-
+- **[Minimum Path Sum](https://leetcode.com/problems/minimum-path-sum/)** 
+ 
   Recurrence Relation: `dp[i][j] = grid[i][j] + min(dp[i-1][j], dp[i][j-1])`  
 
-  Base Case: `dp[0][0] = grid[0][0]`  
+  Base Case: `dp[0][0] = grid[0][0]`  `dp[0][i] = grid[0][i] + dp[0][i - 1]`  `dp[i][0] = grid[i][0] + dp[i - 1][0]`
 
-- **[Shortest Path in a Grid with Obstacles Elimination](https://leetcode.com/problems/shortest-path-in-a-grid-with-obstacles-elimination/)**  
-
-  Key Idea: Use BFS with states defined as `(x, y, obstacles_remaining)`.  
-
-  Base Case: Start from `(0, 0)` with the allowed obstacle eliminations.  
-
-- **[Check if There is a Valid Path in a Grid](https://leetcode.com/problems/check-if-there-is-a-valid-path-in-a-grid/)**  
-
-  Key Idea: Use DFS or BFS to verify if a valid path exists from `(0, 0)` to `(m-1, n-1)` based on grid rules.  
-
-  Base Case: Ensure compatibility of path segments at each grid cell.  
-
-- **[Find the Safest Path in a Grid](https://leetcode.com/problems/find-the-safest-path-in-a-grid/)**  
-
-  Key Idea: Use Dijkstra's algorithm or BFS with safety factors as weights.  
-
-  Base Case: Start from the top-left corner `(0, 0)` and maximize safety at each step.
+- **[Minimum Falling Path Sum](https://leetcode.com/problems/find-the-safest-path-in-a-grid/)**  
  
+  - Find Minimum from 3 directions and sum it with current element
+
+- **[Triangle](https://leetcode.com/problems/triangle/description/)**  
+
+  - Similiar to path sum
+
 
  **3. Subsequences(Kanpsack, Subset, Coin Change, Partition)** 
 
@@ -1187,7 +1218,6 @@
 
  **5. Longest Increasing Subsequence** 
 
-
  **Examples:**
 
 - **[Longest Increasing Subsequence](https://leetcode.com/problems/longest-increasing-subsequence/)**  
@@ -1206,20 +1236,6 @@
   Steps:  
   - Update `length[i]` as `max(length[j] + 1)` for all `j` where `nums[j] < nums[i]`.  
   - Update `count[i]` accordingly.  
-
-- **[Longest Bitonic Subsequence](https://practice.geeksforgeeks.org/problems/longest-bitonic-subsequence0824/1)**  
-
-  Approach:  
-  - Find LIS for each index from left to right.  
-  - Find LIS for each index from right to left.  
-  - Combine to find the maximum length of the bitonic sequence as `LIS_left[i] + LIS_right[i] - 1`.  
-
-- **[Maximum Sum Increasing Subsequence](https://practice.geeksforgeeks.org/problems/maximum-sum-increasing-subsequence4749/1)**  
-
-  Recurrence Relation:  
-  `dp[i] = max(dp[j] + nums[i] for all j where nums[j] < nums[i])`  
-
-  Base Case: `dp[i] = nums[i] for all i` 
 
 
  **6. Stock Optimizations** 
@@ -1269,72 +1285,10 @@
   `dp[0][0] = 0` (no stock on day 0).  
   `dp[0][1] = -prices[0]` (buy stock on day 0).  
 
-- **[Best Time to Buy and Sell Stock V](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-v/) (Stock Transaction Fee)**  
-
-  Recurrence Relation:  
-  `dp[i] = max(dp[i-1], prices[i] - min_price + fee)`  
-  where `fee` is the transaction fee.  
-
-  Base Case: `dp[0] = -prices[0]` (initially buying stock on the first day).  
-
-- **[Stock Buy and Sell to Maximize Profit](https://leetcode.com/problems/stock-buy-and-sell-to-maximize-profit/) (Multiple Transactions)**  
-
-  Recurrence Relation:  
-  `dp[i] = max(dp[i-1], prices[i] - prices[j] + dp[j-1])`  
-  where `j` is the index before `i`.  
-
-  Base Case: `dp[0] = 0` (no profit on the first day).  
-
-- **[Maximum Profit in Stock Trading with Unlimited Transactions](https://www.geeksforgeeks.org/maximum-profit-in-stock-trading-with-unlimited-transactions/) (Same as Best Time to Buy and Sell Stock II)**  
-
-  Recurrence Relation:  
-  `dp[i] = dp[i-1] + (prices[i] - prices[i-1])` (Add profits from every rise in prices).  
-
-  Base Case: `dp[0] = 0`.  
-
 
  **7. Matrix Chain Multiplication**  
 
 **Examples:**
-
-- **[Matrix Chain Multiplication](https://leetcode.com/problems/matrix-chain-multiplication/)**  
-
-  Recurrence Relation:  
-  `dp[i][j] = min(dp[i][k] + dp[k+1][j] + p[i-1]*p[k]*p[j])`  
-  where `p` is the array of matrix dimensions, and `k` is the splitting point between matrices `i` and `j`.  
-
-  Base Case: `dp[i][i] = 0` (multiplying a single matrix requires no operations).  
-
-- **[Boolean Parenthesization](https://www.geeksforgeeks.org/boolean-parenthesization-problem-dp-37/)**  
-
-  Recurrence Relation:  
-  `dp[i][j] = min(dp[i][k] + dp[k+1][j] + cost of combining results of two partitions)`  
-  For each partition, consider every possible boolean operation (`AND`, `OR`, `XOR`).  
-
-  Base Case: `dp[i][i] = True or False` depending on the Boolean value at index `i`.  
-
-- **[Optimal Binary Search Tree](https://leetcode.com/problems/optimal-binary-search-tree/)**  
-
-  Recurrence Relation:  
-  `dp[i][j] = min(dp[i][k] + dp[k+1][j] + sum of frequencies from i to j)`  
-  where `k` is the root of the subtree, and the sum of frequencies is the cost of searching the tree.  
-
-  Base Case: `dp[i][i] = freq[i]` (cost of searching a single node).  
-
-- **[Matrix Multiplication](https://practice.geeksforgeeks.org/problems/matrix-multiplication/0)**  
-
-  Recurrence Relation:  
-  `dp[i][j] = min(dp[i][k] + dp[k+1][j] + matrix multiplication cost)`  
-  where the cost is `dim[i-1] * dim[k] * dim[j]`.  
-
-  Base Case: `dp[i][i] = 0` (no cost for a single matrix).  
-
-- **[Palindrome Partitioning](https://practice.geeksforgeeks.org/problems/palindromic-patitioning4845/1)**  
-
-  Recurrence Relation:  
-  `dp[i][j] = min(dp[i][k] + dp[k+1][j] + cost of palindrome check for substring[i..j])`  
-
-  Base Case: `dp[i][i] = 0` (a single character is always a palindrome).  
 
 
  **8. DP With Path Traversal**
@@ -1346,27 +1300,6 @@
 
 **Examples:**
 
-- **[Traveling Salesman Problem (TSP)](https://leetcode.com/problems/starting-city/)**  
-
-  Problem: Find the minimum cost to visit every city exactly once and return to the starting city.  
-
-  Recurrence Relation:  
-  `dp[mask][i] = min(dp[mask ^ (1 << i)][j] + dist[j][i])`  
-  where `mask` represents the set of cities visited so far, and `i` is the current city.  
-
-  Base Case: `dp[1 << start][start] = 0`, where `start` is the starting city.  
-
-- **[Subset Sum Problem](https://www.geeksforgeeks.org/subset-sum-problem-dp-25/)**  
-
-  Problem: Given a set of positive integers, check if there exists a subset with a given sum.  
-
-  Recurrence Relation:  
-  `dp[mask] = dp[mask ^ (1 << i)] || arr[i] == sum`  
-  where `mask` represents a bitmask that covers all subsets, and `i` iterates over elements.  
-
-  Base Case: `dp[0] = 0` (empty subset).  
-
-
 - **[Partition to K Equal Sum Subsets](https://leetcode.com/problems/partition-to-k-equal-sum-subsets/)**  
 
   Problem: Partition a set of numbers into `k` subsets where each subset has the same sum.  
@@ -1376,61 +1309,6 @@
   where `mask` represents the subset, and `i` iterates over elements.  
 
   Base Case: `dp[0] = 0` (empty subset).  
-
-
-- **[Word Masking](https://leetcode.com/problems/word-subsets/)**  
-
-  Problem: Find all words in a list that can be formed by characters of other words.  
-
-  Recurrence Relation:  
-  `dp[mask] = dp[mask ^ (1 << i)]`  
-  where `mask` represents the inclusion of each letter and `i` iterates over characters.  
-
-  Base Case: `dp[0] = 1` (empty word).  
-
-
-- **[Minimum Cost to Hire K Workers](https://leetcode.com/problems/minimum-cost-to-hire-k-workers/)**  
-
-  Problem: Given a set of workers with their quality and wage, find the minimum cost to hire exactly `K` workers such that the ratio of quality to wage is the same.  
-
-  Recurrence Relation:  
-  `dp[mask] = min(dp[mask ^ (1 << i)] + wage[i])`  
-  where `mask` represents a subset of workers chosen.  
-
-  Base Case: `dp[0] = 0` (no workers hired).  
-
-
-- **[Job Assignment Problem](https://leetcode.com/problems/job-scheduling-with-intervals/)**  
-
-  Problem: Assign jobs to workers such that the total cost of the assignment is minimized, and each worker can do at most one job.  
-
-  Recurrence Relation:  
-  `dp[mask] = min(dp[mask ^ (1 << i)] + cost[i])`  
-  where `mask` represents the jobs that have been assigned.  
-
-  Base Case: `dp[0] = 0` (no jobs assigned).  
-
-
-- **[Number of Ways to Arrange Coins](https://leetcode.com/problems/coin-arrangement/)**  
-
-  Problem: Count the number of ways to arrange `n` coins in rows such that each row has one or more coins.  
-
-  Recurrence Relation:  
-  `dp[mask] = dp[mask ^ (1 << i)] + 1`  
-  where `mask` represents the subset of coins arranged.  
-
-  Base Case: `dp[0] = 1` (no coins arranged).  
-
-
-- **[Maximum XOR of Two Numbers in an Array](https://leetcode.com/problems/maximum-xor-of-two-numbers-in-an-array/)**  
-
-  Problem: Find the maximum XOR of two numbers from a given set of numbers.  
-
-  Recurrence Relation:  
-  `dp[mask] = max(dp[mask ^ (1 << i)] ^ arr[i])`  
-  where `mask` represents the binary digits of the numbers.  
-
-  Base Case: `dp[0] = 0` (initial value).  
 
 
 - **[Word Break II](https://leetcode.com/problems/word-break-ii/)**  

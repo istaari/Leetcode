@@ -27,6 +27,27 @@ public class UniquePaths {
     }
 
 
+    public int uniquePathsSpaceOptimized(int m, int n) {
+        // Create a 2-row array for optimization
+        int[][] dp = new int[2][n];
+
+        for (int j = 0; j < n; j++) {
+            dp[0][j] = 1;
+        }
+
+        // Fill the dp array row by row
+        for (int i = 1; i < m; i++) {
+            dp[i % 2][0] = 1; // First column is always 1
+            for (int j = 1; j < n; j++) {
+                dp[i % 2][j] = dp[(i - 1) % 2][j] + dp[i % 2][j - 1];
+            }
+        }
+
+        // The result is stored in the last cell of the row corresponding to (m-1)
+        return dp[(m - 1) % 2][n - 1];
+    }
+
+
 
     public static void main(String[] args) {
         int m = 3;

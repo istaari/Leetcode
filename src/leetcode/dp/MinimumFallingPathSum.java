@@ -78,8 +78,8 @@ public class MinimumFallingPathSum {
 
 
     public static int minFallingPathSum(int[][] matrix) {
-      //return topDown(matrix);
-        return bottomUp(matrix);
+      return topDown(matrix);
+        //return bottomUp(matrix);
     }
 
 
