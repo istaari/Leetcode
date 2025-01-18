@@ -1216,30 +1216,7 @@
   Base Case: `dp[0][0] = True, dp[i][0] = False for i > 0, dp[0][j] = dp[0][j-1] if p[j-1] == '*'`  
 
 
- **5. Longest Increasing Subsequence** 
-
- **Examples:**
-
-- **[Longest Increasing Subsequence](https://leetcode.com/problems/longest-increasing-subsequence/)**  
-
-  Recurrence Relation:  
-  `dp[i] = max(dp[j] + 1 for all j where nums[j] < nums[i])`  
-
-  Base Case: `dp[i] = 1 for all i`  
-
-- **[Number of Longest Increasing Subsequences](https://leetcode.com/problems/number-of-longest-increasing-subsequence/)**  
-
-  Approach: Use two arrays:  
-  - `length[i]` to store the length of the LIS ending at index `i`.  
-  - `count[i]` to store the number of LISs ending at index `i`.  
-
-  Steps:  
-  - Update `length[i]` as `max(length[j] + 1)` for all `j` where `nums[j] < nums[i]`.  
-  - Update `count[i]` accordingly.  
-
-
- **6. Stock Optimizations** 
-
+ **5. Stock Optimizations** 
 
 **Examples:**
 
@@ -1286,17 +1263,17 @@
   `dp[0][1] = -prices[0]` (buy stock on day 0).  
 
 
- **7. Matrix Chain Multiplication**  
-
-**Examples:**
+ **6. Matrix Chain Multiplication**  
 
 
- **8. DP With Path Traversal**
+
+ **7. DP With Path Traversal**
 
   - [Frog Jump](https://leetcode.com/problems/frog-jump/) - Find if a frog can reach the final stone.   
 
 
- **9. Bitmasking + DP**  
+
+ **8. Bitmasking + DP**  
 
 **Examples:**
 
