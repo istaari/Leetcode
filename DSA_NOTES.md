@@ -1643,8 +1643,6 @@ public boolean isPowerOfTwo(int number) {
   So, 10111101 (binary) = BD (hex)
   ```
 
----
-
 ### 2. **Convert from Decimal to Binary, Octal, and Hexadecimal**
 
 #### Decimal to Binary
@@ -1692,8 +1690,6 @@ public boolean isPowerOfTwo(int number) {
   So, 255 (decimal) = FF (hex)
   ```
 
----
-
 ### 3. **Convert from Octal to Binary, Decimal, and Hexadecimal**
 
 #### Octal to Binary
@@ -1740,8 +1736,6 @@ public boolean isPowerOfTwo(int number) {
   
   So, 27 (octal) = 2F (hex)
   ```
-
----
 
 ### 4. **Convert from Hexadecimal to Binary, Decimal, and Octal**
 
