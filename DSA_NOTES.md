@@ -1000,35 +1000,29 @@
  **Examples:**
 
 - **[Climbing Stairs](https://leetcode.com/problems/climbing-stairs/)**  
-
-   Recurrence Relation: `f(n) = f(n-1) + f(n-2)`  
-
-   Base Cases: `f(1) = 1, f(2) = 2`  
+   - Recurrence Relation: `f(n) = f(n-1) + f(n-2)`  
+   - Base Cases: `f(1) = 1, f(2) = 2`  
 
 
 - **[Min Cost Climbing Stairs](https://leetcode.com/problems/min-cost-climbing-stairs/)**  
 
-   Recurrence Relation: `f(n) = cost[n] + min(f(n-1), f(n-2))`  
-
-   Base Cases: `f(0) = cost[0], f(1) = cost[1]`  
+   - Recurrence Relation: `f(n) = cost[n] + min(f(n-1), f(n-2))`  
+   - Base Cases: `f(0) = cost[0], f(1) = cost[1]`  
 
 
 - **[House Robber](https://leetcode.com/problems/house-robber/)**  
-
-   Recurrence Relation: `f(n) = max(f(n-1), f(n-2) + nums[n])`  
-
-   Base Cases: `f(0) = nums[0], f(1) = max(nums[0], nums[1])`  
+   - Recurrence Relation: `f(n) = max(f(n-1), f(n-2) + nums[n])`  
+   - Base Cases: `f(0) = nums[0], f(1) = max(nums[0], nums[1])`  
 
 
 - **[House Robber II](https://leetcode.com/problems/house-robber-ii/)**  
-
    Recurrence Relation:  
-   - Case 1: `f_1(n) = max(f_1(n-1), f_1(n-2) + nums[n])` (houses 0 to n-2)  
-   - Case 2: `f_2(n) = max(f_2(n-1), f_2(n-2) + nums[n])` (houses 1 to n-1)  
+    - Case 1: `f_1(n) = max(f_1(n-1), f_1(n-2) + nums[n])` (houses 0 to n-2)  
+    - Case 2: `f_2(n) = max(f_2(n-1), f_2(n-2) + nums[n])` (houses 1 to n-1)  
 
    Base Cases:  
-   - Case 1: `f_1(0) = nums[0], f_1(1) = max(nums[0], nums[1])`  
-   - Case 2: `f_2(1) = nums[1], f_2(2) = max(nums[1], nums[2])`  
+    - Case 1: `f_1(0) = nums[0], f_1(1) = max(nums[0], nums[1])`  
+    - Case 2: `f_2(1) = nums[1], f_2(2) = max(nums[1], nums[2])`  
 
 
 - **[Decode Ways](https://leetcode.com/problems/decode-ways/)**  
@@ -1078,14 +1072,13 @@
 
 - **[Unique Paths II](https://leetcode.com/problems/unique-paths-ii/)**  
 
-  Recurrence Relation: `dp[i][j] = 0 if obstacleGrid[i][j] == 1 else dp[i-1][j] + dp[i][j-1]`  
-  Base Case: `dp[0][0] = 1 if obstacleGrid[0][0] == 0 else 0`  
+  - Recurrence Relation: `dp[i][j] = 0 if obstacleGrid[i][j] == 1 else dp[i-1][j] + dp[i][j-1]`  
+  - Base Case: `dp[0][0] = 1 if obstacleGrid[0][0] == 0 else 0`  
 
 - **[Minimum Path Sum](https://leetcode.com/problems/minimum-path-sum/)** 
  
-  Recurrence Relation: `dp[i][j] = grid[i][j] + min(dp[i-1][j], dp[i][j-1])`  
-
-  Base Case: `dp[0][0] = grid[0][0]`  `dp[0][i] = grid[0][i] + dp[0][i - 1]`  `dp[i][0] = grid[i][0] + dp[i - 1][0]`
+  - Recurrence Relation: `dp[i][j] = grid[i][j] + min(dp[i-1][j], dp[i][j-1])`  
+  - Base Case: `dp[0][0] = grid[0][0]`  `dp[0][i] = grid[0][i] + dp[0][i - 1]`  `dp[i][0] = grid[i][0] + dp[i - 1][0]`
 
 - **[Minimum Falling Path Sum](https://leetcode.com/problems/find-the-safest-path-in-a-grid/)**  
  
@@ -1102,45 +1095,82 @@
 
 - **[Partition Equal Subset Sum](https://leetcode.com/problems/partition-equal-subset-sum/)**  
 
-  Recurrence Relation: `dp[i][j] = dp[i-1][j] or dp[i-1][j-nums[i-1]]`  
+  - Check if sum is even, then divide the sum by 2, then check if subset sum is equal to half of sum
+  - In `recursive approach` use `include or exclude` decision tree technique
 
-  Base Case: `dp[i][0] = True (empty subset)`  
+  - ```java 
+      boolean recursive(int[] nums, int index, int target, Boolean[][] dp) {
+        if (target == 0) return true;
+        
+        if (index > nums.length - 1) return false;
+        if (target < 0) return false;
 
-- **[Coin Change](https://leetcode.com/problems/coin-change/)**  
+        if (dp[index][target] != null) return dp[index][target];
 
-  Recurrence Relation: `dp[i][j] = min(dp[i-1][j], dp[i][j-coins[i-1]] + 1)`  
+        dp[index][target] = recursive(nums, index + 1, target - nums[index], dp)
+                || recursive(nums, index + 1, target, dp);
 
-  Base Case: `dp[0][j] = inf, dp[i][0] = 0`  
+        return dp[index][target];
+    }
+    ```
+  - `0/1 Knapsack Problem`
+
+  - ```java
+      boolean iterative(int[] nums, int targetSum) {
+          boolean[][] dp = new boolean[nums.length + 1][targetSum + 1];
+
+          for (int i = 0; i <= nums.length; i++)
+              dp[i][0] = true; // For any set of numbers, you can always form a sum of 0 by taking no elements at all
+
+          for (int i = 1; i <= nums.length; i++) {
+              for (int j = 1; j <= targetSum; j++) {
+
+                  if (nums[i - 1] <= j) {
+                      // dp[i - 1][j] - can we form excluding current item
+                      // dp[i - 1][j - nums[i - 1]] - can we form excluding current item and remaining capacity
+                      dp[i][j] = dp[i - 1][j] || dp[i - 1][j - nums[i - 1]];
+                  } else {
+                      dp[i][j] = dp[i - 1][j];
+                  }
+              }
+          }
+          return dp[nums.length][targetSum];
+      }
+    ``` 
+- **[Coin Change](https://leetcode.com/problems/coin-change/)** 
+
+  Recurrence Relation: `dp[i][j] = min(dp[i-1][j], dp[i][j-coins[i-1]] + 1)` 
+
+     - `Variations Unbounded Knapsack problem` same coins can be used more than once
+     - Exclude the current item: `dp[i-1][j]`
+     - Include the current item: `dp[i][j-coins[i-1]] + 1`
+
+  Base Case: `dp[0][j] = inf, dp[i][0] = 0` 
+
+- **[Coin Change 2](https://leetcode.com/problems/coin-change-ii/description/)**  
+
+  Recurrence Relation: `dp[i][j] = dp[i - 1][j] + dp[i][j - coins[i - 1]]` 
+
+     - `Variations Unbounded Knapsack problem`
+     - Exclude the current item: `dp[i-1][j]`
+     - Include the current item: `dp[i][j-coins[i-1]]`
+  
+  - Base Case : ` dp[i][0] = 1`
 
 - **[Combination Sum IV](https://leetcode.com/problems/combination-sum-iv/)**  
 
-  Recurrence Relation: `dp[i] += dp[i-num] for num in nums`  
-
-  Base Case: `dp[0] = 1`  
+  - Recurrence Relation: `dp[i] += dp[i-num] for num in nums`  
+  - Base Case: `dp[0] = 1`  
 
 - **[Target Sum](https://leetcode.com/problems/target-sum/)**  
 
-  Recurrence Relation: `dp[i][sum] = dp[i-1][sum-nums[i-1]] + dp[i-1][sum+nums[i-1]]`  
-
-  Base Case: `dp[0][0] = 1`  
-
-- **[Knapsack Problem (0/1)](https://www.geeksforgeeks.org/0-1-knapsack-problem-dp-10/)**  
-
-  Recurrence Relation: `dp[i][j] = max(dp[i-1][j], dp[i-1][j-weight[i-1]] + value[i-1])`  
-
-  Base Case: `dp[i][0] = 0, dp[0][j] = 0`  
-
-- **[Count of Subsets with Given Sum](https://practice.geeksforgeeks.org/problems/perfect-sum-problem5633/1)**  
-
-  Recurrence Relation: `dp[i][j] = dp[i-1][j] + dp[i-1][j-arr[i-1]]`  
-
-  Base Case: `dp[i][0] = 1, dp[0][j] = 0 for j > 0`  
-
+  - Recurrence Relation: `dp[i][sum] = dp[i-1][sum-nums[i-1]] + dp[i-1][sum+nums[i-1]]`  
+  - Base Case: `dp[0][0] = 1`  
+ 
 - **[Longest Increasing Subsequence](https://leetcode.com/problems/longest-increasing-subsequence/)**  
 
-  Recurrence Relation: `dp[i] = max(dp[j] + 1 for all j where nums[j] < nums[i])`  
-
-  Base Case: `dp[i] = 1 for all i`  
+  - Recurrence Relation: `dp[i] = max(dp[j] + 1 for all j where nums[j] < nums[i])`  
+  - Base Case: `dp[i] = 1 for all i`  
 
 
  **4. String(Subsequence, Substring, Edit Distance)** 
@@ -1149,8 +1179,7 @@
 
 - **[Longest Common Subsequence](https://leetcode.com/problems/longest-common-subsequence/)**  
 
-  Recurrence Relation:  
-  `dp[i][j] = dp[i-1][j-1] + 1 if text1[i-1] == text2[j-1] else max(dp[i-1][j], dp[i][j-1])`  
+  Recurrence Relation: `dp[i][j] = dp[i-1][j-1] + 1 if text1[i-1] == text2[j-1] else max(dp[i-1][j], dp[i][j-1])`  
 
   Base Case: `dp[i][0] = 0, dp[0][j] = 0`  
 
@@ -1182,13 +1211,6 @@
   `dp[i][j] = dp[i-1][j-1] + dp[i-1][j] if s[i-1] == t[j-1] else dp[i-1][j]`  
 
   Base Case: `dp[i][0] = 1, dp[0][j] = 0 for j > 0`  
-
-- **[Minimum Insertion Steps to Make a String Palindrome](https://leetcode.com/problems/minimum-insertion-steps-to-make-a-string-palindrome/)**  
-
-  Recurrence Relation:  
-  `dp[i][j] = dp[i+1][j-1] if s[i] == s[j] else min(dp[i+1][j], dp[i][j-1]) + 1`  
-
-  Base Case: `dp[i][i] = 0`  
 
 - **[Interleaving String](https://leetcode.com/problems/interleaving-string/)**  
 
@@ -1265,12 +1287,14 @@
 
  **6. Matrix Chain Multiplication**  
 
+   - [Minimum Cost to Cut a Stick](https://leetcode.com/problems/minimum-cost-to-cut-a-stick/description/)
+   
+   - [Burst Balloons](https://leetcode.com/problems/burst-balloons/description/) 
 
 
  **7. DP With Path Traversal**
 
   - [Frog Jump](https://leetcode.com/problems/frog-jump/) - Find if a frog can reach the final stone.   
-
 
 
  **8. Bitmasking + DP**  

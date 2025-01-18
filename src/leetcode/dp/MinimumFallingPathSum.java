@@ -7,7 +7,6 @@ import java.util.Arrays;
 public class MinimumFallingPathSum {
 
     public static int helper(int[][] matrix, int row, int col, int[][] dp) {
-
         if (row >= matrix.length || col >= matrix[0].length || row < 0 || col < 0) return Integer.MAX_VALUE;
 
         if (row == matrix.length - 1) return matrix[row][col];
@@ -26,7 +25,7 @@ public class MinimumFallingPathSum {
         return dp[row][col];
     }
 
-    public static int topDown(int[][] matrix) {
+    public static int recursive(int[][] matrix) {
         int[][] dp = new int[matrix.length][matrix[0].length];
         for (int[] row : dp) {
             Arrays.fill(row, Integer.MAX_VALUE);
@@ -41,7 +40,7 @@ public class MinimumFallingPathSum {
     }
 
 
-    public static int bottomUp(int[][] matrix) {
+    public static int iterative(int[][] matrix) {
         int m = matrix.length;
         int n = matrix[0].length;
         int[][] dp = new int[m][n + 2];
@@ -68,7 +67,6 @@ public class MinimumFallingPathSum {
         }
 
         int min = Integer.MAX_VALUE;
-
         for (int i = 0; i < n; i++) {
             min = Math.min(dp[matrix.length - 1][i + 1], min);
         }
@@ -78,14 +76,12 @@ public class MinimumFallingPathSum {
 
 
     public static int minFallingPathSum(int[][] matrix) {
-      return topDown(matrix);
-        //return bottomUp(matrix);
+        return recursive(matrix);
     }
 
 
     public static void main(String[] args) {
         int[][] matrix = {{2, 1, 3}, {6, 5, 4}, {7, 8, 9}};
-
         System.out.println(minFallingPathSum(matrix));
     }
 

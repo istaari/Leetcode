@@ -3,10 +3,8 @@ package leetcode.dp;
 public class UniquePaths {
 
 
-    public static int uniquePaths(int m, int n) {
-        // Create a 2D problems.array to store the number of unique paths
+    public static int uniquePathsIterative(int m, int n) {
         int[][] dp = new int[m][n];
-        // Initialize the top row and left column to 1 (only one way to reach each cell in the top row or left column)
         for (int i = 0; i < m; i++) {
             dp[i][0] = 1;
         }
@@ -15,19 +13,18 @@ public class UniquePaths {
         }
 
 
-        // Build the DP table by summing the paths from the cell above and the cell to the left
         for (int i = 1; i < m; i++) {
             for (int j = 1; j < n; j++) {
                 dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
             }
         }
 
-        // The bottom-right cell contains the final result
+
         return dp[m - 1][n - 1];
     }
 
 
-    public int uniquePathsSpaceOptimized(int m, int n) {
+    public static int uniquePathsSpaceIterativeOptimized(int m, int n) {
         // Create a 2-row array for optimization
         int[][] dp = new int[2][n];
 
@@ -48,11 +45,10 @@ public class UniquePaths {
     }
 
 
-
     public static void main(String[] args) {
         int m = 3;
         int n = 3;
-        int paths = uniquePaths(m, n);
+        int paths = uniquePathsSpaceIterativeOptimized(m, n);
         System.out.println("Number of unique paths: " + paths);
     }
 

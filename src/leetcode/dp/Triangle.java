@@ -15,18 +15,16 @@ public class Triangle {
             Arrays.fill(dp[i], Integer.MAX_VALUE);
         }
 
-        return bottomUp(triangle);
-
-        //return topDown(triangle, 0, 0, dp);
+        return iterative(triangle);
     }
 
-    public static int topDown(List<List<Integer>> triangle, int row, int col, int[][] dp) {
+    public static int recursive(List<List<Integer>> triangle, int row, int col, int[][] dp) {
         if (row == triangle.size() - 1) return triangle.get(row).get(col);
 
         if (dp[row][col] != Integer.MAX_VALUE) return dp[row][col];
 
-        int nextRow = topDown(triangle, row + 1, col, dp);
-        int diagonal = topDown(triangle, row + 1, col + 1, dp);
+        int nextRow = recursive(triangle, row + 1, col, dp);
+        int diagonal = recursive(triangle, row + 1, col + 1, dp);
 
         dp[row][col] = triangle.get(row).get(col) + Math.min(nextRow, diagonal);
 
@@ -34,7 +32,7 @@ public class Triangle {
     }
 
 
-    public static int bottomUp(List<List<Integer>> triangle) {
+    public static int iterative(List<List<Integer>> triangle) {
         int n = triangle.size();
         int[] dp = new int[n];
 
@@ -44,12 +42,9 @@ public class Triangle {
         }
 
         for (int i = n - 2; i >= 0; i--) {
-
             for (int j = 0; j < triangle.get(i).size(); j++) {
-
                 dp[j] = triangle.get(i).get(j) + Math.min(dp[j], dp[j + 1]);
             }
-
         }
 
         return dp[0];
