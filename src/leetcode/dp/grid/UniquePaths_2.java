@@ -1,6 +1,6 @@
-package leetcode.dp;
+package leetcode.dp.grid;
 
-public class UniquePaths2 {
+public class UniquePaths_2 {
 
 
     public static int uniquePathsWithObstaclesIterative(int[][] obstacleGrid) {

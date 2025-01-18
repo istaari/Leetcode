@@ -1,6 +1,4 @@
-package leetcode.dp;
-
-import java.util.Arrays;
+package leetcode.dp.subsequence;
 
 public class CoinChange {
 

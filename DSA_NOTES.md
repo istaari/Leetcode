@@ -1035,29 +1035,6 @@
    Base Cases: `f(0) = 1` (empty string), `f(1) = 1` (if valid single digit)  
 
 
-- **[Jump Game](https://leetcode.com/problems/jump-game/)**  
-
-   - For dp recursive solution check from each index, for all possible jumps, if any of the jump reaches the end then return true
-   - For iterative solution, base case `dp[n - 1] = true` from `n-2` check till the end, if any of the jump reaches the end then update the dp array
-
-
-- **[Jump Game II](https://leetcode.com/problems/jump-game-ii/)**  
-   
-   ```java
-    int jump(int[] nums, int pos) {
-        if (pos >= nums.length - 1) {
-            return 0; // Base case: we've reached or exceeded the last index
-        }
-
-        int minJumps = 10001;
-        for (int j = 1; j <= nums[pos]; j++) {
-            // Explore all possible jump sizes from current position
-            minJumps = Math.min(minJumps, 1 + jump(nums, pos + j));
-        }
-        return minJumps;
-    }
-   ```
-
 - **[Minimum Cost to Hire K Workers](https://leetcode.com/problems/minimum-cost-to-hire-k-workers/)**  
 
  **2. Grids(Path Problem)**
@@ -1093,7 +1070,7 @@
 
  **Examples:**
 
-- **[Partition Equal Subset Sum](https://leetcode.com/problems/partition-equal-subset-sum/)**  
+- **[Partition Equal Subset Sum](https://leetcode.com/problems/partition-equal-subset-sum/)**  - Check if subset exists with some target
 
   - Check if sum is even, then divide the sum by 2, then check if subset sum is equal to half of sum
   - In `recursive approach` use `include or exclude` decision tree technique
@@ -1137,37 +1114,33 @@
           return dp[nums.length][targetSum];
       }
     ``` 
-- **[Coin Change](https://leetcode.com/problems/coin-change/)** 
+- **[Coin Change](https://leetcode.com/problems/coin-change/)**  - Find minimum number of coins to make a sum, `same coins can be used more than once`
 
-  Recurrence Relation: `dp[i][j] = min(dp[i-1][j], dp[i][j-coins[i-1]] + 1)` 
+  - Recurrence Relation: `dp[i][j] = min(dp[i-1][j], dp[i][j-coins[i-1]] + 1)`
+  - Base Case: `dp[0][j] = inf, dp[i][0] = 0`  
+  - `Variations Unbounded Knapsack problem`
+  - Exclude the current item: `dp[i-1][j]`
+  - Include the current item: `dp[i][j-coins[i-1]] + 1`
 
-     - `Variations Unbounded Knapsack problem` same coins can be used more than once
-     - Exclude the current item: `dp[i-1][j]`
-     - Include the current item: `dp[i][j-coins[i-1]] + 1`
+- **[Coin Change 2](https://leetcode.com/problems/coin-change-ii/description/)**  - Find number of ways to make a sum, `same coins can be used more than once`
 
-  Base Case: `dp[0][j] = inf, dp[i][0] = 0` 
-
-- **[Coin Change 2](https://leetcode.com/problems/coin-change-ii/description/)**  
-
-  Recurrence Relation: `dp[i][j] = dp[i - 1][j] + dp[i][j - coins[i - 1]]` 
-
-     - `Variations Unbounded Knapsack problem`
-     - Exclude the current item: `dp[i-1][j]`
-     - Include the current item: `dp[i][j-coins[i-1]]`
-  
+  - Recurrence Relation: `dp[i][j] = dp[i - 1][j] + dp[i][j - coins[i - 1]]` 
   - Base Case : ` dp[i][0] = 1`
-
-- **[Combination Sum IV](https://leetcode.com/problems/combination-sum-iv/)**  
+  - `Variations Unbounded Knapsack problem`
+  - Exclude the current item: `dp[i-1][j]`
+  - Include the current item: `dp[i][j-coins[i-1]]`
+  
+- **[Combination Sum IV](https://leetcode.com/problems/combination-sum-iv/)** - Number of ways(no. of Subsequence) to make a target sum, `same number can be used more than once`
 
   - Recurrence Relation: `dp[i] += dp[i-num] for num in nums`  
   - Base Case: `dp[0] = 1`  
 
-- **[Target Sum](https://leetcode.com/problems/target-sum/)**  
+- **[Target Sum](https://leetcode.com/problems/target-sum/)** - Number of ways to make a target sum, using `+` and `-` operator, Same number can be used more than once
 
   - Recurrence Relation: `dp[i][sum] = dp[i-1][sum-nums[i-1]] + dp[i-1][sum+nums[i-1]]`  
   - Base Case: `dp[0][0] = 1`  
  
-- **[Longest Increasing Subsequence](https://leetcode.com/problems/longest-increasing-subsequence/)**  
+- **[Longest Increasing Subsequence](https://leetcode.com/problems/longest-increasing-subsequence/)**  - Length of longest increasing subsequence
 
   - Recurrence Relation: `dp[i] = max(dp[j] + 1 for all j where nums[j] < nums[i])`  
   - Base Case: `dp[i] = 1 for all i`  
@@ -1177,20 +1150,20 @@
 
  **Examples:**
 
-- **[Longest Common Subsequence](https://leetcode.com/problems/longest-common-subsequence/)**  
+- **[Longest Common Subsequence](https://leetcode.com/problems/longest-common-subsequence/)** - Longest common subsequence between two strings
 
   Recurrence Relation: `dp[i][j] = dp[i-1][j-1] + 1 if text1[i-1] == text2[j-1] else max(dp[i-1][j], dp[i][j-1])`  
 
   Base Case: `dp[i][0] = 0, dp[0][j] = 0`  
 
-- **[Longest Palindromic Subsequence](https://leetcode.com/problems/longest-palindromic-subsequence/)**  
+- **[Longest Palindromic Subsequence](https://leetcode.com/problems/longest-palindromic-subsequence/)**  - Longest palindromic subsequence in a string
 
   Recurrence Relation:  
   `dp[i][j] = dp[i+1][j-1] + 2 if s[i] == s[j] else max(dp[i+1][j], dp[i][j-1])`  
 
   Base Case: `dp[i][i] = 1`  
 
-- **[Edit Distance (Levenshtein Distance)](https://leetcode.com/problems/edit-distance/)**  
+- **[Edit Distance (Levenshtein Distance)](https://leetcode.com/problems/edit-distance/)** - minimum number of operations required to convert word1 to word2, `insert, delete, replace`
 
   Recurrence Relation:  
   `dp[i][j] = min(dp[i-1][j-1] + cost, dp[i-1][j] + 1, dp[i][j-1] + 1)`  
@@ -1198,21 +1171,21 @@
 
   Base Case: `dp[i][0] = i, dp[0][j] = j`  
 
-- **[Longest Palindromic Substring](https://leetcode.com/problems/longest-palindromic-substring/)**  
+- **[Longest Palindromic Substring](https://leetcode.com/problems/longest-palindromic-substring/)**  - Longest palindromic substring in a string
 
   Recurrence Relation:  
   `dp[i][j] = dp[i+1][j-1] and s[i] == s[j]`  
 
   Base Case: `dp[i][i] = True, dp[i][i+1] = (s[i] == s[i+1])`  
 
-- **[Distinct Subsequences](https://leetcode.com/problems/distinct-subsequences/)**  
+- **[Distinct Subsequences](https://leetcode.com/problems/distinct-subsequences/)**  - Number of distinct subsequences of `s` which equals `t`
 
   Recurrence Relation:  
   `dp[i][j] = dp[i-1][j-1] + dp[i-1][j] if s[i-1] == t[j-1] else dp[i-1][j]`  
 
   Base Case: `dp[i][0] = 1, dp[0][j] = 0 for j > 0`  
 
-- **[Interleaving String](https://leetcode.com/problems/interleaving-string/)**  
+- **[Interleaving String](https://leetcode.com/problems/interleaving-string/)**  - find target string s2 by interleaving substring of s1 and s2
 
   Recurrence Relation:  
   `dp[i][j] = (dp[i-1][j] and s1[i-1] == s3[i+j-1]) or (dp[i][j-1] and s2[j-1] == s3[i+j-1])`  
@@ -1238,7 +1211,7 @@
   Base Case: `dp[0][0] = True, dp[i][0] = False for i > 0, dp[0][j] = dp[0][j-1] if p[j-1] == '*'`  
 
 
- **5. Stock Optimizations** 
+**5. Stock Optimizations** 
 
 **Examples:**
 
@@ -1287,40 +1260,50 @@
 
  **6. Matrix Chain Multiplication**  
 
+ **Examples:**
+
    - [Minimum Cost to Cut a Stick](https://leetcode.com/problems/minimum-cost-to-cut-a-stick/description/)
-   
+
    - [Burst Balloons](https://leetcode.com/problems/burst-balloons/description/) 
 
 
  **7. DP With Path Traversal**
 
-  - [Frog Jump](https://leetcode.com/problems/frog-jump/) - Find if a frog can reach the final stone.   
+ **Examples:**
+
+ - [Frog Jump](https://leetcode.com/problems/frog-jump/)
+
+ - **[Jump Game](https://leetcode.com/problems/jump-game/)**  
+
+    - For dp recursive solution check from each index, `for all possible jumps`, if any of the jump reaches the end then return true
+    - For iterative solution, base case `dp[n - 1] = true` from `n-2` check till the end, if any of the jump reaches the end then update the dp array
+
+ - **[Jump Game II](https://leetcode.com/problems/jump-game-ii/)**  
+  
+  ```java
+    int jump(int[] nums, int pos) {
+        if (pos >= nums.length - 1) {
+            return 0; // Base case: we've reached or exceeded the last index
+        }
+
+        int minJumps = 10001;
+        for (int j = 1; j <= nums[pos]; j++) {
+            // Explore all possible jump sizes from current position
+            minJumps = Math.min(minJumps, 1 + jump(nums, pos + j));
+        }
+        return minJumps;
+    }
+  ```
 
 
- **8. Bitmasking + DP**  
+**8. Bitmasking + DP**  
 
 **Examples:**
 
-- **[Partition to K Equal Sum Subsets](https://leetcode.com/problems/partition-to-k-equal-sum-subsets/)**  
+- **[Partition to K Equal Sum Subsets](https://leetcode.com/problems/partition-to-k-equal-sum-subsets/)**  - Partition a set of numbers into `k` subsets where each subset has the same sum
 
-  Problem: Partition a set of numbers into `k` subsets where each subset has the same sum.  
+- **[Word Break II](https://leetcode.com/problems/word-break-ii/)**  - Break a sentence into words using a dictionary of words
 
-  Recurrence Relation:  
-  `dp[mask] = dp[mask ^ (1 << i)] + nums[i] == target`  
-  where `mask` represents the subset, and `i` iterates over elements.  
-
-  Base Case: `dp[0] = 0` (empty subset).  
-
-
-- **[Word Break II](https://leetcode.com/problems/word-break-ii/)**  
-
-  Problem: Given a string and a dictionary, find all possible word breaks such that the string is split into dictionary words.  
-
-  Recurrence Relation:  
-  `dp[mask] = dp[mask ^ (1 << i)] + words[i]`  
-  where `mask` represents the current substring and `i` iterates over the words.  
-
-  Base Case: `dp[0] = ""` (empty string). 
 
 ---
 
@@ -1334,8 +1317,6 @@
 
 - [Design Add and Search Words Data Structure](https://leetcode.com/problems/design-add-and-search-words-data-structure/) - Implement a Trie that supports adding words and searching words with `.` as a wildcard.
 
-- [Implement Trie II (Prefix Tree)](https://leetcode.com/problems/implement-trie-ii-prefix-tree/) - Extend the basic Trie to support counting words and prefixes.
-
 
 **2. Word Search and Prefix Matching**
 
@@ -1344,8 +1325,6 @@
 - [Concatenated Words](https://leetcode.com/problems/concatenated-words/) - Find all words that can be formed by concatenating two or more dictionary words.
 
 - [Replace Words](https://leetcode.com/problems/replace-words/) - Replace words in a sentence with the shortest prefix found in a dictionary.
-
-- [Short Encoding of Words](https://leetcode.com/problems/short-encoding-of-words/) - Find the minimum encoding length of a list of words using Trie (suffix encoding).
 
 
 **3. Autocomplete and Suggestions**
@@ -1361,7 +1340,7 @@
 
 - [Prefix and Suffix Search](https://leetcode.com/problems/prefix-and-suffix-search/) - Design a data structure that finds words matching a given prefix and suffix.
 
-- [677. Map Sum Pairs](https://leetcode.com/problems/map-sum-pairs/) - Implement a Trie-based key-value mapping where keys share prefixes.
+- [Map Sum Pairs](https://leetcode.com/problems/map-sum-pairs/) - Implement a Trie-based key-value mapping where keys share prefixes.
 
 
 **5. Number Manipulation Using Trie**
@@ -1372,93 +1351,6 @@
 
 - [Count Pairs With XOR in a Range](https://leetcode.com/problems/count-pairs-with-xor-in-a-range/) - Count pairs in an array whose XOR lies within a given range using a Trie.
  
-
----
-## Graph
-
-
-### **Traversal & Basic Operations**
-
-**Depth-First Search (DFS)**  
-
-**Breadth-First Search (BFS)** 
-
-**Number of Connected Components** 
-
-**Shortest Path - BFS**  
-
-**Grid-Based Problems** (e.g., shortest path in a grid, number of islands).  
-
-
-### **Cycle Detection**
-
-**Detect Cycle in an Undirected Graph**  
-
-**Detect Cycle in a Directed Graph**  
-
-**Detect Negative Weight Cycle** (using Bellman-Ford).  
-
-
-### **Topological Sort & Directed Acyclic Graphs (DAG)**
-
-**Topological Sort**  
-
-**Kahn’s Algorithm** 
-
-**Longest Path in a DAG**  
-
-
-### **Minimum Spanning Tree (MST)**
-
-**Kruskal's Algorithm**  
-
-**Prim's Algorithm** 
-
-**Borůvka's Algorithm** (another MST algorithm).  
-
-
-### **Shortest Path Algorithms**
-
-**Dijkstra's Algorithm** 
-
-**Bellman-Ford Algorithm** 
-
-**Floyd-Warshall Algorithm** 
-
-**Shortest Path in Weighted DAG** 
-
-
-###  **Graph Coloring**
-
-**M-Coloring Problem** (Can the graph be colored with M colors?). 
-
-**Check Bipartite Graph** (using graph coloring).  
-
-**Chromatic Number** (Minimum number of colors to color the graph).  
-
-
-### **Connectivity and Bridges**
-
-**Articulation Points** (Nodes whose removal increases connected components).  
-
-**Bridges in a Graph** (Edges whose removal increases connected components).  
-
-**Strongly Connected Components (SCC)** (Kosaraju, Tarjan’s algorithms).  
-
-**2-Edge Connected Components**.  
-
-
-### **Flow and Matching Problems**
-
-**Ford-Fulkerson Algorithm** (Maximum Flow).  
-
-**Edmonds-Karp Algorithm** (Optimized Maximum Flow). 
-
-**Dinic’s Algorithm** (Efficient Maximum Flow).  
-
-**Bipartite Graph Check** (using DFS/BFS).  
-
-**Maximum Bipartite Matching** (Hungarian Algorithm).  
 
 ---
 
@@ -1497,7 +1389,7 @@ System.out.println(b); // Output: 5
 
 **2. Toggle a Specific Bit**
 
-`It means doing NOT operation at a specific bit position(using XOR ^)`
+- It means doing NOT operation at a specific bit position(using XOR ^)
 
 ```java
 
@@ -1515,7 +1407,7 @@ public int toggleBit(int number, int bitPosition) {
 
 **3. Set a Specific Bit**
 
-`It means setting 1 at a specific bit position (using OR | )`
+- It means setting 1 at a specific bit position (using OR | )
 
 ```java
 
@@ -1532,7 +1424,7 @@ public int setBit(int number, int bitPosition) {
 
 **4. clear a Specific Bit**
 
-`It means setting 0 at a specific bit position (using AND and Complement )`
+- It means setting 0 at a specific bit position (using AND and Complement )
 
 ```java
 
@@ -1787,6 +1679,95 @@ public boolean isPowerOfTwo(int number) {
   
   So, 4B (hex) = 0453 (octal)
   ```
+
+---
+
+## Graph
+
+
+### **Traversal & Basic Operations**
+
+**Depth-First Search (DFS)**  
+
+**Breadth-First Search (BFS)** 
+
+**Number of Connected Components** 
+
+**Shortest Path - BFS**  
+
+**Grid-Based Problems** (e.g., shortest path in a grid, number of islands).  
+
+
+### **Cycle Detection**
+
+**Detect Cycle in an Undirected Graph**  
+
+**Detect Cycle in a Directed Graph**  
+
+**Detect Negative Weight Cycle** (using Bellman-Ford).  
+
+
+### **Topological Sort & Directed Acyclic Graphs (DAG)**
+
+**Topological Sort**  
+
+**Kahn’s Algorithm** 
+
+**Longest Path in a DAG**  
+
+
+### **Minimum Spanning Tree (MST)**
+
+**Kruskal's Algorithm**  
+
+**Prim's Algorithm** 
+
+**Borůvka's Algorithm** (another MST algorithm).  
+
+
+### **Shortest Path Algorithms**
+
+**Dijkstra's Algorithm** 
+
+**Bellman-Ford Algorithm** 
+
+**Floyd-Warshall Algorithm** 
+
+**Shortest Path in Weighted DAG** 
+
+
+###  **Graph Coloring**
+
+**M-Coloring Problem** (Can the graph be colored with M colors?). 
+
+**Check Bipartite Graph** (using graph coloring).  
+
+**Chromatic Number** (Minimum number of colors to color the graph).  
+
+
+### **Connectivity and Bridges**
+
+**Articulation Points** (Nodes whose removal increases connected components).  
+
+**Bridges in a Graph** (Edges whose removal increases connected components).  
+
+**Strongly Connected Components (SCC)** (Kosaraju, Tarjan’s algorithms).  
+
+**2-Edge Connected Components**.  
+
+
+### **Flow and Matching Problems**
+
+**Ford-Fulkerson Algorithm** (Maximum Flow).  
+
+**Edmonds-Karp Algorithm** (Optimized Maximum Flow). 
+
+**Dinic’s Algorithm** (Efficient Maximum Flow).  
+
+**Bipartite Graph Check** (using DFS/BFS).  
+
+**Maximum Bipartite Matching** (Hungarian Algorithm).  
+
 
 ---
 

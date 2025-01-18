@@ -1,4 +1,4 @@
-package leetcode.dp;
+package leetcode.dp.grid;
 
 import java.util.ArrayList;
 import java.util.Arrays;

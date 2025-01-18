@@ -1,4 +1,4 @@
-package leetcode.dp;
+package leetcode.dp.subsequence;
 
 public class CoinChange_2 {
 

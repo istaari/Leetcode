@@ -1,11 +1,5 @@
 # DSA Patterns Links
 
-## Leetcode Solution Discussion
-
--  abc
-- abd
-
-
 ## Two Pointer
 
 - [Comprehensive Guide on Two Pointer Patterns](https://leetcode.com/discuss/study-guide/1688903/Solved-all-two-pointers-problems-in-100-days)
@@ -58,3 +52,7 @@
 
 - [Backtracking Algorithm Problems to Practice](https://leetcode.com/discuss/study-guide/1405817/backtracking-algorithm-problems-to-practice)
 - [Backtracking Template and General Approach](https://leetcode.com/problems/palindrome-partitioning/solutions/182307/Java:-Backtracking-Template-General-Approach/)
+
+## Bit Manipulation
+
+- [Bit Manipulation](https://leetcode.com/discuss/interview-question/3695233/all-types-of-patterns-for-bits-manipulations-and-how-to-use-it)

@@ -1,16 +1,14 @@
-package leetcode.dp;
+package leetcode.dp.path;
 
-public class CanJump2 {
+public class CanJump_2 {
 
     public static int canJump(int[] nums) {
-
         int far = 0;
         int reached = 0;
         int count = 0;
         int n = nums.length;
 
         for (int i = 0; i < n - 1; i++) {
-
             far = Math.max(i + nums[i], far);
 
             if (i == reached) {
