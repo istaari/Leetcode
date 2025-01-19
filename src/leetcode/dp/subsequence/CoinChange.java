@@ -1,6 +1,35 @@
 package leetcode.dp.subsequence;
 
+import java.util.Arrays;
+
 public class CoinChange {
+
+
+    public static int helper(int[] coins, int amount, int[] memo) {
+        if (amount < 0) return -1;
+        if (amount == 0) return 0;
+
+        if (memo[amount] != -2) return memo[amount];
+
+        int minCount = -1;
+        for (int coin : coins) {
+            int count = 1 + helper(coins, amount - coin, memo);
+
+            if (count > 0) {
+                minCount = (minCount < 0) ? count : Math.min(count, minCount);
+            }
+        }
+
+        memo[amount] = minCount;
+        return memo[amount];
+    }
+
+    public static int recursive(int[] coins, int amount) {
+        int[] memo = new int[amount + 1];
+        Arrays.fill(memo, -2);
+        return helper(coins, amount, memo);
+    }
+
 
     public static int iterative(int[] coins, int amount) {
         int[][] dp = new int[coins.length + 1][amount + 1];
@@ -31,7 +60,7 @@ public class CoinChange {
     public static void main(String[] args) {
         int[] coins = {1,2,5};
         int amount = 11;
-        System.out.println(iterative(coins, amount));
+        System.out.println(recursive(coins, amount));
     }
 
 }

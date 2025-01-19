@@ -32,6 +32,7 @@
 - Combine Smallest subproblems to solve bigger problems
 - Think of smallest input like size is empty or 1, or string is empty
 - Some DP problems are about maximizing/minimizing a value subject to some constraints
+- In Recursive dp think from the last
 
 ## Math
 

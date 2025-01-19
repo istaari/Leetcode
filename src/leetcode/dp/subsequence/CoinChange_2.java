@@ -1,6 +1,46 @@
 package leetcode.dp.subsequence;
 
+import java.util.Arrays;
+
 public class CoinChange_2 {
+
+
+    private static int helper0(int amount, int[] coins, int index, Integer[][] memo) {
+        if (amount == 0) return 1;
+        if (amount < 0 || index == coins.length) return 0;
+
+        if (memo[index][amount] != null) return memo[index][amount];
+
+        int include = helper0(amount - coins[index], coins, index, memo);
+        int exclude = helper0(amount, coins, index + 1, memo);
+
+        memo[index][amount] = include + exclude;
+
+        return memo[index][amount];
+    }
+
+
+    private static int helper(int[] coins, int amount, int index, Integer[][] memo) {
+        if (amount == 0) return 1;
+        if (amount < 0 || index >= coins.length) return 0;
+
+        if (memo[index][amount] != null) return memo[index][amount] ;
+
+        int count = 0;
+        for (int i = index; i < coins.length; i++) {
+            count += helper(coins, amount - coins[i], i, memo);
+        }
+
+        memo[index][amount] = count;
+        return count;
+    }
+
+
+    public static int recursive(int amount, int[] coins) {
+        Integer[][] memo = new Integer[coins.length][amount + 1];
+        return helper(coins, amount, 0, memo);
+    }
+
 
     public static int Iterative(int amount, int[] coins) {
         int[][] dp = new int[coins.length + 1][amount + 1];
@@ -27,6 +67,6 @@ public class CoinChange_2 {
     public static void main(String[] args) {
         int[] coins = {1, 2, 5};
         int amount = 5;
-        System.out.println(Iterative(amount, coins));
+        System.out.println(recursive(amount, coins)); // 4
     }
 }

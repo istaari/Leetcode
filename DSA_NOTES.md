@@ -1121,6 +1121,29 @@
   - `Variations Unbounded Knapsack problem`
   - Exclude the current item: `dp[i-1][j]`
   - Include the current item: `dp[i][j-coins[i-1]] + 1`
+  
+  ```java
+     // Recursion Pattern : generating permutations
+     int helper(int[] coins, int amount, int[] memo) {
+          if (amount < 0) return -1;
+          if (amount == 0) return 0;
+
+          if (memo[amount] != -2) return memo[amount];
+
+          int minCount = -1;
+          for (int coin : coins) {
+              int count = 1 + helper(coins, amount - coin, memo);
+
+              if (count > 0) {
+                  minCount = (minCount < 0) ? count : Math.min(count, minCount);
+              }
+          }
+
+          memo[amount] = minCount;
+          return memo[amount];
+    }
+  ```
+
 
 - **[Coin Change 2](https://leetcode.com/problems/coin-change-ii/description/)**  - Find number of ways to make a sum, `same coins can be used more than once`
 
@@ -1129,6 +1152,40 @@
   - `Variations Unbounded Knapsack problem`
   - Exclude the current item: `dp[i-1][j]`
   - Include the current item: `dp[i][j-coins[i-1]]`
+
+
+  ```java
+    /* Recursion Pattern : generating combinations, generate subsets, generate subsequences */
+    int helper0(int amount, int[] coins, int index, Integer[][] memo) {
+        if (amount == 0) return 1;
+        if (amount < 0 || index == coins.length) return 0;
+
+        if (memo[index][amount] != null) return memo[index][amount];
+
+        int include = helper0(amount - coins[index], coins, index, memo);
+        int exclude = helper0(amount, coins, index + 1, memo);
+
+        memo[index][amount] = include + exclude;
+
+        return memo[index][amount];
+    }
+
+   int helper(int[] coins, int amount, int index, Integer[][] memo) {
+        if (amount == 0) return 1;
+        if (amount < 0 || index >= coins.length) return 0;
+
+        if (memo[index][amount] != null) return memo[index][amount];
+
+        int count = 0;
+        for (int i = index; i < coins.length; i++) {
+            count += helper(coins, amount - coins[i], i, memo);
+        }
+
+        memo[index][amount] = count;
+        return count;
+    }
+
+  ```
   
 - **[Combination Sum IV](https://leetcode.com/problems/combination-sum-iv/)** - Number of ways(no. of Subsequence) to make a target sum, `same number can be used more than once`
 
@@ -1370,10 +1427,15 @@
 **Examples:**
 
 - [Flood Fill](https://leetcode.com/problems/flood-fill/) - Fill a connected region in a grid starting from a given point.
+
 - [Number of Islands](https://leetcode.com/problems/number-of-islands/) - Count the number of islands in a 2D grid of water and land.
+
 - [Word Ladder I](https://leetcode.com/problems/word-ladder/) - Find the shortest transformation sequence from one word to another using a dictionary.
+
 - [Word Ladder II](https://leetcode.com/problems/word-ladder-ii/) - Find all the shortest transformation sequences from one word to another.
+
 - [Evaluate Division](https://leetcode.com/problems/evaluate-division/) - Evaluate division results based on given equations.
+
 - [Get Watched Videos by Your Friends](https://leetcode.com/problems/get-watched-videos-by-your-friends/) - Find the most popular videos watched by your friends in a social network.
 - [Cut Off Trees for Golf Event](https://leetcode.com/problems/cut-off-trees-for-golf-event/) - Minimize the number of steps required to cut off trees in a golf course.
 
@@ -1383,14 +1445,23 @@
 **Examples:**
 
 - [Number of Islands](https://leetcode.com/problems/number-of-islands/) - Count the number of distinct islands in a 2D grid.
+
 - [Flood Fill](https://leetcode.com/problems/flood-fill/) - Fill a connected region in a grid starting from a specific point.
+
 - [Longest Increasing Path in a Matrix](https://leetcode.com/problems/longest-increasing-path-in-a-matrix/) - Find the longest increasing path in a matrix.
+
 - [Evaluate Division](https://leetcode.com/problems/evaluate-division/) - Evaluate the result of division based on a set of equations.
+
 - [Robot Room Cleaner](https://leetcode.com/problems/robot-room-cleaner/) - Implement a robot to clean a room by navigating and avoiding obstacles.
+
 - [Most Stones Removed with Same Row or Column](https://leetcode.com/problems/most-stones-removed-with-same-row-or-column/) - Find the maximum number of stones that can be removed in a grid.
+
 - [Reconstruct Itinerary](https://leetcode.com/problems/reconstruct-itinerary/) - Reconstruct a travel itinerary based on given flight tickets.
+
 - [Tree Diameter](https://leetcode.com/problems/tree-diameter/) - Find the diameter of a tree (the longest path between any two nodes).
+
 - [Accounts Merge](https://leetcode.com/problems/accounts-merge/) - Merge accounts with the same email addresses.
+
 - [Connected Components in a Graph](https://leetcode.com/problems/connected-components-in-an-undirected-graph/) - Find the connected components in an undirected graph.
 
 
@@ -1399,9 +1470,13 @@
 **Examples:**
 
 - [Number of Provinces](https://leetcode.com/problems/number-of-provinces/) - Count the number of connected provinces in a graph.
+
 - [Number of Connected Components in an Undirected Graph](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/) - Find the number of connected components in an undirected graph.
+
 - [Number of Operations to Make Network Connected](https://leetcode.com/problems/number-of-operations-to-make-network-connected/) - Find the minimum number of operations to make the network fully connected.
+
 - [Accounts Merge](https://leetcode.com/problems/accounts-merge/) - Merge accounts with common email addresses into a single account.
+
 - [Critical Connections in a Network](https://leetcode.com/problems/critical-connections-in-a-network/) - Identify the critical connections in a network that, if removed, would increase the number of connected components.
 
 
@@ -1421,8 +1496,11 @@
 **Examples:**
 
 - [Course Schedule](https://leetcode.com/problems/course-schedule/) - Determine if it's possible to finish all courses given the prerequisite constraints.
+
 - [Course Schedule II](https://leetcode.com/problems/course-schedule-ii/) - Find the order of courses to take to finish all courses given the prerequisite constraints.
+
 - [Sequence Reconstruction](https://leetcode.com/problems/sequence-reconstruction/) - Reconstruct the original sequence from a set of sequences, ensuring that they are in the correct order.
+
 - [Alien Dictionary](https://leetcode.com/problems/alien-dictionary/solution/) - Determine the order of letters in an alien language based on a list of words.
 
 **Kahn’s Algorithm** 
@@ -1435,8 +1513,11 @@
 **Examples:**
 
 - [Number of Islands](https://leetcode.com/problems/number-of-islands/) - Count the number of distinct islands in a 2D grid of water and land using Union Find.
+
 - [Largest Component Size by Common Factor](https://leetcode.com/problems/largest-component-size-by-common-factor/) - Find the largest connected component of nodes that share a common factor.
+
 - [Most Stones Removed with Same Row or Column](https://leetcode.com/problems/most-stones-removed-with-same-row-or-column/) - Find the maximum number of stones that can be removed in a grid using Union Find.
+
 - [Number of Connected Components in an Undirected Graph](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/) - Find the number of connected components in an undirected graph using Union Find.
 
 
@@ -1449,6 +1530,7 @@
 **Examples:**
 
 - [Connecting Cities With Minimum Cost](https://leetcode.com/problems/connecting-cities-with-minimum-cost/) - Connect all cities with the minimum cost, ensuring no cycles and a minimum spanning tree.
+
 - [Min Cost to Connect All Points](https://leetcode.com/problems/min-cost-to-connect-all-points/) - Connect all points with the minimum cost, ensuring all points are part of a minimum spanning tree.
 
 
@@ -1459,9 +1541,13 @@
 **Examples:**
 
 - [Path With Maximum Minimum Value](https://leetcode.com/problems/path-with-maximum-minimum-value/) - Find the path in a graph where the minimum value on the path is maximized.
+
 - [Network Delay Time](https://leetcode.com/problems/network-delay-time/) - Calculate the time it takes for all nodes to receive a signal from a source node.
+
 - [Path with Maximum Probability](https://leetcode.com/problems/path-with-maximum-probability/) - Find the path with the highest probability in a graph.
+
 - [Path With Minimum Effort](https://leetcode.com/problems/path-with-minimum-effort/) - Find the path with the smallest possible maximum effort in a 2D grid.
+
 - [Cheapest Flights Within K Stops](https://leetcode.com/problems/cheapest-flights-within-k-stops/) - Find the cheapest price for flights within a given number of stops.
 
 
@@ -1470,6 +1556,7 @@
 **Examples:**
 
 - [Find the City With the Smallest Number of Neighbors at a Threshold Distance](https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/) - Find the city with the smallest number of neighboring cities at or below a certain distance threshold.
+
 - [Network Delay Time](https://leetcode.com/problems/network-delay-time/) - Calculate the time it takes for all nodes to receive a signal from a source node, considering all pairwise shortest paths.
 
 
