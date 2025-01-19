@@ -1309,9 +1309,9 @@
 
 ## Trie
 
-**Examples:**
-
 **1. Basic Trie Implementation**
+
+**Examples:**
 
 - [Implement Trie (Prefix Tree)](https://leetcode.com/problems/implement-trie-prefix-tree/) - Build a Trie with insert, search, and prefix-check operations.
 
@@ -1319,6 +1319,8 @@
 
 
 **2. Word Search and Prefix Matching**
+
+**Examples:**
 
 - [Word Search II](https://leetcode.com/problems/word-search-ii/) - Find all valid words in a grid using a word dictionary (Trie + DFS).
 
@@ -1329,12 +1331,16 @@
 
 **3. Autocomplete and Suggestions**
 
+**Examples:**
+
 - [Design Search Autocomplete System](https://leetcode.com/problems/design-search-autocomplete-system/) - Build an autocomplete system that suggests hot sentences based on user input.
 
 - [Search Suggestions System](https://leetcode.com/problems/search-suggestions-system/) - Given a list of products, return lexicographically sorted product suggestions based on a search prefix.
 
 
 **4. Dictionary and Word Manipulation**
+
+**Examples:**
 
 - [Longest Word in Dictionary](https://leetcode.com/problems/longest-word-in-dictionary/) - Find the longest word that can be built one character at a time using a given list of words.
 
@@ -1345,12 +1351,169 @@
 
 **5. Number Manipulation Using Trie**
 
+**Examples:**
+
 - [Maximum XOR of Two Numbers in an Array](https://leetcode.com/problems/maximum-xor-of-two-numbers-in-an-array/) - Find the maximum XOR value for two numbers in an array using a binary Trie.
 
 - [Maximum XOR With an Element From Array](https://leetcode.com/problems/maximum-xor-with-an-element-from-array/) - Find the maximum XOR value of queries with constraints using a Trie.
 
 - [Count Pairs With XOR in a Range](https://leetcode.com/problems/count-pairs-with-xor-in-a-range/) - Count pairs in an array whose XOR lies within a given range using a Trie.
  
+---
+
+## Graph
+
+### **Traversal & Basic Operations**
+
+**1. BFS Problems**
+
+**Examples:**
+
+- [Flood Fill](https://leetcode.com/problems/flood-fill/) - Fill a connected region in a grid starting from a given point.
+- [Number of Islands](https://leetcode.com/problems/number-of-islands/) - Count the number of islands in a 2D grid of water and land.
+- [Word Ladder I](https://leetcode.com/problems/word-ladder/) - Find the shortest transformation sequence from one word to another using a dictionary.
+- [Word Ladder II](https://leetcode.com/problems/word-ladder-ii/) - Find all the shortest transformation sequences from one word to another.
+- [Evaluate Division](https://leetcode.com/problems/evaluate-division/) - Evaluate division results based on given equations.
+- [Get Watched Videos by Your Friends](https://leetcode.com/problems/get-watched-videos-by-your-friends/) - Find the most popular videos watched by your friends in a social network.
+- [Cut Off Trees for Golf Event](https://leetcode.com/problems/cut-off-trees-for-golf-event/) - Minimize the number of steps required to cut off trees in a golf course.
+
+
+**2. DFS Problems**
+
+**Examples:**
+
+- [Number of Islands](https://leetcode.com/problems/number-of-islands/) - Count the number of distinct islands in a 2D grid.
+- [Flood Fill](https://leetcode.com/problems/flood-fill/) - Fill a connected region in a grid starting from a specific point.
+- [Longest Increasing Path in a Matrix](https://leetcode.com/problems/longest-increasing-path-in-a-matrix/) - Find the longest increasing path in a matrix.
+- [Evaluate Division](https://leetcode.com/problems/evaluate-division/) - Evaluate the result of division based on a set of equations.
+- [Robot Room Cleaner](https://leetcode.com/problems/robot-room-cleaner/) - Implement a robot to clean a room by navigating and avoiding obstacles.
+- [Most Stones Removed with Same Row or Column](https://leetcode.com/problems/most-stones-removed-with-same-row-or-column/) - Find the maximum number of stones that can be removed in a grid.
+- [Reconstruct Itinerary](https://leetcode.com/problems/reconstruct-itinerary/) - Reconstruct a travel itinerary based on given flight tickets.
+- [Tree Diameter](https://leetcode.com/problems/tree-diameter/) - Find the diameter of a tree (the longest path between any two nodes).
+- [Accounts Merge](https://leetcode.com/problems/accounts-merge/) - Merge accounts with the same email addresses.
+- [Connected Components in a Graph](https://leetcode.com/problems/connected-components-in-an-undirected-graph/) - Find the connected components in an undirected graph.
+
+
+**3. Connected Components Problems**
+
+**Examples:**
+
+- [Number of Provinces](https://leetcode.com/problems/number-of-provinces/) - Count the number of connected provinces in a graph.
+- [Number of Connected Components in an Undirected Graph](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/) - Find the number of connected components in an undirected graph.
+- [Number of Operations to Make Network Connected](https://leetcode.com/problems/number-of-operations-to-make-network-connected/) - Find the minimum number of operations to make the network fully connected.
+- [Accounts Merge](https://leetcode.com/problems/accounts-merge/) - Merge accounts with common email addresses into a single account.
+- [Critical Connections in a Network](https://leetcode.com/problems/critical-connections-in-a-network/) - Identify the critical connections in a network that, if removed, would increase the number of connected components.
+
+
+### **Cycle Detection**
+
+**Detect Cycle in an Undirected Graph**  
+
+**Detect Cycle in a Directed Graph**  
+
+**Detect Negative Weight Cycle** (using Bellman-Ford).  
+
+
+### **Topological Sort & Directed Acyclic Graphs (DAG)**
+
+**Topological Sort** 
+
+**Examples:**
+
+- [Course Schedule](https://leetcode.com/problems/course-schedule/) - Determine if it's possible to finish all courses given the prerequisite constraints.
+- [Course Schedule II](https://leetcode.com/problems/course-schedule-ii/) - Find the order of courses to take to finish all courses given the prerequisite constraints.
+- [Sequence Reconstruction](https://leetcode.com/problems/sequence-reconstruction/) - Reconstruct the original sequence from a set of sequences, ensuring that they are in the correct order.
+- [Alien Dictionary](https://leetcode.com/problems/alien-dictionary/solution/) - Determine the order of letters in an alien language based on a list of words.
+
+**Kahn’s Algorithm** 
+
+**Longest Path in a DAG**  
+
+
+### **Union Find**
+
+**Examples:**
+
+- [Number of Islands](https://leetcode.com/problems/number-of-islands/) - Count the number of distinct islands in a 2D grid of water and land using Union Find.
+- [Largest Component Size by Common Factor](https://leetcode.com/problems/largest-component-size-by-common-factor/) - Find the largest connected component of nodes that share a common factor.
+- [Most Stones Removed with Same Row or Column](https://leetcode.com/problems/most-stones-removed-with-same-row-or-column/) - Find the maximum number of stones that can be removed in a grid using Union Find.
+- [Number of Connected Components in an Undirected Graph](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/) - Find the number of connected components in an undirected graph using Union Find.
+
+
+### **Minimum Spanning Tree (MST)**
+
+**Kruskal's Algorithm**  
+
+**Prim's Algorithm** 
+
+**Examples:**
+
+- [Connecting Cities With Minimum Cost](https://leetcode.com/problems/connecting-cities-with-minimum-cost/) - Connect all cities with the minimum cost, ensuring no cycles and a minimum spanning tree.
+- [Min Cost to Connect All Points](https://leetcode.com/problems/min-cost-to-connect-all-points/) - Connect all points with the minimum cost, ensuring all points are part of a minimum spanning tree.
+
+
+### **Shortest Path Algorithms**
+
+**Dijkstra's Algorithm** 
+
+**Examples:**
+
+- [Path With Maximum Minimum Value](https://leetcode.com/problems/path-with-maximum-minimum-value/) - Find the path in a graph where the minimum value on the path is maximized.
+- [Network Delay Time](https://leetcode.com/problems/network-delay-time/) - Calculate the time it takes for all nodes to receive a signal from a source node.
+- [Path with Maximum Probability](https://leetcode.com/problems/path-with-maximum-probability/) - Find the path with the highest probability in a graph.
+- [Path With Minimum Effort](https://leetcode.com/problems/path-with-minimum-effort/) - Find the path with the smallest possible maximum effort in a 2D grid.
+- [Cheapest Flights Within K Stops](https://leetcode.com/problems/cheapest-flights-within-k-stops/) - Find the cheapest price for flights within a given number of stops.
+
+
+**Floyd-Warshall Algorithm Problems**
+
+**Examples:**
+
+- [Find the City With the Smallest Number of Neighbors at a Threshold Distance](https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/) - Find the city with the smallest number of neighboring cities at or below a certain distance threshold.
+- [Network Delay Time](https://leetcode.com/problems/network-delay-time/) - Calculate the time it takes for all nodes to receive a signal from a source node, considering all pairwise shortest paths.
+
+
+**Bellman-Ford Algorithm Problems**
+
+**Examples:**
+
+- [Network Delay Time](https://leetcode.com/problems/network-delay-time/) - Calculate the time it takes for all nodes to receive a signal from a source node, considering edge weights in the graph.
+
+
+**Shortest Path in Weighted DAG** 
+
+
+###  **Graph Coloring**
+
+**M-Coloring Problem** (Can the graph be colored with M colors?). 
+
+**Check Bipartite Graph** (using graph coloring).  
+
+**Chromatic Number** (Minimum number of colors to color the graph).  
+
+
+### **Connectivity and Bridges**
+
+**Articulation Points** (Nodes whose removal increases connected components).  
+
+**Bridges in a Graph** (Edges whose removal increases connected components).  
+
+**Strongly Connected Components (SCC)** (Kosaraju, Tarjan’s algorithms).  
+
+**2-Edge Connected Components**.  
+
+
+### **Flow and Matching Problems**
+
+**Ford-Fulkerson Algorithm** (Maximum Flow).  
+
+**Edmonds-Karp Algorithm** (Optimized Maximum Flow). 
+
+**Dinic’s Algorithm** (Efficient Maximum Flow).  
+
+**Bipartite Graph Check** (using DFS/BFS).  
+
+**Maximum Bipartite Matching** (Hungarian Algorithm).  
 
 ---
 
@@ -1679,94 +1842,6 @@ public boolean isPowerOfTwo(int number) {
   
   So, 4B (hex) = 0453 (octal)
   ```
-
----
-
-## Graph
-
-
-### **Traversal & Basic Operations**
-
-**Depth-First Search (DFS)**  
-
-**Breadth-First Search (BFS)** 
-
-**Number of Connected Components** 
-
-**Shortest Path - BFS**  
-
-**Grid-Based Problems** (e.g., shortest path in a grid, number of islands).  
-
-
-### **Cycle Detection**
-
-**Detect Cycle in an Undirected Graph**  
-
-**Detect Cycle in a Directed Graph**  
-
-**Detect Negative Weight Cycle** (using Bellman-Ford).  
-
-
-### **Topological Sort & Directed Acyclic Graphs (DAG)**
-
-**Topological Sort**  
-
-**Kahn’s Algorithm** 
-
-**Longest Path in a DAG**  
-
-
-### **Minimum Spanning Tree (MST)**
-
-**Kruskal's Algorithm**  
-
-**Prim's Algorithm** 
-
-**Borůvka's Algorithm** (another MST algorithm).  
-
-
-### **Shortest Path Algorithms**
-
-**Dijkstra's Algorithm** 
-
-**Bellman-Ford Algorithm** 
-
-**Floyd-Warshall Algorithm** 
-
-**Shortest Path in Weighted DAG** 
-
-
-###  **Graph Coloring**
-
-**M-Coloring Problem** (Can the graph be colored with M colors?). 
-
-**Check Bipartite Graph** (using graph coloring).  
-
-**Chromatic Number** (Minimum number of colors to color the graph).  
-
-
-### **Connectivity and Bridges**
-
-**Articulation Points** (Nodes whose removal increases connected components).  
-
-**Bridges in a Graph** (Edges whose removal increases connected components).  
-
-**Strongly Connected Components (SCC)** (Kosaraju, Tarjan’s algorithms).  
-
-**2-Edge Connected Components**.  
-
-
-### **Flow and Matching Problems**
-
-**Ford-Fulkerson Algorithm** (Maximum Flow).  
-
-**Edmonds-Karp Algorithm** (Optimized Maximum Flow). 
-
-**Dinic’s Algorithm** (Efficient Maximum Flow).  
-
-**Bipartite Graph Check** (using DFS/BFS).  
-
-**Maximum Bipartite Matching** (Hungarian Algorithm).  
 
 
 ---
