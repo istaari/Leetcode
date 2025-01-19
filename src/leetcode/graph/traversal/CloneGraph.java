@@ -1,9 +1,11 @@
-package leetcode.graph;
+package leetcode.graph.traversal;
+
+import leetcode.graph.representations.Graph;
+import leetcode.graph.representations.Node;
 
 import java.util.*;
 
 public class CloneGraph {
-
     Map<Integer, Node> map = new HashMap<>();
 
 
@@ -46,28 +48,25 @@ public class CloneGraph {
         return map.get(node.val);
     }
 
+
     public Node cloneGraph(Node node) {
         if (node == null) return null;
-
         map.clear();
-        //return helperDFS(node);
         return helperBFS(node);
     }
 
 
-
     public static void main(String[] args) {
-        int[][] adjList = {{2, 4}, // Node 1 neighbors
+        int[][] adjList = {
+                {2, 4}, // Node 1 neighbors
                 {1, 3}, // Node 2 neighbors
                 {2, 4}, // Node 3 neighbors
                 {1, 3}  // Node 4 neighbors
         };
 
-        //adjList = new int[0][0];
-
         Node node = new Graph().buildGraph(adjList);
         Node clone = new CloneGraph().cloneGraph(node);
-        System.out.println();
+        System.out.println(clone);
     }
 
 

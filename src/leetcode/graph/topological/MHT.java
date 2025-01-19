@@ -1,15 +1,12 @@
-package leetcode.graph;
+package leetcode.graph.topological;
 
 import java.util.*;
 
 public class MHT {
 
-    @SuppressWarnings("all")
     public static List<Integer> findMinHeightTrees(int n, int[][] edges) {
 
-        if (n == 1) {
-            return Collections.singletonList(0);
-        }
+        if (n == 1) return Collections.singletonList(0);
 
         // 1. Build Graph
         List<List<Integer>> graph = new ArrayList<>(n);
@@ -36,7 +33,7 @@ public class MHT {
 
             for (int i = 0; i < size; i++) {
                 int leaf = queue.poll();
-                int neighbor = graph.get(leaf).get(0);
+                int neighbor = graph.get(leaf).getFirst();
 
                 graph.get(neighbor).remove(Integer.valueOf(leaf));
 

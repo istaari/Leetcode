@@ -1,9 +1,9 @@
-package leetcode.graph;
+package leetcode.graph.traversal;
 
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class JumpGame3 {
+public class JumpGame_3 {
 
     public static boolean canReach(int[] arr, int start) {
 
