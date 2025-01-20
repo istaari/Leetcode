@@ -1,36 +1,24 @@
 ### **DSA Todos**
 
-- [ ] CheatSheet, Notes, Revision
-- [ ] Stack
-- [ ] Trie
-- [ ] Design and Concurrency
 - [ ] DP
-- [ ] Graph
-- [ ] Bitwise
-- [ ] Maths
+- [ ] Greedy
+- [ ] Sliding Window
+- [ ] Prefix Sum
+- [ ] Design 
+- [ ] Concurrency
+- [ ] Monotonic Stack Revision
 
 ---
 
 ### **Future DSA Todos**
 
-- [ ] Start Codeforces
+- [ ] Graph
 - [ ] B and B+ Trees
 - [ ] AVL Tree
 - [ ] Red Black Trees
 - [ ] Segment Trees
 - [ ] KMP and Rabin Karp
-
----
-
-### **BIT Manipulations**
-
-- [ ] Bitwise Effects on numbers
-- [ ] Toggle a Specific Bit
-- [ ] Set a Specific Bit
-- [ ] clear a Specific Bit
-- [ ] Find the Position of the Rightmost Set Bit
-- [ ] Check if a number is a power of 2
-
+- [ ] Start Codeforces
 
 ---
 

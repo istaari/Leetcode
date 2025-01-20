@@ -1118,12 +1118,12 @@
 
   - Recurrence Relation: `dp[i][j] = min(dp[i-1][j], dp[i][j-coins[i-1]] + 1)`
   - Base Case: `dp[0][j] = inf, dp[i][0] = 0`  
-  - `Variations Unbounded Knapsack problem`
+  - Variations **Unbounded Knapsack problem**
   - Exclude the current item: `dp[i-1][j]`
   - Include the current item: `dp[i][j-coins[i-1]] + 1`
   
   ```java
-     // Recursion Pattern : generating permutations
+     // Recursion Pattern : generate permutations, shortest path/minimum steps
      int helper(int[] coins, int amount, int[] memo) {
           if (amount < 0) return -1;
           if (amount == 0) return 0;
@@ -1149,13 +1149,13 @@
 
   - Recurrence Relation: `dp[i][j] = dp[i - 1][j] + dp[i][j - coins[i - 1]]` 
   - Base Case : ` dp[i][0] = 1`
-  - `Variations Unbounded Knapsack problem`
+  - Variations **Unbounded Knapsack problem**
   - Exclude the current item: `dp[i-1][j]`
   - Include the current item: `dp[i][j-coins[i-1]]`
 
 
   ```java
-    /* Recursion Pattern : generating combinations, generate subsets, generate subsequences */
+    /* Recursion Pattern : generate combinations, generate subsets, generate subsequences */
     int helper0(int amount, int[] coins, int index, Integer[][] memo) {
         if (amount == 0) return 1;
         if (amount < 0 || index == coins.length) return 0;
@@ -1198,9 +1198,48 @@
   - Base Case: `dp[0][0] = 1`  
  
 - **[Longest Increasing Subsequence](https://leetcode.com/problems/longest-increasing-subsequence/)**  - Length of longest increasing subsequence
+     
+  - Recursion logic for each prevous values check, if there is a increasing subsequence
 
-  - Recurrence Relation: `dp[i] = max(dp[j] + 1 for all j where nums[j] < nums[i])`  
-  - Base Case: `dp[i] = 1 for all i`  
+  ```java
+    int helper(int[] nums, int i, int prevIndex) {
+        if (i >= nums.length) return 0;
+
+        if (dp[i][prevIndex + 1] != null) {
+            return dp[i][prevIndex + 1];
+        }
+
+        int exclude = helper(nums, i + 1, prevIndex);
+
+        int include = 0;
+        if (prevIndex == -1 || nums[i] > nums[prevIndex]) {
+            include = 1 + helper(nums, i + 1, i);
+        }
+
+        dp[i][prevIndex + 1] = Math.max(exclude, include);
+        return dp[i][prevIndex + 1];
+    }
+  ```
+
+  - Binary Search
+
+  ```java
+    int LIS_BS(int[] number) {
+        int[] dp = new int[number.length];
+        int len = 0;
+        for (int x : number) {
+            // Returns insertion point where element can be inserted if element is not found
+            int i = Arrays.binarySearch(dp, 0, len, x);
+
+            // Turns insertion point into valid index
+            if (i < 0) i = -(i + 1);
+
+            dp[i] = x;
+            if (i == len) len++;
+        }
+        return len;
+    }
+  ```
 
 
  **4. String(Subsequence, Substring, Edit Distance)** 

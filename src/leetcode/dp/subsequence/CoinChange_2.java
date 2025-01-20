@@ -4,7 +4,18 @@ import java.util.Arrays;
 
 public class CoinChange_2 {
 
-
+    /**
+     * Find the number of ways to make the given amount using the available coins.
+     * This solution uses dynamic programming with memoization.
+     *
+     * Without Memoization:
+     * Time Complexity: O(2^n), where n is the number of coins.
+     * Space Complexity: O(m), where m is the amount (due to the recursion call stack).
+     *
+     * With Memoization:
+     * Time Complexity: O(n * m), where n is the number of coins and m is the amount.
+     * Space Complexity: O(n * m), where n is the number of coins and m is the amount (due to the memo[][] array and the recursion call stack).
+     */
     private static int helper0(int amount, int[] coins, int index, Integer[][] memo) {
         if (amount == 0) return 1;
         if (amount < 0 || index == coins.length) return 0;
@@ -20,6 +31,17 @@ public class CoinChange_2 {
     }
 
 
+    /**
+     * Find the number of ways to make the given amount using the available coins.
+     *
+     * Without Memoization:
+     * Time Complexity: O(n^m), where n is the number of coins and m is the amount.
+     * Space Complexity: O(m), where m is the amount (due to the recursion call stack).
+     *
+     * With Memoization:
+     * Time Complexity: O(n * m), where n is the number of coins and m is the amount.
+     * Space Complexity: O(n * m), where n is the number of coins and m is the amount (due to the memo[][] array and the recursion call stack).
+     */
     private static int helper(int[] coins, int amount, int index, Integer[][] memo) {
         if (amount == 0) return 1;
         if (amount < 0 || index >= coins.length) return 0;

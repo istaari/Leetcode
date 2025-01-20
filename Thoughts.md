@@ -1,5 +1,23 @@
-
 # Data Structure and Algorithms
+
+## Thinking about problem
+
+- Alway read constraints
+- Break Down the Problem
+- Think in Terms of Patterns
+- Explore Brute Force First
+- Think from different angle, can array be visualized as graph or tree
+
+### **Rule of Thumb for Common Constraints**
+
+| **Constraint**           | **Recommended Time Complexity**       | **Examples**                               |
+|---------------------------|---------------------------------------|-------------------------------------------|
+| <code>n &leq; 10</code>   | <code>O(n!)</code>, <code>O(2^n)</code> | Backtracking, combinatorics             |
+| <code>n &leq; 100</code>  | <code>O(n^2)</code>, <code>O(n^3)</code> | Dynamic programming, matrix algorithms |
+| <code>n &leq; 10^4</code> | <code>O(n log n)</code>, <code>O(n)</code> | Sorting, linear scans                |
+| <code>n &leq; 10^6</code> | <code>O(n)</code>, <code>O(n log n)</code> | Sliding window, prefix sums          |
+| <code>n &leq; 10^9</code> | <code>O(log n)</code>, <code>O(1)</code> | Binary search, modular arithmetic      |
+
 
 ## Array
 

@@ -12,16 +12,19 @@ public class LIS_300 {
      */
 
     public static int LIS_DP(int[] number) {
-        int ans = 1, n = number.length;
+        int n = number.length;
         int[] dp = new int[n];
         Arrays.fill(dp, 1);
-        for (int i = 0; i < n; i++)
-            for (int j = 0; j < i; j++)
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < i; j++) {
                 if (number[i] > number[j]) {
                     dp[i] = Math.max(dp[i], dp[j] + 1);
-                    ans = Math.max(ans, dp[i]);
                 }
-        return ans;
+            }
+        }
+
+        return dp[n - 1];
     }
 
     /**
@@ -34,9 +37,11 @@ public class LIS_300 {
         int[] dp = new int[number.length];
         int len = 0;
         for (int x : number) {
-            // This returns a insertion point where element can be inserted if element is not found
+            // Returns insertion point where element can be inserted if element is not found
             int i = Arrays.binarySearch(dp, 0, len, x);
-            if (i < 0) i = -(i + 1); // Turns insertion point into valid index
+            // Turns insertion point into valid index
+            if (i < 0) i = -(i + 1);
+
             dp[i] = x;
             if (i == len) len++;
         }
