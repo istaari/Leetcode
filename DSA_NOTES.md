@@ -703,6 +703,8 @@
    - Traverse from right to left, check if right neighbour is greater than current element, If yes then add max of current candy or next candies plus 1
    - Can be done in one pass using [Up-Down-Peak Method](https://leetcode.com/problems/candy/solutions/4037646/99-20-greedy-two-one-pass/)
 
+- **[Minimum Cost to Hire K Workers](https://leetcode.com/problems/minimum-cost-to-hire-k-workers/)**  
+
 ## Trees
 
 - `Inorder successor(smallest element in left subtree from right node)` is next node element in inorder traversal(Sorted Element in BST)
@@ -999,7 +1001,16 @@
 ---
 ## Dynamic Programming
 
- **1D DP** 
+**Maximum Subarray/Contiguous Subarray Problems**
+
+- **[Maximum Subarray (Kadane’s Algorithm)](https://leetcode.com/problems/maximum-subarray/)** - Find the largest sum of a contiguous subarray. 
+
+- **[Maximum Product Subarray](https://leetcode.com/problems/maximum-product-subarray/)** - Find the largest product of a contiguous subarray.
+  
+- **[Maximum Sum Circular Subarray](https://leetcode.com/problems/maximum-sum-circular-subarray/)** - Find the maximum sum of a circular subarray.  
+
+
+**Fibonacci Variations** 
 
  **Examples:**
 
@@ -1037,9 +1048,6 @@
    - `f(n) = f(n-1) + f(n-2)` if both are valid  
 
    Base Cases: `f(0) = 1` (empty string), `f(1) = 1` (if valid single digit)  
-
-
-- **[Minimum Cost to Hire K Workers](https://leetcode.com/problems/minimum-cost-to-hire-k-workers/)**  
 
  **Grids(Path Problem)**
 
@@ -1245,7 +1253,7 @@
   ```
 
 
- **String(Subsequence, Substring, Edit Distance)** 
+ **String(Subsequence, Substring, Edit Distance, Wildcard)** 
 
  **Examples:**
 
@@ -1307,7 +1315,7 @@
 
   - **[Minimum Cost to Cut a Stick](https://leetcode.com/problems/minimum-cost-to-cut-a-stick/description/)**
 
-  - [**Burst Balloons](https://leetcode.com/problems/burst-balloons/description/)**
+  - **[Burst Balloons](https://leetcode.com/problems/burst-balloons/description/)**
 
 
  **DP With Path Traversal**
@@ -1328,6 +1336,7 @@
 - **[Partition to K Equal Sum Subsets](https://leetcode.com/problems/partition-to-k-equal-sum-subsets/)**  - Partition a set of numbers into `k` subsets where each subset has the same sum
 
 - **[Word Break II](https://leetcode.com/problems/word-break-ii/)**  - Break a sentence into words using a dictionary of words
+
 
 **Game Theory**
 
