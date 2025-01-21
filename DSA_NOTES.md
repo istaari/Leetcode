@@ -105,9 +105,9 @@
 **1. Subarrays** 
 
 - Total Subarrays = `n * (n + 1) / 2`
-- `Kadane's algorithm` is used to solve the `maximum subarray sum` in array 
 - Sum Of All Subarrays : `contribution = (i + 1) * (n - i)` and `sum += arr[i] * contribution`
 - Sum Odd Length Subarrays : `contribution = ( (i + 1) * (n - i) + 1 ) / 2` and `sum += arr[i] * contribution`
+- Use **`Map`** to store the **`index, pair, count`** of element to see in future and past and calculate distance between index, Like **`pair(count, last seen index, current index)`**
 
  - ```java
     int sumOddLengthSubarrays(int[] arr) {
@@ -123,7 +123,17 @@
     }
    ``` 
 
+**Examples:**
 
+- [Check array is rotated and sorted](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/)
+
+  - Check deviations `nums[i] > nums[(i + 1) % nums.length]`, If array is sorted and rotated array there will 0 or 1 incorrectly Positioned element
+
+
+- [Remove Duplicates(In place)](), [Move Zeroes at end(In place)](), [Remove Elements(In place)]()
+   
+   - Solve using two pointers, one for `iterating` and one for `placing` the element
+   - Create a `placing index`, then replace or swap `iterating index` with placing index based on condition
 
 ---
 ## Binary Search
@@ -1001,7 +1011,7 @@
 ---
 ## Dynamic Programming
 
-**Maximum Subarray/Contiguous Subarray Problems**
+**1. Maximum Subarray/Contiguous Subarray Problems**
 
 - **[Maximum Subarray (Kadane’s Algorithm)](https://leetcode.com/problems/maximum-subarray/)** - Find the largest sum of a contiguous subarray. 
 
@@ -1049,7 +1059,7 @@
 
    Base Cases: `f(0) = 1` (empty string), `f(1) = 1` (if valid single digit)  
 
- **Grids(Path Problem)**
+ **2. Grids(Path Problem)**
 
  **Examples:**
 
@@ -1253,7 +1263,7 @@
   ```
 
 
- **String(Subsequence, Substring, Edit Distance, Wildcard)** 
+ **4. String(Subsequence, Substring, Edit Distance, Wildcard)** 
 
  **Examples:**
 
@@ -1281,7 +1291,7 @@
 - **[Wildcard Matching](https://leetcode.com/problems/wildcard-matching/)**   
 
 
-**Partitioning Problems** 
+**5. Partitioning Problems** 
 
 - **[Palindrome Partitioning](https://leetcode.com/problems/palindrome-partitioning-ii/)** - Partition a string into the minimum number of palindromic substrings. 
 
@@ -1290,7 +1300,7 @@
 - **[Word Break](https://leetcode.com/problems/word-break/)** - Check if a string can be segmented into a sequence of dictionary words.  
 
 
-**5. Stock Optimizations** 
+**6. Stock Optimizations** 
 
 **Examples:**
 
@@ -1309,7 +1319,7 @@
 - **[Best Time to Buy and Sell Stock with Cooldown](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/)**  
 
  
- **Matrix Chain Multiplication**  
+ **7. Matrix Chain Multiplication**  
 
  **Examples:**
 
@@ -1318,7 +1328,7 @@
   - **[Burst Balloons](https://leetcode.com/problems/burst-balloons/description/)**
 
 
- **DP With Path Traversal**
+ **8. DP With Path Traversal**
 
  **Examples:**
 
@@ -1329,7 +1339,7 @@
  - **[Jump Game II](https://leetcode.com/problems/jump-game-ii/)**  
 
 
-**Bitmasking + DP**  
+**9. Bitmasking + DP**  
 
 **Examples:**
 
@@ -1338,7 +1348,7 @@
 - **[Word Break II](https://leetcode.com/problems/word-break-ii/)**  - Break a sentence into words using a dictionary of words
 
 
-**Game Theory**
+**10. Game Theory**
 
 - **[Stone Game](https://leetcode.com/problems/stone-game/)** - Two players take turns removing stones from piles. Determine if the first player can win. 
 

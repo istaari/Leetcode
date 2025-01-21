@@ -2,7 +2,6 @@ package leetcode.array;
 
 public class CheckArraySortedAndRotated {
 
-    // https://leetcode.com/problems/check-if-array-is-sorted-and-rotated/submissions/1399596325/
     public static boolean check(int[] nums) {
         int deviations = 0;
         for (int i = 0; i < nums.length; i++) {
@@ -15,7 +14,7 @@ public class CheckArraySortedAndRotated {
     }
 
     public static void main(String[] args) {
-        int[] nums = {3, 4, 5, 1, 2};
+        int[] nums = {1, 2};
         System.out.println(check(nums));
     }
 }

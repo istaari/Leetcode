@@ -20,6 +20,7 @@ public class MostCommonWord {
 
         String[] words = paragraph.split(" ");
         Set<String> set = new HashSet<>(List.of(banned));
+
         Map<String, Integer> map = new HashMap<>();
 
 

@@ -3,16 +3,12 @@ package leetcode.array;
 public class RemoveNElement {
 
 
-    // https://leetcode.com/problems/remove-element/description/
-    // Similar problems  : https://leetcode.com/problems/remove-duplicates-from-sorted-array/description/
-    // j: The fast pointer scans through the entire array starting from the first element
-    // i: The slow pointer tracks the position where the next valid (non-val) element should be written.
     public static int removeElement(int[] nums, int val) {
-
-        int i = 0;
+        int n = nums.length;
+        int i = 0; // Use i to place elements which should not be removed
         int j = 0;
 
-        while (j < nums.length) {
+        while (j < n) {
 
             if (nums[j] != val) {
                 int temp = nums[i];
@@ -25,7 +21,6 @@ public class RemoveNElement {
         }
 
         return i;
-
     }
 
 

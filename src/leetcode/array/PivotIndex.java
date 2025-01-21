@@ -2,8 +2,6 @@ package leetcode.array;
 
 public class PivotIndex {
 
-    // https://leetcode.com/problems/find-pivot-index/description/
-    // Solved using a prefix sum
     public static int pivotIndex(int[] nums) {
 
         int n = nums.length;
@@ -32,7 +30,7 @@ public class PivotIndex {
 
     public static void main(String[] args) {
         int[] a = new int[]{1, 7, 3, 6, 5, 6};
-        a = new int[]{2, 1, -1};
+        // a = new int[]{2, 1, -1};
         System.out.println(pivotIndex(a));
     }
 

@@ -2,9 +2,6 @@ package leetcode.array;
 
 import java.util.Arrays;
 
-
-// Two pointers, Creating a boundary to separate element
-// https://leetcode.com/problems/move-zeroes/description/
 public class MoveZeroes {
 
     public static void moveZeroes(int[] nums) {
