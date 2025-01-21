@@ -1,6 +1,10 @@
 
 # Algorithms and Data Structures
 
+[Algo Pattern Cheatsheet](https://leetcode.com/discuss/interview-question/5915635/DP-or-Greedy-or-String-or-Graph-or-Tree-or-BinarySearch-or-SlidingWindow-or-Sorting-or-Prefix-Sum-Topic-Wise)
+
+[useful link for pattern](https://leetcode.com/discuss/general-discussion/665604/important-and-useful-links-from-all-over-the-leetcode)
+
 ## Formulas
 
 - Number of subarrays and substrings = `n(n+1) / 2`
@@ -995,7 +999,7 @@
 ---
 ## Dynamic Programming
 
- **1. 1D DP** 
+ **1D DP** 
 
  **Examples:**
 
@@ -1037,7 +1041,7 @@
 
 - **[Minimum Cost to Hire K Workers](https://leetcode.com/problems/minimum-cost-to-hire-k-workers/)**  
 
- **2. Grids(Path Problem)**
+ **Grids(Path Problem)**
 
  **Examples:**
 
@@ -1189,17 +1193,16 @@
   
 - **[Combination Sum IV](https://leetcode.com/problems/combination-sum-iv/)** - Number of ways(no. of Subsequence) to make a target sum, `same number can be used more than once`
 
-  - Recurrence Relation: `dp[i] += dp[i-num] for num in nums`  
-  - Base Case: `dp[0] = 1`  
 
 - **[Target Sum](https://leetcode.com/problems/target-sum/)** - Number of ways to make a target sum, using `+` and `-` operator, Same number can be used more than once
 
-  - Recurrence Relation: `dp[i][sum] = dp[i-1][sum-nums[i-1]] + dp[i-1][sum+nums[i-1]]`  
-  - Base Case: `dp[0][0] = 1`  
- 
+
 - **[Longest Increasing Subsequence](https://leetcode.com/problems/longest-increasing-subsequence/)**  - Length of longest increasing subsequence
+
+  - Recurrence Relation: `dp[i] = max(dp[i], dp[j] + 1)`
+  - Base Case : ` dp[i] = 1`
      
-  - Recursion logic for each prevous values check, if there is a increasing subsequence
+  - Recursion logic for each previous values check, if there is a increasing subsequence
 
   ```java
     int helper(int[] nums, int i, int prevIndex) {
@@ -1221,10 +1224,10 @@
     }
   ```
 
-  - Binary Search
+  - Binary Search `patience sorting`
 
   ```java
-    int LIS_BS(int[] number) {
+    int binarySearch(int[] number) {
         int[] dp = new int[number.length];
         int len = 0;
         for (int x : number) {
@@ -1242,69 +1245,41 @@
   ```
 
 
- **4. String(Subsequence, Substring, Edit Distance)** 
+ **String(Subsequence, Substring, Edit Distance)** 
 
  **Examples:**
 
 - **[Longest Common Subsequence](https://leetcode.com/problems/longest-common-subsequence/)** - Longest common subsequence between two strings
 
-  Recurrence Relation: `dp[i][j] = dp[i-1][j-1] + 1 if text1[i-1] == text2[j-1] else max(dp[i-1][j], dp[i][j-1])`  
-
-  Base Case: `dp[i][0] = 0, dp[0][j] = 0`  
 
 - **[Longest Palindromic Subsequence](https://leetcode.com/problems/longest-palindromic-subsequence/)**  - Longest palindromic subsequence in a string
 
-  Recurrence Relation:  
-  `dp[i][j] = dp[i+1][j-1] + 2 if s[i] == s[j] else max(dp[i+1][j], dp[i][j-1])`  
-
-  Base Case: `dp[i][i] = 1`  
 
 - **[Edit Distance (Levenshtein Distance)](https://leetcode.com/problems/edit-distance/)** - minimum number of operations required to convert word1 to word2, `insert, delete, replace`
 
-  Recurrence Relation:  
-  `dp[i][j] = min(dp[i-1][j-1] + cost, dp[i-1][j] + 1, dp[i][j-1] + 1)`  
-  where `cost = 0 if word1[i-1] == word2[j-1] else 1`  
-
-  Base Case: `dp[i][0] = i, dp[0][j] = j`  
 
 - **[Longest Palindromic Substring](https://leetcode.com/problems/longest-palindromic-substring/)**  - Longest palindromic substring in a string
 
-  Recurrence Relation:  
-  `dp[i][j] = dp[i+1][j-1] and s[i] == s[j]`  
-
-  Base Case: `dp[i][i] = True, dp[i][i+1] = (s[i] == s[i+1])`  
 
 - **[Distinct Subsequences](https://leetcode.com/problems/distinct-subsequences/)**  - Number of distinct subsequences of `s` which equals `t`
 
-  Recurrence Relation:  
-  `dp[i][j] = dp[i-1][j-1] + dp[i-1][j] if s[i-1] == t[j-1] else dp[i-1][j]`  
-
-  Base Case: `dp[i][0] = 1, dp[0][j] = 0 for j > 0`  
 
 - **[Interleaving String](https://leetcode.com/problems/interleaving-string/)**  - find target string s2 by interleaving substring of s1 and s2
 
-  Recurrence Relation:  
-  `dp[i][j] = (dp[i-1][j] and s1[i-1] == s3[i+j-1]) or (dp[i][j-1] and s2[j-1] == s3[i+j-1])`  
-
-  Base Case: `dp[0][0] = True`  
 
 - **[Regular Expression Matching](https://leetcode.com/problems/regular-expression-matching/)**  
 
-  Recurrence Relation:  
-  `dp[i][j] = dp[i-1][j-1] if s[i-1] == p[j-1] or p[j-1] == '.'`  
-  For `'*'`:  
-  `dp[i][j] = dp[i][j-2] or (dp[i-1][j] if s[i-1] == p[j-2] or p[j-2] == '.')`  
 
-  Base Case: `dp[0][j] = True if p[:j] matches empty string`  
+- **[Wildcard Matching](https://leetcode.com/problems/wildcard-matching/)**   
 
-- **[Wildcard Matching](https://leetcode.com/problems/wildcard-matching/)**  
 
-  Recurrence Relation:  
-  `dp[i][j] = dp[i-1][j-1] if s[i-1] == p[j-1] or p[j-1] == '?'`  
-  For `'*'`:  
-  `dp[i][j] = dp[i-1][j] or dp[i][j-1]`  
+**Partitioning Problems** 
 
-  Base Case: `dp[0][0] = True, dp[i][0] = False for i > 0, dp[0][j] = dp[0][j-1] if p[j-1] == '*'`  
+- **[Palindrome Partitioning](https://leetcode.com/problems/palindrome-partitioning-ii/)** - Partition a string into the minimum number of palindromic substrings. 
+
+- **[Burst Balloons](https://leetcode.com/problems/burst-balloons/)** - Find the maximum coins you can collect by bursting balloons in a particular order.  
+
+- **[Word Break](https://leetcode.com/problems/word-break/)** - Check if a string can be segmented into a sequence of dictionary words.  
 
 
 **5. Stock Optimizations** 
@@ -1313,92 +1288,54 @@
 
 - **[Best Time to Buy and Sell Stock](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/)**  
 
-  Recurrence Relation:  
-  `dp[i] = max(dp[i-1], prices[i] - min_price)`  
-  where `min_price` is the lowest price encountered up to day `i`.  
-
-  Base Case: `dp[0] = 0` (no profit on the first day).  
 
 - **[Best Time to Buy and Sell Stock II](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/)**  
 
-  Recurrence Relation:  
-  `dp[i] = max(dp[i-1], dp[i-1] + prices[i] - prices[i-1])`  
-  Keep adding the profit from every transaction, i.e., every price increase.  
-
-  Base Case: `dp[0] = 0` (no profit on the first day).  
 
 - **[Best Time to Buy and Sell Stock III](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/)**  
 
-  Recurrence Relation:  
-  `dp[i][k] = max(dp[i-1][k], prices[i] - min_price[k])`  
-  where `min_price[k]` is the minimum price encountered for the `k`th transaction.  
-
-  Base Case: `dp[0][0] = 0`  
 
 - **[Best Time to Buy and Sell Stock IV](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/)**  
 
-  Recurrence Relation:  
-  `dp[i][k] = max(dp[i-1][k], prices[i] - min_price[k])`  
-  where `min_price[k]` represents the minimum price encountered for the `k`th transaction.  
-
-  Base Case: `dp[0][0] = 0`  
 
 - **[Best Time to Buy and Sell Stock with Cooldown](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/)**  
 
-  Recurrence Relation:  
-  `dp[i][0] = max(dp[i-1][0], dp[i-1][1] + prices[i])`  
-  `dp[i][1] = max(dp[i-1][1], dp[i-1][0] - prices[i])`  
-
-  Base Case:  
-  `dp[0][0] = 0` (no stock on day 0).  
-  `dp[0][1] = -prices[0]` (buy stock on day 0).  
-
-
- **6. Matrix Chain Multiplication**  
+ 
+ **Matrix Chain Multiplication**  
 
  **Examples:**
 
-   - [Minimum Cost to Cut a Stick](https://leetcode.com/problems/minimum-cost-to-cut-a-stick/description/)
+  - **[Minimum Cost to Cut a Stick](https://leetcode.com/problems/minimum-cost-to-cut-a-stick/description/)**
 
-   - [Burst Balloons](https://leetcode.com/problems/burst-balloons/description/) 
+  - [**Burst Balloons](https://leetcode.com/problems/burst-balloons/description/)**
 
 
- **7. DP With Path Traversal**
+ **DP With Path Traversal**
 
  **Examples:**
 
- - [Frog Jump](https://leetcode.com/problems/frog-jump/)
+ - **[Frog Jump](https://leetcode.com/problems/frog-jump/)**
 
  - **[Jump Game](https://leetcode.com/problems/jump-game/)**  
 
-    - For dp recursive solution check from each index, `for all possible jumps`, if any of the jump reaches the end then return true
-    - For iterative solution, base case `dp[n - 1] = true` from `n-2` check till the end, if any of the jump reaches the end then update the dp array
-
  - **[Jump Game II](https://leetcode.com/problems/jump-game-ii/)**  
-  
-  ```java
-    int jump(int[] nums, int pos) {
-        if (pos >= nums.length - 1) {
-            return 0; // Base case: we've reached or exceeded the last index
-        }
-
-        int minJumps = 10001;
-        for (int j = 1; j <= nums[pos]; j++) {
-            // Explore all possible jump sizes from current position
-            minJumps = Math.min(minJumps, 1 + jump(nums, pos + j));
-        }
-        return minJumps;
-    }
-  ```
 
 
-**8. Bitmasking + DP**  
+**Bitmasking + DP**  
 
 **Examples:**
 
 - **[Partition to K Equal Sum Subsets](https://leetcode.com/problems/partition-to-k-equal-sum-subsets/)**  - Partition a set of numbers into `k` subsets where each subset has the same sum
 
 - **[Word Break II](https://leetcode.com/problems/word-break-ii/)**  - Break a sentence into words using a dictionary of words
+
+**Game Theory**
+
+- **[Stone Game](https://leetcode.com/problems/stone-game/)** - Two players take turns removing stones from piles. Determine if the first player can win. 
+
+- **[Predict the Winner](https://leetcode.com/problems/predict-the-winner/)** - Determine if the first player can guarantee a win with optimal moves.  
+
+- **[Nim Game](https://leetcode.com/problems/nim-game/)** - Players take turns removing 1 to 3 stones from a pile. Determine if the first player can win.  
 
 
 ---

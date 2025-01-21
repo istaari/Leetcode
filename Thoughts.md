@@ -46,6 +46,8 @@
 
 ## Dynamic Programming
 
+
+- Always find what is subproblem and what is state
 - Think solution to smallest subproblems, `smallest problem is almost always a problem of size 0 or 1 or empty string`
 - Combine Smallest subproblems to solve bigger problems
 - Think of smallest input like size is empty or 1, or string is empty
