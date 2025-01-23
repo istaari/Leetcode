@@ -67,6 +67,23 @@
 
 **10. Cyclic**
 
+```java
+ void cyclicSort(int[] arr) {
+      int i = 0;
+      while (i < arr.length) {
+          // Calculate the correct index for the current element
+          int correctIndex = arr[i] - 1;
+          if (arr[i] != arr[correctIndex]) {
+              // Swap the current element with the one at its correct position
+              swap(arr, i, correctIndex);
+          } else {
+              // Move to the next element if it's in the correct position
+              i++;
+          }
+      }
+}
+```
+
 ---
 
 ## String
@@ -97,10 +114,51 @@
   
 **2. Palindrome Problems** 
 
+**Examples:**
+
+- [Total Palindrome substrings]()
+   
+   - Expand around the center, for each character in the string, expand around the center and check for palindrome
+
+   ```java
+    int extendPalindrome(String s) {
+        int n = s.length();
+        int ans = 0;
+        for (int i = 0; i < n; i++) {
+            int even = palindromeCount(s, i, i + 1); // Even Length
+            int odd = palindromeCount(s, i - 1, i + 1); // Odd Length
+            ans += even + odd + 1; // +1 for single character
+        }
+        return ans;
+    }
+
+   int palindromeCount(String s, int left, int right) {
+        int count = 0;
+        int n = s.length();
+        while (left >= 0 && right < n && s.charAt(left) == s.charAt(right)) {
+            count++;
+            left--;
+            right++;
+        }
+        return count;
+    }
+   ```
+
 
 ---
 
 ## Array
+
+- For Circular Array, use `i % n` to get the correct index `i < n * 2`
+- For negative index, `(i % n + n) % n`
+- For odd length array  `n / 2` gives the `middle index`
+- For even length array `n / 2 - 1` -  lower middle index  and `n / 2` - upper middle index
+- Middle index based on last index
+   - For odd length array `lastIndex + 1 / 2` 
+   - For even length array `(lastIndex + 1 / 2) - 1` - Lower middle index and `(lastIndex + 1 / 2)` - Upper middle index
+- Rotated Index in Rotated Arrays
+   - `(i + k) % n` (for right rotation by k).
+   - `(i - k + n) % n` (for left rotation by k)
 
 **1. Subarrays** 
 
@@ -393,6 +451,9 @@
 
 - Window Size = `j - 1 + 1`
 - Remove first element from window `i - k` k is window size
+- Circular Sliding Window
+   - Start of the window - `i % n`
+   - End of the window - `(i + k - 1) % n` where k is the window size.
 - Digits - `count = new int[10]`, Small Aphabets - `count = new int[26]`, Big Aphabets - `count = new int[128]`
 - When `two strings` are invloved first create a map of frequency of first string, then compare with second string
 - When `one string or array` is involved, Inside the loop increment and decrement the count of that element in map
@@ -654,9 +715,7 @@
 
 **Examples:**
 - [Task Scheduler](https://leetcode.com/problems/task-scheduler/) - Greedily assign tasks while considering cooldown periods.
-  
-  - Formula : `minimumIntervals = (maxFreq − 1 ) × (n + 1 ) + maxCount`
-  - Can be done with priority queue
+
 
 **3. Greedy for Arrays**
 
@@ -1020,7 +1079,7 @@
 - **[Maximum Sum Circular Subarray](https://leetcode.com/problems/maximum-sum-circular-subarray/)** - Find the maximum sum of a circular subarray.  
 
 
-**Fibonacci Variations** 
+**2. Fibonacci Variations** 
 
  **Examples:**
 
@@ -1039,27 +1098,11 @@
    - Recurrence Relation: `f(n) = max(f(n-1), f(n-2) + nums[n])`  
    - Base Cases: `f(0) = nums[0], f(1) = max(nums[0], nums[1])`  
 
-
 - **[House Robber II](https://leetcode.com/problems/house-robber-ii/)**  
-   Recurrence Relation:  
-    - Case 1: `f_1(n) = max(f_1(n-1), f_1(n-2) + nums[n])` (houses 0 to n-2)  
-    - Case 2: `f_2(n) = max(f_2(n-1), f_2(n-2) + nums[n])` (houses 1 to n-1)  
-
-   Base Cases:  
-    - Case 1: `f_1(0) = nums[0], f_1(1) = max(nums[0], nums[1])`  
-    - Case 2: `f_2(1) = nums[1], f_2(2) = max(nums[1], nums[2])`  
-
 
 - **[Decode Ways](https://leetcode.com/problems/decode-ways/)**  
 
-   Recurrence Relation:  
-   - `f(n) = f(n-1)` if the single-digit (1-9) is valid  
-   - `f(n) = f(n-2)` if the two-digit (10-26) is valid  
-   - `f(n) = f(n-1) + f(n-2)` if both are valid  
-
-   Base Cases: `f(0) = 1` (empty string), `f(1) = 1` (if valid single digit)  
-
- **2. Grids(Path Problem)**
+ **3. Grids(Path Problem)**
 
  **Examples:**
 
@@ -1088,7 +1131,7 @@
   - Similiar to path sum
 
 
- **3. Subsequences(Kanpsack, Subset, Coin Change, Partition)** 
+ **4. Subsequences(Kanpsack, Subset, Coin Change, Partition)** 
 
  **Examples:**
 
@@ -1263,41 +1306,25 @@
   ```
 
 
- **4. String(Subsequence, Substring, Edit Distance, Wildcard)** 
+ **5. String(Subsequence, Substring, Edit Distance, Wildcard)** 
 
  **Examples:**
 
 - **[Longest Common Subsequence](https://leetcode.com/problems/longest-common-subsequence/)** - Longest common subsequence between two strings
 
+- **[Longest Palindromic Substring](https://leetcode.com/problems/longest-palindromic-substring/)**  - Longest palindromic substring in a string
 
 - **[Longest Palindromic Subsequence](https://leetcode.com/problems/longest-palindromic-subsequence/)**  - Longest palindromic subsequence in a string
 
-
-- **[Edit Distance (Levenshtein Distance)](https://leetcode.com/problems/edit-distance/)** - minimum number of operations required to convert word1 to word2, `insert, delete, replace`
-
-
-- **[Longest Palindromic Substring](https://leetcode.com/problems/longest-palindromic-substring/)**  - Longest palindromic substring in a string
-
-
 - **[Distinct Subsequences](https://leetcode.com/problems/distinct-subsequences/)**  - Number of distinct subsequences of `s` which equals `t`
-
 
 - **[Interleaving String](https://leetcode.com/problems/interleaving-string/)**  - find target string s2 by interleaving substring of s1 and s2
 
+- **[Edit Distance (Levenshtein Distance)](https://leetcode.com/problems/edit-distance/)** - minimum number of operations required to convert word1 to word2, `insert, delete, replace`
 
 - **[Regular Expression Matching](https://leetcode.com/problems/regular-expression-matching/)**  
 
-
 - **[Wildcard Matching](https://leetcode.com/problems/wildcard-matching/)**   
-
-
-**5. Partitioning Problems** 
-
-- **[Palindrome Partitioning](https://leetcode.com/problems/palindrome-partitioning-ii/)** - Partition a string into the minimum number of palindromic substrings. 
-
-- **[Burst Balloons](https://leetcode.com/problems/burst-balloons/)** - Find the maximum coins you can collect by bursting balloons in a particular order.  
-
-- **[Word Break](https://leetcode.com/problems/word-break/)** - Check if a string can be segmented into a sequence of dictionary words.  
 
 
 **6. Stock Optimizations** 
@@ -1319,13 +1346,15 @@
 - **[Best Time to Buy and Sell Stock with Cooldown](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/)**  
 
  
- **7. Matrix Chain Multiplication**  
+ **7. Interval DP(MCM)**  
 
  **Examples:**
 
   - **[Minimum Cost to Cut a Stick](https://leetcode.com/problems/minimum-cost-to-cut-a-stick/description/)**
 
   - **[Burst Balloons](https://leetcode.com/problems/burst-balloons/description/)**
+
+  - **[Rod Cutting](https://leetcode.com/discuss/interview-question/4889192/4-Solutions-or-Top-DownBottom-Up-or-Best-Explanation-Using-Comments-or-C%2B%2B-Code)**
 
 
  **8. DP With Path Traversal**
@@ -1339,9 +1368,13 @@
  - **[Jump Game II](https://leetcode.com/problems/jump-game-ii/)**  
 
 
-**9. Bitmasking + DP**  
+**9. Bitmasking and Partitioning**  
 
 **Examples:**
+
+- **[Palindrome Partitioning 2](https://leetcode.com/problems/palindrome-partitioning-ii/)** - Partition a string into the minimum number of palindromic substrings. 
+
+- **[Word Break](https://leetcode.com/problems/word-break/)** - Check if a string can be segmented into a sequence of dictionary words.  
 
 - **[Partition to K Equal Sum Subsets](https://leetcode.com/problems/partition-to-k-equal-sum-subsets/)**  - Partition a set of numbers into `k` subsets where each subset has the same sum
 

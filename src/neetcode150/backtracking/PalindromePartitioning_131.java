@@ -21,7 +21,6 @@ public class PalindromePartitioning_131 {
     }
 
     public static void helper(String remaining, List<String> partitions, List<List<String>> result) {
-
         if (remaining.isEmpty()) {
             result.add(new ArrayList<>(partitions));
             return;

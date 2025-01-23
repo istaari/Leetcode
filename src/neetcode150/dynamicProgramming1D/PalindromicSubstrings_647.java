@@ -50,15 +50,18 @@ public class PalindromicSubstrings_647 {
      */
     public static int palindromeCount(String s, int left, int right) {
         int count = 0;
-        while (left >= 0 && right < s.length() && s.charAt(left--) == s.charAt(right++)) {
+        int n = s.length();
+        while (left >= 0 && right < n && s.charAt(left) == s.charAt(right)) {
             count++;
+            left--;
+            right++;
         }
         return count;
     }
 
 
     public static void main(String[] args) {
-        System.out.println(countSubstrings("ababdc"));
+        System.out.println(extendPalindrome("ababdc"));
     }
 
 }
