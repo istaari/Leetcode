@@ -35,9 +35,9 @@ public class PalindromicSubstrings_647 {
         int n = s.length();
         int ans = 0;
         for (int i = 0; i < n; i++) {
-            int even = palindromeCount(s, i, i + 1);
-            int odd = palindromeCount(s, i - 1, i + 1);
-            ans += even + odd + 1;
+            int odd = palindromeCount(s, i, i );
+            int even = palindromeCount(s, i , i + 1);
+            ans += even + odd;
         }
         return ans;
     }

@@ -12,6 +12,7 @@
 - Number of subsets = `2^n`
 - Number of contiguous subarrays with size `k` = `n - k + 1`
 
+
 ## Sorting
 
 **1. Bubble Sort**
@@ -125,9 +126,9 @@
         int n = s.length();
         int ans = 0;
         for (int i = 0; i < n; i++) {
-            int even = palindromeCount(s, i, i + 1); // Even Length
-            int odd = palindromeCount(s, i - 1, i + 1); // Odd Length
-            ans += even + odd + 1; // +1 for single character
+            int odd = palindromeCount(s, i, i); // odd Length
+            int even = palindromeCount(s, i, i + 1); // even Length
+            ans += even + odd;
         }
         return ans;
     }
@@ -1072,61 +1073,61 @@
 
 **1. Maximum Subarray/Contiguous Subarray Problems**
 
-- **[Maximum Subarray (Kadane’s Algorithm)](https://leetcode.com/problems/maximum-subarray/)** - Find the largest sum of a contiguous subarray. 
+- [Maximum Subarray (Kadane’s Algorithm)](https://leetcode.com/problems/maximum-subarray/) - Find the largest sum of a contiguous subarray. 
 
-- **[Maximum Product Subarray](https://leetcode.com/problems/maximum-product-subarray/)** - Find the largest product of a contiguous subarray.
+- [Maximum Product Subarray](https://leetcode.com/problems/maximum-product-subarray/) - Find the largest product of a contiguous subarray.
   
-- **[Maximum Sum Circular Subarray](https://leetcode.com/problems/maximum-sum-circular-subarray/)** - Find the maximum sum of a circular subarray.  
+- [Maximum Sum Circular Subarray](https://leetcode.com/problems/maximum-sum-circular-subarray/) - Find the maximum sum of a circular subarray.  
 
 
 **2. Fibonacci Variations** 
 
  **Examples:**
 
-- **[Climbing Stairs](https://leetcode.com/problems/climbing-stairs/)**  
+- [Climbing Stairs](https://leetcode.com/problems/climbing-stairs/) 
    - Recurrence Relation: `f(n) = f(n-1) + f(n-2)`  
    - Base Cases: `f(1) = 1, f(2) = 2`  
 
 
-- **[Min Cost Climbing Stairs](https://leetcode.com/problems/min-cost-climbing-stairs/)**  
+- [Min Cost Climbing Stairs](https://leetcode.com/problems/min-cost-climbing-stairs/) 
 
    - Recurrence Relation: `f(n) = cost[n] + min(f(n-1), f(n-2))`  
    - Base Cases: `f(0) = cost[0], f(1) = cost[1]`  
 
 
-- **[House Robber](https://leetcode.com/problems/house-robber/)**  
+- [House Robber](https://leetcode.com/problems/house-robber/) 
    - Recurrence Relation: `f(n) = max(f(n-1), f(n-2) + nums[n])`  
    - Base Cases: `f(0) = nums[0], f(1) = max(nums[0], nums[1])`  
 
-- **[House Robber II](https://leetcode.com/problems/house-robber-ii/)**  
+- [House Robber II](https://leetcode.com/problems/house-robber-ii/) 
 
-- **[Decode Ways](https://leetcode.com/problems/decode-ways/)**  
+- [Decode Ways](https://leetcode.com/problems/decode-ways/) 
 
  **3. Grids(Path Problem)**
 
  **Examples:**
 
-- **[Unique Paths](https://leetcode.com/problems/unique-paths/)** 
+- [Unique Paths](https://leetcode.com/problems/unique-paths/)
    
   - [Solution](https://leetcode.com/problems/unique-paths/solutions/1581998/c-python-5-simple-solutions-w-explanation-optimization-from-brute-force-to-dp-to-math/)
 
   - Can be space optimized using `2-row array`, alternating between 0 and 1 row `i & 1` or `i % 2`
 
-- **[Unique Paths II](https://leetcode.com/problems/unique-paths-ii/)**  
+- [Unique Paths II](https://leetcode.com/problems/unique-paths-ii/) 
 
   - Recurrence Relation: `dp[i][j] = 0 if obstacleGrid[i][j] == 1 else dp[i-1][j] + dp[i][j-1]`  
   - Base Case: `dp[0][0] = 1 if obstacleGrid[0][0] == 0 else 0`  
 
-- **[Minimum Path Sum](https://leetcode.com/problems/minimum-path-sum/)** 
+- [Minimum Path Sum](https://leetcode.com/problems/minimum-path-sum/)
  
   - Recurrence Relation: `dp[i][j] = grid[i][j] + min(dp[i-1][j], dp[i][j-1])`  
   - Base Case: `dp[0][0] = grid[0][0]`  `dp[0][i] = grid[0][i] + dp[0][i - 1]`  `dp[i][0] = grid[i][0] + dp[i - 1][0]`
 
-- **[Minimum Falling Path Sum](https://leetcode.com/problems/find-the-safest-path-in-a-grid/)**  
+- [Minimum Falling Path Sum](https://leetcode.com/problems/find-the-safest-path-in-a-grid/)  
  
   - Find Minimum from 3 directions and sum it with current element
 
-- **[Triangle](https://leetcode.com/problems/triangle/description/)**  
+- [Triangle](https://leetcode.com/problems/triangle/description/) 
 
   - Similiar to path sum
 
@@ -1135,7 +1136,7 @@
 
  **Examples:**
 
-- **[Partition Equal Subset Sum](https://leetcode.com/problems/partition-equal-subset-sum/)**  - Check if subset exists with some target
+- [Partition Equal Subset Sum](https://leetcode.com/problems/partition-equal-subset-sum/)  - Check if subset exists with some target
 
   - Check if sum is even, then divide the sum by 2, then check if subset sum is equal to half of sum
   - In `recursive approach` use `include or exclude` decision tree technique
@@ -1155,7 +1156,8 @@
         return dp[index][target];
     }
     ```
-  - `0/1 Knapsack Problem`
+
+  - 0/1 Knapsack Problem
 
   - ```java
       boolean iterative(int[] nums, int targetSum) {
@@ -1179,7 +1181,7 @@
           return dp[nums.length][targetSum];
       }
     ``` 
-- **[Coin Change](https://leetcode.com/problems/coin-change/)**  - Find minimum number of coins to make a sum, `same coins can be used more than once`
+- [Coin Change](https://leetcode.com/problems/coin-change/)  - Find minimum number of coins to make a sum, `same coins can be used more than once`
 
   - Recurrence Relation: `dp[i][j] = min(dp[i-1][j], dp[i][j-coins[i-1]] + 1)`
   - Base Case: `dp[0][j] = inf, dp[i][0] = 0`  
@@ -1210,7 +1212,7 @@
   ```
 
 
-- **[Coin Change 2](https://leetcode.com/problems/coin-change-ii/description/)**  - Find number of ways to make a sum, `same coins can be used more than once`
+- [Coin Change 2](https://leetcode.com/problems/coin-change-ii/description/)  - Find number of ways to make a sum, `same coins can be used more than once`
 
   - Recurrence Relation: `dp[i][j] = dp[i - 1][j] + dp[i][j - coins[i - 1]]` 
   - Base Case : ` dp[i][0] = 1`
@@ -1252,13 +1254,13 @@
 
   ```
   
-- **[Combination Sum IV](https://leetcode.com/problems/combination-sum-iv/)** - Number of ways(no. of Subsequence) to make a target sum, `same number can be used more than once`
+- [Combination Sum IV](https://leetcode.com/problems/combination-sum-iv/) - Number of ways(no. of Subsequence) to make a target sum, `same number can be used more than once`
 
 
-- **[Target Sum](https://leetcode.com/problems/target-sum/)** - Number of ways to make a target sum, using `+` and `-` operator, Same number can be used more than once
+- [Target Sum](https://leetcode.com/problems/target-sum/) - Number of ways to make a target sum, using `+` and `-` operator, Same number can be used more than once
 
 
-- **[Longest Increasing Subsequence](https://leetcode.com/problems/longest-increasing-subsequence/)**  - Length of longest increasing subsequence
+- [Longest Increasing Subsequence](https://leetcode.com/problems/longest-increasing-subsequence/)  - Length of longest increasing subsequence
 
   - Recurrence Relation: `dp[i] = max(dp[i], dp[j] + 1)`
   - Base Case : ` dp[i] = 1`
@@ -1310,84 +1312,80 @@
 
  **Examples:**
 
-- **[Longest Common Subsequence](https://leetcode.com/problems/longest-common-subsequence/)** - Longest common subsequence between two strings
+- [Longest Common Subsequence](https://leetcode.com/problems/longest-common-subsequence/) - Longest common subsequence between two strings
 
-- **[Longest Palindromic Substring](https://leetcode.com/problems/longest-palindromic-substring/)**  - Longest palindromic substring in a string
+- [Longest Palindromic Substring](https://leetcode.com/problems/longest-palindromic-substring/)  - Longest palindromic substring in a string
 
-- **[Longest Palindromic Subsequence](https://leetcode.com/problems/longest-palindromic-subsequence/)**  - Longest palindromic subsequence in a string
+- [Longest Palindromic Subsequence](https://leetcode.com/problems/longest-palindromic-subsequence/)  - Longest palindromic subsequence in a string
 
-- **[Distinct Subsequences](https://leetcode.com/problems/distinct-subsequences/)**  - Number of distinct subsequences of `s` which equals `t`
+- [Distinct Subsequences](https://leetcode.com/problems/distinct-subsequences/)  - Number of distinct subsequences of `s` which equals `t`
 
-- **[Interleaving String](https://leetcode.com/problems/interleaving-string/)**  - find target string s2 by interleaving substring of s1 and s2
+- [Interleaving String](https://leetcode.com/problems/interleaving-string/)  - find target string s2 by interleaving substring of s1 and s2
 
-- **[Edit Distance (Levenshtein Distance)](https://leetcode.com/problems/edit-distance/)** - minimum number of operations required to convert word1 to word2, `insert, delete, replace`
+- [Edit Distance (Levenshtein Distance)](https://leetcode.com/problems/edit-distance/) - minimum number of operations required to convert word1 to word2, `insert, delete, replace`
 
-- **[Regular Expression Matching](https://leetcode.com/problems/regular-expression-matching/)**  
+- [Regular Expression Matching](https://leetcode.com/problems/regular-expression-matching/)  
 
-- **[Wildcard Matching](https://leetcode.com/problems/wildcard-matching/)**   
+- [Wildcard Matching](https://leetcode.com/problems/wildcard-matching/)   
 
 
 **6. Stock Optimizations** 
 
 **Examples:**
 
-- **[Best Time to Buy and Sell Stock](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/)**  
+- [Best Time to Buy and Sell Stock](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/) 
 
+- [Best Time to Buy and Sell Stock II](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/)  
 
-- **[Best Time to Buy and Sell Stock II](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/)**  
+- [Best Time to Buy and Sell Stock III](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/) 
 
+- [Best Time to Buy and Sell Stock IV](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/)  
 
-- **[Best Time to Buy and Sell Stock III](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/)**  
-
-
-- **[Best Time to Buy and Sell Stock IV](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/)**  
-
-
-- **[Best Time to Buy and Sell Stock with Cooldown](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/)**  
+- [Best Time to Buy and Sell Stock with Cooldown](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/)  
 
  
  **7. Interval DP(MCM)**  
 
  **Examples:**
 
-  - **[Minimum Cost to Cut a Stick](https://leetcode.com/problems/minimum-cost-to-cut-a-stick/description/)**
+  - [Minimum Cost to Cut a Stick](https://leetcode.com/problems/minimum-cost-to-cut-a-stick/description/)
 
-  - **[Burst Balloons](https://leetcode.com/problems/burst-balloons/description/)**
+  - [Burst Balloons](https://leetcode.com/problems/burst-balloons/description/)
 
-  - **[Rod Cutting](https://leetcode.com/discuss/interview-question/4889192/4-Solutions-or-Top-DownBottom-Up-or-Best-Explanation-Using-Comments-or-C%2B%2B-Code)**
+  - [Rod Cutting](https://leetcode.com/discuss/interview-question/4889192/4-Solutions-or-Top-DownBottom-Up-or-Best-Explanation-Using-Comments-or-C%2B%2B-Code)
 
 
  **8. DP With Path Traversal**
 
  **Examples:**
 
- - **[Frog Jump](https://leetcode.com/problems/frog-jump/)**
+ - [Frog Jump](https://leetcode.com/problems/frog-jump/)
 
- - **[Jump Game](https://leetcode.com/problems/jump-game/)**  
+ - [Jump Game](https://leetcode.com/problems/jump-game/) 
 
- - **[Jump Game II](https://leetcode.com/problems/jump-game-ii/)**  
+ - [Jump Game II](https://leetcode.com/problems/jump-game-ii/) 
 
 
 **9. Bitmasking and Partitioning**  
 
 **Examples:**
 
-- **[Palindrome Partitioning 2](https://leetcode.com/problems/palindrome-partitioning-ii/)** - Partition a string into the minimum number of palindromic substrings. 
+- [Palindrome Partitioning 2](https://leetcode.com/problems/palindrome-partitioning-ii/) - Partition a string into the minimum number of palindromic substrings. 
 
-- **[Word Break](https://leetcode.com/problems/word-break/)** - Check if a string can be segmented into a sequence of dictionary words.  
+- [Word Break](https://leetcode.com/problems/word-break/) - Check if a string can be segmented into a sequence of dictionary words.  
 
-- **[Partition to K Equal Sum Subsets](https://leetcode.com/problems/partition-to-k-equal-sum-subsets/)**  - Partition a set of numbers into `k` subsets where each subset has the same sum
+- [Partition to K Equal Sum Subsets](https://leetcode.com/problems/partition-to-k-equal-sum-subsets/)  - Partition a set of numbers into `k` subsets where each subset has the same sum
 
-- **[Word Break II](https://leetcode.com/problems/word-break-ii/)**  - Break a sentence into words using a dictionary of words
+- [Word Break II](https://leetcode.com/problems/word-break-ii/)  - Break a sentence into words using a dictionary of words
 
 
 **10. Game Theory**
 
-- **[Stone Game](https://leetcode.com/problems/stone-game/)** - Two players take turns removing stones from piles. Determine if the first player can win. 
+- [Stone Game](https://leetcode.com/problems/stone-game/) - Two players take turns removing stones from piles. Determine if the first player can win. 
 
-- **[Predict the Winner](https://leetcode.com/problems/predict-the-winner/)** - Determine if the first player can guarantee a win with optimal moves.  
+- [Predict the Winner](https://leetcode.com/problems/predict-the-winner/) - Determine if the first player can guarantee a win with optimal moves.  
 
-- **[Nim Game](https://leetcode.com/problems/nim-game/)** - Players take turns removing 1 to 3 stones from a pile. Determine if the first player can win.  
+- [Nim Game](https://leetcode.com/problems/nim-game/) - Players take turns removing 1 to 3 stones from a pile. Determine if the first player can win.  
 
 
 ---
@@ -1984,3 +1982,15 @@ public boolean isPowerOfTwo(int number) {
 - Convert array to `n * m` matrix : `matrix[i / m][i % m] = a[i]` where `n = matrix.length` and `m = matrix[0].length`
 
 - Grid Number = `(row / 3) * 3 + (col / 3)`
+
+---
+
+## Modular Arithmetic
+
+- **Modular Addition**: `(a + b) % m = ((a % m) + (b % m)) % m`
+- **Modular Subtraction**: `(a - b) % m = ((a % m) - (b % m) + m) % m`
+- **Modular Multiplication**: `(a * b) % m = ((a % m) * (b % m)) % m`
+- **Modular Division**: `(a / b) % m = ((a % m) * (b^(-1) % m)) % m`
+- **Modular Exponentiation**: `(a ^ b) % m = ((a % m) ^ b) % m`
+- **Modular Inverse**: `a^(-1) % m = a^(m-2) % m` (Fermat's Little Theorem)
+- **Divisibility Check** : `if a mod m = 0 then a is divisible by m`
