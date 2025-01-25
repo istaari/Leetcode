@@ -1379,13 +1379,11 @@
 - [Word Break II](https://leetcode.com/problems/word-break-ii/)  - Break a sentence into words using a dictionary of words
 
 
-**10. Game Theory**
+**10. Game Theor(Min, Max)y**
 
 - [Stone Game](https://leetcode.com/problems/stone-game/) - Two players take turns removing stones from piles. Determine if the first player can win. 
 
 - [Predict the Winner](https://leetcode.com/problems/predict-the-winner/) - Determine if the first player can guarantee a win with optimal moves.  
-
-- [Nim Game](https://leetcode.com/problems/nim-game/) - Players take turns removing 1 to 3 stones from a pile. Determine if the first player can win.  
 
 
 ---
@@ -1431,24 +1429,13 @@
 
 - [Map Sum Pairs](https://leetcode.com/problems/map-sum-pairs/) - Implement a Trie-based key-value mapping where keys share prefixes.
 
-
-**5. Number Manipulation Using Trie**
-
-**Examples:**
-
-- [Maximum XOR of Two Numbers in an Array](https://leetcode.com/problems/maximum-xor-of-two-numbers-in-an-array/) - Find the maximum XOR value for two numbers in an array using a binary Trie.
-
-- [Maximum XOR With an Element From Array](https://leetcode.com/problems/maximum-xor-with-an-element-from-array/) - Find the maximum XOR value of queries with constraints using a Trie.
-
-- [Count Pairs With XOR in a Range](https://leetcode.com/problems/count-pairs-with-xor-in-a-range/) - Count pairs in an array whose XOR lies within a given range using a Trie.
- 
 ---
 
 ## Graph
 
 ### **Traversal & Basic Operations**
 
-**1. BFS Problems**
+**1. DFS and BFS Problems**
 
 **Examples:**
 
@@ -1463,16 +1450,8 @@
 - [Evaluate Division](https://leetcode.com/problems/evaluate-division/) - Evaluate division results based on given equations.
 
 - [Get Watched Videos by Your Friends](https://leetcode.com/problems/get-watched-videos-by-your-friends/) - Find the most popular videos watched by your friends in a social network.
+
 - [Cut Off Trees for Golf Event](https://leetcode.com/problems/cut-off-trees-for-golf-event/) - Minimize the number of steps required to cut off trees in a golf course.
-
-
-**2. DFS Problems**
-
-**Examples:**
-
-- [Number of Islands](https://leetcode.com/problems/number-of-islands/) - Count the number of distinct islands in a 2D grid.
-
-- [Flood Fill](https://leetcode.com/problems/flood-fill/) - Fill a connected region in a grid starting from a specific point.
 
 - [Longest Increasing Path in a Matrix](https://leetcode.com/problems/longest-increasing-path-in-a-matrix/) - Find the longest increasing path in a matrix.
 

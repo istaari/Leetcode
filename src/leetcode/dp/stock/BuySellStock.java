@@ -2,6 +2,7 @@ package leetcode.dp.stock;
 
 public class BuySellStock {
 
+    // Using greedy approach
     public static int maxProfit(int[] prices) {
         int minPrice = prices[0];
         int maxProfit = 0;
@@ -17,25 +18,10 @@ public class BuySellStock {
         return maxProfit;
     }
 
-    public static int maxProfitDP(int[] prices) {
-        int minPrice = prices[0];
-
-        int[] dp = new int[prices.length + 1];
-        dp[0] = 0;
-
-        for (int i = 1; i <= prices.length; i++) {
-            minPrice = Math.min(minPrice, prices[i - 1]);
-
-            dp[i] = Math.max(dp[i - 1], prices[i - 1] - minPrice);
-
-        }
-
-        return dp[prices.length];
-    }
 
     public static void main(String[] args) {
         int[] prices = {7, 1, 5, 3, 6, 4};
-        //prices = new int[]{7, 6, 4, 3, 1};
-        System.out.println(maxProfitDP(prices));
+        System.out.println(maxProfit(prices));
     }
+
 }

@@ -20,18 +20,18 @@ public class PalindromicSubstrings_647 {
                     dp[j][i] = true;
                     count++;
                 }
+                dp[j][i] = true;
             }
         }
         return count;
     }
-
 
     //-----------------------------------Extend Method-----------------------------------//
     /**
      * @param s input string
      * @return Total palindromic substring
      */
-    public static int extendPalindrome(String s) {
+    public static  int extendPalindrome(String s) {
         int n = s.length();
         int ans = 0;
         for (int i = 0; i < n; i++) {
@@ -61,7 +61,7 @@ public class PalindromicSubstrings_647 {
 
 
     public static void main(String[] args) {
-        System.out.println(extendPalindrome("ababdc"));
+        System.out.println(longestPalindromeSubseq("ababdc"));
     }
 
 }
