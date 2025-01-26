@@ -53,6 +53,17 @@
 - [Backtracking Algorithm Problems to Practice](https://leetcode.com/discuss/study-guide/1405817/backtracking-algorithm-problems-to-practice)
 - [Backtracking Template and General Approach](https://leetcode.com/problems/palindrome-partitioning/solutions/182307/Java:-Backtracking-Template-General-Approach/)
 
+
 ## Bit Manipulation
 
 - [Bit Manipulation](https://leetcode.com/discuss/interview-question/3695233/all-types-of-patterns-for-bits-manipulations-and-how-to-use-it)
+- [Bit Manipulation Tricks](https://leetcode.com/discuss/study-guide/3629570/Bit-Manipulation-ororBasics-for-Beginners-oror-Concepts-with-all-curated-problems)
+
+
+##  Misc
+
+- [BFS and variations](https://leetcode.com/discuss/study-guide/1833581/BFS-and-its-variations)
+- [Lee215 problem list](https://leetcode.com/discuss/feedback/4518909/happy-new-year-2024)
+- [Java useful tricks](https://leetcode.com/discuss/study-guide/1170715/Java-or-Data-Structure-Mostly-used-Syntax)
+- [Advanced DP](https://leetcode.com/discuss/study-guide/6074423/Advanced-DP-Problems-for-Practice)
+- [Square root decomposition](https://leetcode.com/discuss/study-guide/2432715/Tutorial-or-Square-root-decomposition-or-Dynamic-Range-Query)

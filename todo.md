@@ -1,16 +1,11 @@
+
 ### **DSA Todos**
 
-- [ ] DP
-- [ ] Greedy
-- [ ] Sliding Window
-- [ ] Prefix Sum
-- [ ] Design 
-- [ ] Concurrency
-- [ ] Monotonic Stack Revision
+- [ ] Binary Lifting
+   
+   - Binary Lifting is a technique used to solve problems related to trees or graphs, especially those that involve answering queries about the Lowest Common Ancestor (LCA), ancestor queries, or path queries efficiently
 
----
-
-### **Future DSA Todos**
+   - [Binary Lifting Optimisation](https://codeforces.com/blog/entry/74847)
 
 - [ ] Graph
 - [ ] B and B+ Trees
@@ -24,12 +19,24 @@
 
 ### **Revisit Problems**
 
-1. [Find if Path Exists in Graph](https://leetcode.com/problems/find-if-path-exists-in-graph/description/)
-2. [Reverse Linked List II](https://leetcode.com/problems/reverse-linked-list-ii/)
-3. [Remove Duplicates from Sorted Array](https://leetcode.com/problems/remove-duplicates-from-sorted-array/description/)
-4. [Remove Duplicates from Sorted Array II](https://leetcode.com/problems/remove-duplicates-from-sorted-array-ii/description/)
-5. [Construct Binary Tree from Preorder and Inorder Traversal](https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/description/)
-6. [Populating Next Right Pointers in Each Node II (Simple Solution Using Constant Space)](https://leetcode.com/problems/populating-next-right-pointers-in-each-node-ii/solutions/37811/simple-solution-using-constant-space/)
-7. [Unique Binary Search Trees II](https://leetcode.com/problems/unique-binary-search-trees-ii/)
+[Find if Path Exists in Graph](https://leetcode.com/problems/find-if-path-exists-in-graph/description/)
+
+[Reverse Linked List II](https://leetcode.com/problems/reverse-linked-list-ii/)
+
+[Construct Binary Tree from Preorder and Inorder Traversal](https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/description/)
+
+[Populating Next Right Pointers in Each Node II (Simple Solution Using Constant Space)](https://leetcode.com/problems/populating-next-right-pointers-in-each-node-ii/solutions/37811/simple-solution-using-constant-space/)
+
+[Unique Binary Search Trees II](https://leetcode.com/problems/unique-binary-search-trees-ii/)
+
+---
+
+### **Blog**
+
+[Codeforces binary search techniques](https://nor-blog.codeberg.page/posts/2021-11-07-binary-search/)
+
+[Tips on Constructive Algorithms](https://codeforces.com/blog/entry/80317)
+
+[Cartesian Tree](https://codeforces.com/blog/entry/112664)
 
 ---

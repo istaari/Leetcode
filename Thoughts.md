@@ -31,7 +31,10 @@
 
 ## Recursion
 
+- `Recursive Calls Represent Unfinished Work`, When a recursive function calls itself, it doesn’t immediately solve the current problem but instead defers it to be solved later by breaking it down into smaller subproblems
+
 - Think of the `bases cases and smallest input`
+
 - Use `Nested Recursion`, Solution to one recursive call depends on the solution of another recursive call, or nested structure
 
 ## Tree

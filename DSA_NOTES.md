@@ -459,7 +459,7 @@
 - When `two strings` are invloved first create a map of frequency of first string, then compare with second string
 - When `one string or array` is involved, Inside the loop increment and decrement the count of that element in map
 
-### **Examples:**
+**Examples:**
 
 **1. Fixed Window Size**
 
@@ -642,13 +642,13 @@
 ## Prefix Sum
 
 - `prefix[j] - prefix[i - 1] = k` sum of a subarray from index i to j is equal to k
-- `prefix[i - 1] = prefix[j] - k` , till prefix[i - 1] is valid subarray with sum k
+- `prefix[i - 1] = prefix[j] - k` , prefix[i - 1] is valid subarray with sum k
 - Subarray sum multuple of k, `prefix[j] % k = prefix[i - 1] % k` 
 
 
 **1. Subarray Problems with Prefix Sum**
 
-#### **Examples:**
+**Examples:**
 
 - [Range Sum Query 2D - Immutable](https://leetcode.com/problems/range-sum-query-2d-immutable/)
 
@@ -1484,7 +1484,7 @@
 
 **Detect Cycle in an Undirected Graph** 
 
-- <p>Two vertices cannot form a cycle with a single edge (<strong>A -- B</strong>) unless there is a self-loop (an edge from <strong>A to A</strong> or from <strong>B to B</strong>).</p>
+- <p>Two vertices cannot form a cycle with a single edge (<strong>A <--> B</strong>) unless there is a self-loop (an edge from <strong>A to A</strong> or from <strong>B to B</strong>).</p>
 
 - For a cycle to exist in an undirected graph, it must involve `at least 3 vertices`
 
@@ -1513,8 +1513,6 @@
 - [Sequence Reconstruction](https://leetcode.com/problems/sequence-reconstruction/) - Reconstruct the original sequence from a set of sequences, ensuring that they are in the correct order.
 
 - [Alien Dictionary](https://leetcode.com/problems/alien-dictionary/solution/) - Determine the order of letters in an alien language based on a list of words.
-
-**Longest Path in a DAG**  
 
 
 ### **Union Find**
@@ -1574,8 +1572,6 @@
 **Examples:**
 
 - [Network Delay Time](https://leetcode.com/problems/network-delay-time/) - Calculate the time it takes for all nodes to receive a signal from a source node, considering edge weights in the graph.
-
-**Shortest Path in Weighted DAG** 
 
 
 ###  **Graph Coloring**
