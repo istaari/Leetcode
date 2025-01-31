@@ -63,7 +63,25 @@
 ##  Misc
 
 - [BFS and variations](https://leetcode.com/discuss/study-guide/1833581/BFS-and-its-variations)
+
 - [Lee215 problem list](https://leetcode.com/discuss/feedback/4518909/happy-new-year-2024)
-- [Java useful tricks](https://leetcode.com/discuss/study-guide/1170715/Java-or-Data-Structure-Mostly-used-Syntax)
+
 - [Advanced DP](https://leetcode.com/discuss/study-guide/6074423/Advanced-DP-Problems-for-Practice)
-- [Square root decomposition](https://leetcode.com/discuss/study-guide/2432715/Tutorial-or-Square-root-decomposition-or-Dynamic-Range-Query)
+
+- [Algo Pattern Cheatsheet](https://leetcode.com/discuss/interview-question/5915635/DP-or-Greedy-or-String-or-Graph-or-Tree-or-BinarySearch-or-SlidingWindow-or-Sorting-or-Prefix-Sum-Topic-Wise)
+
+- [useful link for pattern](https://leetcode.com/discuss/general-discussion/665604/important-and-useful-links-from-all-over-the-leetcode)
+
+
+##  Maths
+
+- [Maths problems](https://codeforces.com/blog/entry/13529)
+
+- [Khan Academy pre algebra](https://www.khanacademy.org/math/pre-algebra)
+
+
+## Greedy
+
+- [Greedy Problems](https://leetcode.com/discuss/general-discussion/669996/greedy-for-beginners-problems-sample-solutions)
+
+

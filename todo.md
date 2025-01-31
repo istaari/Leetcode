@@ -33,6 +33,8 @@
 
 ### **Blog**
 
+[Algo and Data Structures](https://www.geeksforgeeks.org/data-structures/)
+
 [Codeforces binary search techniques](https://nor-blog.codeberg.page/posts/2021-11-07-binary-search/)
 
 [Tips on Constructive Algorithms](https://codeforces.com/blog/entry/80317)

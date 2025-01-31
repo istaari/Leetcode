@@ -16,11 +16,9 @@ public class PartitionLabels {
 
         int start = 0;
         int end = Integer.MIN_VALUE;
-
         List<Integer> result = new ArrayList<>();
 
         for (int i = 0; i < s.length(); i++) {
-
             if (lastSeenIndex.get(s.charAt(i)) > end) {
                 end = lastSeenIndex.get(s.charAt(i));
             }

@@ -61,7 +61,7 @@ public class PalindromicSubstrings_647 {
 
 
     public static void main(String[] args) {
-        System.out.println(longestPalindromeSubseq("ababdc"));
+        System.out.println(extendPalindrome("ababdc"));
     }
 
 }

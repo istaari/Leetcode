@@ -1,9 +1,6 @@
 
 # Algorithms and Data Structures
 
-[Algo Pattern Cheatsheet](https://leetcode.com/discuss/interview-question/5915635/DP-or-Greedy-or-String-or-Graph-or-Tree-or-BinarySearch-or-SlidingWindow-or-Sorting-or-Prefix-Sum-Topic-Wise)
-
-[useful link for pattern](https://leetcode.com/discuss/general-discussion/665604/important-and-useful-links-from-all-over-the-leetcode)
 
 ## Formulas
 
@@ -762,6 +759,30 @@
               return count;
           }
         ```
+
+  - [Wiggle Subsequence](https://leetcode.com/problems/wiggle-subsequence/description/)
+
+    - Greedy DP
+    - Count peak and valley, `peak = valley + 1` , `valley = peak + 1` when you encounter peak and valley twice in a row there will be no change
+
+    ```java
+    int wiggleMaxLength(int[] nums) {
+        int size = nums.length;
+        int peak = 1;
+        int valley = 1;
+        for (int i = 1; i < size; ++i) {
+            if (nums[i] > nums[i - 1]) {
+                peak = valley + 1;
+            }
+            else if (nums[i] < nums[i - 1]) {
+                valley = peak + 1;
+            }
+        }
+        return Math.max(peak, valley);
+    }
+    ``` 
+
+
    
 - [Partition Labels](https://leetcode.com/problems/partition-labels/) - Partition a string into as many parts as possible such that each letter appears in only one part.
 
