@@ -197,6 +197,29 @@
 - `low + high / 2`  - Selects lower middle, if there are even elments 
 - `low + (high - low + 1) / 2`  - Selects upper middle, if there are even elments 
 
+- `Binary Search for the First True in a Boolean Array` or `Binary Search for the First Valid Element`
+
+  ```java
+    // int[] scores = {-1, -1, -1, 50, 60, 70, 80}; // Sorted array with -1 representing absent students
+    int findFirstValidScore(int[] scores) {
+          int left = -1; // Left boundary (starts before the array)
+          int right = scores.length; // Right boundary (starts after the array)
+
+          // Binary search to find the first valid score
+          while (right - left > 1) {
+              int mid = left + (right - left) / 2; // Middle point
+              if (scores[mid] == -1) {
+                  left = mid; // If -1, move the left boundary
+              } else {
+                  right = mid; // If valid score, move the right boundary
+              }
+          }
+
+          // Return the index of the first valid score
+          return right;
+      }
+  ```
+
 
 **1. Classic Binary Search**
 
@@ -206,7 +229,6 @@
 
     - When target is found for first occurrence, move `right = mid-1`
     - When target is found for last occurrence, move `left = mid+1`
-
 
 - Floor and Ceil of a number in a sorted array
 
@@ -820,7 +842,7 @@
     ``` 
 - [Car Pooling](https://leetcode.com/problems/car-pooling/description/)
 
-   - Uses the Sweep Line Algorithm, commonly used for interval-based problems, like meeting rooms scheduling, car pooling, and skyline problems
+   - Uses the Sweep Line Algorithm, commonly used for interval-based problems, like `meeting rooms scheduling, car pooling, and skyline problems`
 
    - Convert each trip into two events `Pick up and Drop-off event` then sort by location and capacity
 

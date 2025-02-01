@@ -1,7 +1,7 @@
 package leetcode.binarySearch;
 
 @SuppressWarnings("SpellCheckingInspection")
-public class SearchInRotatedArray2 {
+public class SearchInRotatedArray_2 {
 
     public static int smallestElementIndex(int[] nums) {
         int low = 0;

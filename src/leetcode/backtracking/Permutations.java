@@ -13,13 +13,10 @@ public class Permutations {
         }
 
         for (int num : nums) {
-
             if (tempList.contains(num)) continue;
 
             tempList.add(num);
-
             helper(nums, tempList, result);
-
             tempList.removeLast();
         }
 

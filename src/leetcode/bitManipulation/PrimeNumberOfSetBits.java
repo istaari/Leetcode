@@ -22,7 +22,6 @@ public class PrimeNumberOfSetBits {
         int result = 0;
 
         for (int i = left; i <= right; i++) {
-
             int count = 0;
 
             for (int j = 0; j < 32; j++) {
@@ -32,7 +31,6 @@ public class PrimeNumberOfSetBits {
             }
 
             if (isPrime(count)) result++;
-
         }
 
         return result;

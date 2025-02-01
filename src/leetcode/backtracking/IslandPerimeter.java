@@ -2,8 +2,8 @@ package leetcode.backtracking;
 
 public class IslandPerimeter {
 
+    @SuppressWarnings("all")
     public static int helper(int[][] grid, int i, int j, int m, int n) {
-
         if (i < 0 || i >= m || j < 0 || j >= n) return 1;
 
         if (grid[i][j] == 0) return 1;
@@ -16,7 +16,6 @@ public class IslandPerimeter {
                 helper(grid, i - 1, j, m, n) +
                 helper(grid, i, j + 1, m, n) +
                 helper(grid, i, j - 1, m, n);
-
 
         return result;
     }

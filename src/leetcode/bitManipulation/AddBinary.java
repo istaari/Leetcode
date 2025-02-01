@@ -25,7 +25,6 @@ public class AddBinary {
 
             sb.append(sum % 2);
             carry = sum / 2;
-
         }
 
         if (carry > 0) {

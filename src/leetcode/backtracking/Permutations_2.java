@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Permutations2 {
+public class Permutations_2 {
 
     public static void helper(int[] nums, List<Integer> list, List<List<Integer>> result, boolean[] visited) {
 

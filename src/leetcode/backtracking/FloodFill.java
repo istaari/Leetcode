@@ -5,7 +5,6 @@ import java.util.Arrays;
 public class FloodFill {
 
     public static void helper(int[][] image, int sr, int sc, int color, int target) {
-
         if (sr < 0 || sr >= image.length || sc < 0 || sc >= image[0].length) return;
 
         if (image[sr][sc] == color) return;
