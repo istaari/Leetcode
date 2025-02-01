@@ -101,11 +101,10 @@
   - Use a `PriorityQueue` to store the words based on frequency and lexicographical order with custom comparator.
      ```java
       Queue<String>  queue = new PriorityQueue<>((a, b) -> {
-        int frequency =  map.get(b) - map.get(a) ;
-        if( frequency == 0 ) {
+        if(map.get(b) == map.get(a)) {
           return a.compareTo(b); // Sort alphabetically in ascending order
         }else{
-          return frequency; // Sort by frequency in descending order
+          return map.get(b) - map.get(a); // Sort by frequency in descending order
         }
       } );
      ```
@@ -311,6 +310,7 @@
 ---
 ## Linked List
 
+- Todo
 
 
 ---
@@ -677,7 +677,7 @@
 
 - [Insert Interval](https://leetcode.com/problems/insert-interval/) - Insert a new interval into a list of non-overlapping intervals.
 
-  - wfwfw
+  - Todo
 
 - [Meeting Rooms I](https://leetcode.com/problems/meeting-rooms/) - Given intervals, Determine if a person could attend all meeting
 
@@ -712,8 +712,45 @@
 - Scheduling a task optimally with with gap of n intervals.
 
 **Examples:**
+
 - [Task Scheduler](https://leetcode.com/problems/task-scheduler/) - Greedily assign tasks while considering cooldown periods.
 
+- [Reorganize String](https://leetcode.com/problems/reorganize-string/description/)
+
+  - Use priority queue to store the character and its frequency(High - Low), then pop the top two elements and add to the result, then add back to the queue if frequency is not zero
+
+  - `Another` approach first check solution exits or not ` Does not exist, maxFrequency >  (n + 1) / 2`  and create max heap and distribute the characters in alternate positions
+    
+    ```java
+      String reorganizeStringSort(String s) {
+          HashMap<Character, Integer> map = new HashMap<>();
+          for (char c : s.toCharArray()) {
+              map.put(c, freqMap.getOrDefault(c, 0) + 1);
+          }
+
+          PriorityQueue<Character> maxHeap = new PriorityQueue<>((a, b) -> map.get(b) - map.get(a));
+          maxHeap.addAll(map.keySet());
+          // Solution does not exist,  maxFrequency >  (n + 1) / 2
+          if (map.get(maxHeap.peek()) > (s.length() + 1) / 2) {
+              return "";
+          }
+
+          char[] result = new char[s.length()];
+          int index = 0;
+          while (!maxHeap.isEmpty()) {
+              char c = maxHeap.poll();
+              // First fills the even index
+              // Then it fills the odd index
+              for (int j = 0; j < map.get(c); j++) {
+                  if (index >= s.length()) index = 1; // This will only execute once
+                  result[index] = c;
+                  index += 2;
+              }
+          }
+
+          return new String(result);
+      }
+    ```
 
 **3. Greedy for Arrays**
 
@@ -760,7 +797,7 @@
           }
         ```
 
-  - [Wiggle Subsequence](https://leetcode.com/problems/wiggle-subsequence/description/)
+- [Wiggle Subsequence](https://leetcode.com/problems/wiggle-subsequence/description/)
 
     - Greedy DP
     - Count peak and valley, `peak = valley + 1` , `valley = peak + 1` when you encounter peak and valley twice in a row there will be no change
@@ -781,9 +818,66 @@
         return Math.max(peak, valley);
     }
     ``` 
+- [Car Pooling](https://leetcode.com/problems/car-pooling/description/)
 
+   - Uses the Sweep Line Algorithm, commonly used for interval-based problems, like meeting rooms scheduling, car pooling, and skyline problems
 
-   
+   - Convert each trip into two events `Pick up and Drop-off event` then sort by location and capacity
+
+     ```java
+        boolean carPooling(int[][] trips, int capacity) {
+            List<int[]> location = new ArrayList<>();
+
+            // Convert trips into pickup/drop-off events
+            for (int[] trip : trips) {
+                location.add(new int[]{trip[1], trip[0]});  // Pickup event (start location, numPassengers)
+                location.add(new int[]{trip[2], -trip[0]}); // Drop-off event (end location, -numPassengers)
+            }
+
+            Comparator<int[]> comparator = (a, b) -> {
+                if (a[0] == b[0]) return a[1] - b[1]; // Pickup before drop-off
+                return a[0] - b[0]; // Sort by location
+            };
+
+            location.sort(comparator);
+            int currentCapacity = 0;
+            for (int[] trip : location) {
+                currentCapacity += trip[1];
+
+                if (currentCapacity > capacity) return false;
+            }
+
+            return true;
+        }
+     ```
+  
+  - [Cinema Seat Allocation](https://leetcode.com/problems/cinema-seat-allocation/description/) 
+
+     -  Problem involves `set or row comparison`, use bitmask to represent set and compare using `&` operator
+
+  - [Group the People Given the Group Size They Belong To](https://leetcode.com/problems/group-the-people-given-the-group-size-they-belong-to/description/)
+
+     - Create a list based on size and add the elements to the list 
+
+     ```java
+        List<List<Integer>> groupThePeople(int[] groupSizes) {
+            List<List<Integer>> result = new ArrayList<>();
+            Map<Integer, List<Integer>> map = new HashMap<>();
+
+            for (int i = 0; i < groupSizes.length; i++) {
+                List<Integer> tempList = map.computeIfAbsent(groupSizes[i], (key) -> new ArrayList<>());
+                tempList.add(i);
+
+                if (tempList.size() == groupSizes[i]) {
+                    result.add(map.get(groupSizes[i]));
+                    map.put(groupSizes[i], new ArrayList<>());
+                }
+            }
+
+          return result;
+      }
+     ``` 
+
 - [Partition Labels](https://leetcode.com/problems/partition-labels/) - Partition a string into as many parts as possible such that each letter appears in only one part.
 
    - Store the last index of each character, then iterate the string and find the last index of each character, if it is equal to current index then partition the string
@@ -794,7 +888,7 @@
    - Traverse from right to left, check if right neighbour is greater than current element, If yes then add max of current candy or next candies plus 1
    - Can be done in one pass using [Up-Down-Peak Method](https://leetcode.com/problems/candy/solutions/4037646/99-20-greedy-two-one-pass/)
 
-- **[Minimum Cost to Hire K Workers](https://leetcode.com/problems/minimum-cost-to-hire-k-workers/)**  
+- [Minimum Cost to Hire K Workers](https://leetcode.com/problems/minimum-cost-to-hire-k-workers/)
 
 ## Trees
 

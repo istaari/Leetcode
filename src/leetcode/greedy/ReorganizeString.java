@@ -39,7 +39,7 @@ public class ReorganizeString {
         if (queue.isEmpty())  return result.toString();
 
         Character ch = queue.poll();
-        if (map.get(ch) > 1)  return "";
+        if (map.get(ch) > 1)  return ""; // If count is greater than 1 than cannot reorganize
 
         return result.append(ch).toString();
     }
@@ -53,7 +53,6 @@ public class ReorganizeString {
 
         PriorityQueue<Character> maxHeap = new PriorityQueue<>((a, b) -> freqMap.get(b) - freqMap.get(a));
         maxHeap.addAll(freqMap.keySet());
-
         // Solution does not exist,  maxFrequency >  (n + 1) / 2
         if (freqMap.get(maxHeap.peek()) > (s.length() + 1) / 2) {
             return "";
