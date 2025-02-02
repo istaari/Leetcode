@@ -1,13 +1,6 @@
 
 ### **DSA Todos**
 
-- [ ] Binary Lifting
-   
-   - Binary Lifting is a technique used to solve problems related to trees or graphs, especially those that involve answering queries about the Lowest Common Ancestor (LCA), ancestor queries, or path queries efficiently
-
-   - [Binary Lifting Optimisation](https://codeforces.com/blog/entry/74847)
-
-- [ ] Graph
 - [ ] B and B+ Trees
 - [ ] AVL Tree
 - [ ] Red Black Trees
@@ -56,6 +49,7 @@
 
 - [Serialize and Deserialize Binary Tree](https://leetcode.com/problems/serialize-and-deserialize-binary-tree/description/) → BFS/DFS, String Encoding
 
+### Lee 215
 
 ### Rolling Hash
 
