@@ -1211,10 +1211,14 @@
 **1. Maximum Subarray/Contiguous Subarray Problems**
 
 - [Maximum Subarray (Kadane’s Algorithm)](https://leetcode.com/problems/maximum-subarray/) - Find the largest sum of a contiguous subarray. 
-
-- [Maximum Product Subarray](https://leetcode.com/problems/maximum-product-subarray/) - Find the largest product of a contiguous subarray.
+ 
+  - Can be solved using `Kadane's Algorithm`
   
 - [Maximum Sum Circular Subarray](https://leetcode.com/problems/maximum-sum-circular-subarray/) - Find the maximum sum of a circular subarray.  
+
+  - Can be solved using `Kadane's Algorithm`
+
+- [Maximum Product Subarray](https://leetcode.com/problems/maximum-product-subarray/) - Find the largest product of a contiguous subarray.
 
 
 **2. Fibonacci Variations** 
@@ -1521,6 +1525,8 @@
 - [Stone Game](https://leetcode.com/problems/stone-game/) - Two players take turns removing stones from piles. Determine if the first player can win. 
 
 - [Predict the Winner](https://leetcode.com/problems/predict-the-winner/) - Determine if the first player can guarantee a win with optimal moves.  
+
+- [Super Egg Drop](https://leetcode.com/problems/super-egg-drop/description/)
 
 
 ---
