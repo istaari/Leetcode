@@ -27,27 +27,18 @@ public class PalindromicSubstrings_647 {
     }
 
     //-----------------------------------Extend Method-----------------------------------//
-    /**
-     * @param s input string
-     * @return Total palindromic substring
-     */
-    public static  int extendPalindrome(String s) {
+
+    public static int extendPalindrome(String s) {
         int n = s.length();
         int ans = 0;
         for (int i = 0; i < n; i++) {
-            int odd = palindromeCount(s, i, i );
-            int even = palindromeCount(s, i , i + 1);
+            int odd = palindromeCount(s, i, i);
+            int even = palindromeCount(s, i, i + 1);
             ans += even + odd;
         }
         return ans;
     }
 
-    /**
-     * @param s input string
-     * @param left left index
-     * @param right right index
-     * @return count of palindromic substring
-     */
     public static int palindromeCount(String s, int left, int right) {
         int count = 0;
         int n = s.length();

@@ -1502,11 +1502,6 @@
 
  - [Frog Jump](https://leetcode.com/problems/frog-jump/)
 
- - [Jump Game](https://leetcode.com/problems/jump-game/) 
-
- - [Jump Game II](https://leetcode.com/problems/jump-game-ii/) 
-
-
 **9. Bitmasking and Partitioning**  
 
 **Examples:**
