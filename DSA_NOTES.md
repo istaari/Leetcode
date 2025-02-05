@@ -1778,13 +1778,3 @@
 - Grid Number = `(row / 3) * 3 + (col / 3)`
 
 ---
-
-## Modular Arithmetic
-
-- **Modular Addition**: `(a + b) % m = ((a % m) + (b % m)) % m`
-- **Modular Subtraction**: `(a - b) % m = ((a % m) - (b % m) + m) % m`
-- **Modular Multiplication**: `(a * b) % m = ((a % m) * (b % m)) % m`
-- **Modular Division**: `(a / b) % m = ((a % m) * (b^(-1) % m)) % m`
-- **Modular Exponentiation**: `(a ^ b) % m = ((a % m) ^ b) % m`
-- **Modular Inverse**: `a^(-1) % m = a^(m-2) % m` (Fermat's Little Theorem)
-- **Divisibility Check** : `if a mod m = 0 then a is divisible by m`
