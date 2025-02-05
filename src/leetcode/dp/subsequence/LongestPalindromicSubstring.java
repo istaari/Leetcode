@@ -3,7 +3,7 @@ package leetcode.dp.subsequence;
 public class LongestPalindromicSubstring {
 
     // Iterative solution for longest palindromic substring
-    static String iterative(String s) {
+    public static String iterative(String s) {
         String result = "";
         boolean[][] dp = new boolean[s.length()][s.length()];
 
@@ -26,7 +26,8 @@ public class LongestPalindromicSubstring {
         return result;
     }
 
-    static String palindrome(String s, int left, int right) {
+
+    public static String expandAroundCenter(String s, int left, int right) {
         int n = s.length();
         String result = "";
         while (left >= 0 && right < n && s.charAt(left) == s.charAt(right)) {
@@ -41,13 +42,13 @@ public class LongestPalindromicSubstring {
         return result;
     }
 
-    static String extendPalindrome(String s) {
+    public static String findLongestPalindromicSubstring(String s) {
         int n = s.length();
         String result = "";
 
         for (int i = 0; i < n; i++) {
-            String odd = palindrome(s, i, i);
-            String even = palindrome(s, i, i + 1);
+            String odd = expandAroundCenter(s, i, i);
+            String even = expandAroundCenter(s, i, i + 1);
 
             if (odd.length() > result.length()) {
                 result = odd;
@@ -63,7 +64,7 @@ public class LongestPalindromicSubstring {
 
 
     static String longestPalindrome(String s) {
-        return extendPalindrome(s);
+        return findLongestPalindromicSubstring(s);
     }
 
 

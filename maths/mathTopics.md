@@ -57,62 +57,8 @@
 
 ---
 
-## **3. Arithmetic**  
-- **Basic Operations:**  
-  - Addition, Subtraction, Multiplication, Division  
-- **Applications:**  
-  - Percentage  
-  - Profit and Loss  
-  - Ratio and Proportion  
-  - Averages  
-- **Word Problems:**  
-  - Time and Work  
-  - Time, Speed, and Distance  
-  - Simple and Compound Interest  
-  - Discounts  
+## **3. Statistics and Probability**  
 
----
-
-## **4. Geometry**  
-- **Basics:**  
-  - Points, Lines, Angles  
-- **Shapes and Figures:**  
-  - Triangles  
-  - Circles  
-  - Quadrilaterals  
-  - Polygons  
-- **Measurement:**  
-  - Area  
-  - Perimeter  
-  - Volume  
-  - Surface Area  
-- **Theorems and Concepts:**  
-  - Pythagoras’ Theorem  
-  - Coordinate Geometry  
-
----
-
-## **5. Trigonometry**  
-- **Trigonometric Ratios:**  
-  - Sine, Cosine, Tangent (and their reciprocals)  
-- **Identities and Equations:**  
-  - Trigonometric identities  
-  - Solving trigonometric equations  
-- **Applications:**  
-  - Heights and Distances  
-  - Inverse Trigonometric Functions  
-
----
-
-## **6. Mensuration**  
-- **Two-Dimensional (2D):**  
-  - Area and Perimeter of various shapes (squares, rectangles, circles, etc.)  
-- **Three-Dimensional (3D):**  
-  - Surface Area and Volume of solids (cubes, spheres, cones, cylinders, etc.)  
-
----
-
-## **7. Statistics and Probability**  
 ### **Statistics:**  
 - **Data Collection and Representation:**  
   - Tables, Bar Graphs, Pie Charts, Histograms  
@@ -145,7 +91,22 @@
 
 ---
 
-## **8. Set Theory**  
+## **4. Vectors and Matrices** (For Higher Grades)  
+- **Vectors:**  
+  - Vector algebra  
+  - Operations (addition, scalar multiplication)  
+  - Dot and Cross products  
+- **Matrices:**  
+  - Matrix operations  
+  - Determinants  
+  - Inverse of a matrix  
+- **Applications:**  
+  - Systems of linear equations  
+  - Eigenvalues and Eigenvectors  
+
+---
+
+## **5. Set Theory**  
 - **Fundamentals:**  
   - Definitions of sets  
   - Elements  
@@ -165,7 +126,7 @@
 
 ---
 
-## **9. Calculus** (For Higher Grades)  
+## **6. Calculus** (For Higher Grades)  
 - **Limits and Continuity:**  
   - Concept of limits  
   - Continuity of functions  
@@ -182,27 +143,67 @@
 
 ---
 
-## **10. Linear Programming**  
+## **7. Arithmetic**  
+- **Basic Operations:**  
+  - Addition, Subtraction, Multiplication, Division  
+- **Applications:**  
+  - Percentage  
+  - Profit and Loss  
+  - Ratio and Proportion  
+  - Averages  
+- **Word Problems:**  
+  - Time and Work  
+  - Time, Speed, and Distance  
+  - Simple and Compound Interest  
+  - Discounts  
+
+---
+
+## **8. Geometry**  
+- **Basics:**  
+  - Points, Lines, Angles  
+- **Shapes and Figures:**  
+  - Triangles  
+  - Circles  
+  - Quadrilaterals  
+  - Polygons  
+- **Measurement:**  
+  - Area  
+  - Perimeter  
+  - Volume  
+  - Surface Area  
+- **Theorems and Concepts:**  
+  - Pythagoras’ Theorem  
+  - Coordinate Geometry  
+
+---
+
+## **9. Trigonometry**  
+- **Trigonometric Ratios:**  
+  - Sine, Cosine, Tangent (and their reciprocals)  
+- **Identities and Equations:**  
+  - Trigonometric identities  
+  - Solving trigonometric equations  
+- **Applications:**  
+  - Heights and Distances  
+  - Inverse Trigonometric Functions  
+
+---
+
+## **10. Mensuration**  
+- **Two-Dimensional (2D):**  
+  - Area and Perimeter of various shapes (squares, rectangles, circles, etc.)  
+- **Three-Dimensional (3D):**  
+  - Surface Area and Volume of solids (cubes, spheres, cones, cylinders, etc.)  
+
+---
+
+## **11. Linear Programming**  
 - **Optimization Techniques:**  
   - Graphical method for solving linear inequalities  
 - **Concepts:**  
   - Feasible region  
   - Objective functions  
   - Optimization (maximization/minimization)  
-
----
-
-## **11. Vectors and Matrices** (For Higher Grades)  
-- **Vectors:**  
-  - Vector algebra  
-  - Operations (addition, scalar multiplication)  
-  - Dot and Cross products  
-- **Matrices:**  
-  - Matrix operations  
-  - Determinants  
-  - Inverse of a matrix  
-- **Applications:**  
-  - Systems of linear equations  
-  - Eigenvalues and Eigenvectors  
 
 ---

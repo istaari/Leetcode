@@ -13,9 +13,7 @@ public class LongestPalindromeSubsequence {
         if (s.charAt(i) == s.charAt(j)) {
             dp[i][j] = 2 + helper(s, i + 1, j - 1, dp);
         } else {
-            int max1 = helper(s, i + 1, j, dp);
-            int max2 = helper(s, i, j - 1, dp);
-            dp[i][j] = Math.max(max1, max2);
+            dp[i][j] = Math.max(helper(s, i + 1, j, dp), helper(s, i, j - 1, dp));
         }
 
         return dp[i][j];
@@ -28,6 +26,7 @@ public class LongestPalindromeSubsequence {
     }
 
 
+    // Reverse the string apply iterative LCS
     public static int longestPalindromeSubseq(String s) {
         return recursive(s);
     }

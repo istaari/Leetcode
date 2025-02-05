@@ -14,7 +14,6 @@ public class DivideArraySetsKConsecutiveNumbers {
 
         while (!minHeap.isEmpty()) {
             int start = minHeap.poll(); // Remove first element
-
             for (int i = 1; i < k; i++) {
                 if (minHeap.remove(start + i)) {
                     continue;

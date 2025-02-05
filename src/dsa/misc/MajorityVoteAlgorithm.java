@@ -1,4 +1,4 @@
-package dsa;
+package dsa.misc;
 
 public class MajorityVoteAlgorithm {
 
