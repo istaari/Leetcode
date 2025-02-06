@@ -1,8 +1,10 @@
-package leetcode.design;
+package leetcode.design.hashing;
 
+
+import leetcode.design.BST;
 
 /**
- * Uses open addressing to handle collisions; Chaining is used to handle collisions
+ * Chaining is used to handle collisions
  * Binary Search Tree is used to handle collisions
  */
 public class HashSet {

@@ -115,8 +115,7 @@ A positive integer that is greater than 1 and is not prime is called composite.
 - **Chinese Remainder Theorem**
 
 
-
-### Modular Arithmetic
+### 13. Modular Arithmetic
 
 - **Modular Addition**: `(a + b) % m = ((a % m) + (b % m)) % m`
 - **Modular Subtraction**: `(a - b) % m = ((a % m) - (b % m) + m) % m`
@@ -125,4 +124,11 @@ A positive integer that is greater than 1 and is not prime is called composite.
 - **Modular Exponentiation**: `(a ^ b) % m = ((a % m) ^ b) % m`
 - **Modular Inverse**: `a^(-1) % m = a^(m-2) % m` (Fermat's Little Theorem)
 - **Divisibility Check** : `if a mod m = 0 then a is divisible by m`
+
+
+### 14. Applications of Hashing
+
+
+
+
  

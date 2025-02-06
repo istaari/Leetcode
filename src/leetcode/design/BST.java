@@ -1,6 +1,6 @@
 package leetcode.design;
 
-class BST {
+public class BST {
 
     private Node root;
 

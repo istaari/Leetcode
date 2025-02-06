@@ -1,8 +1,8 @@
-package leetcode.design;
+package leetcode.design.hashing;
 
 
 /**
- * Uses open addressing to handle collisions; Chaining is used to handle collisions
+ * Chaining is used to handle collisions
  * LinkedList is used to handle collisions
  */
 public class HashMap {
