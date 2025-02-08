@@ -41,20 +41,6 @@ public class PartitionSubsetSum {
     }
 
 
-    public static boolean iterativeOptimized(int[] nums, int targetSum) {
-        boolean[] dp = new boolean[targetSum + 1];
-        dp[0] = true;
-
-        for (int val : nums) {
-            for (int j = targetSum; val <= j; j--) {
-                dp[j] = dp[j] || dp[j - val];
-            }
-        }
-
-        return dp[targetSum];
-    }
-
-
     public static boolean canPartition(int[] nums) {
         int totalSum = 0;
         for (int val : nums) {

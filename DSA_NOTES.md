@@ -1208,20 +1208,8 @@
 ---
 ## Dynamic Programming
 
-**1. Maximum Subarray/Contiguous Subarray Problems**
 
-- [Maximum Subarray (Kadane’s Algorithm)](https://leetcode.com/problems/maximum-subarray/) - Find the largest sum of a contiguous subarray. 
- 
-  - Can be solved using `Kadane's Algorithm`
-  
-- [Maximum Sum Circular Subarray](https://leetcode.com/problems/maximum-sum-circular-subarray/) - Find the maximum sum of a circular subarray.  
-
-  - Can be solved using `Kadane's Algorithm`
-
-- [Maximum Product Subarray](https://leetcode.com/problems/maximum-product-subarray/) - Find the largest product of a contiguous subarray.
-
-
-**2. Fibonacci Variations** 
+**1. Fibonacci Variations** 
 
  **Examples:**
 
@@ -1244,7 +1232,7 @@
 
 - [Decode Ways](https://leetcode.com/problems/decode-ways/) 
 
- **3. Grids(Path Problem)**
+ **2. Grids(Path Problem)**
 
  **Examples:**
 
@@ -1273,7 +1261,7 @@
   - Similiar to path sum
 
 
- **4. Subsequences(Kanpsack, Subset, Coin Change, Partition)** 
+ **3. Subsequences(Kanpsack, Subset, Coin Change, Partition)** 
 
  **Examples:**
 
@@ -1449,7 +1437,7 @@
   ```
 
 
- **5. String(Subsequence, Substring, Edit Distance, Wildcard)** 
+ **4. String(Subsequence, Substring, Edit Distance, Wildcard)** 
 
  **Examples:**
 
@@ -1470,9 +1458,21 @@
 - [Wildcard Matching](https://leetcode.com/problems/wildcard-matching/)   
 
 
-**6. Stock Optimizations(State Machines)** 
+**5. Optimizations(State Machines, Maximum Subarray )** 
 
 **Examples:**
+
+**1. Maximum Subarray/Contiguous Subarray Problems**
+
+- [Maximum Subarray (Kadane’s Algorithm)](https://leetcode.com/problems/maximum-subarray/) - Find the largest sum of a contiguous subarray. 
+ 
+  - Can be solved using `Kadane's Algorithm`
+  
+- [Maximum Sum Circular Subarray](https://leetcode.com/problems/maximum-sum-circular-subarray/) - Find the maximum sum of a circular subarray.  
+
+  - Can be solved using `Kadane's Algorithm`
+
+- [Maximum Product Subarray](https://leetcode.com/problems/maximum-product-subarray/) - Find the largest product of a contiguous subarray.
 
 - [Best Time to Buy and Sell Stock](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/) 
 
@@ -1482,10 +1482,34 @@
 
 - [Best Time to Buy and Sell Stock IV](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/)  
 
-- [Best Time to Buy and Sell Stock with Cooldown](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/)  
+- [Best Time to Buy and Sell Stock with Cooldown](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/) 
+
+
+  - **1. Deterministic Nature**
+  A **Deterministic Finite State Machine (DFSM)** means that **given a specific state and an input (decision), the next state is uniquely determined**. Let's analyze this:
+
+  - If you **own a stock (`Hold`)**, you have two choices:
+    - Do nothing → Stay in `Hold`.
+    - Sell → Move to `Sold`.
+    
+  - If you **just sold a stock (`Sold`)**, there is **only one possible transition**:
+    - Move to `Rest` (cooldown applies).
+    
+  - If you are **not holding a stock and not in cooldown (`Rest`)**, you also have two choices:
+    - Do nothing → Stay in `Rest`.
+    - Buy → Move to `Hold`.
+
+  - **2. Difference Between DFSM and NDFSM**
+  A **Non-Deterministic FSM (NDFSM)** allows **multiple possible next states for the same input, without a clear rule**. That is, for the same state and input, different transitions could happen at the same time.
+
+  - In this problem, at any given moment, **the transitions follow strict rules**.
+  - Given a state and a choice, you always move to **one specific next state** (no parallel paths).
+
+  - The key difference is **in an NDFSM, the machine can "magically" pick different paths without clear rules**.
+  - Here, once a choice is made, the transition is **fixed**, which makes it **deterministic**.
 
  
- **7. Interval DP(MCM)**  
+ **6. Interval DP(MCM)**  
 
  **Examples:**
 
@@ -1496,13 +1520,7 @@
   - [Rod Cutting](https://leetcode.com/discuss/interview-question/4889192/4-Solutions-or-Top-DownBottom-Up-or-Best-Explanation-Using-Comments-or-C%2B%2B-Code)
 
 
- **8. DP With Path Traversal**
-
- **Examples:**
-
- - [Frog Jump](https://leetcode.com/problems/frog-jump/)
-
-**9. Bitmasking and Partitioning**  
+**7. Bitmasking and Partitioning**  
 
 **Examples:**
 
@@ -1515,57 +1533,11 @@
 - [Word Break II](https://leetcode.com/problems/word-break-ii/)  - Break a sentence into words using a dictionary of words
 
 
-**10. Game Theory(Min, Max)y**
+**8. Game Theory(Minimax)**
 
 - [Stone Game](https://leetcode.com/problems/stone-game/) - Two players take turns removing stones from piles. Determine if the first player can win. 
 
 - [Predict the Winner](https://leetcode.com/problems/predict-the-winner/) - Determine if the first player can guarantee a win with optimal moves.  
-
-- [Super Egg Drop](https://leetcode.com/problems/super-egg-drop/description/)
-
-
----
-
-## Trie
-
-**1. Basic Trie Implementation**
-
-**Examples:**
-
-- [Implement Trie (Prefix Tree)](https://leetcode.com/problems/implement-trie-prefix-tree/) - Build a Trie with insert, search, and prefix-check operations.
-
-- [Design Add and Search Words Data Structure](https://leetcode.com/problems/design-add-and-search-words-data-structure/) - Implement a Trie that supports adding words and searching words with `.` as a wildcard.
-
-
-**2. Word Search and Prefix Matching**
-
-**Examples:**
-
-- [Word Search II](https://leetcode.com/problems/word-search-ii/) - Find all valid words in a grid using a word dictionary (Trie + DFS).
-
-- [Concatenated Words](https://leetcode.com/problems/concatenated-words/) - Find all words that can be formed by concatenating two or more dictionary words.
-
-- [Replace Words](https://leetcode.com/problems/replace-words/) - Replace words in a sentence with the shortest prefix found in a dictionary.
-
-
-**3. Autocomplete and Suggestions**
-
-**Examples:**
-
-- [Design Search Autocomplete System](https://leetcode.com/problems/design-search-autocomplete-system/) - Build an autocomplete system that suggests hot sentences based on user input.
-
-- [Search Suggestions System](https://leetcode.com/problems/search-suggestions-system/) - Given a list of products, return lexicographically sorted product suggestions based on a search prefix.
-
-
-**4. Dictionary and Word Manipulation**
-
-**Examples:**
-
-- [Longest Word in Dictionary](https://leetcode.com/problems/longest-word-in-dictionary/) - Find the longest word that can be built one character at a time using a given list of words.
-
-- [Prefix and Suffix Search](https://leetcode.com/problems/prefix-and-suffix-search/) - Design a data structure that finds words matching a given prefix and suffix.
-
-- [Map Sum Pairs](https://leetcode.com/problems/map-sum-pairs/) - Implement a Trie-based key-value mapping where keys share prefixes.
 
 ---
 
@@ -1746,8 +1718,51 @@
 
 ---
 
-## Bit Manipulation
+## Trie
 
+**1. Basic Trie Implementation**
+
+**Examples:**
+
+- [Implement Trie (Prefix Tree)](https://leetcode.com/problems/implement-trie-prefix-tree/) - Build a Trie with insert, search, and prefix-check operations.
+
+- [Design Add and Search Words Data Structure](https://leetcode.com/problems/design-add-and-search-words-data-structure/) - Implement a Trie that supports adding words and searching words with `.` as a wildcard.
+
+
+**2. Word Search and Prefix Matching**
+
+**Examples:**
+
+- [Word Search II](https://leetcode.com/problems/word-search-ii/) - Find all valid words in a grid using a word dictionary (Trie + DFS).
+
+- [Concatenated Words](https://leetcode.com/problems/concatenated-words/) - Find all words that can be formed by concatenating two or more dictionary words.
+
+- [Replace Words](https://leetcode.com/problems/replace-words/) - Replace words in a sentence with the shortest prefix found in a dictionary.
+
+
+**3. Autocomplete and Suggestions**
+
+**Examples:**
+
+- [Design Search Autocomplete System](https://leetcode.com/problems/design-search-autocomplete-system/) - Build an autocomplete system that suggests hot sentences based on user input.
+
+- [Search Suggestions System](https://leetcode.com/problems/search-suggestions-system/) - Given a list of products, return lexicographically sorted product suggestions based on a search prefix.
+
+
+**4. Dictionary and Word Manipulation**
+
+**Examples:**
+
+- [Longest Word in Dictionary](https://leetcode.com/problems/longest-word-in-dictionary/) - Find the longest word that can be built one character at a time using a given list of words.
+
+- [Prefix and Suffix Search](https://leetcode.com/problems/prefix-and-suffix-search/) - Design a data structure that finds words matching a given prefix and suffix.
+
+- [Map Sum Pairs](https://leetcode.com/problems/map-sum-pairs/) - Implement a Trie-based key-value mapping where keys share prefixes.
+
+---
+
+
+## Bit Manipulation
 
 
 

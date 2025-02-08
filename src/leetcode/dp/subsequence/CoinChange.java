@@ -4,17 +4,7 @@ import java.util.Arrays;
 
 public class CoinChange {
 
-    /**
-     * Find the minimum number of coins needed to make the given amount using dynamic programming.
-     *
-     * Without Memoization:
-     * Time Complexity: O(n^m), where n is the number of coins and m is the amount.
-     * Space Complexity: O(m), where m is the amount (due to the recursion call stack).
-     *
-     * With Memoization:
-     * Time Complexity: O(n * m), where n is the number of coins and m is the amount.
-     * Space Complexity: O(m), where m is the amount (due to the memo[] array and the recursion call stack).
-     */
+
     public static int helper(int[] coins, int amount, int[] memo) {
         if (amount < 0) return -1;
         if (amount == 0) return 0;
