@@ -7,17 +7,17 @@
 Codeforces assigns **ratings** based on performance in **rated contests**. Your rating determines your **title (rank)**,
 as shown below:
 
-| **Rating**      | **Title**             | **Color**                                 |
-|-----------------|-----------------------|-------------------------------------------|
-| **2600+**       | Legendary Grandmaster | <span style="color:red;">Red</span>       |
-| **2400 - 2599** | Grandmaster           | <span style="color:red;">Red</span>       |
-| **2300 - 2399** | International Master  | <span style="color:orange;">Orange</span> |
-| **2100 - 2299** | Master                | <span style="color:orange;">Orange</span> |
-| **1900 - 2099** | Candidate Master      | <span style="color:purple;">Purple</span> |
-| **1600 - 1899** | Expert                | <span style="color:blue;">Blue</span>     |
-| **1400 - 1599** | Specialist            | <span style="color:cyan;">Cyan</span>     |
-| **1200 - 1399** | Pupil                 | <span style="color:green;">Green</span>   |
-| **0 - 1199**    | Newbie                | <span style="color:gray;">Gray</span>     |
+| **Rating**      | **Title**             | **Color**                            |
+|-----------------|-----------------------|--------------------------------------|
+| **2600+**       | Legendary Grandmaster | $${\color{red} \mathbf{Red}}$$       |
+| **2400 - 2599** | Grandmaster           | $${\color{red} \mathbf{Red}}$$       |
+| **2300 - 2399** | International Master  | $${\color{orange} \mathbf{Orange}}$$ |
+| **2100 - 2299** | Master                | $${\color{orange} \mathbf{Orange}}$$ |
+| **1900 - 2099** | Candidate Master      | $${\color{purple} \mathbf{Purple}}$$ |
+| **1600 - 1899** | Expert                | $${\color{blue} \mathbf{Blue}}$$     |
+| **1400 - 1599** | Specialist            | $${\color{cyan} \mathbf{Cyan}}$$     |
+| **1200 - 1399** | Pupil                 | $${\color{green} \mathbf{Green}}$$   |
+| **0 - 1199**    | Newbie                | $${\color{gray} \mathbf{Gray}}$$     |
 
 - **Your rating starts at 0.** After **your first rated contest**, you'll get a rating based on your performance.
 - **Higher rating → Higher title** (like in chess rankings).
