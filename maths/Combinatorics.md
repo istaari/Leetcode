@@ -119,3 +119,20 @@ How many ways can you choose 3 items from 2 types of fruit (\(A, B\)), allowing 
 - C_rep(2, 3) = <span style="font-size: larger;">(2 + 3 - 1)!</span> / (<span style="font-size: larger;">3! × (2 - 1)!</span>) = <span style="font-size: larger;">4!</span> / (<span style="font-size: larger;">3! × 1!</span>) = <span style="font-size: larger;">24</span> / <span style="font-size: larger;">6</span> = 4
 
 - Selections: \(\{AAA, AAB, ABB, BBB\}\).
+
+
+### Catlan Numbers:
+
+`Cₙ = (2n)! / ((n+1)! n!)`
+
+`C(n) = Ci(2n,n)/n+1`
+
+#### Examples:
+
+- `C₀ = 1`
+- `C₁ = 1`
+- `C₂ = 2`
+- `C₃ = 5`
+- `C₄ = 14`
+- `C₅ = 42`
+

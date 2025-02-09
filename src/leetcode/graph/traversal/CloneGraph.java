@@ -5,6 +5,8 @@ import leetcode.graph.representations.Node;
 
 import java.util.*;
 
+
+@SuppressWarnings("ALL")
 public class CloneGraph {
     Map<Integer, Node> map = new HashMap<>();
 

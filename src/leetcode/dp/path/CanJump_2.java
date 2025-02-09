@@ -25,4 +25,5 @@ public class CanJump_2 {
         int[] nums = {2, 3, 1, 1, 4};
         System.out.println(canJump(nums));
     }
+
 }

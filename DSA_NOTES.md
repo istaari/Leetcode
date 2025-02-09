@@ -1551,11 +1551,46 @@
 
 - [Flood Fill](https://leetcode.com/problems/flood-fill/) - Fill a connected region in a grid starting from a given point.
 
+  - In Flood Fill, we change the color of a group of connected cells starting from a given cell.
+
 - [Number of Islands](https://leetcode.com/problems/number-of-islands/) - Count the number of islands in a 2D grid of water and land.
+
+  - In Number of Islands, we count groups of connected '1's (land) and change them to '0' to mark them as visited.
+
+  - The problem can be represented count connected components in a graph
 
 - [Word Ladder I](https://leetcode.com/problems/word-ladder/) - Find the shortest transformation sequence from one word to another using a dictionary.
 
+  - Problem can be represented as `unweighted and directed graph`, Use `BFS` to find the shortest path between two nodes
+
+    ```
+    graph = {
+    "hot": ["hit"],
+    "dot": ["hot"],
+    "lot": ["hot"],
+    "dog": ["dot"],
+    "log": ["lot"],
+    "cog": ["dog", "log"]
+    }
+    ```
+
+  - Transform each char from `a-z` and check if it is present in the dictionary to find the to find the shortest path from beginWord to endWord
+  - We can use Bidirectional BFS to optimize the solution
+
 - [Word Ladder II](https://leetcode.com/problems/word-ladder-ii/) - Find all the shortest transformation sequences from one word to another.
+
+  - Use BFS from `beginWord` to `endWord` to construct the reverse graph
+    ```
+      graph = {
+        "hot": ["hit"],
+        "dot": ["hot"],
+        "lot": ["hot"],
+        "dog": ["dot"],
+        "log": ["lot"],
+        "cog": ["dog", "log"]
+        }
+    ```
+  - Use backtracking and DFS to find all the shortest paths from `endWord` to `beginWord`
 
 - [Get Watched Videos by Your Friends](https://leetcode.com/problems/get-watched-videos-by-your-friends/) - Find the most popular videos watched by your friends in a social network.
 

@@ -32,6 +32,9 @@ public class MHT {
             remainingNodes = remainingNodes - size;
 
             for (int i = 0; i < size; i++) {
+
+                assert queue.peek() != null;
+
                 int leaf = queue.poll();
                 int neighbor = graph.get(leaf).getFirst();
 
