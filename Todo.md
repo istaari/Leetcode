@@ -1,12 +1,34 @@
 ## **DSA Todos**
 
-- [ ] B and B+ Trees
-- [ ] AVL Tree
-- [ ] Red Black Trees
-- [ ] Segment Trees
-- [ ] KMP, Rabin Karp, Z Function
-- [ ] Minimax
-- [ ] Start Codeforces
+### **Advanced Data Structures**
+
+- [ ] **B and B+ Trees**
+- [ ] **AVL Tree**
+- [ ] **Red Black Trees**
+- [ ] Segment Trees**
+- [ ] **KMP, Rabin Karp, Z Function**
+- [ ] **Fenwick Tree (Binary Indexed Tree - BIT)**
+- [ ] **Persistent Data Structures**
+- [ ] **Treap (Tree + Heap)**
+- [ ] **Heavy-Light Decomposition (HLD)**
+- [ ] **Splay Tree (Self-adjusting BST)**
+- [ ] **Skip List**
+- [ ] **KD-Tree (K-Dimensional Tree)**
+- [ ] **Suffix Array + LCP Array**
+
+### **Advanced Algorithms**
+
+- [ ] **Minimax**
+- [ ] **Tarjan’s Algorithm (Strongly Connected Components & Bridges)**
+- [ ] **Hopcroft-Karp Algorithm (Maximum Bipartite Matching)**
+- [ ] **Convex Hull & Graham's Scan (Computational Geometry)**
+- [ ] **Mo's Algorithm (Offline Queries on Arrays)**
+- [ ] **Floyd-Warshall & Johnson’s Algorithm (All-Pairs Shortest Path)**
+- [ ] **Miller-Rabin Primality Test**
+- [ ] **Pollard’s Rho Algorithm (Integer Factorization)**
+- [ ] **Suffix Automaton**
+- [ ] **Dominator Tree (Graph Theory)**
+- [ ] **FFT (Fast Fourier Transform) & NTT (Number Theoretic Transform)**
 
 ---
 
