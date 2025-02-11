@@ -108,6 +108,12 @@
         }
       } );
      ```
+
+- [String Compression](https://leetcode.com/problems/string-compression/description/) 
+
+  - Count the adjacent charcters using `forward inner while loop` then add the character and count to the result
+
+  
   
 **2. Palindrome Problems** 
 
