@@ -470,6 +470,38 @@
 
 - [Sum of Subarray Minimums](https://leetcode.com/problems/sum-of-subarray-minimums/) - Calculate the sum of the minimum elements of all subarrays.
 
+- [Remove Duplicate Letters](https://leetcode.com/problems/remove-duplicate-letters/description/) - Remove duplicate letters to make the string lexicographically smallest.
+
+  ```java
+      String removeDuplicateLetters(String s) {
+          HashMap<Character, Integer> map = new HashMap<>();
+          for (char c : s.toCharArray()) {
+              map.put(c, map.getOrDefault(c, 0) + 1);
+          }
+
+          Stack<Character> stack = new Stack<>();
+          HashSet<Character> seen = new HashSet<>();
+
+          for (char c : s.toCharArray()) {
+              map.put(c, map.get(c) - 1);
+              if (seen.contains(c)) continue;
+
+              while (!stack.isEmpty() && stack.peek() > c && map.get(stack.peek()) > 0) {
+                  seen.remove(stack.pop());
+              }
+
+              stack.push(c);
+              seen.add(c);
+          }
+
+          StringBuilder result = new StringBuilder();
+          for (Character c : stack) {
+              result.append(c);
+          }
+
+          return result.toString();
+      }
+  ```
 
 ---
 

@@ -22,15 +22,7 @@
 
 ### Greedy Problems
 
-- [String Compression](https://leetcode.com/problems/string-compression/description/)
-
-- [Remove Duplicate Letters](https://leetcode.com/problems/remove-duplicate-letters/description/)
-
-- [Minimum Cost to Hire K Workers](https://leetcode.com/problems/minimum-cost-to-hire-k-workers/description/)
-
 - [Construct K Palindrome Strings](https://leetcode.com/problems/construct-k-palindrome-strings/description/)
-
-- [Maximal Rectangle](https://leetcode.com/problems/maximal-rectangle/description/)
 
 - [String Without AAA or BBB](https://leetcode.com/problems/string-without-aaa-or-bbb/description/)
 
