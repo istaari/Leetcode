@@ -5,7 +5,7 @@
 - [ ] **B and B+ Trees**
 - [ ] **AVL Tree**
 - [ ] **Red Black Trees**
-- [ ] Segment Trees**
+- [ ] **Segment Trees**
 - [ ] **KMP, Rabin Karp, Z Function**
 - [ ] **Fenwick Tree (Binary Indexed Tree - BIT)**
 - [ ] **Persistent Data Structures**
