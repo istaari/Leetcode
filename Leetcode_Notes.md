@@ -394,73 +394,6 @@
 
 **3. Monotonic Stack Problems**
 
-```java
-
-    // Increasing Stack (from bottom to top) [1, 2, 3, 4]
-    int[] findPreviousSmallest(int[] arr) {
-        int[] result = new int[arr.length];
-        Stack<Integer> stack = new Stack<>();
-
-        for (int i = 0; i < arr.length; i++) {
-            while (!stack.isEmpty() && stack.peek() >= arr[i]) {
-                stack.pop();
-            }
-            result[i] = stack.isEmpty() ? -1 : stack.peek();
-            stack.push(arr[i]);
-        }
-        return result;
-    }
-
-    // Increasing Stack (from bottom to top) [1, 2, 3, 4]
-    int[] findNextSmallest(int[] arr) {
-        int[] result = new int[arr.length];
-        Stack<Integer> stack = new Stack<>();
-
-        for (int i = arr.length - 1; i >= 0; i--) {
-            while (!stack.isEmpty() && stack.peek() >= arr[i]) {
-                stack.pop();
-            }
-            result[i] = stack.isEmpty() ? -1 : stack.peek();
-            stack.push(arr[i]);
-        }
-
-        return result;
-    }
-
-    // Decreasing Stack (from bottom to top) [4, 3, 2, 1]
-    int[] findPreviousLargest(int[] arr) {
-        int[] result = new int[arr.length];
-        Stack<Integer> stack = new Stack<>();
-
-        for (int i = 0; i < arr.length; i++) {
-            while (!stack.isEmpty() && stack.peek() <= arr[i]) {
-                stack.pop();
-            }
-            result[i] = stack.isEmpty() ? -1 : stack.peek();
-            stack.push(arr[i]);
-        }
-
-        return result;
-    }
-
-   // Decreasing Stack (from bottom to top) [4, 3, 2, 1]
-    int[] findNextLargest(int[] arr) {
-        int[] result = new int[arr.length];
-        Stack<Integer> stack = new Stack<>();
-
-        for (int i = arr.length - 1; i >= 0; i--) {
-            while (!stack.isEmpty() && stack.peek() <= arr[i]) {
-                stack.pop();
-            }
-            result[i] = stack.isEmpty() ? -1 : stack.peek();
-            stack.push(arr[i]);
-        }
-
-        return result;
-    }
-
-```
-
 **Examples:**
 - [Daily Temperatures](https://leetcode.com/problems/daily-temperatures/) - Find the number of days until a warmer temperature.
 
@@ -1241,6 +1174,120 @@
 
 ---
 ## Backtracking
+
+
+### **Subsets (Power Set)**  
+
+**Examples:**  
+
+- [Subsets](https://leetcode.com/problems/subsets/) - Generate all possible subsets of a given set.
+
+  - Always Select the next element, then backtrack and remove the element
+  
+  ```java
+    void backtrack(int[] nums, List<Integer> list, List<List<Integer>> result, int start) {
+        result.add(new ArrayList<>(list));
+        for (int i = start; i < nums.length; i++) {
+            list.add(nums[i]);
+            backtrack(nums, list, result, i + 1);
+            list.removeLast();
+        }
+    }
+  ```
+
+- [Subsets II](https://leetcode.com/problems/subsets-ii/) - Generate all possible subsets of a given set, handling duplicates.  
+
+  - Sort the elements and check if there is duplicates by comparing with previous element, then skip the duplicates
+
+
+### **Permutations**  
+
+**Examples:**  
+
+- [Permutations](https://leetcode.com/problems/permutations/) - Generate all possible permutations of a given set of numbers. 
+
+  - Recursive functions always starts with `i = 0` or first element and check duplicates in the list
+
+  ```java
+    void backtrack(int[] nums, List<Integer> list, List<List<Integer>> result) {
+        if (nums.length == list.size()) {
+            result.add(new ArrayList<>(list));
+            return;
+        }
+
+        for (int num : nums) {
+            if (list.contains(num)) continue;
+
+            list.add(num);
+            backtrack(nums, list, result);
+            list.removeLast();
+        }
+    }
+  ```
+
+
+- [Permutations II](https://leetcode.com/problems/permutations-ii/) - Generate all unique permutations of a given set, handling duplicates.  
+
+  - Can be used visited array to check duplicates
+    ```java
+      if (visited[i]) continue;
+      if (i > 0 && nums[i] == nums[i - 1] && !visited[i - 1]) continue;
+    ```
+
+
+### **Combinations**  
+
+**Examples:**  
+
+- [Combinations](https://leetcode.com/problems/combinations/) - Generate all possible combinations of `k` numbers from a given set. 
+
+  - Recursive Subset pattern can be used here, call recursive function with next starting index
+
+
+- [Combination Sum](https://leetcode.com/problems/combination-sum/) - Find all unique combinations of numbers that sum up to a target.  
+
+
+- [Combination Sum II](https://leetcode.com/problems/combination-sum-ii/) - Similar to Combination Sum but with each number used at most once.  
+
+
+- [Combination Sum III](https://leetcode.com/problems/combination-sum-iii/) - Find all valid combinations of `k` numbers that sum to `n`.  
+
+
+### **Word Search**  
+
+**Examples:**  
+
+- [Word Search](https://leetcode.com/problems/word-search/) - Check if a word exists in a grid using backtracking.  
+
+- [Word Search II](https://leetcode.com/problems/word-search-ii/) - Find all words from a dictionary that exist in a grid.  
+
+
+
+### **Sudoku Solver**  
+
+**Examples:**  
+
+- [Sudoku Solver](https://leetcode.com/problems/sudoku-solver/) - Solve a Sudoku puzzle by filling empty cells with valid numbers.  
+
+- [Valid Sudoku](https://leetcode.com/problems/valid-sudoku/) - Check if a given Sudoku board configuration is valid.  
+
+
+### **N-Queens**  
+
+**Examples:**  
+
+- [N-Queens](https://leetcode.com/problems/n-queens/) - Place `N` queens on an `N×N` board without attacking each other.  
+
+- [N-Queens II](https://leetcode.com/problems/n-queens-ii/) - Count the number of distinct solutions to the N-Queens problem.  
+
+
+### **Backtracking with String**  
+
+**Examples:**  
+
+- [Letter Case Permutation](https://leetcode.com/problems/letter-case-permutation/) - Generate all possible case variations of a string containing letters.  
+
+- [Restore IP Addresses](https://leetcode.com/problems/restore-ip-addresses/) - Generate all possible valid IP addresses from a given string.  
 
 
 ---
