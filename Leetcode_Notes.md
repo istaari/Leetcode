@@ -1176,7 +1176,7 @@
 ## Backtracking
 
 
-### **Subsets (Power Set)**  
+**Subsets (Power Set)**  
 
 **Examples:**  
 
@@ -1200,7 +1200,7 @@
   - Sort the elements and check if there is duplicates by comparing with previous element, then skip the duplicates
 
 
-### **Permutations**  
+**Permutations**  
 
 **Examples:**  
 
@@ -1235,7 +1235,7 @@
     ```
 
 
-### **Combinations**  
+**Combinations**  
 
 **Examples:**  
 
@@ -1253,7 +1253,7 @@
 - [Combination Sum III](https://leetcode.com/problems/combination-sum-iii/) - Find all valid combinations of `k` numbers that sum to `n`.  
 
 
-### **Word Search**  
+**Word Search**  
 
 **Examples:**  
 
@@ -1263,7 +1263,7 @@
 
 
 
-### **Sudoku Solver**  
+**Sudoku Solver**  
 
 **Examples:**  
 
@@ -1272,7 +1272,7 @@
 - [Valid Sudoku](https://leetcode.com/problems/valid-sudoku/) - Check if a given Sudoku board configuration is valid.  
 
 
-### **N-Queens**  
+**N-Queens**  
 
 **Examples:**  
 
@@ -1281,7 +1281,7 @@
 - [N-Queens II](https://leetcode.com/problems/n-queens-ii/) - Count the number of distinct solutions to the N-Queens problem.  
 
 
-### **Backtracking with String**  
+**Backtracking with String**  
 
 **Examples:**  
 
@@ -1293,57 +1293,37 @@
 ---
 ## Dynamic Programming
 
+**1. Fibonacci Variations**
 
-**1. Fibonacci Variations** 
+- [Climbing Stairs](https://leetcode.com/problems/climbing-stairs/) - Count distinct ways to reach the top by taking 1
+  or 2 steps.
 
- **Examples:**
+- [Min Cost Climbing Stairs](https://leetcode.com/problems/min-cost-climbing-stairs/) - Find the minimum cost to reach
+  the top when each step has a cost.
 
-- [Climbing Stairs](https://leetcode.com/problems/climbing-stairs/) 
-   - Recurrence Relation: `f(n) = f(n-1) + f(n-2)`  
-   - Base Cases: `f(1) = 1, f(2) = 2`  
+- [House Robber](https://leetcode.com/problems/house-robber/) - Maximize money stolen without robbing adjacent houses.
 
+- [House Robber II](https://leetcode.com/problems/house-robber-ii/) - House Robber problem with houses arranged in a
+  circle.
 
-- [Min Cost Climbing Stairs](https://leetcode.com/problems/min-cost-climbing-stairs/) 
+- [Decode Ways](https://leetcode.com/problems/decode-ways/) - Count the number of ways to decode a string of digits.
 
-   - Recurrence Relation: `f(n) = cost[n] + min(f(n-1), f(n-2))`  
-   - Base Cases: `f(0) = cost[0], f(1) = cost[1]`  
+**2. Grids (Path Problems)**
 
+- [Unique Paths](https://leetcode.com/problems/unique-paths/) - Count unique paths from top-left to bottom-right in an
+  empty grid.
 
-- [House Robber](https://leetcode.com/problems/house-robber/) 
-   - Recurrence Relation: `f(n) = max(f(n-1), f(n-2) + nums[n])`  
-   - Base Cases: `f(0) = nums[0], f(1) = max(nums[0], nums[1])`  
+- [Unique Paths II](https://leetcode.com/problems/unique-paths-ii/) - Count unique paths in a grid with obstacles.
 
-- [House Robber II](https://leetcode.com/problems/house-robber-ii/) 
+- [Minimum Path Sum](https://leetcode.com/problems/minimum-path-sum/) - Find the minimum sum path from top-left to
+  bottom-right.
 
-- [Decode Ways](https://leetcode.com/problems/decode-ways/) 
+- [Minimum Falling Path Sum](https://leetcode.com/problems/find-the-safest-path-in-a-grid/) - Find the minimum sum
+  falling path in a matrix.
 
- **2. Grids(Path Problem)**
+- [Triangle](https://leetcode.com/problems/triangle/description/) - Find the minimum path sum from top to bottom in a
+  triangle.
 
- **Examples:**
-
-- [Unique Paths](https://leetcode.com/problems/unique-paths/)
-   
-  - [Solution](https://leetcode.com/problems/unique-paths/solutions/1581998/c-python-5-simple-solutions-w-explanation-optimization-from-brute-force-to-dp-to-math/)
-
-  - Can be space optimized using `2-row array`, alternating between 0 and 1 row `i & 1` or `i % 2`
-
-- [Unique Paths II](https://leetcode.com/problems/unique-paths-ii/) 
-
-  - Recurrence Relation: `dp[i][j] = 0 if obstacleGrid[i][j] == 1 else dp[i-1][j] + dp[i][j-1]`  
-  - Base Case: `dp[0][0] = 1 if obstacleGrid[0][0] == 0 else 0`  
-
-- [Minimum Path Sum](https://leetcode.com/problems/minimum-path-sum/)
- 
-  - Recurrence Relation: `dp[i][j] = grid[i][j] + min(dp[i-1][j], dp[i][j-1])`  
-  - Base Case: `dp[0][0] = grid[0][0]`  `dp[0][i] = grid[0][i] + dp[0][i - 1]`  `dp[i][0] = grid[i][0] + dp[i - 1][0]`
-
-- [Minimum Falling Path Sum](https://leetcode.com/problems/find-the-safest-path-in-a-grid/)  
- 
-  - Find Minimum from 3 directions and sum it with current element
-
-- [Triangle](https://leetcode.com/problems/triangle/description/) 
-
-  - Similiar to path sum
 
 
  **3. Subsequences(Kanpsack, Subset, Coin Change, Partition)** 
@@ -1384,8 +1364,8 @@
               for (int j = 1; j <= targetSum; j++) {
 
                   if (nums[i - 1] <= j) {
-                      // dp[i - 1][j] - can we form excluding current item
-                      // dp[i - 1][j - nums[i - 1]] - can we form excluding current item and remaining capacity
+                      // dp[i - 1][j] - Can we form excluding current item
+                      // dp[i - 1][j - nums[i - 1]] - Can we form excluding current item and remaining capacity
                       dp[i][j] = dp[i - 1][j] || dp[i - 1][j - nums[i - 1]];
                   } else {
                       dp[i][j] = dp[i - 1][j];
@@ -1571,27 +1551,29 @@
 
 
   - **1. Deterministic Nature**
-  A **Deterministic Finite State Machine (DFSM)** means that **given a specific state and an input (decision), the next state is uniquely determined**. Let's analyze this:
 
-  - If you **own a stock (`Hold`)**, you have two choices:
-    - Do nothing → Stay in `Hold`.
-    - Sell → Move to `Sold`.
+    A **Deterministic Finite State Machine (DFSM)** means that **given a specific state and an input (decision), the next state is uniquely determined**. Let's analyze this:
+
+    - If you **own a stock (`Hold`)**, you have two choices:
+      - Do nothing → Stay in `Hold`.
+      - Sell → Move to `Sold`.
     
-  - If you **just sold a stock (`Sold`)**, there is **only one possible transition**:
-    - Move to `Rest` (cooldown applies).
+    - If you **just sold a stock (`Sold`)**, there is **only one possible transition**:
+      - Move to `Rest` (cooldown applies).
     
-  - If you are **not holding a stock and not in cooldown (`Rest`)**, you also have two choices:
-    - Do nothing → Stay in `Rest`.
-    - Buy → Move to `Hold`.
+    - If you are **not holding a stock and not in cooldown (`Rest`)**, you also have two choices:
+      - Do nothing → Stay in `Rest`.
+      - Buy → Move to `Hold`.
 
   - **2. Difference Between DFSM and NDFSM**
-  A **Non-Deterministic FSM (NDFSM)** allows **multiple possible next states for the same input, without a clear rule**. That is, for the same state and input, different transitions could happen at the same time.
 
-  - In this problem, at any given moment, **the transitions follow strict rules**.
-  - Given a state and a choice, you always move to **one specific next state** (no parallel paths).
+    A **Non-Deterministic FSM (NDFSM)** allows **multiple possible next states for the same input, without a clear rule**. That is, for the same state and input, different transitions could happen at the same time.
 
-  - The key difference is **in an NDFSM, the machine can "magically" pick different paths without clear rules**.
-  - Here, once a choice is made, the transition is **fixed**, which makes it **deterministic**.
+    - In this problem, at any given moment, **the transitions follow strict rules**.
+    - Given a state and a choice, you always move to **one specific next state** (no parallel paths).
+
+    - The key difference is **in an NDFSM, the machine can "magically" pick different paths without clear rules**.
+    - Here, once a choice is made, the transition is **fixed**, which makes it **deterministic**.
 
  
  **6. Interval DP(MCM)**  

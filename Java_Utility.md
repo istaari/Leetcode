@@ -102,39 +102,9 @@ The `Arrays` class provides **static methods** for common operations on arrays.
 
 ### **Matrix Traversals Commonly Used in Dynamic Programming (DP) Problems**
 
----
 
-### **1. Row-wise Traversal (Left to Right)**
 
-- **Usage:** Used in **1D DP table filling** or **grid-based DP** where each state depends on the left or top cell.
-- **Example Problem:** Longest Common Subsequence (LCS), Coin Change.
-
-```
-for (int i = 0; i < rows; i++) {
-    for (int j = 0; j < cols; j++) {
-        dp[i][j] = ... // DP transition
-    }
-}
-```
-
----
-
-### **2. Column-wise Traversal (Top to Bottom)**
-
-- **Usage:** Used when DP transition depends on the **above cell**.
-- **Example Problem:** Minimum Path Sum.
-
-```cpp
-for (int j = 0; j < cols; j++) {
-    for (int i = 0; i < rows; i++) {
-        dp[i][j] = ... // DP transition
-    }
-}
-```
-
----
-
-### **3. Diagonal Traversal**
+### **1. Diagonal Traversal**
 
 - **Usage:** Used in **problems where state transition depends on diagonal elements**.
 - **Example Problem:** Longest Palindromic Subsequence (LPS), Matrix Chain Multiplication.
@@ -147,68 +117,6 @@ for (int d = 0; d < rows + cols - 1; d++) {
         dp[row][col] = ... // DP transition
         row++;
         col--;
-    }
-}
-```
-
----
-
-### **4. Zig-Zag Diagonal Traversal**
-
-- **Usage:** Similar to diagonal traversal but alternates between top-left to bottom-right and vice versa.
-- **Example Problem:** DP on grids with non-traditional dependencies.
-
-```cpp
-for (int d = 0; d < rows + cols - 1; d++) {
-    if (d % 2 == 0) { // Top to Bottom
-        int row = min(d, rows - 1);
-        int col = max(0, d - rows + 1);
-        while (row >= 0 && col < cols) {
-            dp[row][col] = ... // DP transition
-            row--;
-            col++;
-        }
-    } else { // Bottom to Top
-        int col = min(d, cols - 1);
-        int row = max(0, d - cols + 1);
-        while (col >= 0 && row < rows) {
-            dp[row][col] = ... // DP transition
-            col--;
-            row++;
-        }
-    }
-}
-```
-
----
-
-### **5. L-Shaped Traversal**
-
-- **Usage:** Used in problems where DP state depends on **rightward and downward moves**.
-- **Example Problem:** Unique Paths, Minimum Cost Path.
-
-```cpp
-for (int i = 0; i < rows; i++) {
-    dp[i][0] = ... // Base case for leftmost column
-}
-for (int j = 1; j < cols; j++) {
-    dp[rows - 1][j] = ... // Base case for bottom row
-}
-```
-
----
-
-### **6. Wave Traversal**
-
-- **Usage:** Useful in **problems where alternating transitions are required**.
-- **Example Problem:** Problems with **alternating row-based dependencies**.
-
-```cpp
-for (int j = 0; j < cols; j++) {
-    if (j % 2 == 0) {
-        for (int i = 0; i < rows; i++) dp[i][j] = ... // DP transition
-    } else {
-        for (int i = rows - 1; i >= 0; i--) dp[i][j] = ... // DP transition
     }
 }
 ```

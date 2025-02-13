@@ -30,6 +30,7 @@
 - [Advanced Dynamic Programming Strategies](https://leetcode.com/discuss/study-guide/458695/Dynamic-Programming-Patterns)
 - [Comprehensive Dynamic Programming Problem List](https://leetcode.com/discuss/general-discussion/1050391/Must-do-Dynamic-programming-Problems-Category-wise)
 - [Mastering Dynamic Programming Questions](https://leetcode.com/discuss/general-discussion/1000929/solved-all-dynamic-programming-dp-problems-in-7-months)
+- [All DP Problems](https://leetcode.com/discuss/general-discussion/1000929/solved-all-dynamic-programming-dp-problems-in-7-months)
 
 ## Graph
 

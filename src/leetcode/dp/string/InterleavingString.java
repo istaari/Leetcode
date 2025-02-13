@@ -1,4 +1,4 @@
-package leetcode.dp.subsequence;
+package leetcode.dp.string;
 
 public class InterleavingString {
 
