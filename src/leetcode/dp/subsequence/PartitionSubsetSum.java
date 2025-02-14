@@ -23,14 +23,14 @@ public class PartitionSubsetSum {
         boolean[][] dp = new boolean[nums.length + 1][targetSum + 1];
 
         for (int i = 0; i <= nums.length; i++)
-            dp[i][0] = true; // For any set of numbers, you can always form a sum of 0 by taking no elements at all
+            dp[i][0] = true;
 
         for (int i = 1; i <= nums.length; i++) {
             for (int j = 1; j <= targetSum; j++) {
 
                 if (nums[i - 1] <= j) {
-                    // dp[i - 1][j] - can we form excluding current item
-                    // dp[i - 1][j - nums[i - 1]] - can we form excluding current item and remaining capacity
+                    // dp[i - 1][j] - Can we form excluding current item
+                    // dp[i - 1][j - nums[i - 1]] - Can we form excluding current item and remaining capacity
                     dp[i][j] = dp[i - 1][j] || dp[i - 1][j - nums[i - 1]];
                 } else {
                     dp[i][j] = dp[i - 1][j];

@@ -1176,7 +1176,7 @@
 ## Backtracking
 
 
-**Subsets (Power Set)**  
+**1. Subsets (Power Set)**  
 
 **Examples:**  
 
@@ -1200,7 +1200,7 @@
   - Sort the elements and check if there is duplicates by comparing with previous element, then skip the duplicates
 
 
-**Permutations**  
+**2. Permutations**  
 
 **Examples:**  
 
@@ -1235,7 +1235,7 @@
     ```
 
 
-**Combinations**  
+**3. Combinations**  
 
 **Examples:**  
 
@@ -1253,7 +1253,7 @@
 - [Combination Sum III](https://leetcode.com/problems/combination-sum-iii/) - Find all valid combinations of `k` numbers that sum to `n`.  
 
 
-**Word Search**  
+**4. Word Search**  
 
 **Examples:**  
 
@@ -1263,7 +1263,7 @@
 
 
 
-**Sudoku Solver**  
+**5. Sudoku Solver**  
 
 **Examples:**  
 
@@ -1272,7 +1272,7 @@
 - [Valid Sudoku](https://leetcode.com/problems/valid-sudoku/) - Check if a given Sudoku board configuration is valid.  
 
 
-**N-Queens**  
+**6. N-Queens**  
 
 **Examples:**  
 
@@ -1281,7 +1281,7 @@
 - [N-Queens II](https://leetcode.com/problems/n-queens-ii/) - Count the number of distinct solutions to the N-Queens problem.  
 
 
-**Backtracking with String**  
+**7. Backtracking with String**  
 
 **Examples:**  
 
@@ -1294,6 +1294,8 @@
 ## Dynamic Programming
 
 **1. Fibonacci Variations**
+
+**Examples:** 
 
 - [Climbing Stairs](https://leetcode.com/problems/climbing-stairs/) - Count distinct ways to reach the top by taking 1
   or 2 steps.
@@ -1309,6 +1311,8 @@
 - [Decode Ways](https://leetcode.com/problems/decode-ways/) - Count the number of ways to decode a string of digits.
 
 **2. Grids (Path Problems)**
+
+**Examples:** 
 
 - [Unique Paths](https://leetcode.com/problems/unique-paths/) - Count unique paths from top-left to bottom-right in an
   empty grid.
