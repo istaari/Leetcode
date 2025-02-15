@@ -1,6 +1,6 @@
 package leetcode.dp.stock;
 
-public class BuySellStock {
+public class BestTimeBuySellStock {
 
     // Using greedy approach
     public static int maxProfit(int[] prices) {

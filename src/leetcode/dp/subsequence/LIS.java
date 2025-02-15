@@ -53,6 +53,23 @@ public class LIS {
     }
 
 
+    int binarySearch(int[] number) {
+        int[] dp = new int[number.length];
+        int len = 0;
+        for (int x : number) {
+            // Returns insertion point where element can be inserted if element is not found
+            int i = Arrays.binarySearch(dp, 0, len, x);
+
+            // Turns insertion point into valid index
+            if (i < 0) i = -(i + 1);
+
+            dp[i] = x;
+            if (i == len) len++;
+        }
+        return len;
+    }
+
+
     public static void main(String[] args) {
         int[] nums = {10, 9, 2, 5, 3, 7, 101, 18};
         System.out.println(recursive(nums));

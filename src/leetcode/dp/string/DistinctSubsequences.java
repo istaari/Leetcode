@@ -23,11 +23,12 @@ public class DistinctSubsequences {
     }
 
     public static int iterative(String s, String t) {
-        int m = t.length();
-        int n = s.length();
+        int m = t.length(); // Target
+        int n = s.length(); // Source
         int[][] dp = new int[m + 1][n + 1];
 
         for (int j = 0; j <= n; j++) {
+            // The first row is set to 1 because there's one way to match an empty string t in any prefix of s: by deleting all characters.
             dp[0][j] = 1;
         }
 
