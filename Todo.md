@@ -52,7 +52,7 @@
 
 - [Serialize and Deserialize Binary Tree](https://leetcode.com/problems/serialize-and-deserialize-binary-tree/description/)
 
-### Permutations
+### String Permutations
 
 - [Next Permutation](https://leetcode.com/problems/next-permutation/description/)
 

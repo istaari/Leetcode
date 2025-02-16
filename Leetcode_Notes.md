@@ -1812,7 +1812,7 @@
 
 ### **Traversal & Basic Operations**
 
-**1. DFS and BFS Problems**
+**1. DFS and BFS Traversal Problems**
 
 **Examples:**
 
@@ -1826,64 +1826,24 @@
 
   - The problem can be represented count connected components in a graph
 
-- [Word Ladder I](https://leetcode.com/problems/word-ladder/) - Find the shortest transformation sequence from one word to another using a dictionary.
-
-  - Problem can be represented as `unweighted and directed graph`, Use `BFS` to find the shortest path between two nodes
-
-    ```
-    graph = {
-    "hot": ["hit"],
-    "dot": ["hot"],
-    "lot": ["hot"],
-    "dog": ["dot"],
-    "log": ["lot"],
-    "cog": ["dog", "log"]
-    }
-    ```
-
-  - Transform each char from `a-z` and check if it is present in the dictionary to find the to find the shortest path from beginWord to endWord
-  - We can use Bidirectional BFS to optimize the solution
-
-- [Word Ladder II](https://leetcode.com/problems/word-ladder-ii/) - Find all the shortest transformation sequences from one word to another.
-
-  - Use BFS from `beginWord` to `endWord` to construct the reverse graph
-    ```
-      graph = {
-        "hot": ["hit"],
-        "dot": ["hot"],
-        "lot": ["hot"],
-        "dog": ["dot"],
-        "log": ["lot"],
-        "cog": ["dog", "log"]
-        }
-    ```
-  - Use backtracking and DFS to find all the shortest paths from `endWord` to `beginWord`
+- [Clone Graph](https://leetcode.com/problems/clone-graph/description/)
 
 - [Get Watched Videos by Your Friends](https://leetcode.com/problems/get-watched-videos-by-your-friends/) - Find the most popular videos watched by your friends in a social network.
 
-- [Cut Off Trees for Golf Event](https://leetcode.com/problems/cut-off-trees-for-golf-event/) - Minimize the number of steps required to cut off trees in a golf course.
-
-- [Longest Increasing Path in a Matrix](https://leetcode.com/problems/longest-increasing-path-in-a-matrix/) - Find the longest increasing path in a matrix.
-
 - [Evaluate Division](https://leetcode.com/problems/evaluate-division/) - Evaluate the result of division based on a set of equations.
 
-- [Most Stones Removed with Same Row or Column](https://leetcode.com/problems/most-stones-removed-with-same-row-or-column/) - Find the maximum number of stones that can be removed in a grid.
-
 - [Reconstruct Itinerary](https://leetcode.com/problems/reconstruct-itinerary/) - Reconstruct a travel itinerary based on given flight tickets.
-
-- [Accounts Merge](https://leetcode.com/problems/accounts-merge/) - Merge accounts with the same email addresses.
 
 
 **3. Connected Components Problems**
 
 - `BFS`, `DFS`, `Union Find` can be used to find connected components in a graph
+
 - `Kosaraju's Algorithm` is a well-known algorithm for finding Strongly Connected Components (SCCs) in a directed graph
 
 **Examples:**
 
 - [Number of Provinces](https://leetcode.com/problems/number-of-provinces/) - Count the number of connected provinces in a graph.
-
-- [Number of Connected Components in an Undirected Graph](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/) - Find the number of connected components in an undirected graph.
 
 - [Number of Operations to Make Network Connected](https://leetcode.com/problems/number-of-operations-to-make-network-connected/) - Find the minimum number of operations to make the network fully connected.
 
@@ -1891,28 +1851,44 @@
 
 - [Critical Connections in a Network](https://leetcode.com/problems/critical-connections-in-a-network/) - Identify the critical connections in a network that, if removed, would increase the number of connected components.
 
+- [Most Stones Removed with Same Row or Column](https://leetcode.com/problems/most-stones-removed-with-same-row-or-column/) - Find the maximum number of stones that can be removed in a grid.
 
-### **Cycle Detection**
 
-**Detect Cycle in an Undirected Graph** 
+### **Cycle Detection in Graph**
 
-- <p>Two vertices cannot form a cycle with a single edge (<strong>A <--> B</strong>) unless there is a self-loop (an edge from <strong>A to A</strong> or from <strong>B to B</strong>).</p>
+#### **Cycle Detection in an Undirected Graph**
 
-- For a cycle to exist in an undirected graph, it must involve `at least 3 vertices`
+- A single edge between two vertices (`A <--> B`) **does not form a cycle** unless there is a self-loop (an edge from `A` to `A` or `B` to `B`).
 
-- `DFS`, `Union Find` can be used to detect cycles in an undirected graph
+- A **cycle in an undirected graph must involve at least 3 vertices** (except when self-loops exist).
 
-**Detect Cycle in a Directed Graph**  
+- **Techniques to detect cycles:**
+  - **DFS (Depth-First Search) with Parent Tracking**: If a visited node is encountered again, and it is **not the parent of the current node**, a cycle exists.
+  
+  - **Union-Find (Disjoint Set Union - DSU)**: Useful for detecting cycles in a **graph given as edge lists**.
 
-- For a cycle to exist in a directed graph, it must involve `at least 2 vertices`
+#### **Cycle Detection in a Directed Graph**
 
-- `DFS(Topological Sort)` and `Topological Sort` can be used to detect cycles in a directed graph
+- A **cycle in a directed graph can exist with just 2 vertices** (`A -> B -> A`).
 
-**Detect Negative Weight Cycle** (using Bellman-Ford).  
+- **Techniques to detect cycles:**
+
+  - **DFS with Recursion Stack (Back Edge Detection)**: If a node is visited again while still in the recursion stack, a cycle is detected.
+  
+  - **Topological Sorting (Kahn's Algorithm - BFS)**: If the graph contains a cycle, it is **not possible** to get a valid topological order.
+
+#### **Detecting Negative Weight Cycles**
+
+- **Bellman-Ford Algorithm** is used to detect **negative weight cycles** in weighted graphs.
+
+- If an additional relaxation step still improves the shortest path, a **negative weight cycle exists**.
+
+**Examples:**
+
+- [Redundant Connection](https://leetcode.com/problems/redundant-connection/description/) - Find the redundant connection in a graph that results in a cycle.
+
 
 ### **Topological Sort & Directed Acyclic Graphs (DAG)**
-
-**Topological Sort** 
 
 - Kahn’s Algorithm(Specific Topological Sort Algorithm) 
 
@@ -1926,25 +1902,26 @@
 
 - [Alien Dictionary](https://leetcode.com/problems/alien-dictionary/solution/) - Determine the order of letters in an alien language based on a list of words.
 
+- [Longest Increasing Path in a Matrix](https://leetcode.com/problems/longest-increasing-path-in-a-matrix/) - Find the longest increasing path in a matrix.
+
 
 ### **Union Find**
 
 **Examples:**
 
-- [Number of Islands](https://leetcode.com/problems/number-of-islands/) - Count the number of distinct islands in a 2D grid of water and land using Union Find.
-
 - [Largest Component Size by Common Factor](https://leetcode.com/problems/largest-component-size-by-common-factor/) - Find the largest connected component of nodes that share a common factor.
 
 - [Most Stones Removed with Same Row or Column](https://leetcode.com/problems/most-stones-removed-with-same-row-or-column/) - Find the maximum number of stones that can be removed in a grid using Union Find.
-
-- [Number of Connected Components in an Undirected Graph](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/) - Find the number of connected components in an undirected graph using Union Find.
-
 
 ### **Minimum Spanning Tree (MST)**
 
 **Kruskal's Algorithm**  
 
+- Uses edges, sorts them, and adds them one by one to form the MST
+
 **Prim's Algorithm** 
+
+- Uses nodes, expanding the MST from a starting node
 
 **Examples:**
 
@@ -1955,7 +1932,49 @@
 
 ### **Shortest Path Algorithms**
 
-**Dijkstra's Algorithm** 
+**BFS(Unweighted graph)**
+
+**Examples:**
+
+- [Word Ladder I](https://leetcode.com/problems/word-ladder/) - Find the shortest transformation sequence from one word to another using a dictionary.
+
+  - Problem can be represented as `unweighted and directed graph`, Use `BFS` to find the shortest path between two nodes
+
+    ```json
+    graph = {
+        "hit": ["hot"],
+        "hot": ["hit", "dot", "lot"],
+        "dot": ["hot", "dog"],
+        "lot": ["hot", "log"],
+        "dog": ["dot", "cog"],
+        "log": ["lot", "cog"],
+        "cog": ["dog", "log"]
+    }
+    ```
+
+  - Transform each char from `a-z` and check if it is present in the dictionary to find the to find the shortest path from beginWord to endWord
+  - We can use Bidirectional BFS to optimize the solution
+
+- [Word Ladder II](https://leetcode.com/problems/word-ladder-ii/) - Find all the shortest transformation sequences from one word to another.
+
+  - Use BFS from `beginWord` to `endWord` to construct the reverse graph
+    ```json
+      graph = {
+        "hot": ["hit"],
+        "dot": ["hot"],
+        "lot": ["hot"],
+        "dog": ["dot"],
+        "log": ["lot"],
+        "cog": ["dog", "log"]
+        }
+    ```
+  - Use backtracking and DFS to find all the shortest paths from `endWord` to `beginWord`
+
+- [Rotating Oranges](https://leetcode.com/problems/rotting-oranges/description/)  
+
+- [Cut Off Trees for Golf Event](https://leetcode.com/problems/cut-off-trees-for-golf-event/) - Minimize the number of steps required to cut off trees in a golf course.
+
+**Dijkstra's Algorithm(Weighted graph with positive weights)** 
 
 **Examples:**
 
@@ -1970,7 +1989,7 @@
 - [Cheapest Flights Within K Stops](https://leetcode.com/problems/cheapest-flights-within-k-stops/) - Find the cheapest price for flights within a given number of stops.
 
 
-**Floyd-Warshall Algorithm Problems**
+**Floyd-Warshall Algorithm(Weighted graph with negative weights)**
 
 **Examples:**
 
@@ -1979,7 +1998,7 @@
 - [Network Delay Time](https://leetcode.com/problems/network-delay-time/) - Calculate the time it takes for all nodes to receive a signal from a source node, considering all pairwise shortest paths.
 
 
-**Bellman-Ford Algorithm Problems**
+**Bellman-Ford Algorithm(Weighted graph with negative weights)**
 
 **Examples:**
 
@@ -1988,35 +2007,15 @@
 
 ###  **Graph Coloring**
 
-**M-Coloring Problem** (Can the graph be colored with M colors?). 
+- Solves the problem of assigning colors to vertices in a graph such that no two adjacent vertices share the same color.
 
-**Check Bipartite Graph** (using graph coloring).  
+### **Connectivity and Bridges** 
 
-**Chromatic Number** (Minimum number of colors to color the graph).  
-
-
-### **Connectivity and Bridges**
-
-**Articulation Points** (Nodes whose removal increases connected components).  
-
-**Bridges in a Graph** (Edges whose removal increases connected components).  
-
-**Strongly Connected Components (SCC)** (Kosaraju, Tarjan’s algorithms).  
-
-**2-Edge Connected Components**.  
-
+- Identifies whether a graph is connected and finds critical edges (bridges) whose removal would disconnect the graph
 
 ### **Flow and Matching Problems**
 
-**Ford-Fulkerson Algorithm** (Maximum Flow).  
-
-**Edmonds-Karp Algorithm** (Optimized Maximum Flow). 
-
-**Dinic’s Algorithm** (Efficient Maximum Flow).  
-
-**Bipartite Graph Check** (using DFS/BFS).  
-
-**Maximum Bipartite Matching** (Hungarian Algorithm).  
+- Focuses on finding optimal flows through a network or perfect matchings in bipartite graphs.
 
 ---
 
