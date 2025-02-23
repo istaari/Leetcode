@@ -75,7 +75,7 @@ class OliveDecorator extends PizzaDecorator {
 
 
 
-public class DecoratorDemo {
+public class Decorator {
     public static void main(String[] args) {
         Pizza pizza = new SimplePizza(); // Start with a plain pizza
         pizza = new CheeseDecorator(pizza); // Add cheese

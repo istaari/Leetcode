@@ -4,13 +4,15 @@ import java.util.Deque;
 
 public class SnakeAndLadderGame {
 
-    private static final Board board = Board.getInstance();
-    private static final Dice dice = Dice.getInstance();
+    private final Board board;
+    private final Dice dice;
     private final Deque<Player> players;
 
 
     public SnakeAndLadderGame(Deque<Player> players) {
         this.players = players;
+        this.board = new Board();
+        this.dice = new Dice();
     }
 
     public void play() {

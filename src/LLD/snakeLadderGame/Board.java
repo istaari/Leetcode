@@ -5,16 +5,11 @@ import java.util.List;
 public class Board {
 
     public static final int BOARD_SIZE = 100;
-    private static final Board INSTANCE = new Board();
     private  List<Snake> snakes;
     private  List<Ladder> ladders;
 
-    private Board() {
+    public Board() {
         initSnakesAndLadders();
-    }
-
-    public static Board getInstance() {
-        return INSTANCE;
     }
 
     public void initSnakesAndLadders() {

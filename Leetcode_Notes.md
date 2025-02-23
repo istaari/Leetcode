@@ -1141,6 +1141,30 @@
 
 - [Number of Unique Binary Search Trees](https://leetcode.com/problems/unique-binary-search-trees/description/)
 
+```java
+
+   long binomialCoefficient(int n, int k) {
+        long res = 1;
+
+        if (k > n - k)
+            k = n - k; // Using the property: C(n, k) = C(n, n-k)
+
+        for (int i = 0; i < k; i++) {
+            res *= (n - i); // Multiply by decreasing numerator
+            res /= (i + 1); // Divide by increasing denominator
+            // Using the property of the associativity of multiplication and division:
+            // (a / b) × (c / d) = (a × c) / (b × d)
+        }
+
+        return res;
+    }
+
+   int numTrees(int n) {
+        return (int) (binomialCoefficient(2 * n, n) / (n + 1));
+    }
+
+```
+
 - [Construct Binary Tree from Preorder and Inorder Traversal](https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/description/)
 
 - [Construct Binary Tree from Inorder and Postorder Traversal](https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/description/)
@@ -1339,23 +1363,6 @@
   - Check if sum is even, then divide the sum by 2, then check if subset sum is equal to half of sum
   - Its a `0/1 Knapsack Problem`
 
-  - ```java 
-      // Include or Exclude decision tree technique
-      boolean recursive(int[] nums, int index, int target, Boolean[][] dp) {
-        if (target == 0) return true;
-        
-        if (index > nums.length - 1) return false;
-        if (target < 0) return false;
-
-        if (dp[index][target] != null) return dp[index][target];
-
-        dp[index][target] = recursive(nums, index + 1, target - nums[index], dp)
-                || recursive(nums, index + 1, target, dp);
-
-        return dp[index][target];
-    }
-    ```
-
   - ```java
       // Iterative Solution
       boolean iterative(int[] nums, int targetSum) {
@@ -1388,24 +1395,29 @@
   - Include the current item: `dp[i][j-coins[i-1]] + 1`
   
   ```java
-     // Recursion Pattern : generate permutations, shortest path/minimum steps
-     int helper(int[] coins, int amount, int[] memo) {
-          if (amount < 0) return -1;
-          if (amount == 0) return 0;
+      public static int iterative(int[] coins, int amount) {
+        int[][] dp = new int[coins.length + 1][amount + 1];
 
-          if (memo[amount] != -2) return memo[amount];
+        for (int i = 0; i <= coins.length; i++) {
+            dp[i][0] = 0;
+        }
 
-          int minCount = -1;
-          for (int coin : coins) {
-              int count = 1 + helper(coins, amount - coin, memo);
+        for (int j = 1; j <= amount; j++) {
+            dp[0][j] = amount + 1;
+        }
 
-              if (count > 0) {
-                  minCount = (minCount < 0) ? count : Math.min(count, minCount);
-              }
-          }
+        for (int i = 1; i <= coins.length; i++) {
+            for (int j = 1; j <= amount; j++) {
 
-          memo[amount] = minCount;
-          return memo[amount];
+                if (coins[i - 1] <= j) {
+                    dp[i][j] = Math.min(dp[i - 1][j], 1 + dp[i][j - coins[i - 1]]);
+                } else {
+                    dp[i][j] = dp[i - 1][j];
+                }
+            }
+        }
+
+        return dp[coins.length][amount] > amount ? -1 : dp[coins.length][amount];
     }
   ```
 
@@ -1420,36 +1432,26 @@
 
 
   ```java
-    /* Recursion Pattern : generate combinations, generate subsets, generate subsequences */
-    int helper0(int amount, int[] coins, int index, Integer[][] memo) {
-        if (amount == 0) return 1;
-        if (amount < 0 || index == coins.length) return 0;
+    public static int Iterative(int amount, int[] coins) {
+        int[][] dp = new int[coins.length + 1][amount + 1];
 
-        if (memo[index][amount] != null) return memo[index][amount];
-
-        int include = helper0(amount - coins[index], coins, index, memo);
-        int exclude = helper0(amount, coins, index + 1, memo);
-
-        memo[index][amount] = include + exclude;
-
-        return memo[index][amount];
-    }
-
-   int helper(int[] coins, int amount, int index, Integer[][] memo) {
-        if (amount == 0) return 1;
-        if (amount < 0 || index >= coins.length) return 0;
-
-        if (memo[index][amount] != null) return memo[index][amount];
-
-        int count = 0;
-        for (int i = index; i < coins.length; i++) {
-            count += helper(coins, amount - coins[i], i, memo);
+        for (int i = 0; i <= coins.length; i++) {
+            dp[i][0] = 1;
         }
 
-        memo[index][amount] = count;
-        return count;
-    }
+        for (int i = 1; i <= coins.length; i++) {
+            for (int j = 1; j <= amount; j++) {
 
+                if (coins[i - 1] <= j) {
+                    dp[i][j] = dp[i - 1][j] + dp[i][j - coins[i - 1]];
+                } else {
+                    dp[i][j] = dp[i - 1][j];
+                }
+            }
+        }
+
+        return dp[coins.length][amount];
+    }
   ```
   
 - [Combination Sum IV](https://leetcode.com/problems/combination-sum-iv/) - Number of ways(no. of Subsequence) to make a target sum, `same number can be used more than once`
@@ -1466,28 +1468,7 @@
   - Recursion logic for each previous values check, if there is a increasing subsequence
 
   ```java
-    int helper(int[] nums, int i, int prevIndex) {
-        if (i >= nums.length) return 0;
-
-        if (dp[i][prevIndex + 1] != null) {
-            return dp[i][prevIndex + 1];
-        }
-
-        int exclude = helper(nums, i + 1, prevIndex);
-
-        int include = 0;
-        if (prevIndex == -1 || nums[i] > nums[prevIndex]) {
-            include = 1 + helper(nums, i + 1, i);
-        }
-
-        dp[i][prevIndex + 1] = Math.max(exclude, include);
-        return dp[i][prevIndex + 1];
-    }
-  ```
-
-  - Iterative
-
-  ```java
+    // Iterative Solution
     public static int iterative(int[] nums) {
         int n = nums.length;
         int[] dp = new int[n];

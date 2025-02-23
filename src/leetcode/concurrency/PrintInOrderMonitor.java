@@ -1,43 +1,40 @@
 package leetcode.concurrency;
 
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.ReentrantLock;
 
-public class PrintInOrderRe {
-
-    public PrintInOrderRe() {
-    }
-
-    private final ReentrantLock lock = new ReentrantLock();
-    private final Condition first = lock.newCondition();
-    private final Condition second = lock.newCondition();
-    private final Condition third = lock.newCondition();
-
+public class PrintInOrderMonitor {
     private String state = "First";
 
-    public void first(Runnable printFirst) throws InterruptedException {
-        lock.lock();
+    public PrintInOrderMonitor() {
+    }
 
+    public synchronized void first(Runnable printFirst) throws InterruptedException {
+        while (!state.equals("First")) {
+            wait(); // Releases the locks
+        }
         printFirst.run();
-        lock.unlock();
+        state = "Second";
+        notifyAll();
     }
 
-    public void second(Runnable printSecond) throws InterruptedException {
-        lock.lock();
+    public synchronized void second(Runnable printSecond) throws InterruptedException {
+        while (!state.equals("Second")) {
+            wait();
+        }
         printSecond.run();
-        lock.unlock();
+        state = "Third";
+        notifyAll();
     }
 
-    public void third(Runnable printThird) throws InterruptedException {
-        lock.lock();
+    public synchronized void third(Runnable printThird) throws InterruptedException {
+        while (!state.equals("Third")) {
+            wait();
+        }
         printThird.run();
-        lock.unlock();
     }
-
 
 
     public static void main(String[] args) throws InterruptedException {
-        PrintInOrderRe print = new PrintInOrderRe();
+        PrintInOrderMonitor print = new PrintInOrderMonitor();
 
         Thread t1 = new Thread(() -> {
             try {
@@ -64,8 +61,7 @@ public class PrintInOrderRe {
         });
 
         t1.start();
-        t3.start();
         t2.start();
-
+        t3.start();
     }
 }

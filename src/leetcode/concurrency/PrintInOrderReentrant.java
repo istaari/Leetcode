@@ -1,41 +1,64 @@
 package leetcode.concurrency;
 
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.ReentrantLock;
 
-public class PrintInOrderMon {
+public class PrintInOrderReentrant {
+
+    public PrintInOrderReentrant() {
+    }
+
+    private final ReentrantLock lock = new ReentrantLock();
+
+    private final Condition first = lock.newCondition();
+    private final Condition second = lock.newCondition();
+    private final Condition third = lock.newCondition();
+
     private String state = "First";
 
-    public PrintInOrderMon() {
-    }
+    public void first(Runnable printFirst) throws InterruptedException {
+        lock.lock();
 
-    public synchronized void first(Runnable printFirst) throws InterruptedException {
         while (!state.equals("First")) {
-            wait(); // Releases the locks
+            first.await(); // Releases the locks
         }
+
         printFirst.run();
         state = "Second";
-        notifyAll();
+
+        second.signal();
+        lock.unlock();
     }
 
-    public synchronized void second(Runnable printSecond) throws InterruptedException {
+    public void second(Runnable printSecond) throws InterruptedException {
+        lock.lock();
+
         while (!state.equals("Second")) {
-            wait();
+            second.await(); // Releases the locks
         }
+
         printSecond.run();
         state = "Third";
-        notifyAll();
+
+        third.signal();
+        lock.unlock();
     }
 
-    public synchronized void third(Runnable printThird) throws InterruptedException {
+    public void third(Runnable printThird) throws InterruptedException {
+        lock.lock();
+
         while (!state.equals("Third")) {
-            wait();
+            third.await(); // Releases the locks
         }
-        printThird.run();
-    }
 
+        printThird.run();
+        lock.unlock();
+    }
 
     public static void main(String[] args) throws InterruptedException {
-        PrintInOrderMon print = new PrintInOrderMon();
+        PrintInOrderReentrant print = new PrintInOrderReentrant();
 
+        // Threads to print "First", "Second", "Third"
         Thread t1 = new Thread(() -> {
             try {
                 print.first(() -> System.out.println("First"));
@@ -60,6 +83,7 @@ public class PrintInOrderMon {
             }
         });
 
+        // Start threads
         t1.start();
         t2.start();
         t3.start();

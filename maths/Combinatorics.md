@@ -127,6 +127,15 @@ How many ways can you choose 3 items from 2 types of fruit (\(A, B\)), allowing 
 
 `C(n) = Ci(2n,n)/n+1`
 
+<p>Where:</p>
+<ul>
+  <li><code>(2n)! / (n! &bull; n!)</code> is the binomial coefficient <code>&#8658; binomial(2n, n)</code></li>
+  <li><code>n!</code> is the factorial of <code>n</code></li>
+</ul>
+
+
+
+
 #### Examples:
 
 - `C₀ = 1`

@@ -2,13 +2,13 @@ package leetcode.concurrency;
 
 import java.util.concurrent.Semaphore;
 
-public class PrintInOrderSem {
+public class PrintInOrderSemaphore {
 
     Semaphore first = new Semaphore(1);
     Semaphore second = new Semaphore(0);
     Semaphore third = new Semaphore(0);
 
-    public PrintInOrderSem() {
+    public PrintInOrderSemaphore() {
     }
 
     public void first(Runnable printFirst) throws InterruptedException {

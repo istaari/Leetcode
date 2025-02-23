@@ -24,7 +24,15 @@ public class TextEditorManager {
     public void undo() {
         if (!undoHistory.isEmpty()) {
             redoHistory.push(undoHistory.pop());
-            textEditor.restore((!undoHistory.isEmpty()) ? undoHistory.peek() : new Memento(""));
+
+            Memento memento;
+            if (!undoHistory.isEmpty()) {
+                memento = undoHistory.peek();
+            } else {
+                memento = new Memento("");
+            }
+
+            textEditor.restore(memento);
         }
     }
 
