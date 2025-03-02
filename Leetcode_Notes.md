@@ -1200,7 +1200,7 @@
 ## Backtracking
 
 
-**1. Subsets (Power Set)**  
+### **1. Subsets (Power Set)**  
 
 **Examples:**  
 
@@ -1224,7 +1224,7 @@
   - Sort the elements and check if there is duplicates by comparing with previous element, then skip the duplicates
 
 
-**2. Permutations**  
+### **2. Permutations**  
 
 **Examples:**  
 
@@ -1259,7 +1259,7 @@
     ```
 
 
-**3. Combinations**  
+### **3. Combinations**  
 
 **Examples:**  
 
@@ -1277,7 +1277,7 @@
 - [Combination Sum III](https://leetcode.com/problems/combination-sum-iii/) - Find all valid combinations of `k` numbers that sum to `n`.  
 
 
-**4. Word Search**  
+### **4. Word Search**  
 
 **Examples:**  
 
@@ -1287,7 +1287,7 @@
 
 
 
-**5. Sudoku Solver**  
+### **5. Sudoku Solver**  
 
 **Examples:**  
 
@@ -1296,7 +1296,7 @@
 - [Valid Sudoku](https://leetcode.com/problems/valid-sudoku/) - Check if a given Sudoku board configuration is valid.  
 
 
-**6. N-Queens**  
+### **6. N-Queens**  
 
 **Examples:**  
 
@@ -1305,7 +1305,7 @@
 - [N-Queens II](https://leetcode.com/problems/n-queens-ii/) - Count the number of distinct solutions to the N-Queens problem.  
 
 
-**7. Backtracking with String**  
+### **7. Backtracking with String**  
 
 **Examples:**  
 
@@ -1317,7 +1317,7 @@
 ---
 ## Dynamic Programming
 
-**1. Fibonacci Variations**
+### **1. Fibonacci Variations**
 
 **Examples:** 
 
@@ -1354,7 +1354,7 @@
 
 
 
- **3. Subsequences(Knapsack, Subset, Coin Change, Partition)** 
+ ### **3. Subsequences(Knapsack, Subset, Coin Change, Partition)** 
 
  **Examples:**
 
@@ -1487,7 +1487,7 @@
   ```
 
 
- **4. String(Subsequence, Substring, Edit Distance, Wildcard)** 
+ ### **4. String(Subsequence, Substring, Edit Distance, Wildcard)** 
 
  **Examples:**
 
@@ -1647,7 +1647,7 @@
 - [Wildcard Matching](https://leetcode.com/problems/wildcard-matching/)  
 
 
-**5. Optimizations(State Machines, Maximum Subarray )** 
+### **5. Optimizations(State Machines, Maximum Subarray )** 
 
 **Examples:**
 
@@ -1759,7 +1759,7 @@
 
   ```
  
- **6. Interval DP(MCM)**  
+ ### **6. Interval DP(MCM)**  
 
  **Examples:**
 
@@ -1768,7 +1768,7 @@
   - [Burst Balloons](https://leetcode.com/problems/burst-balloons/description/)
 
 
-**7. Bitmasking and Partitioning**  
+### **7. Bitmasking and Partitioning**  
 
 **Examples:**
 
@@ -1781,7 +1781,7 @@
 - [Word Break II](https://leetcode.com/problems/word-break-ii/)  - Break a sentence into words using a dictionary of words
 
 
-**8. Game Theory(Minimax)**
+### **8. Game Theory(Minimax)**
 
 - [Stone Game](https://leetcode.com/problems/stone-game/) - Two players take turns removing stones from piles. Determine if the first player can win. 
 
