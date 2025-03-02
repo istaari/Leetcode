@@ -1816,9 +1816,12 @@
 
 ### **2. Connected Components Problems**
 
-- `BFS`, `DFS`, `Union Find` can be used to find connected components in a graph
+| **Type of Component**                  | **Definition**                                                                                                                       | **Example**                   | **Explanation**                                                                                                                                  | **Algorithm for Solving**                               |
+|----------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------|-------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------|
+| **Connected Component (CC)**           | Maximal subgraph in an **undirected graph** where all nodes are reachable from each other.                                           | **Graph:** `A -- B`, `C -- D` | In an undirected graph, two components: `{A, B}` and `{C, D}` because each pair is connected, but there’s no path between `{A, B}` and `{C, D}`. | **DFS**, **BFS**, **Union-Find (Disjoint Set)**         |
+| **Strongly Connected Component (SCC)** | Maximal subgraph in a **directed graph** where every node is reachable from every other node in **both directions**.                 | **Graph:** `A → B → C, C → A` | `{A, B, C}` forms a single SCC since all nodes can reach each other in both directions.                                                          | **Kosaraju’s Algorithm**, **Tarjan’s Algorithm**        |
+| **Weakly Connected Component (WCC)**   | Maximal subgraph in a **directed graph** where every node is reachable from every other node if edges are treated as **undirected**. | **Graph:** `A → B, D → E`     | `{A, B}` and `{D, E}` form two WCCs. If we treat the graph as undirected, both components become connected.                                      | **DFS**, **BFS** (after converting to undirected graph) |
 
-- `Kosaraju's Algorithm` is a well-known algorithm for finding Strongly Connected Components (SCCs) in a directed graph
 
 **Examples:**
 
@@ -1835,30 +1838,12 @@
 
 ### **3. Cycle Detection in Graph**
 
-- **Cycle Detection in an Undirected Graph**
+| **Topic**                                  | **Description**                                                                                                                                                                                                                                       | **Techniques to Detect Cycles**                                                                                                                       |
+|--------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Cycle Detection in an Undirected Graph** | A single edge between two vertices (`A <--> B`) **does not form a cycle** unless there is a self-loop (an edge from `A` to `A` or `B` to `B`).<br>A **cycle in an undirected graph must involve at least 3 vertices** (except when self-loops exist). | **DFS (Depth-First Search) with Parent Tracking**<br>**Union-Find (Disjoint Set Union)**                                                              |
+| **Cycle Detection in a Directed Graph**    | A cycle in a directed graph can exist with just 2 vertices (`A -> B -> A`).                                                                                                                                                                           | **DFS with Recursion Stack (Back Edge Detection)**<br>**Topological Sorting (Kahn's Algorithm - BFS)**                                                |
+| **Detecting Negative Weight Cycles**       | **Bellman-Ford Algorithm** is used to detect negative weight cycles in weighted graphs.                                                                                                                                                               | **Bellman-Ford Algorithm**: Detects negative weight cycles in a weighted graph by checking if a vertex can be further relaxed after `V-1` iterations. |
 
-  - A single edge between two vertices (`A <--> B`) **does not form a cycle** unless there is a self-loop (an edge from `A` to `A` or `B` to `B`).
-
-  - A **cycle in an undirected graph must involve at least 3 vertices** (except when self-loops exist).
-
-  - **Techniques to detect cycles:**
-    - **DFS (Depth-First Search) with Parent Tracking**: If a visited node is encountered again, and it is not the parent of the current node, a cycle exists.
-    
-    - **Union-Find (Disjoint Set Union)**: Useful for detecting cycles in a graph given as edge lists.
-
-- **Cycle Detection in a Directed Graph**
-
-  - A cycle in a directed graph can exist with just 2 vertices (`A -> B -> A`).
-
-  - **Techniques to detect cycles:**
-
-    - **DFS with Recursion Stack (Back Edge Detection)**: If a node is visited again while still in the recursion stack, a cycle is detected.
-    
-    - **Topological Sorting (Kahn's Algorithm - BFS)**: If the graph contains a cycle, it is **not possible** to get a valid topological order.
-
-- **Detecting Negative Weight Cycles**
-
-  - **Bellman-Ford Algorithm** is used to detect negative weight cycles in weighted graphs.
 
 **Examples:**
 
@@ -2064,9 +2049,21 @@
 
 **Matrix Formula**
 
-- Convert `n * m` matrix to an array : `a[row * m + col] = matrix[row][col]` where `n = matrix.length` and `m = matrix[0].length`
+- Convert `n * m` matrix to an array : 
 
-- Convert array to `n * m` matrix : `matrix[i / m][i % m] = a[i]` where `n = matrix.length` and `m = matrix[0].length`
+  ```plaintext
+
+  a[row * m + col] = matrix[row][col] where n = matrix.length and m = matrix[0].length
+
+  ```
+
+- Convert array to `n * m` matrix : 
+
+  ```plaintext
+
+  matrix[i / m][i % m] = a[i] where n = matrix.length and m = matrix[0].length
+
+  ```
 
 - Grid Number = `(row / 3) * 3 + (col / 3)`
 
