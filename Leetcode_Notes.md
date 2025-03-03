@@ -1841,9 +1841,7 @@
 | **Topic**                                  | **Description**                                                                                                                                                                                                                                       | **Techniques to Detect Cycles**                                                                                                                       |
 |--------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Cycle Detection in an Undirected Graph** | A single edge between two vertices (`A <--> B`) **does not form a cycle** unless there is a self-loop (an edge from `A` to `A` or `B` to `B`).<br>A **cycle in an undirected graph must involve at least 3 vertices** (except when self-loops exist). | **DFS (Depth-First Search) with Parent Tracking**<br>**Union-Find (Disjoint Set Union)**                                                              |
-| **Cycle Detection in a Directed Graph**    | A cycle in a directed graph can exist with just 2 vertices (`A -> B -> A`).                                                                                                                                                                           | **DFS with Recursion Stack (Back Edge Detection)**<br>**Topological Sorting (Kahn's Algorithm - BFS)**                                                |
-| **Detecting Negative Weight Cycles**       | **Bellman-Ford Algorithm** is used to detect negative weight cycles in weighted graphs.                                                                                                                                                               | **Bellman-Ford Algorithm**: Detects negative weight cycles in a weighted graph by checking if a vertex can be further relaxed after `V-1` iterations. |
-
+| **Cycle Detection in a Directed Graph**    | A cycle in a directed graph can exist with just 2 vertices (`A -> B -> A`).                                                                                                                                                                           | **Cycle Detection using Colors" (Three-State DFS Marking Method)**<br>**Topological Sorting (Kahn's Algorithm - BFS)**                                |
 
 **Examples:**
 
@@ -1960,7 +1958,7 @@
 - [Network Delay Time](https://leetcode.com/problems/network-delay-time/) - Calculate the time it takes for all nodes to receive a signal from a source node, considering all pairwise shortest paths.
 
 
-### **Bellman-Ford Algorithm(Weighted graph with negative weights)**
+**Bellman-Ford Algorithm(Weighted graph with negative weights)**
 
 **Examples:**
 
@@ -1973,7 +1971,19 @@
 
 ### **9 .Connectivity and Bridges** 
 
-  - Identifies whether a graph is connected and finds critical edges (bridges) whose removal would disconnect the graph
+**Bridge**
+
+- A bridge (or cut edge) is an edge in an undirected graph whose removal increases the number of connected components.
+
+- Tarjan’s algorithm can be modified to find bridges using `low[]` values.
+
+
+**Articulation Point**
+
+- An articulation point (or cut vertex) is a node whose removal increases the number of connected components in an undirected graph.
+
+- Tarjan’s algorithm can be modified to find articulation points using `low[]` values.
+
 
 ### **10. Flow and Matching Problems**
 

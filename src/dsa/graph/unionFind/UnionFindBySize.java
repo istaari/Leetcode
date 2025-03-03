@@ -1,4 +1,4 @@
-package dsa.graph;
+package dsa.graph.unionFind;
 
 public class UnionFindBySize {
 

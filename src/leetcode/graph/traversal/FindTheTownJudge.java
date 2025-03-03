@@ -1,4 +1,4 @@
-package leetcode.graph;
+package leetcode.graph.traversal;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -17,7 +17,6 @@ public class FindTheTownJudge {
         }
 
         int result = -1;
-
         for (Integer key : map.keySet()) {
             if (map.get(key).size() == n - 1 && !map.get(key).contains(key)) {
                 result = key;
@@ -38,7 +37,6 @@ public class FindTheTownJudge {
 
 
     public static int findJudgeOptimized(int n, int[][] trust) {
-
         int[] count = new int[n + 1];
 
         for (int[] t : trust) {

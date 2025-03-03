@@ -1,15 +1,9 @@
-package neetcode150.graphs;
+package leetcode.graph.topological;
 
 import java.util.*;
 
 public class CourseSchedule_210 {
-    /**
-     * Build an adjacency list for the graph
-     *
-     * @param numCourses    number of courses
-     * @param prerequisites prerequisites for the courses
-     * @return adjacency list
-     */
+
     private static List<List<Integer>> buildGraph(int numCourses, int[][] prerequisites) {
         List<List<Integer>> adjacencyList = new ArrayList<>();
 
@@ -17,7 +11,7 @@ public class CourseSchedule_210 {
             adjacencyList.add(new ArrayList<>());
         }
 
-        // [1, 0] means 0 is prerequisite for 1 there is edge from 0 to 1
+        // [1, 0] means 0 is prerequisite for 1, There is edge from 0 to 1
         for (int[] pre : prerequisites) {
             adjacencyList.get(pre[1]).add(pre[0]);
         }
@@ -27,12 +21,11 @@ public class CourseSchedule_210 {
 
     //---------------------------------------------BFS-----------------------------------------------------
 
-    // Detects cycle using topological sort in directed non-weighted graph
-    // Cycle Detection (Topological Sort with Kahn’s Algorithm)
-    private static List<Integer> detectCycleBFS(int numCourses, List<List<Integer>> adjacencyList) {
+
+    private static List<Integer> hashCycle(int numCourses, List<List<Integer>> adjacencyList) {
         List<Integer> result = new ArrayList<>();
 
-        // Stores the in-degree of each course
+        //  1. Stores the in-degree of each course
         int[] inDegree = new int[numCourses];
         for (int i = 0; i < numCourses; i++) {
             for (int course : adjacencyList.get(i)) {
@@ -40,7 +33,7 @@ public class CourseSchedule_210 {
             }
         }
 
-        // Queue will be empty when there is a cycle in the graph, none of the courses can be completed
+        // 2. Add vertex whose in-degree is 0
         Queue<Integer> queue = new LinkedList<>();
         for (int i = 0; i < numCourses; i++) {
             if (inDegree[i] == 0) {
@@ -57,7 +50,6 @@ public class CourseSchedule_210 {
                     queue.add(nextCourse);
                 }
             }
-
         }
 
         return result;
@@ -65,32 +57,19 @@ public class CourseSchedule_210 {
 
     //---------------------------------------------DFS-----------------------------------------------------
 
-    /**
-     * If there is a cycle in graph, none of the courses can be completed
-     * Detects cycle in weighted graph, using three states
-     * <p>
-     * The values in the visited array (0, 1, 2) represent the following states:
-     * <p>
-     * 0 (Unvisited): This indicates that the vertex (course) has not been visited yet during the DFS traversal.
-     * When visited[i] == 0, it means that course i has not been explored at all.
-     * <p>
-     * 1 (Visiting/In Progress): This indicates that the vertex is currently being visited,
-     * i.e., the DFS has reached this vertex and is exploring its adjacent vertices.
-     * Setting visited[course] = 1 marks the vertex as being visited.
-     * If during the DFS traversal you encounter a vertex already marked as 1,
-     * it means that you've encountered a cycle because you're revisiting a vertex that is still in progress.
-     * <p>
-     * 2 (Visited/Completed): This indicates that the vertex and all its adjacent vertices have been fully explored,
-     * and the DFS has finished processing it. When visited[course] = 2,
-     * it signifies that the vertex is fully processed and there is no cycle starting from this vertex.
-     **/
 
-    private static boolean detectCycleDFS(int course, List<List<Integer>> adjacencyList, int[] visited, Stack<Integer> stack) {
+    /**
+     * Cycle Detection using Colors (Three-State DFS Marking Method)
+     *
+     * 0 (Unvisited) - This indicates that the vertex (course) has not been visited
+     * 1 (Visiting/In Progress) - This indicates that the vertex is currently being visited
+     * 2 (Visited/Completed) - This indicates that the vertex and all its adjacent vertices have been fully explored
+     */
+    private static boolean hashCycle(int course, List<List<Integer>> adjacencyList, int[] visited, Stack<Integer> stack) {
         // Detected cycle
         if (visited[course] == 1) {
             return true;
         }
-
         if (visited[course] == 2) {
             return false;
         }
@@ -98,13 +77,14 @@ public class CourseSchedule_210 {
         visited[course] = 1;
 
         for (int nextCourse : adjacencyList.get(course)) {
-            if (detectCycleDFS(nextCourse, adjacencyList, visited, stack)) {
+            if (hashCycle(nextCourse, adjacencyList, visited, stack)) {
                 return true;
             }
         }
 
         stack.push(course);
         visited[course] = 2;
+
         return false;
     }
 
@@ -117,7 +97,7 @@ public class CourseSchedule_210 {
         int[] result = new int[numCourses];
 
         for (int i = 0; i < numCourses; i++) {
-            if (visited[i] == 0 && detectCycleDFS(i, adjacencyList, visited, stack)) {
+            if (visited[i] == 0 && hashCycle(i, adjacencyList, visited, stack)) {
                 return new int[0];
             }
         }
