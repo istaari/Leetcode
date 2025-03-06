@@ -3,7 +3,7 @@ package leetcode.dp.subsequence;
 
 import java.util.Arrays;
 
-public class LIS {
+public class LongestIncreasingSubsequence {
 
     public static Integer[][] dp;
 

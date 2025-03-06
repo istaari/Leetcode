@@ -1,6 +1,6 @@
-package neetcode150.dynamicProgramming1D;
+package leetcode.dp.fibonacci;
 
-public class HouseRobber2_213 {
+public class HouseRobber_2 {
 
     public static int helper(int[] nums) {
         int n = nums.length + 1;
@@ -16,19 +16,6 @@ public class HouseRobber2_213 {
         return dp[n - 1];
     }
 
-    /**
-     * Bottom-up dynamic programming (Memoization)
-     *
-     * Time complexity: O(n)
-     * Space complexity: O(n)
-     *
-     * dp[i] = max(dp[i - 2] + nums[i - 1], dp[i - 1])
-     * dp[0] = 0
-     * dp[1] = nums[0]
-     *
-     * @param nums input array
-     * @return maximum amount of money you can rob tonight without alerting the police
-     */
     public static int rob(int[] nums) {
 
         if (nums.length == 0) {

@@ -2,8 +2,26 @@ package leetcode.dp.grid;
 
 public class UniquePaths {
 
+    public static int recursive(int m, int n, int[][] memo) {
+        // Base case: if we're at the first row or first column, there's only one way to reach the destination
+        if (m == 1 || n == 1) {
+            return 1;
+        }
 
-    public static int uniquePathsIterative(int m, int n) {
+        if (memo[m][n] != -1) {
+            return memo[m][n];
+        }
+
+        // Compute the number of unique paths by moving either down or right
+        int left = recursive(m, n - 1, memo);  // Move left
+        int up = recursive(m - 1, n, memo);    // Move up
+
+        memo[m][n] = left + up;
+
+        return memo[m][n];
+    }
+
+    public static int iterative(int m, int n) {
         int[][] dp = new int[m][n];
         for (int i = 0; i < m; i++) {
             dp[i][0] = 1;
@@ -24,7 +42,7 @@ public class UniquePaths {
     }
 
 
-    public static int uniquePathsSpaceIterativeOptimized(int m, int n) {
+    public static int iterativeOptimized(int m, int n) {
         // Create a 2-row array for optimization
         int[][] dp = new int[2][n];
 
@@ -48,7 +66,7 @@ public class UniquePaths {
     public static void main(String[] args) {
         int m = 3;
         int n = 3;
-        int paths = uniquePathsSpaceIterativeOptimized(m, n);
+        int paths = iterativeOptimized(m, n);
         System.out.println("Number of unique paths: " + paths);
     }
 

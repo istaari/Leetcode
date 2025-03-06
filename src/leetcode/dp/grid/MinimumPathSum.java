@@ -27,7 +27,8 @@ public class MinimumPathSum {
     }
 
     public static int recursive(int[][] grid, int row, int col) {
-        if (row == 0 && col == 0) return grid[row][col];
+        if (row == 0 && col == 0)
+            return grid[row][col];
 
         if (row == 0)
             /* when we reach the first row, we could only move horizontally.*/

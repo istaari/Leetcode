@@ -19,7 +19,13 @@ public class DistinctSubsequences {
         }
 
         return dp[i][j];
+    }
 
+    public static int recursive(String s, String t) {
+        int[][] dp = new int[s.length()][t.length()];
+        for (int[] m : dp) Arrays.fill(m, -1);
+
+        return helper(s, t, 0, 0, dp);
     }
 
     public static int iterative(String s, String t) {
@@ -45,17 +51,9 @@ public class DistinctSubsequences {
         return dp[t.length()][s.length()];
     }
 
-    public static int recursive(String s, String t) {
-        int[][] dp = new int[s.length()][t.length()];
-        for (int[] m : dp) Arrays.fill(m, -1);
-
-        return helper(s, t, 0, 0, dp);
-    }
-
     public static int numDistinct(String s, String t) {
         return recursive(s, t);
     }
-
 
     public static void main(String[] args) {
         String s = "rabbbit";
