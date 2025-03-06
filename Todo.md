@@ -34,14 +34,6 @@
 
 ## **Revisit Problems**
 
-### Prefix Sum Problems
-
-- [Subarray Sum Equals K](https://leetcode.com/problems/subarray-sum-equals-k/description/)
-
-- [Continuous Subarray Sum](https://leetcode.com/problems/continuous-subarray-sum/description/)
-
-- [Subarray Sums Divisible by K](https://leetcode.com/problems/subarray-sums-divisible-by-k/description/)
-
 ### Tree Problems
 
 - [Construct Binary Tree from Preorder and Inorder Traversal](https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/description/)
