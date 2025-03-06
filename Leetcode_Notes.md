@@ -1532,8 +1532,6 @@
 
 **Examples:**
 
-- [Word Search II](https://leetcode.com/problems/word-search-ii/) - Find all valid words in a grid using a word dictionary (Trie + DFS).
-
 - [Concatenated Words](https://leetcode.com/problems/concatenated-words/) - Find all words that can be formed by concatenating two or more dictionary words.
 
 - [Replace Words](https://leetcode.com/problems/replace-words/) - Replace words in a sentence with the shortest prefix found in a dictionary.
@@ -1557,6 +1555,21 @@
 - [Prefix and Suffix Search](https://leetcode.com/problems/prefix-and-suffix-search/) - Design a data structure that finds words matching a given prefix and suffix.
 
 - [Map Sum Pairs](https://leetcode.com/problems/map-sum-pairs/) - Implement a Trie-based key-value mapping where keys share prefixes.
+
+
+**5. Bit Manipulation and Trie**
+
+**Examples:**
+
+#### **Examples:**
+
+Here are the descriptions for all four problems in the requested format:
+
+1. [Maximum XOR of Two Numbers in an Array](https://leetcode.com/problems/maximum-xor-of-two-numbers-in-an-array/description/) - Find the maximum XOR of two numbers in an array by comparing all possible pairs.
+
+2. [Maximum XOR with an Element from Array](https://leetcode.com/problems/maximum-xor-with-an-element-from-array/description/)** - Compute the maximum XOR of a given element with any element from an array.
+
+3. [Maximum Strong Pair XOR I](https://leetcode.com/problems/maximum-strong-pair-xor-i/description/) - Determine the maximum XOR value of a strong pair from an array, where a strong pair is defined by specific conditions.
 
 ---
 
