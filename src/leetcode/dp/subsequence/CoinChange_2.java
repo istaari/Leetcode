@@ -4,33 +4,33 @@ import java.util.Arrays;
 
 public class CoinChange_2 {
 
-    private static int helper0(int amount, int[] coins, int index, Integer[][] memo) {
+    private static int helper0(int amount, int[] coins, int i, Integer[][] dp) {
         if (amount == 0) return 1;
-        if (amount < 0 || index == coins.length) return 0;
+        if (amount < 0 || i == coins.length) return 0;
 
-        if (memo[index][amount] != null) return memo[index][amount];
+        if (dp[i][amount] != null) return dp[i][amount];
 
-        int include = helper0(amount - coins[index], coins, index, memo);
-        int exclude = helper0(amount, coins, index + 1, memo);
+        int include = helper0(amount - coins[i], coins, i, dp);
+        int exclude = helper0(amount, coins, i + 1, dp);
 
-        memo[index][amount] = include + exclude;
+        dp[i][amount] = include + exclude;
 
-        return memo[index][amount];
+        return dp[i][amount];
     }
 
 
-    private static int helper(int[] coins, int amount, int index, Integer[][] memo) {
+    private static int helper(int[] coins, int amount, int index, Integer[][] dp) {
         if (amount == 0) return 1;
         if (amount < 0 || index >= coins.length) return 0;
 
-        if (memo[index][amount] != null) return memo[index][amount] ;
+        if (dp[index][amount] != null) return dp[index][amount];
 
         int count = 0;
         for (int i = index; i < coins.length; i++) {
-            count += helper(coins, amount - coins[i], i, memo);
+            count += helper(coins, amount - coins[i], i, dp);
         }
 
-        memo[index][amount] = count;
+        dp[index][amount] = count;
         return count;
     }
 
@@ -63,9 +63,23 @@ public class CoinChange_2 {
     }
 
 
+    public static int iterativeOptimized(int[] coins, int amount) {
+        int[] dp = new int[amount + 1];
+        dp[0] = 1;
+
+        for (int coin : coins) {
+            for (int i = coin; i <= amount; i++) {
+                dp[i] += dp[i - coin];
+            }
+        }
+
+        return dp[amount];
+    }
+
+
     public static void main(String[] args) {
         int[] coins = {1, 2, 5};
         int amount = 5;
-        System.out.println(recursive(amount, coins)); // 4
+        System.out.println(iterativeOptimized(coins, amount)); // 4
     }
 }

@@ -56,7 +56,7 @@ public class LongestPalindromeSubsequence {
 
     public static void main(String[] args) {
         String s = "cbbd";
-        System.out.println(longestPalindromeSubseq(s));
+        System.out.println(iterative(s));
     }
 
 

@@ -7,22 +7,22 @@ public class LongestIncreasingSubsequence {
 
     public static Integer[][] dp;
 
-    public static int helper(int[] nums, int i, int prevIndex) {
+    public static int helper(int[] nums, int i, int prev) {
         if (i >= nums.length) return 0;
 
-        if (dp[i][prevIndex + 1] != null) {
-            return dp[i][prevIndex + 1];
+        if (dp[i][prev + 1] != null) {
+            return dp[i][prev + 1];
         }
 
-        int exclude = helper(nums, i + 1, prevIndex);
+        int exclude = helper(nums, i + 1, prev);
 
         int include = 0;
-        if (prevIndex == -1 || nums[i] > nums[prevIndex]) {
+        if (prev == -1 || nums[i] > nums[prev]) {
             include = 1 + helper(nums, i + 1, i);
         }
 
-        dp[i][prevIndex + 1] = Math.max(exclude, include);
-        return dp[i][prevIndex + 1];
+        dp[i][prev + 1] = Math.max(exclude, include);
+        return dp[i][prev + 1];
     }
 
 

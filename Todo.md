@@ -56,3 +56,32 @@
 
 - [Permutation Sequence](https://leetcode.com/problems/permutation-sequence/description/)
 
+---
+
+## **Company List**
+
+### **Tier I**
+
+- **Google**
+- **Amazon**
+- **Meta**
+- **Microsoft**
+- **Uber**
+- **Netflix**
+
+### **Tier II**
+
+- **Angel One**
+- **Databricks**
+- **Wayfair**
+- **Coinbase**
+- **Nutanix**
+- **Walmart**
+- **Salesforce**
+- **Gojek**
+- **CoinDcx**
+- **Booking.com**
+- **MakeMyTrip**
+- **Maersk**
+- **MakeMyTrip**
+

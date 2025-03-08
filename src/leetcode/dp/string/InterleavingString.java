@@ -43,12 +43,12 @@ public class InterleavingString {
 
         dp[0][0] = true;
 
-        // Fill first column (considering only s1)
+        // Fill the first column (considering only s1)
         for (int i = 1; i <= n; i++) {
             dp[i][0] = dp[i - 1][0] && s1.charAt(i - 1) == s3.charAt(i - 1);
         }
 
-        // Fill first row (considering only s2)
+        // Fill the first row (considering only s2)
         for (int j = 1; j <= m; j++) {
             dp[0][j] = dp[0][j - 1] && s2.charAt(j - 1) == s3.charAt(j - 1);
         }
@@ -56,7 +56,11 @@ public class InterleavingString {
         // Fill the DP table
         for (int i = 1; i <= n; i++) {
             for (int j = 1; j <= m; j++) {
-                int k = i + j - 1;
+                // current index in s3 that we are checking
+                int k = (i + j) - 1;
+                // Check if the current character from s1 or s2 matches the character at index k in s3.
+                // If it matches, inherit truth from previous valid states.
+                // dp[i][j] checks if s1[0..i-1] and s2[0..j-1] match s3[0..i+j-1].
                 dp[i][j] = (s1.charAt(i - 1) == s3.charAt(k) && dp[i - 1][j]) || (s2.charAt(j - 1) == s3.charAt(k) && dp[i][j - 1]);
             }
         }
@@ -73,6 +77,6 @@ public class InterleavingString {
         String s1 = "aabcc";
         String s2 = "dbbca";
         String s3 = "aadbbcbcac"; // "aa dbbc bc a c";
-        System.out.println(recursive(s1, s2, s3));
+        System.out.println(iterative(s1, s2, s3));
     }
 }
