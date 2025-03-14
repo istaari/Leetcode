@@ -84,4 +84,10 @@
 - **MakeMyTrip**
 - **Maersk**
 - **MakeMyTrip**
+- **Stripe**
+- **LinkedIn**
+- **Godaddy**
+- **Razorpay**
+- **Groww**
+- **ServiceNow**
 

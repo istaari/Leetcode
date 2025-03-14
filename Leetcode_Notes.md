@@ -1561,8 +1561,6 @@
 
 **Examples:**
 
-#### **Examples:**
-
 Here are the descriptions for all four problems in the requested format:
 
 1. [Maximum XOR of Two Numbers in an Array](https://leetcode.com/problems/maximum-xor-of-two-numbers-in-an-array/description/) - Find the maximum XOR of two numbers in an array by comparing all possible pairs.
