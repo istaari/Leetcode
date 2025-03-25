@@ -91,3 +91,13 @@
 - **Groww**
 - **ServiceNow**
 
+## **Current Todos**
+
+- Distributed Systems and Microservices and High Level Design
+- DP (Interval DP, Stock Optimization, Game Theory)
+- Graph Theory(Topological Sort, Kosaraju, Tarjan, Prim, Kruskal, Dijkstra, Bellman Ford, Floyd Warshall)
+- Trie and Backtracking
+- Greedy
+- SpringBoot and Project and Resume
+- Behavioral and Managerial Round
+
