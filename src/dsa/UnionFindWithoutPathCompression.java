@@ -1,4 +1,4 @@
-package dsa.graph.unionFind;
+package dsa;
 
 public class UnionFindWithoutPathCompression {
 

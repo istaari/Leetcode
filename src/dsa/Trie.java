@@ -1,8 +1,19 @@
-package dsa.trie;
+package dsa;
+
+
 
 public class Trie {
 
     private final TrieNode root;
+
+    private static class TrieNode {
+        public boolean isWord;
+        public TrieNode[] children = new TrieNode[26];
+
+        public TrieNode() {
+        }
+    }
+
 
     public Trie() {
         root = new TrieNode();

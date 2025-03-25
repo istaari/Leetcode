@@ -1,4 +1,6 @@
-package dsa.sorting;
+package dsa;
+
+import java.util.Arrays;
 
 public class CyclicSort {
 
@@ -44,8 +46,8 @@ public class CyclicSort {
 
     public static void main(String[] args) {
         int[] value = {4, 3, 2, 7, 8, 2, 3, 1};
-        // cyclicSort(value);
-        // System.out.println(Arrays.toString(value));
+        cyclicSort(value);
+        System.out.println(Arrays.toString(value));
         System.out.println(containsDuplicate(value));
     }
 }

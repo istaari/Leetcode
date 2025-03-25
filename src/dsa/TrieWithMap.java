@@ -1,16 +1,12 @@
-package dsa.trie;
+package dsa;
 
 import java.util.HashMap;
 
-public class TrieWithMap {
+
+ class TrieWithMap {
 
     private final TrieNode root;
 
-    public TrieWithMap() {
-        root = new TrieNode();
-    }
-
-    //-------------------------------Trie Node--------------------------------//
     private static class TrieNode {
         HashMap<Character, TrieNode> children;
         boolean isWord;
@@ -21,7 +17,11 @@ public class TrieWithMap {
         }
     }
 
-    //-------------------------------Insertion--------------------------------//
+     public TrieWithMap() {
+         root = new TrieNode();
+     }
+
+     //-------------------------------Insertion--------------------------------//
     // Inserts an element into the trie.
     public void insert(String word) {
         TrieNode current = root;

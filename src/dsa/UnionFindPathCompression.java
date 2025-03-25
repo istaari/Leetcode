@@ -1,4 +1,4 @@
-package dsa.graph.unionFind;
+package dsa;
 
 
 public class UnionFindPathCompression {
@@ -24,7 +24,7 @@ public class UnionFindPathCompression {
         return parent[x];
     }
 
-    // Union (in broad terms this method adds an edge between two nodes)
+    // Union (in broad terms, this method adds an edge between two nodes)
     public void union(int x, int y) {
         int xRoot = find(x);
         int yRoot = find(y);

@@ -1,4 +1,4 @@
-package dsa.trees;
+package dsa;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -7,9 +7,9 @@ import java.util.Stack;
 public class TreeTraversal {
 
     /**
-     * Level order problems.tree traversal(BFS)
+     * Level order traversal
      **/
-    public static void BFS(TreeNode root) {
+    static void BFS(TreeNode root) {
         Queue<TreeNode> queue = new LinkedList<>();
         queue.add(root);
 
@@ -21,6 +21,8 @@ public class TreeTraversal {
         }
     }
 
+
+    //-----------------------------------------DFS Recursive-----------------------------------//
 
     /**
      * Depth First Search recursion
@@ -60,11 +62,13 @@ public class TreeTraversal {
     }
 
 
+    //-----------------------------------------DFS Iterative-----------------------------------//
+
     /**
      * Depth-First Search iterative
      * Inorder
      **/
-    public static void inorderIterative(TreeNode root) {
+    static void inorderIterative(TreeNode root) {
         if (root == null) {
             return;
         }
@@ -90,7 +94,7 @@ public class TreeTraversal {
      * Depth First Search iterative
      * Preorder
      **/
-    public static void preorderIterative(TreeNode root) {
+    static void preorderIterative(TreeNode root) {
         Stack<TreeNode> stack = new Stack<>();
         stack.add(root);
 
@@ -107,7 +111,7 @@ public class TreeTraversal {
      * Depth-First Search iterative
      * Postorder
      **/
-    public static void postorderIterative(TreeNode root) {
+    static void postorderIterative(TreeNode root) {
         if (root == null) {
             return;
         }

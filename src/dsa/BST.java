@@ -1,6 +1,6 @@
-package dsa.trees;
+package dsa;
 
-class BST {
+public  class BST {
 
     private TreeNode root;
 

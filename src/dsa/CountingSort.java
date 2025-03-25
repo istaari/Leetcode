@@ -1,11 +1,11 @@
-package dsa.sorting;
+package dsa;
 
 import java.util.Arrays;
 
 public class CountingSort {
 
     /**
-     * 1. Find the max value, calculate then length
+     * 1. Find the max value, calculate length
      * 2. Count the occurrences
      * 3. Store the cumulative count
      * 4. From the last take the elements find the right index and place it in the output array
