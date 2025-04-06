@@ -4,9 +4,7 @@
 
 - [ ] **B and B+ Trees**
 - [ ] **AVL Tree**
-- [ ] **Red Black Trees**
-- [ ] **Segment Trees**
-- [ ] **KMP, Rabin Karp, Z Function**
+- [ ] **Red-Black Trees**
 - [ ] **Fenwick Tree (Binary Indexed Tree - BIT)**
 - [ ] **Persistent Data Structures**
 - [ ] **Treap (Tree + Heap)**
@@ -18,12 +16,9 @@
 
 ### **Advanced Algorithms**
 
-- [ ] **Minimax**
-- [ ] **Tarjan’s Algorithm (Strongly Connected Components & Bridges)**
 - [ ] **Hopcroft-Karp Algorithm (Maximum Bipartite Matching)**
 - [ ] **Convex Hull & Graham's Scan (Computational Geometry)**
 - [ ] **Mo's Algorithm (Offline Queries on Arrays)**
-- [ ] **Floyd-Warshall & Johnson’s Algorithm (All-Pairs Shortest Path)**
 - [ ] **Miller-Rabin Primality Test**
 - [ ] **Pollard’s Rho Algorithm (Integer Factorization)**
 - [ ] **Suffix Automaton**
@@ -68,12 +63,14 @@
 - **Microsoft**
 - **Uber**
 - **Netflix**
+- **Apple**
 
 ### **Tier II**
 
 - **Angel One**
 - **Databricks**
 - **Wayfair**
+- **Stripe**
 - **Coinbase**
 - **Nutanix**
 - **Walmart**
@@ -82,22 +79,34 @@
 - **CoinDcx**
 - **Booking.com**
 - **MakeMyTrip**
-- **Maersk**
 - **MakeMyTrip**
-- **Stripe**
 - **LinkedIn**
 - **Godaddy**
 - **Razorpay**
 - **Groww**
 - **ServiceNow**
+- **Tesco**
 
 ## **Current Todos**
 
 - Distributed Systems and Microservices and High Level Design
+- SpringBoot and Project and Resume
+- Behavioral and Managerial Round
 - DP (Interval DP, Stock Optimization, Game Theory)
 - Graph Theory(Topological Sort, Kosaraju, Tarjan, Prim, Kruskal, Dijkstra, Bellman Ford, Floyd Warshall)
 - Trie and Backtracking
 - Greedy
-- SpringBoot and Project and Resume
-- Behavioral and Managerial Round
+
+--- 
+
+KMP, Rabin Karp - done
+Kosaraju and Tarjans - 
+Segment Tree
+Heap
+kruskal and Prims
+Dijkstra, Bellman ford, Floyd Warshal
+
+System Design Revision(LLD and HLD)
+LinkedIn and Resume Update
+Apply for Job
 

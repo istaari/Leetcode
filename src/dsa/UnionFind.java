@@ -1,12 +1,12 @@
 package dsa;
 
 
-public class UnionFindPathCompression {
+public class UnionFind {
 
     private final int[] parent;
     private final int[] rank;
 
-    public UnionFindPathCompression(int n) {
+    public UnionFind(int n) {
         parent = new int[n];
         rank = new int[n];
 
@@ -41,7 +41,7 @@ public class UnionFindPathCompression {
     }
 
     public static void main(String[] args) {
-        UnionFindPathCompression unionFind = new UnionFindPathCompression(8);
+        UnionFind unionFind = new UnionFind(8);
         unionFind.union(1, 2);
         unionFind.union(2, 3);
         unionFind.union(4, 5);

@@ -86,6 +86,67 @@
 
 ## String
 
+### Pattern Matching Algorithms
+
+| # | Algorithm                     | Description                            |
+|---|-------------------------------|----------------------------------------|
+| 1 | **Naive Pattern Matching**    | Brute-force check all positions        |
+| 2 | **Knuth-Morris-Pratt (KMP)**  | Prefix table avoids rechecking         |
+| 3 | **Rabin-Karp**                | Hash-based substring comparison        |
+| 4 | **Boyer-Moore**               | Skip ahead using mismatches            |
+| 5 | **Aho-Corasick**              | Match multiple patterns simultaneously |
+| 6 | **Z-Algorithm**               | Fast prefix-suffix matching            |
+| 7 | **Finite Automaton Matching** | Preprocess state transitions           |
+| 8 | **Suffix Automaton**          | Automaton for all substrings           |
+
+### String Searching / Substring Finding
+
+| #  | Algorithm                           | Description                       |
+|----|-------------------------------------|-----------------------------------|
+| 9  | **Trie-based Search**               | Prefix tree for words             |
+| 10 | **Suffix Tree**                     | Tree of all suffixes              |
+| 11 | **Suffix Array + LCP**              | Compressed suffix + common prefix |
+| 12 | **Burrows-Wheeler Transform (BWT)** | Transform for compression/search  |
+
+### String Comparison & Transform
+
+| #  | Algorithm                            | Description                     |
+|----|--------------------------------------|---------------------------------|
+| 13 | **Longest Common Subsequence (LCS)** | Max length ordered match        |
+| 14 | **Longest Common Substring**         | Max length continuous match     |
+| 15 | **Edit Distance**                    | Min operations to convert       |
+| 16 | **Hamming Distance**                 | Count differing characters only |
+| 17 | **Jaro-Winkler Distance**            | Similarity for short strings    |
+| 18 | **Needleman–Wunsch**                 | Global alignment with scoring   |
+| 19 | **Damerau-Levenshtein**              | Edit distance + transpositions  |
+| 20 | **Myers' Bit-parallel Algorithm**    | Fast edit distance using bits   |
+
+### Palindromes
+
+| #  | Algorithm                     | Description                        |
+|----|-------------------------------|------------------------------------|
+| 21 | **Manacher’s Algorithm**      | Linear-time palindromic substrings |
+| 22 | **Palindrome Tree (Eertree)** | All unique palindromic substrings  |
+
+### String Compression & Encoding
+
+| #  | Algorithm                     | Description                         |
+|----|-------------------------------|-------------------------------------|
+| 23 | **Run-Length Encoding (RLE)** | Encode repeating characters         |
+| 24 | **Huffman Encoding**          | Frequency-based binary encoding     |
+| 25 | **Arithmetic Encoding**       | Probabilistic range-based encoding  |
+| 26 | **Lempel–Ziv–Welch (LZW)**    | Dictionary-based compression scheme |
+
+### String Hashing
+
+| #  | Algorithm                   | Description                       |
+|----|-----------------------------|-----------------------------------|
+| 27 | **Polynomial Rolling Hash** | Rolling hash for substrings       |
+| 28 | **Double Hashing**          | Avoid collisions using two hashes |
+| 29 | **SHA, MD5 (Crypto)**       | Secure hash for identity          |
+| 30 | **Rabin Fingerprints**      | Substring hash for matching       |
+
+
 **1. Basic String Manipulation or Processing** 
 
 **Examples:**
@@ -1316,6 +1377,65 @@
 ---
 
 ## Graph
+
+### Traversal Algorithms
+
+| Algorithm                      | Description                  |
+|--------------------------------|------------------------------|
+| **DFS (Depth First Search)**   | Traverses graph depth-wise   |
+| **BFS (Breadth First Search)** | Traverses graph breadth-wise |
+
+### Shortest Path Algorithms
+
+| Algorithm                    | Description                                |
+|------------------------------|--------------------------------------------|
+| **Dijkstra's Algorithm**     | For non-negative weights                   |
+| **Bellman-Ford Algorithm**   | Handles negative weights                   |
+| **Floyd-Warshall Algorithm** | All-pairs shortest paths                   |
+| **Johnson's Algorithm**      | All-pairs shortest paths for sparse graphs |
+| **A* Search Algorithm**      | Heuristic-based shortest path              |
+| **Bidirectional Search**     | Searches from both start and goal          |
+
+### Minimum Spanning Tree (MST) Algorithms
+
+| Algorithm               | Description                         |
+|-------------------------|-------------------------------------|
+| **Prim's Algorithm**    | Greedy algorithm for MST            |
+| **Kruskal's Algorithm** | Greedy algorithm using edge sorting |
+
+### Cycle Detection
+
+| Algorithm                                 | Description                                    |
+|-------------------------------------------|------------------------------------------------|
+| **Union-Find (Disjoint Set Union – DSU)** | For undirected graphs                          |
+| **DFS-based Cycle Detection**             | For directed graphs                            |
+| **Kahn's Algorithm**                      | BFS-based topological sort for cycle detection |
+
+### Topological Sorting
+
+| Algorithm                        | Description                            |
+|----------------------------------|----------------------------------------|
+| **DFS-based Topological Sort**   | Orders vertices in a DAG               |
+| **Kahn's Algorithm (BFS-based)** | Alternative topological sorting method |
+
+### Connected Components
+
+| Algorithm                | Description                                     |
+|--------------------------|-------------------------------------------------|
+| **DFS/BFS**              | Finds connected components in undirected graphs |
+| **Kosaraju's Algorithm** | Finds strongly connected components (SCC)       |
+| **Tarjan's Algorithm**   | SCC detection using low-link values             |
+| **Union-Find**           | Efficient for connectivity queries              |
+
+### Special Purpose / Advanced
+
+| Algorithm                                | Description                              |
+|------------------------------------------|------------------------------------------|
+| **Top Tree (Heavy-Light Decomposition)** | Optimizes tree queries                   |
+| **Tarjan's Offline LCA Algorithm**       | Finds lowest common ancestor efficiently |
+| **Euler Tour Technique**                 | Solves tree-related problems             |
+| **Centroid Decomposition**               | Tree decomposition for optimization      |
+| **Bridge-Finding (Tarjan's Algorithm)**  | Finds bridges in graphs                  |
 
 ### **1. DFS and BFS Traversal Problems**
 
