@@ -1393,7 +1393,7 @@
 | **Bellman-Ford Algorithm**   | Handles negative weights                   |
 | **Floyd-Warshall Algorithm** | All-pairs shortest paths                   |
 | **Johnson's Algorithm**      | All-pairs shortest paths for sparse graphs |
-| **A* Search Algorithm**      | Heuristic-based shortest path              |
+| **A(Star) Search Algorithm** | Heuristic-based shortest path              |
 | **Bidirectional Search**     | Searches from both start and goal          |
 
 ### Minimum Spanning Tree (MST) Algorithms
@@ -1537,6 +1537,18 @@
 
 
 ### **7. Shortest Path Algorithms**
+
+| Graph Type                          | Use               | Notes |
+|-------------------------------------|--------------------|-------|
+| **Undirected, Unweighted**         | ✅ **BFS**          | All edges have equal cost |
+| **Undirected, Positive Weight**    | ✅ **Dijkstra**      | Add both directions manually |
+| **Undirected, Negative Weight**    | ✅ **Bellman-Ford**  | Add both directions manually, use with caution if negative cycles |
+| **Directed, Unweighted**           | ✅ **BFS**          | Same as undirected BFS, but follow direction |
+| **Directed, Positive Weight**      | ✅ **Dijkstra**      | Handles only non-negative weights |
+| **Directed, Negative Weight**      | ✅ **Bellman-Ford**  | Good for sparse graphs, detects negative cycles |
+| **Directed, Negative Cycle**       | ⚠️ **Bellman-Ford** (to detect) | Cannot find shortest paths, but detects negative cycles |
+| **Directed, All-Pairs**            | ✅ **Floyd-Warshall**| Especially good for small graphs (V ≤ 100) |
+
 
 **BFS(Unweighted graph)**
 

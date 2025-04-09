@@ -6,7 +6,7 @@ import java.util.*;
  * Implementation of Kosaraju's algorithm for finding Strongly Connected Components (SCCs)
  * in a directed graph.
  * <p>
- * Time Complexity: O(V+E) where V is the number of vertices, and E is the number of edges
+ * Time Complexity: O(V+E) where V is the number of vertices, and E is the amount of edge
  * Space Complexity: O(V+E)
  */
 public class Kosaraju {
@@ -33,14 +33,6 @@ public class Kosaraju {
         graph.get(src).add(dest);
     }
 
-
-    /**
-     * 1. First DFS pass to fill stack with vertices according to their finishing times.
-     *
-     * @param v       the current vertex
-     * @param visited array tracking visited vertices
-     * @param stack   stack to store vertices in order of finishing times
-     */
     private void fillOrder(int v, boolean[] visited, Stack<Integer> stack) {
         visited[v] = true;
 

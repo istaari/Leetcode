@@ -39,18 +39,6 @@
 
 - [Serialize and Deserialize Binary Tree](https://leetcode.com/problems/serialize-and-deserialize-binary-tree/description/)
 
-### String Permutations
-
-- [Next Permutation](https://leetcode.com/problems/next-permutation/description/)
-
-- [Advantage Shuffle](https://leetcode.com/problems/advantage-shuffle/description/)
-
-- [Previous Permutation with One Swap](https://leetcode.com/problems/previous-permutation-with-one-swap/solutions/)
-
-- [Check If a String Can Break Another String](https://leetcode.com/problems/check-if-a-string-can-break-another-string/description/)
-
-- [Permutation Sequence](https://leetcode.com/problems/permutation-sequence/description/)
-
 ---
 
 ## **Company List**
@@ -89,24 +77,11 @@
 
 ## **Current Todos**
 
-- Distributed Systems and Microservices and High Level Design
-- SpringBoot and Project and Resume
-- Behavioral and Managerial Round
+- System Design Revision (LLD, HLD and yellow paper)
 - DP (Interval DP, Stock Optimization, Game Theory)
-- Graph Theory(Topological Sort, Kosaraju, Tarjan, Prim, Kruskal, Dijkstra, Bellman Ford, Floyd Warshall)
+- Graph problems practice and Floyd Warshal algorithm
+- Lee 215 lists
 - Trie and Backtracking
 - Greedy
 
---- 
-
-KMP, Rabin Karp - done
-Kosaraju and Tarjans - 
-Segment Tree
-Heap
-kruskal and Prims
-Dijkstra, Bellman ford, Floyd Warshal
-
-System Design Revision(LLD and HLD)
-LinkedIn and Resume Update
-Apply for Job
 
