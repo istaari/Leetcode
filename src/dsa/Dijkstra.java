@@ -5,6 +5,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.PriorityQueue;
 
+
+//Purpose: Finds the shortest path from a single source to all other nodes.
+//Use Case: You want the shortest distance from one specific node (like a starting point).
+//Works with: Only non-negative weights.
+//Time Complexity: O(V²) or O((V + E) log V) with a priority queue (like in Java with a min-heap).
 public class Dijkstra {
     public List<List<Edge>> graph;
     public static int V;

@@ -77,7 +77,8 @@
 
 ## **Current Todos**
 
-- System Design Revision (LLD, HLD and yellow paper)
+- System Design Revision (lld, HLD and yellow paper)
+- Company wise question practice
 - DP (Interval DP, Stock Optimization, Game Theory)
 - Graph problems practice and Floyd Warshal algorithm
 - Lee 215 lists
