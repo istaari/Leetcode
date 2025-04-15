@@ -1427,16 +1427,6 @@
 | **Tarjan's Algorithm**   | SCC detection using low-link values             |
 | **Union-Find**           | Efficient for connectivity queries              |
 
-### Special Purpose / Advanced
-
-| Algorithm                                | Description                              |
-|------------------------------------------|------------------------------------------|
-| **Top Tree (Heavy-Light Decomposition)** | Optimizes tree queries                   |
-| **Tarjan's Offline LCA Algorithm**       | Finds lowest common ancestor efficiently |
-| **Euler Tour Technique**                 | Solves tree-related problems             |
-| **Centroid Decomposition**               | Tree decomposition for optimization      |
-| **Bridge-Finding (Tarjan's Algorithm)**  | Finds bridges in graphs                  |
-
 ### **1. DFS and BFS Traversal Problems**
 
 **Examples:**
@@ -1538,16 +1528,16 @@
 
 ### **7. Shortest Path Algorithms**
 
-| Graph Type                          | Use               | Notes |
-|-------------------------------------|--------------------|-------|
-| **Undirected, Unweighted**         | ✅ **BFS**          | All edges have equal cost |
-| **Undirected, Positive Weight**    | ✅ **Dijkstra**      | Add both directions manually |
-| **Undirected, Negative Weight**    | ✅ **Bellman-Ford**  | Add both directions manually, use with caution if negative cycles |
-| **Directed, Unweighted**           | ✅ **BFS**          | Same as undirected BFS, but follow direction |
-| **Directed, Positive Weight**      | ✅ **Dijkstra**      | Handles only non-negative weights |
-| **Directed, Negative Weight**      | ✅ **Bellman-Ford**  | Good for sparse graphs, detects negative cycles |
-| **Directed, Negative Cycle**       | ⚠️ **Bellman-Ford** (to detect) | Cannot find shortest paths, but detects negative cycles |
-| **Directed, All-Pairs**            | ✅ **Floyd-Warshall**| Especially good for small graphs (V ≤ 100) |
+| Graph Type                      | Use                             | Notes                                                             |
+|---------------------------------|---------------------------------|-------------------------------------------------------------------|
+| **Undirected, Unweighted**      | ✅ **BFS**                       | All edges have equal cost                                         |
+| **Undirected, Positive Weight** | ✅ **Dijkstra**                  | Add both directions manually                                      |
+| **Undirected, Negative Weight** | ✅ **Bellman-Ford**              | Add both directions manually, use with caution if negative cycles |
+| **Directed, Unweighted**        | ✅ **BFS**                       | Same as undirected BFS, but follow direction                      |
+| **Directed, Positive Weight**   | ✅ **Dijkstra**                  | Handles only non-negative weights                                 |
+| **Directed, Negative Weight**   | ✅ **Bellman-Ford**              | Good for sparse graphs, detects negative cycles                   |
+| **Directed, Negative Cycle**    | ⚠️ **Bellman-Ford** (to detect) | Cannot find shortest paths, but detects negative cycles           |
+| **Directed, All-Pairs**         | ✅ **Floyd-Warshall**            | Especially good for small graphs (V ≤ 100)                        |
 
 
 **BFS(Unweighted graph)**
@@ -1627,25 +1617,56 @@
 
   - Solves the problem of assigning colors to vertices in a graph such that no two adjacent vertices share the same color.
 
+  - **Bipartite Graph** :  A graph \( G = (V, E) \) is **bipartite** if its vertex set \( V \) can be partitioned into two sets \( U \) and \( V \) such that every edge in \( E \) connects a vertex in \( U \) to one in \( V \).
+
+     -  Graph can be colored with 2 colors such that no two adjacent nodes share the same color
+     - DFS and BFS can be used to check if a graph is bipartite by coloring the nodes with two colors and checking for conflicts.
+
 ### **9 .Connectivity and Bridges** 
 
 **Bridge**
 
 - A bridge (or cut edge) is an edge in an undirected graph whose removal increases the number of connected components.
 
-- Tarjan’s algorithm can be modified to find bridges using `low[]` values.
+- **Tarjan’s algorithm** can be modified to find bridges using `low[]` values.
 
 
 **Articulation Point**
 
 - An articulation point (or cut vertex) is a node whose removal increases the number of connected components in an undirected graph.
 
-- Tarjan’s algorithm can be modified to find articulation points using `low[]` values.
+- **Tarjan’s algorithm** can be modified to find articulation points using `low[]` values.
 
 
 ### **10. Flow and Matching Problems**
 
-  - Focuses on finding optimal flows through a network or perfect matchings in bipartite graphs.
+**Flow**
+
+- Flow problems deal with transporting "stuff" (like data, water, traffic, etc.) through a network of nodes and edges, where each edge has a capacity (max flow allowed).
+
+- **Typical Problem** : Find the maximum flow from a source node to a sink node, obeying capacity limits on edges.
+
+
+| Algorithm             | Description                                                     | Time Complexity                                                |
+|-----------------------|-----------------------------------------------------------------|----------------------------------------------------------------|
+| **Ford-Fulkerson**    | Basic method using DFS + greedy augmenting paths                | \( O(E \cdot \text{max flow}) \)                               |
+| **Edmonds-Karp**      | Ford-Fulkerson with BFS → always finds shortest augmenting path | \( O(VE^2) \)                                                  |
+| **Dinic's Algorithm** | Uses BFS for level graph + DFS for blocking flow                | \( O(EV^2) \) worst, \( O(\sqrt{V}E) \) for bipartite matching |
+
+
+**Matching**
+
+- A matching is a set of edges where no two edges share a vertex. In a bipartite graph, a maximum matching is the largest possible matching between the two sides (e.g., jobs ↔ workers).
+
+- **Typical Problem** : Pair up elements from two sets (e.g., people and tasks) in such a way that no one is matched more than once, and the total number of matches is maximized.
+
+| Algorithm               | Description                                                                      | Time Complexity             |
+|-------------------------|----------------------------------------------------------------------------------|-----------------------------|
+| **Hungarian Algorithm** | Used for perfect matchings in weighted bipartite graphs (min cost or max profit) | \( O(V^3) \)                |
+| **Hopcroft-Karp**       | Efficient method for maximum matching in unweighted bipartite graphs             | \( O(\sqrt{V} \cdot E) \)   |
+| **Kuhn's Algorithm**    | DFS-based approach for unweighted bipartite graphs                               | \( O(V \cdot E) \)          |
+
+
 
 ---
 
