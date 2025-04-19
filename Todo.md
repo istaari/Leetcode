@@ -7,7 +7,7 @@
 - [ ] **Red-Black Tree** : A self-balancing binary search tree using color properties to ensure balanced height and \( O(\log n) \) operations.
 - [ ] **Treap / Splay Tree** : Self-balancing BSTs using randomized or access-based balancing for efficient dynamic set operations.
 - [ ] **Fenwick Tree (Binary Indexed Tree)** : A compact data structure for prefix sums and point updates in \( O(\log n) \) time.
-- [ ] **Segment Tree** : A tree-based structure for answering range queries and updates (e.g., sum, min, max) in logarithmic time.
+- [x] **Segment Tree** : A tree-based structure for answering range queries and updates (e.g., sum, min, max) in logarithmic time.
 - [ ] **Segment Tree with Lazy Propagation** : An optimized segment tree variant that supports fast range updates without full recomputation.
 - [ ] **Persistent Segment Tree** : Maintains multiple historical versions of a segment tree, useful for rollback and time-based queries.
 - [ ] **Sparse Table** : A preprocessed static structure for answering fast, immutable range queries like min or gcd in \( O(1) \) time.
