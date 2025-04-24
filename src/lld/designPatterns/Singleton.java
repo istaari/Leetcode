@@ -18,6 +18,8 @@ public class Singleton {
 }
 
 
+// Double locking mechanism
+
 class Singleton0 {
     private static volatile Singleton0 instance; // Volatile ensures visibility of changes across threads
 

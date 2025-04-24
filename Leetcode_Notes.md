@@ -454,7 +454,7 @@
 
 ## Sliding Window
 
-- Window Size = `j - 1 + 1`
+- Window Size = `j - i + 1`
 - Remove first element from window `i - k` k is window size
 - Circular Sliding Window
    - Start of the window - `i % n`

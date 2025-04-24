@@ -5,7 +5,7 @@ public class LiskovSubstitutionPrinciple {
     /**
      * Liskov Substitution Principle (LSP) states that objects of a superclass should be replaceable with objects of its subclasses
      * without affecting the correctness of the program.
-     * Here, Green is a base super class of Blue. When a new object of Blue will be assigned in object of Super class,
+     * Here, Green is a base super class of Blue. When a new object of Blue is assigned in an object of Super class,
      * getColor() of Green will be replaced by getColor() of Blue according to inheritance rules of OOP. In this situation,
      * we are expecting “Green” color from Green class. but we are getting “Blue” color from Green color. So the design of class is violating the LSP.
      */

@@ -3,7 +3,7 @@
 - If a and b are integers with a != 0, we say that a divides b if there is an integer c such that  
   `b = ac`. When a divides b, we say that `a is a factor or divisor of b`, and that `b is a multiple of a`.
 
-### 1. Divisibility Property
+### Divisibility Property
 
 - If `a | b` (a divides b) and `a | c` (a divides c), then `a | (mb + nc)` for any integers `m` and `n`.
 - This means that if `a` is a common divisor of `b` and `c`, it also divides any **linear combination** of `b` and `c`.
@@ -22,7 +22,7 @@ Since `69 = 3 × 23`, we conclude `3 | 69`, proving the rule.
 
 ---
 
-### 2. The Division Algorithm
+### The Division Algorithm
 
 - When an integer `a` is divided by a **positive** integer `d`, there exist unique integers `q` (quotient) and `r` (remainder) such that:  
   \[ a = dq + r \]
@@ -38,7 +38,7 @@ For `a = 23` and `d = 5`:
 - **Remainder** (`r`) = `3`
 
 
-### 3. What Does a ≡ b (mod m) Mean?
+### What Does a ≡ b (mod m) Mean?
 
 - When we say **"a is congruent to b modulo m"**, it means that the difference (a - b) is **divisible by m**.  
 - Mathematically, this means:  
@@ -50,9 +50,9 @@ For `a = 23` and `d = 5`:
   where **m** is called the **modulus**
 
 
-### 4. Modular Exponentiation
+### Modular Exponentiation
 
-### 5. Primes
+### Primes
 
 - An integer p greater than 1 is called prime if the only positive factors of p are 1 and p.
 A positive integer that is greater than 1 and is not prime is called composite.
@@ -76,7 +76,7 @@ A positive integer that is greater than 1 and is not prime is called composite.
   - Golbach's Conjecture
   - Twin Prime Conjecture
 
-### 6. GCD
+### GCD
 
 - `Relatively Prime`  Two numbers are said to be `relatively prime (or coprime) if their gcd is 1.` This means they have no common divisors other than 1
 
@@ -84,7 +84,7 @@ A positive integer that is greater than 1 and is not prime is called composite.
 
 - `Euclidean Algorithm`
 
-### 7. LCM
+### LCM
 
 - The `LCM` is used to determine when two events, occurring at different intervals, will happen at the same time. For instance, if one event occurs every 4 days and another every 6 days, the LCM (12) will tell us that both events will occur together every 12 days.
 
@@ -93,7 +93,7 @@ A positive integer that is greater than 1 and is not prime is called composite.
 - `LCM Using Prime Factorization`
 
 
-### 8. Primality testing
+### Primality testing
 
 - Primality testing is the process of determining whether a given number is a prime number or a composite number. A prime number is a number greater than 1 that has no positive divisors other than 1 and itself, whereas a composite number has divisors other than 1 and itself
 
@@ -111,7 +111,6 @@ A positive integer that is greater than 1 and is not prime is called composite.
 
 - `Linear Congruence` is an equation of the form `ax ≡ b (mod m)`, where `a`, `b`, and `m` are integers, and `m` is positive. The goal is to find all integers `x` that satisfy the equation.
 
-
 - **Chinese Remainder Theorem**
 
 
@@ -124,11 +123,6 @@ A positive integer that is greater than 1 and is not prime is called composite.
 - **Modular Exponentiation**: `(a ^ b) % m = ((a % m) ^ b) % m`
 - **Modular Inverse**: `a^(-1) % m = a^(m-2) % m` (Fermat's Little Theorem)
 - **Divisibility Check** : `if a mod m = 0 then a is divisible by m`
-
-
-### 14. Applications of Hashing
-
-
 
 
  
