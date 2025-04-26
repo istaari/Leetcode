@@ -28,13 +28,57 @@
 
 ## Greedy
 
-- Makes the best immediate choice at each step
+### 1. **Sorting-Based Greedy**
+- **When dealing with arrays or intervals,** first **sort the data** based on a key criterion.
+  - **Use Cases:**
+    - Interval scheduling / merging → Sort by start or end time.
+    - Activity selection → Sort by earliest finishing time.
+    - Job scheduling → Sort by profit or deadline.
+  - **Tip:** Think: "What decision can I make *now* that leaves the best options for *later*?"
+
+### 2. **Heap-Based Greedy**
+- **When managing dynamic optimal elements, use a heap (priority queue)** to maintain access to the current **min or max**.
+  - **Use Cases:**
+    - Top K elements → Min-heap for smallest K.
+    - Meeting rooms → Min-heap by end time.
+    - Task scheduler → Max-heap by frequency.
+  - **Tip:** Push/pull tasks based on priority. Always ask: "What is the best next choice based on current values?"
+
+### 3. **Stack-Based Greedy**
+- **When maintaining a "history" or handling order-sensitive sequences, use a stack**.
+  - **Use Cases:**
+    - Remove K digits → Maintain increasing stack.
+    - Build smallest lexicographical string → Pop when current is smaller than top.
+    - Monotonic stack problems → Keep track of previous/next greater or smaller.
+  - **Tip:** Think of a "clean-up" mechanism: "Can I pop from the stack to make a better decision?"
+
+### 4. **Greedy with Counting/Frequency**
+- **When tracking frequency or availability, use hash maps or arrays.**
+  - **Use Cases:**
+    - Reorganize string → Max-heap by frequency.
+    - Can place flowers → Count possible placements greedily.
+    - Task scheduler (cooldown) → Use frequency maps.
+
+### 5. **Greedy with Two Pointers / Sliding Window**
+- **When optimizing over a range or scanning a sequence, use two pointers.**
+  - **Use Cases:**
+    - Gas station → Greedily look for a valid starting point.
+    - Jump game → Track max reach at each step.
+    - Candy distribution → Greedy forward and backward passes.
+
+### 6. **Greedy Choice Property (Key Insight)**
+- Ask yourself: **Can I make a local decision without considering future consequences?**
+- If yes → A greedy strategy might work.
+- **Test this by trying:**
+  - Proof by contradiction.
+  - Greedy stays ahead method.
+  - Exchange argument.
 
 ## Dynamic Programming
 
-- Always find what is sub-problem and what is state
-- Think solution to smallest sub-problems, `smallest problem is almost always a problem of size 0 or 1 or empty string`
-- Combine Smallest sub-problems to solve bigger problems
+- Always find what is subproblem and what is state
+- Think solution to the smallest subproblems, `smallest problem is almost always a problem of size 0 or 1 or empty string`
+- Combine Smallest subproblems to solve bigger problems
 - Think of smallest input like size is empty or 1, or string is empty
 - Some DP problems are about maximizing/minimizing a value subject to some constraints
 - In Recursive dp think from the last

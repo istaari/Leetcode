@@ -8,11 +8,9 @@ import java.util.Queue;
 public class ReorganizeString {
 
     public static String reorganizeString(String s) {
-        int maxFrequency = 0;
         Map<Character, Integer> map = new HashMap<>();
         for (int i = 0; i < s.length(); i++) {
             map.put(s.charAt(i), map.getOrDefault(s.charAt(i), 0) + 1);
-            maxFrequency = Math.max(maxFrequency, map.get(s.charAt(i)));
         }
         // Max Heap on the key of map
         Queue<Character> queue = new PriorityQueue<>((a, b) -> map.get(b) - map.get(a));
@@ -36,15 +34,16 @@ public class ReorganizeString {
             }
         }
 
-        if (queue.isEmpty())  return result.toString();
+        if (queue.isEmpty()) return result.toString();
 
         Character ch = queue.poll();
-        if (map.get(ch) > 1)  return ""; // If count is greater than 1 than cannot reorganize
+        if (map.get(ch) > 1) return ""; // If count is greater than 1 than cannot reorganize
 
         return result.append(ch).toString();
     }
 
 
+    /**
     public static String reorganizeStringSort(String s) {
         HashMap<Character, Integer> freqMap = new HashMap<>();
         for (char c : s.toCharArray()) {
@@ -73,10 +72,11 @@ public class ReorganizeString {
 
         return new String(result);
     }
+    **/
 
     public static void main(String[] args) {
         String s = "aaabc";
-        System.out.println(reorganizeStringSort(s));
+        System.out.println(reorganizeString(s));
     }
 
 }

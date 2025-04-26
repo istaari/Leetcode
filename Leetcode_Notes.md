@@ -729,34 +729,40 @@
   - `Another` approach first check solution exits or not ` Does not exist, maxFrequency >  (n + 1) / 2`  and create max heap and distribute the characters in alternate positions
     
     ```java
-      String reorganizeStringSort(String s) {
-          HashMap<Character, Integer> map = new HashMap<>();
-          for (char c : s.toCharArray()) {
-              map.put(c, freqMap.getOrDefault(c, 0) + 1);
-          }
+     public static String reorganizeString(String s) {
+        Map<Character, Integer> map = new HashMap<>();
+        for (int i = 0; i < s.length(); i++) {
+            map.put(s.charAt(i), map.getOrDefault(s.charAt(i), 0) + 1);
+        }
+        // Max Heap on the key of map
+        Queue<Character> queue = new PriorityQueue<>((a, b) -> map.get(b) - map.get(a));
+        // Push all the key in queue
+        queue.addAll(map.keySet());
 
-          PriorityQueue<Character> maxHeap = new PriorityQueue<>((a, b) -> map.get(b) - map.get(a));
-          maxHeap.addAll(map.keySet());
-          // Solution does not exist,  maxFrequency >  (n + 1) / 2
-          if (map.get(maxHeap.peek()) > (s.length() + 1) / 2) {
-              return "";
-          }
+        StringBuilder result = new StringBuilder();
+        while (queue.size() >= 2) {
+            Character ch1 = queue.poll();
+            Character ch2 = queue.poll();
+            result.append(ch1);
+            result.append(ch2);
+            map.put(ch1, map.get(ch1) - 1);
+            map.put(ch2, map.get(ch2) - 1);
 
-          char[] result = new char[s.length()];
-          int index = 0;
-          while (!maxHeap.isEmpty()) {
-              char c = maxHeap.poll();
-              // First fills the even index
-              // Then it fills the odd index
-              for (int j = 0; j < map.get(c); j++) {
-                  if (index >= s.length()) index = 1; // This will only execute once
-                  result[index] = c;
-                  index += 2;
-              }
-          }
+            if (map.get(ch1) > 0) {
+                queue.add(ch1);
+            }
+            if (map.get(ch2) > 0) {
+                queue.add(ch2);
+            }
+        }
 
-          return new String(result);
-      }
+        if (queue.isEmpty()) return result.toString();
+
+        Character ch = queue.poll();
+        if (map.get(ch) > 1) return ""; // If count is greater than 1 than cannot reorganize
+
+        return result.append(ch).toString();
+     }
     ```
 
 **3. Greedy for Arrays**
