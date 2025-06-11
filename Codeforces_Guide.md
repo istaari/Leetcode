@@ -7,17 +7,17 @@
 Codeforces assigns **ratings** based on performance in **rated contests**. Your rating determines your **title (rank)**,
 as shown below:
 
-| **Rating**      | **Title**             | **Color**                            |
-|-----------------|-----------------------|--------------------------------------|
-| **2600+**       | Legendary Grandmaster | $${\color{red} \mathbf{Red}}$$       |
-| **2400 - 2599** | Grandmaster           | $${\color{red} \mathbf{Red}}$$       |
-| **2300 - 2399** | International Master  | $${\color{orange} \mathbf{Orange}}$$ |
-| **2100 - 2299** | Master                | $${\color{orange} \mathbf{Orange}}$$ |
-| **1900 - 2099** | Candidate Master      | $${\color{purple} \mathbf{Purple}}$$ |
-| **1600 - 1899** | Expert                | $${\color{blue} \mathbf{Blue}}$$     |
-| **1400 - 1599** | Specialist            | $${\color{cyan} \mathbf{Cyan}}$$     |
-| **1200 - 1399** | Pupil                 | $${\color{green} \mathbf{Green}}$$   |
-| **0 - 1199**    | Newbie                | $${\color{gray} \mathbf{Gray}}$$     |
+| **Rating**      | **Title**             | **Color**     |
+|-----------------|-----------------------|---------------|
+| **2600+**       | Legendary Grandmaster | 🔴 Red        |
+| **2400 - 2599** | Grandmaster           | 🔴 Red        |
+| **2300 - 2399** | International Master  | 🟠 Orange     |
+| **2100 - 2299** | Master                | 🟠 Orange     |
+| **1900 - 2099** | Candidate Master      | 🟣 Purple     |
+| **1600 - 1899** | Expert                | 🔵 Blue       |
+| **1400 - 1599** | Specialist            | 🔷 Cyan       |
+| **1200 - 1399** | Pupil                 | 🟢 Green      |
+| **0 - 1199**    | Newbie                | ⚪ Gray       |
 
 - **Your rating starts at 0.** After **your first rated contest**, you'll get a rating based on your performance.
 - **Higher rating → Higher title** (like in chess rankings).
