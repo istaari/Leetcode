@@ -18,10 +18,10 @@
 - [ ] **Euler Tour Technique** : Converts a tree into a linear array to enable fast subtree and Lowest Common Ancestor (LCA) queries.
 
 
-### ✅ **Advanced Algorithms**
+### **Advanced Algorithms**
 
 
-### 🔢 **Number Theory**
+### *Number Theory**
 - [ ] **Miller-Rabin Primality Test** : A fast probabilistic method to check if a number is prime, widely used in cryptography.
 - [ ] **Extended Euclidean Algorithm** : Solves linear Diophantine equations and finds modular inverses.
 - [ ] **Chinese Remainder Theorem (CRT)** : Solves systems of modular equations; often paired with modular arithmetic.
@@ -30,7 +30,7 @@
 - [ ] **Pollard’s Rho Algorithm (Factorization)** : A randomized algorithm for integer factorization, effective on large semi-primes.
 
 
-### 📚 **String Algorithms**
+### **String Algorithms**
 - [ ] **Manacher’s Algorithm** : Finds all palindromic substrings in linear time, optimized for problems involving string symmetry.
 - [ ] **Aho-Corasick Algorithm** : Builds a finite automaton for matching multiple patterns in a text simultaneously, used in multi-pattern search.
 - [ ] **Z-Algorithm** : Finds all pattern occurrences in linear time; simpler alternative to KMP in many cases.
