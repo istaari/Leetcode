@@ -21,7 +21,7 @@
 ### **Advanced Algorithms**
 
 
-### *Number Theory**
+### **Number Theory**
 - [ ] **Miller-Rabin Primality Test** : A fast probabilistic method to check if a number is prime, widely used in cryptography.
 - [ ] **Extended Euclidean Algorithm** : Solves linear Diophantine equations and finds modular inverses.
 - [ ] **Chinese Remainder Theorem (CRT)** : Solves systems of modular equations; often paired with modular arithmetic.
