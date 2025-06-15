@@ -120,12 +120,8 @@
 - **ServiceNow**
 - **Tesco**
 
+
 ## **Current Todos**
 
-- System Design Revision (lld, HLD and yellow paper)
-- Company wise question practice
-- DP (Interval DP, Stock Optimization, Game Theory)
-- Graph problems practice and Floyd Warshal algorithm
-- Lee 215 lists
-- Trie and Backtracking
-- Greedy
+- HLD and LLD and HM
+- DP, Graph, Greedy and implementation

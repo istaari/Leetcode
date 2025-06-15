@@ -47,13 +47,11 @@ public class MaxHeap {
     public int extractMax() {
         if (heap.isEmpty()) throw new IllegalStateException("Heap is empty");
 
-        int max = heap.getFirst();
-        int last = heap.removeLast();
+        int max = heap.get(0);
+        int last = heap.get(heap.size() - 1);
 
-        if (!heap.isEmpty()) {
-            heap.set(0, last);
-            heapifyDown(0);
-        }
+        heap.set(0, last);
+        heapifyDown(0);
 
         return max;
     }
