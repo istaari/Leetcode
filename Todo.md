@@ -18,10 +18,10 @@
 - [ ] **Euler Tour Technique** : Converts a tree into a linear array to enable fast subtree and Lowest Common Ancestor (LCA) queries.
 
 
-### ✅ **Advanced Algorithms**
+### **Advanced Algorithms**
 
 
-### 🔢 **Number Theory**
+### **Number Theory**
 - [ ] **Miller-Rabin Primality Test** : A fast probabilistic method to check if a number is prime, widely used in cryptography.
 - [ ] **Extended Euclidean Algorithm** : Solves linear Diophantine equations and finds modular inverses.
 - [ ] **Chinese Remainder Theorem (CRT)** : Solves systems of modular equations; often paired with modular arithmetic.
@@ -30,7 +30,7 @@
 - [ ] **Pollard’s Rho Algorithm (Factorization)** : A randomized algorithm for integer factorization, effective on large semi-primes.
 
 
-### 📚 **String Algorithms**
+### **String Algorithms**
 - [ ] **Manacher’s Algorithm** : Finds all palindromic substrings in linear time, optimized for problems involving string symmetry.
 - [ ] **Aho-Corasick Algorithm** : Builds a finite automaton for matching multiple patterns in a text simultaneously, used in multi-pattern search.
 - [ ] **Z-Algorithm** : Finds all pattern occurrences in linear time; simpler alternative to KMP in many cases.
@@ -38,36 +38,28 @@
 - [ ] **Suffix Array + LCP Array** : Powerful tools for solving substring, pattern matching, and lexicographical problems.
 - [ ] **Suffix Automaton** : Generalized structure to solve substring problems in linear time.
 
+###  **Tree & Graph Algorithms**
 
-### 🌲 **Tree Algorithms**
-- [ ] **Tarjan's Offline LCA Algorithm** : Answers multiple Lowest Common Ancestor queries on trees efficiently using Union-Find.
-- [ ] **Binary Lifting (for LCA, Kth ancestor, path queries)** : Preprocessing technique for trees to support fast ancestor jumps and queries.
-- [ ] **Euler Tour + RMQ (for LCA)** : Converts trees into arrays for answering subtree and LCA queries efficiently.
-- [ ] **Heavy-Light Decomposition (if not already in DS section)** : Crucial for tree path queries.
-- [ ] **DSU on Tree (a.k.a. Small to Large)** : Advanced technique to combine disjoint set union and tree traversal for complex queries.
+* [ ] **Tarjan's Offline LCA Algorithm** – Efficient multi-query LCA using Union-Find.
+* [ ] **Binary Lifting** – For LCA, Kth ancestor, and path queries with preprocessing.
+* [ ] **Dominator Tree** – Captures dominance in control flow graphs (used in compilers).
+* [ ] **Convex Hull & Graham's Scan** – Finds the smallest convex polygon in 2D space.
 
+### **Optimization & DP Techniques**
 
-### 🧮 **Graph Algorithms**
-- [ ] **Convex Hull & Graham's Scan** : Computes the smallest convex polygon enclosing a set of points; used in computational geometry.
-- [ ] **Dominator Tree (Graph Theory)** : Captures dominance relations in a control flow graph, useful in compiler design and program analysis.
+* [ ] **Convex Hull Trick / Li-Chao Tree** – Optimizes DP with line-based envelopes.
+* [ ] **Bitmask DP** – Solves state problems with subset representation via bits.
 
+### **Mathematical & Miscellaneous Algorithms**
 
-### 💡 **Optimization Algorithms**
-- [ ] **Convex Hull Trick / Li-Chao Tree** : Optimizes certain dynamic programming problems by maintaining a set of lines.
-- [ ] **Bitmask DP** : Solves subset or state-based problems where the states can be represented as bitmasks.
-- [ ] **Sliding Window Optimization** : Optimizes nested loops to linear time using queues, stacks, or deques.
-- [ ] **Meet in the Middle** : Divides the problem into halves for brute-force and combines results efficiently (used in knapsack, etc.).
+* [ ] **Mo's Algorithm (Offline Queries)** – Sqrt-decomposition for static array queries.
+* [ ] **Game Theory (Grundy Numbers / Sprague-Grundy)** – Nim-based XOR game analysis.
+* [ ] **2-SAT and Implication Graph** – Solves boolean conditions efficiently.
 
+### **FFT & Transform Techniques**
 
-### 🧩 **Miscellaneous Algorithms**
-- [ ] **Mo's Algorithm (Offline Queries)** : Efficiently answers range queries on static arrays by sorting them in a special order using sqrt-decomposition.
-- [ ] **Game Theory (Grundy Numbers / Sprague-Grundy)** : For turn-based games — nimbers, XOR-based analysis, etc.
-- [ ] **2-SAT and Implication Graph** : Solves logical constraints problems, commonly found in contests involving binary conditions.
-
-
-### 🛠 **Fast Fourier Transform (FFT) & Related**
-- [ ] **FFT (Fast Fourier Transform)** : Efficient algorithm to compute convolutions and polynomial multiplication.
-- [ ] **NTT (Number Theoretic Transform)** : The number-theoretic variant of FFT, used for modular arithmetic in large number problems.
+* [ ] **FFT (Fast Fourier Transform)** – For convolution/polynomial multiplication.
+* [ ] **NTT (Number Theoretic Transform)** – Modular FFT for number theory problems.
 
 ---
 
@@ -119,9 +111,3 @@
 - **Groww**
 - **ServiceNow**
 - **Tesco**
-
-
-## **Current Todos**
-
-- HLD and LLD and HM
-- DP, Graph, Greedy and implementation
