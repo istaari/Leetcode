@@ -18,7 +18,7 @@ public class Combinations {
 
             temp.add(i);
             helper(n, k, i + 1, result, temp);
-            temp.removeLast();
+            temp.remove(temp.size() - 1);
 
         }
 

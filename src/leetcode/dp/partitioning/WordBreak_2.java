@@ -15,7 +15,7 @@ public class WordBreak_2 {
             if (wordSet.contains(word)) {
                 temp.add(word);
                 backtrack(s, i + 1, wordSet, wordList, temp);
-                temp.removeLast();
+                temp.remove(temp.size() - 1);
             }
         }
     }

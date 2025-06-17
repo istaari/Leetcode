@@ -25,7 +25,7 @@ public class CombinationSum_39 {
         for (int i = start; i < candidates.length; i++) {
             list.add(candidates[i]);
             backtrack(candidates, list, result, rem - candidates[i], i);
-            list.removeLast();
+            list.remove(list.size() - 1);
         }
     }
 
@@ -56,7 +56,7 @@ public class CombinationSum_39 {
 
         temp.add(candidates.get(index));
         picking(candidates, result, temp, index, sum + candidates.get(index), target);
-        temp.removeLast();
+        temp.remove(temp.size() - 1);
         picking(candidates, result, temp, index + 1, sum, target);
     }
 

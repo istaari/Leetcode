@@ -30,7 +30,7 @@ public class Subsets2_90 {
 
             list.add(nums[i]);
             backtrack(nums, list, result, i + 1);
-            list.removeLast();
+            list.remove(list.size()-1);
         }
     }
 

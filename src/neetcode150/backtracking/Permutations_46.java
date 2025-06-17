@@ -16,7 +16,7 @@ public class Permutations_46 {
 
             list.add(num);
             backtrack(nums, list, result);
-            list.removeLast();
+            list.remove(list.size()-1);
         }
     }
 

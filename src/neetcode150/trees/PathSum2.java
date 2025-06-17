@@ -19,7 +19,7 @@ public class PathSum2 {
 
         helper(result, temp, root.left, targetSum);
         helper(result, temp, root.right, targetSum);
-        temp.removeLast();
+        temp.remove(temp.size() - 1);
     }
 
     public List<List<Integer>> pathSum(TreeNode root, int targetSum) {

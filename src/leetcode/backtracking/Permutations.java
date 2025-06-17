@@ -17,7 +17,7 @@ public class Permutations {
 
             tempList.add(num);
             helper(nums, tempList, result);
-            tempList.removeLast();
+            tempList.remove(tempList.size() - 1);
         }
 
         return result;

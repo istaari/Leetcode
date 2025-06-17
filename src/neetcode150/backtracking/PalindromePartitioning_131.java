@@ -31,7 +31,7 @@ public class PalindromePartitioning_131 {
             if (isPalindrome(include)) {
                 partitions.add(include);
                 helper(remaining.substring(i + 1), partitions, result);
-                partitions.removeLast(); // reset
+                partitions.remove(partitions.size()-1); // reset
 
             }
         }

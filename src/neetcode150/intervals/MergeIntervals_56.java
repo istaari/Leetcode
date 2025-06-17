@@ -12,9 +12,9 @@ public class MergeIntervals_56 {
         result.add(intervals[0]);
 
         for (int[] currentInterval : intervals) {
-            int[] lastInterval = result.getLast();
+            int[] lastInterval = result.get(result.size() - 1);
             if (currentInterval[0] <= lastInterval[1]) {
-                result.removeLast();
+                result.remove(result.size() - 1);
                 result.add(new int[]{lastInterval[0], Math.max(lastInterval[1], currentInterval[1])});
             } else {
                 result.add(currentInterval);

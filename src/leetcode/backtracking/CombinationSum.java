@@ -23,7 +23,7 @@ public class CombinationSum {
 
             combination.add(candidates[i]);
             helper(candidates, target - candidates[i], combination, i + 1);
-            combination.removeLast();
+            combination.remove(combination.size()-1);
         }
 
     }

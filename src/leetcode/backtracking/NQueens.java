@@ -52,7 +52,7 @@ public class NQueens {
             d1[row - col + n - 1] = false;
             d2[row + col] = false;
 
-            board.removeLast();
+            board.remove(board.size()-1);
         }
     }
 

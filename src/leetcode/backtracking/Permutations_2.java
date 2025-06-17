@@ -24,7 +24,7 @@ public class Permutations_2 {
 
             helper(nums, list, result, visited);
 
-            list.removeLast();
+            list.remove(list.size() - 1);
             visited[i] = false;
 
         }

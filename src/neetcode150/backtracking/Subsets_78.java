@@ -56,7 +56,7 @@ public class Subsets_78 {
         for (int i = start; i < nums.length; i++) {
             list.add(nums[i]);
             backtrack(nums, list, result, i + 1);
-            list.removeLast();
+            list.remove(list.size() - 1);
         }
     }
 
@@ -102,7 +102,7 @@ public class Subsets_78 {
 
         temp.add(nums[i]);
         picking(nums, temp, result, i + 1); // pick the current element
-        temp.removeLast(); // removed the current picked element
+        temp.remove(temp.size() - 1);  // removed the current picked element
         picking(nums, temp, result, i + 1); // do not pick the current element
     }
 

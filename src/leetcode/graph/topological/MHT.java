@@ -36,7 +36,7 @@ public class MHT {
                 assert queue.peek() != null;
 
                 int leaf = queue.poll();
-                int neighbor = graph.get(leaf).getFirst();
+                int neighbor = graph.get(leaf).get(0);
 
                 graph.get(neighbor).remove(Integer.valueOf(leaf));
 

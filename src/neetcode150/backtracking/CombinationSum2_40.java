@@ -28,7 +28,7 @@ public class CombinationSum2_40 {
 
             list.add(candidates[i]);
             backtrack(candidates, list, result, rem - candidates[i], i + 1);
-            list.removeLast();
+            list.remove(list.size() - 1);
         }
     }
 

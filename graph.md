@@ -269,11 +269,12 @@
 - **Typical Problem** : Find the maximum flow from a source node to a sink node, obeying capacity limits on edges.
 
 
-| Algorithm             | Description                                                     | Time Complexity                                                |
-|-----------------------|-----------------------------------------------------------------|----------------------------------------------------------------|
-| **Ford-Fulkerson**    | Basic method using DFS + greedy augmenting paths                | \( O(E \cdot \text{max flow}) \)                               |
-| **Edmonds-Karp**      | Ford-Fulkerson with BFS → always finds shortest augmenting path | \( O(VE^2) \)                                                  |
-| **Dinic's Algorithm** | Uses BFS for level graph + DFS for blocking flow                | \( O(EV^2) \) worst, \( O(\sqrt{V}E) \) for bipartite matching |
+| Algorithm             | Description                                                     | Time Complexity                                |
+|-----------------------|-----------------------------------------------------------------|------------------------------------------------|
+| **Ford-Fulkerson**    | Basic method using DFS + greedy augmenting paths                | O(E × max flow)                                |
+| **Edmonds-Karp**      | Ford-Fulkerson with BFS → always finds shortest augmenting path | O(VE²)                                         |
+| **Dinic's Algorithm** | Uses BFS for level graph + DFS for blocking flow                | O(EV²) worst, O(√V × E) for bipartite matching |
+
 
 
 **Matching**
@@ -282,11 +283,11 @@
 
 - **Typical Problem** : Pair up elements from two sets (e.g., people and tasks) in such a way that no one is matched more than once, and the total number of matches is maximized.
 
-| Algorithm               | Description                                                                      | Time Complexity             |
-|-------------------------|----------------------------------------------------------------------------------|-----------------------------|
-| **Hungarian Algorithm** | Used for perfect matchings in weighted bipartite graphs (min cost or max profit) | \( O(V^3) \)                |
-| **Hopcroft-Karp**       | Efficient method for maximum matching in unweighted bipartite graphs             | \( O(\sqrt{V} \cdot E) \)   |
-| **Kuhn's Algorithm**    | DFS-based approach for unweighted bipartite graphs                               | \( O(V \cdot E) \)          |
+| Algorithm               | Description                                                                      | Time Complexity |
+|-------------------------|----------------------------------------------------------------------------------|-----------------|
+| **Hungarian Algorithm** | Used for perfect matchings in weighted bipartite graphs (min cost or max profit) | O(V³)           |
+| **Hopcroft-Karp**       | Efficient method for maximum matching in unweighted bipartite graphs             | O(√V × E)       |
+| **Kuhn's Algorithm**    | DFS-based approach for unweighted bipartite graphs                               | O(V × E)        |
 
 
 ### **11. DP on Graph**

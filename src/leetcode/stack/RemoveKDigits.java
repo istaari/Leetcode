@@ -25,8 +25,8 @@ public class RemoveKDigits {
 
 
         StringBuilder result = new StringBuilder();
-        while (!stack.isEmpty() && stack.getFirst() == '0') {
-            stack.removeFirst();
+        while (!stack.isEmpty() && stack.get(0) == '0') {
+            stack.remove(0);
         }
 
         while (!stack.isEmpty()) result.insert(0, stack.pop());
