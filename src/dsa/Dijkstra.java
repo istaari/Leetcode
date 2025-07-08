@@ -28,7 +28,6 @@ public class Dijkstra {
         graph.get(src).add(new Edge(dest, weight));
     }
 
-
     public static class Edge {
         public int dest;
         public int weight;

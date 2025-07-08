@@ -1,9 +1,8 @@
 package leetcode.dp.subsequence;
 
-import java.util.Arrays;
-
 public class CoinChange_2 {
 
+    // Include and Exclude method
     private static int helper0(int amount, int[] coins, int i, Integer[][] dp) {
         if (amount == 0) return 1;
         if (amount < 0 || i == coins.length) return 0;
@@ -18,7 +17,7 @@ public class CoinChange_2 {
         return dp[i][amount];
     }
 
-
+   // Using loop
     private static int helper(int[] coins, int amount, int index, Integer[][] dp) {
         if (amount == 0) return 1;
         if (amount < 0 || index >= coins.length) return 0;

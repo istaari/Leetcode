@@ -122,3 +122,57 @@
 | <code>n &leq; 10^4</code> | <code>O(n log n)</code>, <code>O(n)</code> | Sorting, linear scans                  |
 | <code>n &leq; 10^6</code> | <code>O(n)</code>, <code>O(n log n)</code> | Sliding window, prefix sums            |
 | <code>n &leq; 10^9</code> | <code>O(log n)</code>, <code>O(1)</code>   | Binary search, modular arithmetic      |
+
+
+## Three Methods of Amortized Analysis
+
+### 1. Aggregate Method
+Calculate the total cost of n operations and divide by n.
+
+**Example: Dynamic Array (ArrayList/Vector)**
+```
+Operations: Insert at end
+- Most insertions: O(1) - just add to available space
+- Occasional resize: O(n) - when array is full, create new array of double size
+
+Analysis:
+- Start with size 1, double each time: 1 → 2 → 4 → 8 → 16 → ... → n
+- Total copies during all resizes: 1 + 2 + 4 + 8 + ... + n/2 = n - 1
+- Total cost for n insertions: n (normal insertions) + (n-1) (copies) = 2n - 1
+- Amortized cost per insertion: (2n - 1)/n ≈ O(1)
+```
+
+## Total Subarray Problem
+
+### Sliding Window
+
+Used when you're scanning subarrays that satisfy a specific condition (like count of elements, distinct values, etc.).
+
+- Find number of subarrays where no. of odd integers is exactly k
+- Find the no. subarrays with exactly k different integers
+
+
+### Monotonic Stack
+
+Used for subarray problems where you're calculating the contribution of each element as min or max across subarrays.
+
+- Calculate the sum of the range difference between (max and min) of all subarray
+- Calculate the sum of the min elements of all subarrays
+
+
+### Prefix Sum
+
+Used when you're checking for subarray sums equal to or divisible by something.
+
+- Total no. of subarray whose sum is equals to k
+- The sum of the elements of the subarray is multiple of k
+- Total subarrays that have a sum divisible by k
+
+
+### Kandane DP
+
+Used when you're trying to find the max/min total sum or product of a contiguous subarray.
+
+- Find the largest sum of a contiguous subarray.
+- Find the maximum sum of a circular subarray.
+- Find the largest product of a contiguous subarray.

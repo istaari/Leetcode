@@ -1,6 +1,5 @@
-## **Overview of Codeforces Ranking System & Divisions**
+# **Codeforces Ranking System & Divisions**
 
----
 
 ### **1. Codeforces Ratings and Titles**
 
@@ -65,7 +64,7 @@ Each **Codeforces problem** has a **rating** (like 800, 1200, 1500, etc.), indic
 
 ## **Concepts Required for Different Codeforces Problem Ratings**
 
-## **🔰 Beginner Level (800 - 1200)**
+### **🔰 Beginner Level (800 - 1200)**
 
 **📌 Concepts Required:**
 
@@ -88,7 +87,7 @@ Each **Codeforces problem** has a **rating** (like 800, 1200, 1500, etc.), indic
 
 ---
 
-## **🔰 Intermediate Level (1300 - 1800)**
+### **🔰 Intermediate Level (1300 - 1800)**
 
 **📌 Concepts Required:**
 
@@ -114,7 +113,7 @@ Each **Codeforces problem** has a **rating** (like 800, 1200, 1500, etc.), indic
 
 ---
 
-## **🔰 Advanced Level (1900 - 2400)**
+### **🔰 Advanced Level (1900 - 2400)**
 
 **📌 Concepts Required:**
 
@@ -144,7 +143,7 @@ Each **Codeforces problem** has a **rating** (like 800, 1200, 1500, etc.), indic
 
 ---
 
-## **🔰 Expert / Grandmaster Level (2500 - 3500)**
+### **🔰 Expert / Grandmaster Level (2500 - 3500)**
 
 **📌 Concepts Required:**
 
@@ -167,3 +166,60 @@ Each **Codeforces problem** has a **rating** (like 800, 1200, 1500, etc.), indic
 
 **🛠 Recommended Practice:**  
 ✅ **[Codeforces Hard Problems (2500+)](https://codeforces.com/problemset?tags=2500-3500)**
+
+
+
+# 🏁 **LeetCode Contest**
+
+1. **Weekly Contest**
+
+   * Held every weekend (usually Sunday UTC).
+   * Contains **4 problems**.
+   * Duration: **90 minutes**.
+
+2. **Biweekly Contest**
+
+   * Held every other Saturday.
+   * Also contains **4 problems**.
+   * Duration: **90 minutes**.
+
+3. **LeetCode Monthly Contest (Occasional)**
+
+   * Includes more advanced problems, sometimes focused on a theme.
+   * Often used for company-sponsored events (e.g., Google, Amazon).
+
+4. **LeetCode Shell/Database/SQL/JavaScript Contests**
+
+   * For domains other than algorithmic coding.
+
+---
+
+### 🧮 **Scoring and Ranking**
+
+* Participants are ranked based on:
+
+  * **Number of problems solved**.
+  * **Time taken to solve** (faster solutions earn higher ranks).
+  * **Penalties** for wrong submissions (a small time penalty is added).
+* The **rating system** is similar to Elo used in chess:
+
+  * New users start with a default rating (1500).
+  * Performance in rated contests changes your rating.
+  * More difficult contests offer more rating volatility.
+
+---
+
+### 📊 **Ranking System**
+
+* Users are classified based on their **Contest Rating**:
+
+  * **Top 5%**: \~2500+ rating (often Candidate Master / Master tier).
+  * **Top 10–20%**: 2000–2400+ (Expert / Specialist).
+  * **Mid-range**: 1600–1900 (Regular Participants).
+  * **Newbies**: Below 1500.
+* LeetCode maintains **Global Leaderboards**:
+
+  * Filters: **All time**, **Weekly**, **Country-based**, **Friends**, etc.
+  * Each user's profile shows their **contest history**, **rating graph**, and **ranking**.
+
+---

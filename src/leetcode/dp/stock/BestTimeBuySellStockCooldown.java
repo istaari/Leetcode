@@ -13,9 +13,10 @@ public class BestTimeBuySellStockCooldown {
 
         for (int i = 1; i < n; i++) {
             int prevHold = hold;
-            hold = Math.max(hold, cooldown - prices[i]);
-            cooldown = Math.max(cooldown, sold);
-            sold = prevHold + prices[i];
+
+            hold = Math.max(hold, cooldown - prices[i]); // Total profit when holding a stock or moving from cooldown
+            cooldown = Math.max(cooldown, sold); // Total profit when in cooldown
+            sold = prevHold + prices[i]; // Total profit when you sold the stock
         }
 
         return Math.max(sold, cooldown);

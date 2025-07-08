@@ -1,4 +1,4 @@
-package leetcode.stack;
+package leetcode.greedy.stack;
 
 import java.util.HashMap;
 import java.util.HashSet;

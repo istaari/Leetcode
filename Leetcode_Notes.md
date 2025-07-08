@@ -668,6 +668,32 @@
 
 - Greedy problem exhibits `Greedy Choice and Optimal Substructure` properties.
 
+
+**Coin Change Problem**
+
+A coin system $C = \{c_1, c_2, ..., c_k\}$ with $c_1 < c_2 < ... < c_k$ is **canonical** if, for every positive integer amount $A$, the greedy algorithm yields the same result as the optimal (usually dynamic programming-based) solution — that is, the *fewest coins possible*.
+
+
+**Example of a Canonical System**
+
+**U.S. coin system**: $\{1, 5, 10, 25, 50\}$
+
+* For any amount (e.g., 63 cents → 50 + 10 + 1 + 1 + 1), the greedy choice (biggest coin first) gives an optimal result.
+
+**Euro coin system**: $\{1, 2, 5, 10, 20, 50, 100, 200\}$
+
+* Also canonical — the greedy algorithm always works.
+
+**Example of a Non-Canonical System**
+
+Let’s say you have coins $\{1, 3, 4\}$:
+
+* Target: 6
+* Greedy picks 4, then 1, then 1 → total: 3 coins
+* Optimal: 3 + 3 → total: 2 coins
+* So greedy is **not optimal** → this system is **not canonical**
+
+
 **1. Interval Scheduling**
 
 **Examples:**
@@ -1219,6 +1245,9 @@
 ---
 ## Backtracking
 
+- **Pruning the search** : We can often optimize backtracking by pruning the search tree.
+- **Meet in the middle** : Meet in the middle is a technique where the search space is divided into two parts of about equal size. A separate search is performed for both of the parts, and finally the results of the searches are combined. Example `subset sum` can be optimize using this technique
+
 
 ### **1. Subsets (Power Set)**  
 
@@ -1286,6 +1315,11 @@
 - [Combinations](https://leetcode.com/problems/combinations/) - Generate all possible combinations of `k` numbers from a given set. 
 
   - Recursive Subset pattern can be used here, call recursive function with next starting index
+
+  - **Meet in the Middle Optimizations** : 
+    
+    - For example, suppose that the list is [2,4,5,9] and x = 15. First, we divide the list into A= [2,4] and B= [5,9]. After this, we create lists SA = [0,2,4,6]
+  and SB = [0,5,9,14]. In this case, the sum x = 15 is possible to form, because SA contains the sum 6, SB contains the sum 9, and 6 + 9= 15. This corresponds to the solution [2,4,9].
 
 
 - [Combination Sum](https://leetcode.com/problems/combination-sum/) - Find all unique combinations of numbers that sum up to a target.  
@@ -1393,6 +1427,39 @@ Here are the descriptions for all four problems in the requested format:
 
 ## Bit Manipulation
 
+
+### XOR Properties
+
+| Property                 | Meaning                       |
+|--------------------------|-------------------------------|
+| `a ^ b = c  ⇒ b ^ c = a` | You can reverse XOR           |
+| `x ^ 0 = x`              | XOR with 0 returns same value |
+| `x ^ x = 0`              | XOR with itself is 0          |
+
+
+### Bit Shift Tricks
+
+| Operation | Meaning       |
+|-----------|---------------|
+| `1 << n`  | Equals `2^n`  |
+| `a >> 1`  | Divide by 2   |
+| `a << 1`  | Multiply by 2 |
+
+
+### Set Operations Using Bitmask
+
+| Operation        | Code Example               |
+|------------------|----------------------------|
+| Union            | `A \ B`                    |
+| Intersection     | `A & B`                    |
+| Subtraction      | `A & ~B`                   |
+| Negation         | `A ^ A` or `~A`            |
+| Set bit          | `A \= 1 << bit`            |
+| Clear bit        | `A &= ~(1 << bit)`         |
+| Test bit         | `(A & (1 << bit)) != 0`    |
+| Extract last bit | `A & -A` or `A & ~(A - 1)` |
+| Remove last bit  | `A & (A - 1)`              |
+| All 1-bits       | `~0`                       |
 
 
 ---

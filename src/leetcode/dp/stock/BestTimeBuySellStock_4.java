@@ -5,7 +5,8 @@ import java.util.Arrays;
 public class BestTimeBuySellStock_4 {
 
     public static int maxProfit(int k, int[] prices) {
-        int[] buy = new int[k + 1], sell = new int[k + 1];
+        int[] buy = new int[k + 1];
+        int[] sell = new int[k + 1];
 
         Arrays.fill(buy, Integer.MIN_VALUE);
         for (int price : prices) {

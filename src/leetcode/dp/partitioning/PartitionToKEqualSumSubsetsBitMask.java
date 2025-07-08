@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class PartitionToKEqualSumSubsetsBitMask {
 
-    public boolean canPartitionKSubsets(int[] nums, int k) {
+    public static boolean canPartitionKSubsets(int[] nums, int k) {
         int sum = 0;
         for (int num : nums) {
             sum += num;
@@ -25,6 +25,7 @@ public class PartitionToKEqualSumSubsetsBitMask {
             if (!dp[mask]) continue;
 
             for (int i = 0; i < n; i++) {
+                // if (((i >> j) & 1) == 1) can written this way also
                 if ((mask & (1 << i)) == 0) {
 
                     if (total[mask] % targetSum + nums[i] <= targetSum) {
@@ -37,6 +38,18 @@ public class PartitionToKEqualSumSubsetsBitMask {
         }
 
         return dp[(1 << n) - 1];
+    }
+
+
+
+    public static void main(String[] args) {
+        int[] nums1 = {4, 3, 2, 3, 5, 2, 1};
+        int k1 = 4;
+        System.out.println(canPartitionKSubsets(nums1, k1)); // Output: true
+
+        int[] nums2 = {1, 2, 3, 4};
+        int k2 = 3;
+        System.out.println(canPartitionKSubsets(nums2, k2)); // Output: false
     }
 
 }

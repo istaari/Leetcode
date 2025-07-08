@@ -78,36 +78,12 @@
 
 ---
 
-## **Company List**
 
-### **Tier I**
 
-- **Google**
-- **Amazon**
-- **Meta**
-- **Microsoft**
-- **Uber**
-- **Netflix**
-- **Apple**
+## **My Current Todo**
 
-### **Tier II**
-
-- **Angel One**
-- **Databricks**
-- **Wayfair**
-- **Stripe**
-- **Coinbase**
-- **Nutanix**
-- **Walmart**
-- **Salesforce**
-- **Gojek**
-- **CoinDcx**
-- **Booking.com**
-- **MakeMyTrip**
-- **MakeMyTrip**
-- **LinkedIn**
-- **Godaddy**
-- **Razorpay**
-- **Groww**
-- **ServiceNow**
-- **Tesco**
+- Complete DP, Graph and Greedy
+- Publish blog on Binary Lifting, Segment Tree Lazy Propagation
+- Complete System Design
+- Complete Behavioural
+- Start With Codeforces
