@@ -3,55 +3,55 @@ package dsa;
 
 public class RabinKarp {
 
-    public static void search(String text, String pattern) {
-        int PRIME = 101;
+    void search(String text, String pattern) {
+        int PRIME = 1000_000_000 + 7; // 10 ^ 9 + 7
         int m = pattern.length();
         int n = text.length();
-        int d = 256; // Total number of possible characters
+
+        int base = 256; // Rabin-Karp uses 256 as the base because it's designed for ASCII-based string hashing
         int patternHash = 0; // Hash value for pattern
         int textHash = 0; // Hash value for text substring
-        int h = 1;
 
-        // Compute (d^(m-1)) % PRIME
-        for (int i = 0; i < m - 1; i++) {
-            h = (h * d) % PRIME;
+        // Compute initial window hash values for a pattern and text
+        // This loop builds the hash left to right
+        // This is called Horner’s method, a faster way to evaluate polynomials without repeated exponentiation
+        for (int i = 0; i < m; i++) {
+            patternHash = (base * patternHash + pattern.charAt(i)) % PRIME;
+            textHash = (base * textHash + text.charAt(i)) % PRIME;
         }
 
-        // Compute initial hash values for a pattern and first window of a text
-        for (int i = 0; i < m; i++) {
-            patternHash = (d * patternHash + pattern.charAt(i)) % PRIME;
-            textHash = (d * textHash + text.charAt(i)) % PRIME;
+
+        int h = 1;  // Compute (base^(m-1)) % PRIME
+        for (int i = 0; i < m - 1; i++) {
+            h = (h * base) % PRIME;
         }
 
         for (int i = 0; i <= n - m; i++) {
-            // If hashes match, do a character-by-character check
             if (patternHash == textHash) {
-                boolean match = true;
-
+                boolean matched = true;
                 for (int j = 0; j < m; j++) {
                     if (text.charAt(i + j) != pattern.charAt(j)) {
-                        match = false;
+                        matched = false;
                         break;
                     }
                 }
-
-                if (match) {
+                if (matched) {
                     System.out.println("Pattern found at index " + i);
                 }
             }
 
-            // Compute next hash value (rolling hash)
+            // Compute next hash value including next character
             if (i < n - m) {
-                textHash = (d * (textHash - text.charAt(i) * h) + text.charAt(i + m)) % PRIME;
+                textHash = (base * (textHash - text.charAt(i) * h) + text.charAt(i + m)) % PRIME;
                 if (textHash < 0) textHash += PRIME; // Handles Negative Number
             }
         }
     }
 
     public static void main(String[] args) {
-        String text = "ababdabcabababd";
-        String pattern = "ababd";
-        search(text, pattern);
+        String text = "abcdxyz";
+        String pattern = "xyz";
+        new RabinKarp().search(text, pattern);
     }
 }
 

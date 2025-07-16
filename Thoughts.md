@@ -176,3 +176,114 @@ Used when you're trying to find the max/min total sum or product of a contiguous
 - Find the largest sum of a contiguous subarray.
 - Find the maximum sum of a circular subarray.
 - Find the largest product of a contiguous subarray.
+
+
+## Examples
+
+
+Great question! Let’s break down this line step-by-step so you fully understand how and **why** it works:
+
+---
+
+### 🔍 Code:
+
+```java
+int i = n;
+while (i-- > 0)
+    a[i] = in.nextInt();
+```
+
+---
+
+### 🧠 What it does:
+
+This code **reads `n` integers into an array `a[]` in reverse order**, starting from `a[n-1]` down to `a[0]`.
+
+---
+
+### 📦 Step-by-step Explanation:
+
+#### ✅ Step 1: `int i = n;`
+
+You set `i` to `n`, **one past the last index** of the array (Java arrays are 0-indexed).
+
+#### ✅ Step 2: `i-- > 0`
+
+This is the tricky part — a **post-decrement** check:
+
+* `i--` returns the current value of `i`, then decreases it.
+* `i-- > 0` checks if `i` (before decrementing) is greater than 0.
+* After each check, `i` is reduced by 1.
+
+#### ✅ Step 3: `a[i] = in.nextInt();`
+
+* Since `i` decreases from `n-1` down to `0`, you fill the array in **reverse order**.
+
+---
+
+## Example:
+
+### Reverse Loop with Post-Decrement
+
+Let’s walk through it with `n = 3`:
+
+```java
+int i = 3;
+while (i-- > 0)
+    a[i] = in.nextInt();
+```
+
+| Loop | i (before `--`) | `i-- > 0`? | `i` after `--` | `a[i]` gets value |
+| ---- | --------------- | ---------- | -------------- | ----------------- |
+| 1    | 3               | Yes        | 2              | a\[2] = ...       |
+| 2    | 2               | Yes        | 1              | a\[1] = ...       |
+| 3    | 1               | Yes        | 0              | a\[0] = ...       |
+| 4    | 0               | No         | -1             | stops             |
+
+
+### Fast I/O Template
+
+```java
+static class FastReader {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    StringTokenizer st;
+    String next() {
+        while (st == null || !st.hasMoreElements()) {
+            try { st = new StringTokenizer(br.readLine()); }
+            catch (IOException e) { e.printStackTrace(); }
+        }
+        return st.nextToken();
+    }
+    int nextInt() { return Integer.parseInt(next()); }
+    long nextLong() { return Long.parseLong(next()); }
+}
+```
+
+### Lambda Sorting
+
+```java
+// Ascending
+Arrays.sort(arr, (x, y) -> Integer.compare(x[0], y[0]));
+
+// Descending
+Arrays.sort(arr, (x, y) -> Integer.compare(y[0], x[0]));
+```
+
+### Greedy Index Sorting
+
+```java
+Integer[] idx = new Integer[n];
+for (int i = 0; i < n; i++) idx[i] = i;
+Arrays.sort(idx, (i, j) -> Integer.compare(arr[i], arr[j]));
+```
+
+### prefix sum technique
+
+```java
+int[] a = {3, 5, 2, 7}; // n = 4
+
+int[] prefix = new int[5]; // size n + 1
+for (int i = 0; i < 4; i++)
+    prefix[i + 1] = prefix[i] + a[i];
+```
+

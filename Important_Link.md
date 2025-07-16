@@ -85,4 +85,8 @@
 
 - [Greedy Problems](https://leetcode.com/discuss/general-discussion/669996/greedy-for-beginners-problems-sample-solutions)
 
+## Codeforces
+
+- [Good Blog Post Resources about Algorithm and Data Structures](https://codeforces.com/blog/entry/13529)
+
 

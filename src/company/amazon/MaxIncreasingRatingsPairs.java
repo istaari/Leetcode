@@ -5,7 +5,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-// Leetcode : https://leetcode.com/problems/maximize-greatness-of-an-array/description/
+/**
+ * Leetcode :  <a href="https://leetcode.com/problems/maximize-greatness-of-an-array/">maximize-greatness-of-an-array</a>
+ */
 public class MaxIncreasingRatingsPairs {
 
     public static int getMaxIncrements(int[] ratings) {
