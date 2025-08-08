@@ -178,60 +178,18 @@ Used when you're trying to find the max/min total sum or product of a contiguous
 - Find the largest product of a contiguous subarray.
 
 
-## Examples
+## Coding Tricks
 
-
-Great question! Let’s break down this line step-by-step so you fully understand how and **why** it works:
-
----
-
-### 🔍 Code:
-
-```java
-int i = n;
-while (i-- > 0)
-    a[i] = in.nextInt();
-```
-
----
-
-### 🧠 What it does:
-
-This code **reads `n` integers into an array `a[]` in reverse order**, starting from `a[n-1]` down to `a[0]`.
-
----
-
-### 📦 Step-by-step Explanation:
-
-#### ✅ Step 1: `int i = n;`
-
-You set `i` to `n`, **one past the last index** of the array (Java arrays are 0-indexed).
-
-#### ✅ Step 2: `i-- > 0`
-
-This is the tricky part — a **post-decrement** check:
-
-* `i--` returns the current value of `i`, then decreases it.
-* `i-- > 0` checks if `i` (before decrementing) is greater than 0.
-* After each check, `i` is reduced by 1.
-
-#### ✅ Step 3: `a[i] = in.nextInt();`
-
-* Since `i` decreases from `n-1` down to `0`, you fill the array in **reverse order**.
-
----
-
-## Example:
 
 ### Reverse Loop with Post-Decrement
-
-Let’s walk through it with `n = 3`:
 
 ```java
 int i = 3;
 while (i-- > 0)
     a[i] = in.nextInt();
 ```
+
+Let’s walk through it with `n = 3`:
 
 | Loop | i (before `--`) | `i-- > 0`? | `i` after `--` | `a[i]` gets value |
 | ---- | --------------- | ---------- | -------------- | ----------------- |
@@ -264,7 +222,6 @@ static class FastReader {
 ```java
 // Ascending
 Arrays.sort(arr, (x, y) -> Integer.compare(x[0], y[0]));
-
 // Descending
 Arrays.sort(arr, (x, y) -> Integer.compare(y[0], x[0]));
 ```
@@ -287,3 +244,29 @@ for (int i = 0; i < 4; i++)
     prefix[i + 1] = prefix[i] + a[i];
 ```
 
+## State Machines
+
+- **1. Deterministic Nature**
+
+  A **Deterministic Finite State Machine (DFSM)** means that **given a specific state and an input (decision), the next state is uniquely determined**. Let's analyze this:
+
+    - If you **own a stock (`Hold`)**, you have two choices:
+        - Do nothing → Stay in `Hold`.
+        - Sell → Move to `Sold`.
+
+    - If you **just sold a stock (`Sold`)**, there is **only one possible transition**:
+        - Move to `Rest` (cooldown applies).
+
+    - If you are **not holding a stock and not in cooldown (`Rest`)**, you also have two choices:
+        - Do nothing → Stay in `Rest`.
+        - Buy → Move to `Hold`.
+
+- **2. Difference Between DFSM and NDFSM**
+
+  A **Non-Deterministic FSM (NDFSM)** allows **multiple possible next states for the same input, without a clear rule**. That is, for the same state and input, different transitions could happen at the same time.
+
+    - In this problem, at any given moment, **the transitions follow strict rules**.
+    - Given a state and a choice, you always move to **one specific next state** (no parallel paths).
+
+    - The key difference is **in an NDFSM, the machine can "magically" pick different paths without clear rules**.
+    - Here, once a choice is made, the transition is **fixed**, which makes it **deterministic**.
