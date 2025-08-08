@@ -12,8 +12,6 @@
 
 ---
 
-
-
 ## **My Current Todo**
 
 - Complete DP, Graph and Greedy
@@ -21,8 +19,6 @@
 - Complete System Design
 - Complete Behavioural
 - Start With Codeforces
-
-
 
 | **Technique**                    | **Use**                                        |
 |----------------------------------|------------------------------------------------|
@@ -34,4 +30,9 @@
 | **GCD / LCM**                    | Divisibility, simplification                   |
 | **Prime Factorization**          | Divisor count, GCD logic                       |
 
+## **Videos**
 
+- Complete Dynamic Programming Practice (Noob to Expert) - Colin Galen
+- Tree Algorithms - William Fiset
+- Graph Algorithms - William Fiset
+- Dynamic Programming - William Fiset

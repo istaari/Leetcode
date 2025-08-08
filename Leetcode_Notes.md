@@ -666,268 +666,178 @@
 ---
 ## Greedy
 
-- Greedy problem exhibits `Greedy Choice and Optimal Substructure` properties.
+- [Greedy Template](https://huaguo.substack.com/p/greedy-algorithm)
 
 
-**Coin Change Problem**
+### **1. Interval Scheduling / Coverage**
 
-A coin system $C = \{c_1, c_2, ..., c_k\}$ with $c_1 < c_2 < ... < c_k$ is **canonical** if, for every positive integer amount $A$, the greedy algorithm yields the same result as the optimal (usually dynamic programming-based) solution — that is, the *fewest coins possible*.
+**Greedy Choice Property:**
+Always choose the interval (or action) that finishes earliest or covers the most without overlap, to leave space for future decisions.
 
-
-**Example of a Canonical System**
-
-**U.S. coin system**: $\{1, 5, 10, 25, 50\}$
-
-* For any amount (e.g., 63 cents → 50 + 10 + 1 + 1 + 1), the greedy choice (biggest coin first) gives an optimal result.
-
-**Euro coin system**: $\{1, 2, 5, 10, 20, 50, 100, 200\}$
-
-* Also canonical — the greedy algorithm always works.
-
-**Example of a Non-Canonical System**
-
-Let’s say you have coins $\{1, 3, 4\}$:
-
-* Target: 6
-* Greedy picks 4, then 1, then 1 → total: 3 coins
-* Optimal: 3 + 3 → total: 2 coins
-* So greedy is **not optimal** → this system is **not canonical**
-
-
-**1. Interval Scheduling**
+**Key Insight:** Sort by end time for scheduling, or by coverage span for interval problems.
 
 **Examples:**
+* [Merge Intervals](https://leetcode.com/problems/merge-intervals/) – Merge overlapping intervals.
+* [Non-overlapping Intervals](https://leetcode.com/problems/non-overlapping-intervals/) – Remove minimum intervals to avoid overlaps.
+* [Insert Interval](https://leetcode.com/problems/insert-interval/) – Insert while maintaining sorted non-overlapping list.
+* [Meeting Rooms I](https://leetcode.com/problems/meeting-rooms/) – Can all meetings be attended without conflict?
+* [Meeting Rooms II](https://leetcode.com/problems/meeting-rooms-ii/) – Minimum number of meeting rooms required.
+* [Minimum Number of Taps to Open to Water a Garden](https://leetcode.com/problems/minimum-number-of-taps-to-open-to-water-a-garden/) – Min cover using greedy interval selection.
+* [Video Stitching](https://leetcode.com/problems/video-stitching/) – Minimum clips to cover time range.
 
-- [Merge Intervals](https://leetcode.com/problems/merge-intervals/) - Merge overlapping intervals.
+### **2. Greedy + Sorting (Cost/Benefit Optimization)**
 
-  - Sort intervals by `start time`, put first interval in list, compare other intervals to last interval from list for overlapp, then remove-merge or add in list
+**Greedy Choice Property:**
+Sort elements by cost/requirement/benefit ratio, and take the cheapest or most optimal available option at each step.
 
-- [Non-overlapping Intervals](https://leetcode.com/problems/non-overlapping-intervals/) - Minimum number of intervals to remove to make the remaining intervals non-overlapping.
-
-  -  Sort intervals by `start time`, Take the `End of First Interval` and compare the `Next Start of Interval` for overlapp
-  -  If overlapps then update the `End = Math.min(intervals[i][1], End)` min end time of both intervals, If does not overlaps `End = intervals[i][1]`
-
-
-- [Insert Interval](https://leetcode.com/problems/insert-interval/) - Insert a new interval into a list of non-overlapping intervals.
-
-  - Todo
-
-- [Meeting Rooms I](https://leetcode.com/problems/meeting-rooms/) - Given intervals, Determine if a person could attend all meeting
-
-  -  Sort intervals by `start time`, Take the `End of 1st Interval` and compare the `next Start of Interval` for overlap then return true or false
-
-- [Meeting Rooms II](https://leetcode.com/problems/meeting-rooms-ii/) - Find the minimum number of meeting rooms required to hold all meetings
-
-  - ```java
-        int minMeetingRooms(int[][] intervals) {
-            // Sort the intervals by their start times
-            Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
-            PriorityQueue<Integer> minHeap = new PriorityQueue<>();
-            minHeap.add(intervals[0][1]); // first meeting's end time
-    
-            for (int i = 1; i < intervals.length; i++) {
-                // If there is no overlap
-                if (intervals[i][0] >= minHeap.peek()) {
-                    minHeap.poll();
-                }
-    
-                // update current meeting's end time in heap
-                minHeap.add(intervals[i][1]);
-            }
-            // The size of the heap tells us the minimum rooms required
-            return minHeap.size();
-        }
-    ```
-
-
-**2. Scheduling Problems**
-
-- Scheduling a task optimally with with gap of n intervals.
+**Key Insight:** The sorting criteria determines the greedy choice - sort by what matters most for the objective.
 
 **Examples:**
+* [Minimum Cost to Hire K Workers](https://leetcode.com/problems/minimum-cost-to-hire-k-workers/) – Greedy ratio + sorting.
+* [Minimum Increment to Make Array Unique](https://leetcode.com/problems/minimum-increment-to-make-array-unique/) – Sort and fix duplicates.
+* [Maximum Bags With Full Capacity of Rocks](https://leetcode.com/problems/maximum-bags-with-full-capacity-of-rocks/) – Sort by required space.
+* [Maximum Ice Cream Bars](https://leetcode.com/problems/maximum-ice-cream-bars/) – Buy cheapest until budget exhausted.
+* [Minimum Rounds to Complete All Tasks](https://leetcode.com/problems/minimum-rounds-to-complete-all-tasks/) – Greedy group by frequency.
+* [Least Number of Unique Integers after K Removals](https://leetcode.com/problems/least-number-of-unique-integers-after-k-removals/) – Remove lowest frequencies.
+* [Assign Cookies](https://leetcode.com/problems/assign-cookies/) – Match smallest cookie to smallest child requirement.
+* [Advantage Shuffle](https://leetcode.com/problems/advantage-shuffle/) – Greedy assignment to maximize wins.
+* [Hand of Straights](https://leetcode.com/problems/hand-of-straights/) – Greedy consecutive grouping.
 
-- [Task Scheduler](https://leetcode.com/problems/task-scheduler/) - Greedily assign tasks while considering cooldown periods.
+### **3. Greedy Jumping / Path Optimization**
 
-- [Reorganize String](https://leetcode.com/problems/reorganize-string/description/)
+**Greedy Choice Property:**
+At every position, jump to the farthest reachable location, ensuring minimum jumps or guaranteed reachability.
 
-  - Use priority queue to store the character and its frequency(High - Low), then pop the top two elements and add to the result, then add back to the queue if frequency is not zero
-
-  - `Another` approach first check solution exits or not ` Does not exist, maxFrequency >  (n + 1) / 2`  and create max heap and distribute the characters in alternate positions
-    
-    ```java
-     public static String reorganizeString(String s) {
-        Map<Character, Integer> map = new HashMap<>();
-        for (int i = 0; i < s.length(); i++) {
-            map.put(s.charAt(i), map.getOrDefault(s.charAt(i), 0) + 1);
-        }
-        // Max Heap on the key of map
-        Queue<Character> queue = new PriorityQueue<>((a, b) -> map.get(b) - map.get(a));
-        // Push all the key in queue
-        queue.addAll(map.keySet());
-
-        StringBuilder result = new StringBuilder();
-        while (queue.size() >= 2) {
-            Character ch1 = queue.poll();
-            Character ch2 = queue.poll();
-            result.append(ch1);
-            result.append(ch2);
-            map.put(ch1, map.get(ch1) - 1);
-            map.put(ch2, map.get(ch2) - 1);
-
-            if (map.get(ch1) > 0) {
-                queue.add(ch1);
-            }
-            if (map.get(ch2) > 0) {
-                queue.add(ch2);
-            }
-        }
-
-        if (queue.isEmpty()) return result.toString();
-
-        Character ch = queue.poll();
-        if (map.get(ch) > 1) return ""; // If count is greater than 1 than cannot reorganize
-
-        return result.append(ch).toString();
-     }
-    ```
-
-**3. Greedy for Arrays**
+**Key Insight:** Track the farthest reachable position and update jump count when current range is exhausted.
 
 **Examples:**
+* [Jump Game](https://leetcode.com/problems/jump-game/) – Greedy reachability.
+* [Jump Game II](https://leetcode.com/problems/jump-game-ii/) – Greedy farthest jumps.
 
-- [Jump Game](https://leetcode.com/problems/jump-game/) - Determine if you can reach the last index by making greedy jumps.
+### **4. Task Scheduling / Frequency Optimization**
 
-  - Calculate max jump so far from current index, from privious index
-     
-     ```java
-        boolean canJump(int[] nums) {
-            int far = 0;
-            int n = nums.length;
-    
-            for (int i = 0; i < n; i++) {
-                if (i > far) return false;
-                far = Math.max(i + nums[i], far);
-            }
-    
-            return true;   
-        }
-     ```
+**Greedy Choice Property:**
+Process the most frequent or constrained items first to reduce bottlenecks and make optimal assignments.
 
-- [Jump Game II](https://leetcode.com/problems/jump-game-ii/) - Minimum number of jumps needed to reach the last index.
+**Key Insight:** Use frequency maps and priority queues to always handle the most constrained resource first.
 
-   -  When you reached prev jump, then increament the count
-  
-       ```java
-          public int jump(int[] nums) {
-              int far = 0;
-              int reached = 0;
-              int count = 0;
-              int n = nums.length;
-      
-              for (int i = 0; i < n - 1; i++) {
-                  far = Math.max(i + nums[i], far);
-                  if (i == reached) {
-                      count++;
-                      reached = far;
-                  }
-              }
-      
-              return count;
-          }
-        ```
+**Examples:**
+* [Task Scheduler](https://leetcode.com/problems/task-scheduler/) – Use greedy spacing with cooldown.
+* [Reorganize String](https://leetcode.com/problems/reorganize-string/) – Greedy placement by frequency.
+* [Group the People Given the Group Size They Belong To](https://leetcode.com/problems/group-the-people-given-the-group-size-they-belong-to/) – Group based on size constraints.
+* [Partition Labels](https://leetcode.com/problems/partition-labels/) – Greedy cut based on character ranges.
+* [Optimal Partition of String](https://leetcode.com/problems/optimal-partition-of-string/) – Partition when characters repeat.
 
-- [Wiggle Subsequence](https://leetcode.com/problems/wiggle-subsequence/description/)
+### **5. Simulation / Greedy State Management**
 
-    - Greedy DP
-    - Count peak and valley, `peak = valley + 1` , `valley = peak + 1` when you encounter peak and valley twice in a row there will be no change
+**Greedy Choice Property:**
+Simulate the system step-by-step, always making the best move that improves the state immediately or avoids penalty.
 
-    ```java
-    int wiggleMaxLength(int[] nums) {
-        int size = nums.length;
-        int peak = 1;
-        int valley = 1;
-        for (int i = 1; i < size; ++i) {
-            if (nums[i] > nums[i - 1]) {
-                peak = valley + 1;
-            }
-            else if (nums[i] < nums[i - 1]) {
-                valley = peak + 1;
-            }
-        }
-        return Math.max(peak, valley);
-    }
-    ``` 
-- [Car Pooling](https://leetcode.com/problems/car-pooling/description/)
+**Key Insight:** Model the problem as a state machine and make locally optimal transitions.
 
-   - Uses the Sweep Line Algorithm, commonly used for interval-based problems, like `meeting rooms scheduling, car pooling, and skyline problems`
+**Examples:**
+* [Bag of Tokens](https://leetcode.com/problems/bag-of-tokens/) – Two-pointer greedy simulation.
+* [Broken Calculator](https://leetcode.com/problems/broken-calculator/) – Work backward using greedy ops.
+* [Remove Colored Pieces if Both Neighbors are the Same Color](https://leetcode.com/problems/remove-colored-pieces-if-both-neighbors-are-the-same-color/) – Simulate moves.
+* [Eliminate Maximum Number of Monsters](https://leetcode.com/problems/eliminate-maximum-number-of-monsters/) – Sort and simulate.
+* [Candy](https://leetcode.com/problems/candy/) – Greedy peak-down-up allocation.
+* [Car Pooling](https://leetcode.com/problems/car-pooling/) – Greedy simulation of people on the trip.
+* [Gas Station](https://leetcode.com/problems/gas-station/) – Greedily find starting point.
+* [Water the Plants](https://leetcode.com/problems/watering-plants/) – Greedy refill simulation.
 
-   - Convert each trip into two events `Pick up and Drop-off event` then sort by location and capacity
+### **6. Pairing / Matching Optimization**
 
-     ```java
-        boolean carPooling(int[][] trips, int capacity) {
-            List<int[]> location = new ArrayList<>();
+**Greedy Choice Property:**
+Pair elements in a way that yields the best immediate gain, often by sorting or matching complementary pairs.
 
-            // Convert trips into pickup/drop-off events
-            for (int[] trip : trips) {
-                location.add(new int[]{trip[1], trip[0]});  // Pickup event (start location, numPassengers)
-                location.add(new int[]{trip[2], -trip[0]}); // Drop-off event (end location, -numPassengers)
-            }
+**Key Insight:** Sort both arrays and pair optimally, or use frequency maps for palindrome-like matching.
 
-            Comparator<int[]> comparator = (a, b) -> {
-                if (a[0] == b[0]) return a[1] - b[1]; // Pickup before drop-off
-                return a[0] - b[0]; // Sort by location
-            };
+**Examples:**
+* [Longest Palindrome by Concatenating Two Letter Words](https://leetcode.com/problems/longest-palindrome-by-concatenating-two-letter-words/) – Match mirrored words.
+* [Maximum Number of Coins You Can Get](https://leetcode.com/problems/maximum-number-of-coins-you-can-get/) – Sort and pick every 2nd largest.
+* [Rearranging Fruits](https://leetcode.com/problems/rearrange-fruits/) – Equalize baskets via min swaps.
+* [Boats to Save People](https://leetcode.com/problems/boats-to-save-people/) – Minimize boats using two pointers.
 
-            location.sort(comparator);
-            int currentCapacity = 0;
-            for (int[] trip : location) {
-                currentCapacity += trip[1];
+### **7. Digit / Mathematical Greedy**
 
-                if (currentCapacity > capacity) return false;
-            }
+**Greedy Choice Property:**
+Change the highest-impact digits first to maximize/minimize the result using local best choices.
 
-            return true;
-        }
-     ```
-  
-  - [Cinema Seat Allocation](https://leetcode.com/problems/cinema-seat-allocation/description/) 
+**Key Insight:** Leftmost digits have highest place value impact, so prioritize changes there.
 
-     -  Problem involves `set or row comparison`, use bitmask to represent set and compare using `&` operator
+**Examples:**
+* [Maximum 69 Number](https://leetcode.com/problems/maximum-69-number/) – Change first 6 to 9.
+* [Max Difference You Can Get From Changing an Integer](https://leetcode.com/problems/max-difference-you-can-get-from-changing-an-integer/) – Digit replacement for max diff.
+* [Maximum Element After Decreasing and Rearranging](https://leetcode.com/problems/maximum-element-after-decreasing-and-rearranging/) – Sort + fix values.
+* [Patching Array](https://leetcode.com/problems/patching-array/) – Cover all integers with greedy patching.
 
-  - [Group the People Given the Group Size They Belong To](https://leetcode.com/problems/group-the-people-given-the-group-size-they-belong-to/description/)
+### **8. Sequence Optimization / Monotonic Choices**
 
-     - Create a list based on size and add the elements to the list 
+**Greedy Choice Property:**
+Make local decisions about direction, cut points, or position adjustments to globally optimize sequence formation.
 
-     ```java
-        List<List<Integer>> groupThePeople(int[] groupSizes) {
-            List<List<Integer>> result = new ArrayList<>();
-            Map<Integer, List<Integer>> map = new HashMap<>();
+**Key Insight:** Often involves maintaining monotonic properties or making cuts at optimal boundaries.
 
-            for (int i = 0; i < groupSizes.length; i++) {
-                List<Integer> tempList = map.computeIfAbsent(groupSizes[i], (key) -> new ArrayList<>());
-                tempList.add(i);
+**Examples:**
+* [Wiggle Subsequence](https://leetcode.com/problems/wiggle-subsequence/) – Alternate increasing/decreasing greedy detection.
+* [Earliest Possible Day of Full Bloom](https://leetcode.com/problems/earliest-possible-day-of-full-bloom/) – Sort by grow time descending.
+* [Maximum Score of a Good Subarray](https://leetcode.com/problems/maximum-score-of-a-good-subarray/) – Expand greedily around minimum.
+* [Minimum Replacements to Sort the Array](https://leetcode.com/problems/minimum-replacements-to-sort-the-array/) – Greedy splits from right.
+* [Minimum Number of Arrows to Burst Balloons](https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/) – Sort by end points, greedy shooting.
+* [Queue Reconstruction by Height](https://leetcode.com/problems/queue-reconstruction-by-height/) – Sort by height desc, then insert by position.
 
-                if (tempList.size() == groupSizes[i]) {
-                    result.add(map.get(groupSizes[i]));
-                    map.put(groupSizes[i], new ArrayList<>());
-                }
-            }
+### **9. Stock Trading / Buy-Sell Optimization**
 
-          return result;
-      }
-     ``` 
+**Greedy Choice Property:**
+Buy at local minima and sell at local maxima, or maintain running profit by capturing every positive price difference.
 
-- [Partition Labels](https://leetcode.com/problems/partition-labels/) - Partition a string into as many parts as possible such that each letter appears in only one part.
+**Key Insight:** For multiple transactions, capture every profitable opportunity. For single transaction, track minimum price seen so far.
 
-   - Store the last index of each character, then iterate the string and find the last index of each character, if it is equal to current index then partition the string
+**Examples:**
+* [Best Time to Buy and Sell Stock](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/) – Single transaction, track min price.
+* [Best Time to Buy and Sell Stock II](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/) – Multiple transactions, sum all positive differences.
+* [Best Time to Buy and Sell Stock with Transaction Fee](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/) – Account for transaction costs.
 
-- [Candy](https://leetcode.com/problems/candy/) - Distribute candies to children such that each child has at least one candy and children with higher ratings get more candies.
+### **10. Heap/Priority Queue Greedy** ⭐ *New Category*
 
-   - Traverse from left to right, check if left neighbour is greater than current element, If yes then add prev candies plus 1
-   - Traverse from right to left, check if right neighbour is greater than current element, If yes then add max of current candy or next candies plus 1
-   - Can be done in one pass using [Up-Down-Peak Method](https://leetcode.com/problems/candy/solutions/4037646/99-20-greedy-two-one-pass/)
+**Greedy Choice Property:**
+Always process the element with highest/lowest priority first, using a heap to efficiently track the optimal next choice.
 
-- [Minimum Cost to Hire K Workers](https://leetcode.com/problems/minimum-cost-to-hire-k-workers/)
+**Key Insight:** When you need to repeatedly find min/max elements while adding/removing, heap maintains greedy ordering automatically.
+
+**Examples:**
+* [Last Stone Weight](https://leetcode.com/problems/last-stone-weight/) – Always pick two heaviest stones.
+* [Minimum Cost to Connect Sticks](https://leetcode.com/problems/minimum-cost-to-connect-sticks/) – Always merge two smallest sticks.
+* [Find Median from Data Stream](https://leetcode.com/problems/find-median-from-data-stream/) – Two heaps to maintain median.
+* [Top K Frequent Elements](https://leetcode.com/problems/top-k-frequent-elements/) – Min heap of size K.
+* [Kth Largest Element in a Stream](https://leetcode.com/problems/kth-largest-element-in-a-stream/) – Min heap maintenance.
+* [Meeting Rooms III](https://leetcode.com/problems/meeting-rooms-iii/) – Priority queue for room assignment.
+
+### **11. String Construction / Character Arrangement**
+
+**Greedy Choice Property:**
+Build strings by placing characters in positions that maximize future flexibility or satisfy constraints optimally.
+
+**Key Insight:** Process characters by frequency or constraint priority, place in positions that don't block future placements.
+
+**Examples:**
+* [Remove Duplicate Letters](https://leetcode.com/problems/remove-duplicate-letters/) – Monotonic stack with greedy character placement.
+* [Smallest Subsequence of Distinct Characters](https://leetcode.com/problems/smallest-subsequence-of-distinct-characters/) – Similar to remove duplicate letters.
+* [Construct K Palindrome Strings](https://leetcode.com/problems/construct-k-palindrome-strings/) – Greedy palindrome construction.
+
+### **12. Graph Greedy Algorithms**
+
+**Greedy Choice Property:**
+At each step, choose the locally optimal edge or vertex that builds toward the global optimum (shortest path, minimum spanning tree).
+
+**Key Insight:** Classic graph algorithms like Dijkstra and Kruskal are fundamentally greedy approaches.
+
+**Examples:**
+* [Network Delay Time](https://leetcode.com/problems/network-delay-time/) – Dijkstra's shortest path.
+* [Path With Maximum Probability](https://leetcode.com/problems/path-with-maximum-probability/) – Modified Dijkstra.
+* [Minimum Spanning Tree](https://leetcode.com/problems/min-cost-to-connect-all-points/) – Kruskal's/Prim's algorithm.
+* [Cheapest Flights Within K Stops](https://leetcode.com/problems/cheapest-flights-within-k-stops/) – Modified shortest path with constraints.
+
 
 ## Trees
 

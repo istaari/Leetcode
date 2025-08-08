@@ -1,4 +1,87 @@
-## Dynamic Programming
+### **Introduction**
+
+🧩 1. **State**
+
+A **DP state** defines what subproblem you're solving.
+
+**In other words:**
+
+> It is a representation of the problem with a subset of inputs that leads to the full solution.
+
+**Examples:**
+
+* `dp[i]` = the optimal solution (e.g., max/min/count/etc.) considering the first `i` elements.
+* `dp[i][j]` = the solution when considering the first `i` items and a total capacity of `j`.
+* `dp[mask]` = the result when a subset of elements (represented by bitmask `mask`) has been processed.
+* `F(n)` =the result (e.g., number of ways, max value, min cost, etc.) for input size or parameter n.
+
+**You choose a state by answering:**
+
+> What parameters do I need to uniquely define a subproblem?
+
+
+🔁 2. **Transition**
+
+A **transition** tells you how to compute the value of the current state using previously computed states.
+
+**In other words:**
+
+> It defines how to move from smaller subproblems to bigger ones.
+
+**Example:**
+
+If `dp[i]` is the number of ways to reach step `i`, and you can take 1 or 2 steps at a time:
+
+```
+dp[i] = dp[i-1] + dp[i-2]
+```
+
+Transitions are based on:
+
+* Choices you can make
+* Constraints of the problem
+* Recurrence relations
+
+
+🧱 3. **Base Case**
+
+A **base case** is where your DP starts — the smallest or simplest subproblem that can be solved directly.
+
+**In other words:**
+
+> It provides the initial value(s) to build the rest of the DP table.
+
+**Example:**
+
+If you are counting the number of ways to climb stairs:
+
+```
+dp[0] = 1   # 1 way to stay at ground level (do nothing)
+dp[1] = 1   # 1 way to take the first step
+```
+
+You **must always define** the base case correctly — it anchors your solution.
+
+
+### **Memory Optimization**
+
+- Reduce dimensions: e.g., from dp[i][j] to just dp[j] if only the previous row is needed.
+- Use rolling arrays or swap between two arrays.
+- Use bitmasking to represent states efficiently.
+
+
+### **Optimization Techniques**
+
+- Convex Hull Trick / Li Chao Tree (for certain DP recurrences)
+- Divide and Conquer Optimization
+- Monotonic Queue Optimization
+- Knuth’s Optimization
+- Bitmasking for subset-related problems
+- DP on Trees for hierarchical structures
+- DP with Binary Search for range-based decisions
+
+
+## Problems List
 
 ### **1. Fibonacci Variations**
 

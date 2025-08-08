@@ -1,6 +1,5 @@
 package leetcode.linkedList;
 
-import neetcode150.linkedList.ListNode;
 
 public class LinkedListIntersection {
 

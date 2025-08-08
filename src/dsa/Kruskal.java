@@ -114,6 +114,7 @@ public class Kruskal {
         kruskal.addEdge(2, 3, 4);
 
         System.out.println(kruskal.findMST().toString());// Total weight = 4 + 5 + 10 = 19
+        
     }
 
 

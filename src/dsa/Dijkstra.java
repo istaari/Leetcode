@@ -89,6 +89,8 @@ public class Dijkstra {
         for (int i = 0; i < V; i++) {
             System.out.println("Vertex " + i + ": " + distances1[i]);
         }
+
+        
     }
 }
 

@@ -54,6 +54,7 @@ public class BellmanFord {
         }
 
         return dist;
+
     }
 
     public static void main(String[] args) {

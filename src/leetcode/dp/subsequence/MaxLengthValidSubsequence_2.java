@@ -1,6 +1,5 @@
 package leetcode.dp.subsequence;
 
-import java.sql.Array;
 import java.util.Arrays;
 
 public class MaxLengthValidSubsequence_2 {
