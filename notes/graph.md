@@ -1,54 +1,3 @@
-## Graph
-
-### Traversal Algorithms
-
-| Algorithm                      | Description                  |
-|--------------------------------|------------------------------|
-| **DFS (Depth First Search)**   | Traverses graph depth-wise   |
-| **BFS (Breadth First Search)** | Traverses graph breadth-wise |
-
-### Shortest Path Algorithms
-
-| Algorithm                    | Description                                |
-|------------------------------|--------------------------------------------|
-| **Dijkstra's Algorithm**     | For non-negative weights                   |
-| **Bellman-Ford Algorithm**   | Handles negative weights                   |
-| **Floyd-Warshall Algorithm** | All-pairs shortest paths                   |
-| **Johnson's Algorithm**      | All-pairs shortest paths for sparse graphs |
-| **A(Star) Search Algorithm** | Heuristic-based shortest path              |
-| **Bidirectional Search**     | Searches from both start and goal          |
-
-### Minimum Spanning Tree (MST) Algorithms
-
-| Algorithm               | Description                         |
-|-------------------------|-------------------------------------|
-| **Prim's Algorithm**    | Greedy algorithm for MST            |
-| **Kruskal's Algorithm** | Greedy algorithm using edge sorting |
-
-### Cycle Detection
-
-| Algorithm                                 | Description                                    |
-|-------------------------------------------|------------------------------------------------|
-| **Union-Find (Disjoint Set Union – DSU)** | For undirected graphs                          |
-| **DFS-based Cycle Detection**             | For directed graphs                            |
-| **Kahn's Algorithm**                      | BFS-based topological sort for cycle detection |
-
-### Topological Sorting
-
-| Algorithm                        | Description                            |
-|----------------------------------|----------------------------------------|
-| **DFS-based Topological Sort**   | Orders vertices in a DAG               |
-| **Kahn's Algorithm (BFS-based)** | Alternative topological sorting method |
-
-### Connected Components
-
-| Algorithm                | Description                                     |
-|--------------------------|-------------------------------------------------|
-| **DFS/BFS**              | Finds connected components in undirected graphs |
-| **Kosaraju's Algorithm** | Finds strongly connected components (SCC)       |
-| **Tarjan's Algorithm**   | SCC detection using low-link values             |
-| **Union-Find**           | Efficient for connectivity queries              |
-
 ### **1. DFS and BFS Traversal Problems**
 
 **Examples:**
@@ -290,5 +239,17 @@
 | **Kuhn's Algorithm**    | DFS-based approach for unweighted bipartite graphs                               | O(V × E)        |
 
 
-### **11. DP on Graph**
+### **Tree Algorithms(Special Graph)**
+
+**LCA (Lowest Common Ancestor)**
+
+**Tree Diameter**
+
+**Heavy-Light Decomposition**
+
+
+### **Eulerian Path and Circuit**
+
+
+### **Hamiltonian Path and Circuit**
 

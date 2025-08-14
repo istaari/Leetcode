@@ -63,20 +63,17 @@ dp[1] = 1   # 1 way to take the first step
 You **must always define** the base case correctly — it anchors your solution.
 
 
-### **Memory Optimization**
-
-- Reduce dimensions: e.g., from dp[i][j] to just dp[j] if only the previous row is needed.
-- Use rolling arrays or swap between two arrays.
-- Use bitmasking to represent states efficiently.
-
-
 ### **Optimization Techniques**
 
+- Space Optimization (Reducing DP Array Dimensions, rolling arrays or swap between two arrays)
+- State Compression (Bitmask DP)
 - Convex Hull Trick / Li Chao Tree (for certain DP recurrences)
 - Divide and Conquer Optimization
 - Monotonic Queue Optimization
 - Knuth’s Optimization
-- Bitmasking for subset-related problems
+
+### **Misc.**
+
 - DP on Trees for hierarchical structures
 - DP with Binary Search for range-based decisions
 
