@@ -669,176 +669,6 @@
 - [Greedy Template](https://huaguo.substack.com/p/greedy-algorithm)
 
 
-### **1. Interval Scheduling / Coverage**
-
-**Greedy Choice Property:**
-Always choose the interval (or action) that finishes earliest or covers the most without overlap, to leave space for future decisions.
-
-**Key Insight:** Sort by end time for scheduling, or by coverage span for interval problems.
-
-**Examples:**
-* [Merge Intervals](https://leetcode.com/problems/merge-intervals/) – Merge overlapping intervals.
-* [Non-overlapping Intervals](https://leetcode.com/problems/non-overlapping-intervals/) – Remove minimum intervals to avoid overlaps.
-* [Insert Interval](https://leetcode.com/problems/insert-interval/) – Insert while maintaining sorted non-overlapping list.
-* [Meeting Rooms I](https://leetcode.com/problems/meeting-rooms/) – Can all meetings be attended without conflict?
-* [Meeting Rooms II](https://leetcode.com/problems/meeting-rooms-ii/) – Minimum number of meeting rooms required.
-* [Minimum Number of Taps to Open to Water a Garden](https://leetcode.com/problems/minimum-number-of-taps-to-open-to-water-a-garden/) – Min cover using greedy interval selection.
-* [Video Stitching](https://leetcode.com/problems/video-stitching/) – Minimum clips to cover time range.
-
-### **2. Greedy + Sorting (Cost/Benefit Optimization)**
-
-**Greedy Choice Property:**
-Sort elements by cost/requirement/benefit ratio, and take the cheapest or most optimal available option at each step.
-
-**Key Insight:** The sorting criteria determines the greedy choice - sort by what matters most for the objective.
-
-**Examples:**
-* [Minimum Cost to Hire K Workers](https://leetcode.com/problems/minimum-cost-to-hire-k-workers/) – Greedy ratio + sorting.
-* [Minimum Increment to Make Array Unique](https://leetcode.com/problems/minimum-increment-to-make-array-unique/) – Sort and fix duplicates.
-* [Maximum Bags With Full Capacity of Rocks](https://leetcode.com/problems/maximum-bags-with-full-capacity-of-rocks/) – Sort by required space.
-* [Maximum Ice Cream Bars](https://leetcode.com/problems/maximum-ice-cream-bars/) – Buy cheapest until budget exhausted.
-* [Minimum Rounds to Complete All Tasks](https://leetcode.com/problems/minimum-rounds-to-complete-all-tasks/) – Greedy group by frequency.
-* [Least Number of Unique Integers after K Removals](https://leetcode.com/problems/least-number-of-unique-integers-after-k-removals/) – Remove lowest frequencies.
-* [Assign Cookies](https://leetcode.com/problems/assign-cookies/) – Match smallest cookie to smallest child requirement.
-* [Advantage Shuffle](https://leetcode.com/problems/advantage-shuffle/) – Greedy assignment to maximize wins.
-* [Hand of Straights](https://leetcode.com/problems/hand-of-straights/) – Greedy consecutive grouping.
-
-### **3. Greedy Jumping / Path Optimization**
-
-**Greedy Choice Property:**
-At every position, jump to the farthest reachable location, ensuring minimum jumps or guaranteed reachability.
-
-**Key Insight:** Track the farthest reachable position and update jump count when current range is exhausted.
-
-**Examples:**
-* [Jump Game](https://leetcode.com/problems/jump-game/) – Greedy reachability.
-* [Jump Game II](https://leetcode.com/problems/jump-game-ii/) – Greedy farthest jumps.
-
-### **4. Task Scheduling / Frequency Optimization**
-
-**Greedy Choice Property:**
-Process the most frequent or constrained items first to reduce bottlenecks and make optimal assignments.
-
-**Key Insight:** Use frequency maps and priority queues to always handle the most constrained resource first.
-
-**Examples:**
-* [Task Scheduler](https://leetcode.com/problems/task-scheduler/) – Use greedy spacing with cooldown.
-* [Reorganize String](https://leetcode.com/problems/reorganize-string/) – Greedy placement by frequency.
-* [Group the People Given the Group Size They Belong To](https://leetcode.com/problems/group-the-people-given-the-group-size-they-belong-to/) – Group based on size constraints.
-* [Partition Labels](https://leetcode.com/problems/partition-labels/) – Greedy cut based on character ranges.
-* [Optimal Partition of String](https://leetcode.com/problems/optimal-partition-of-string/) – Partition when characters repeat.
-
-### **5. Simulation / Greedy State Management**
-
-**Greedy Choice Property:**
-Simulate the system step-by-step, always making the best move that improves the state immediately or avoids penalty.
-
-**Key Insight:** Model the problem as a state machine and make locally optimal transitions.
-
-**Examples:**
-* [Bag of Tokens](https://leetcode.com/problems/bag-of-tokens/) – Two-pointer greedy simulation.
-* [Broken Calculator](https://leetcode.com/problems/broken-calculator/) – Work backward using greedy ops.
-* [Remove Colored Pieces if Both Neighbors are the Same Color](https://leetcode.com/problems/remove-colored-pieces-if-both-neighbors-are-the-same-color/) – Simulate moves.
-* [Eliminate Maximum Number of Monsters](https://leetcode.com/problems/eliminate-maximum-number-of-monsters/) – Sort and simulate.
-* [Candy](https://leetcode.com/problems/candy/) – Greedy peak-down-up allocation.
-* [Car Pooling](https://leetcode.com/problems/car-pooling/) – Greedy simulation of people on the trip.
-* [Gas Station](https://leetcode.com/problems/gas-station/) – Greedily find starting point.
-* [Water the Plants](https://leetcode.com/problems/watering-plants/) – Greedy refill simulation.
-
-### **6. Pairing / Matching Optimization**
-
-**Greedy Choice Property:**
-Pair elements in a way that yields the best immediate gain, often by sorting or matching complementary pairs.
-
-**Key Insight:** Sort both arrays and pair optimally, or use frequency maps for palindrome-like matching.
-
-**Examples:**
-* [Longest Palindrome by Concatenating Two Letter Words](https://leetcode.com/problems/longest-palindrome-by-concatenating-two-letter-words/) – Match mirrored words.
-* [Maximum Number of Coins You Can Get](https://leetcode.com/problems/maximum-number-of-coins-you-can-get/) – Sort and pick every 2nd largest.
-* [Rearranging Fruits](https://leetcode.com/problems/rearrange-fruits/) – Equalize baskets via min swaps.
-* [Boats to Save People](https://leetcode.com/problems/boats-to-save-people/) – Minimize boats using two pointers.
-
-### **7. Digit / Mathematical Greedy**
-
-**Greedy Choice Property:**
-Change the highest-impact digits first to maximize/minimize the result using local best choices.
-
-**Key Insight:** Leftmost digits have highest place value impact, so prioritize changes there.
-
-**Examples:**
-* [Maximum 69 Number](https://leetcode.com/problems/maximum-69-number/) – Change first 6 to 9.
-* [Max Difference You Can Get From Changing an Integer](https://leetcode.com/problems/max-difference-you-can-get-from-changing-an-integer/) – Digit replacement for max diff.
-* [Maximum Element After Decreasing and Rearranging](https://leetcode.com/problems/maximum-element-after-decreasing-and-rearranging/) – Sort + fix values.
-* [Patching Array](https://leetcode.com/problems/patching-array/) – Cover all integers with greedy patching.
-
-### **8. Sequence Optimization / Monotonic Choices**
-
-**Greedy Choice Property:**
-Make local decisions about direction, cut points, or position adjustments to globally optimize sequence formation.
-
-**Key Insight:** Often involves maintaining monotonic properties or making cuts at optimal boundaries.
-
-**Examples:**
-* [Wiggle Subsequence](https://leetcode.com/problems/wiggle-subsequence/) – Alternate increasing/decreasing greedy detection.
-* [Earliest Possible Day of Full Bloom](https://leetcode.com/problems/earliest-possible-day-of-full-bloom/) – Sort by grow time descending.
-* [Maximum Score of a Good Subarray](https://leetcode.com/problems/maximum-score-of-a-good-subarray/) – Expand greedily around minimum.
-* [Minimum Replacements to Sort the Array](https://leetcode.com/problems/minimum-replacements-to-sort-the-array/) – Greedy splits from right.
-* [Minimum Number of Arrows to Burst Balloons](https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/) – Sort by end points, greedy shooting.
-* [Queue Reconstruction by Height](https://leetcode.com/problems/queue-reconstruction-by-height/) – Sort by height desc, then insert by position.
-
-### **9. Stock Trading / Buy-Sell Optimization**
-
-**Greedy Choice Property:**
-Buy at local minima and sell at local maxima, or maintain running profit by capturing every positive price difference.
-
-**Key Insight:** For multiple transactions, capture every profitable opportunity. For single transaction, track minimum price seen so far.
-
-**Examples:**
-* [Best Time to Buy and Sell Stock](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/) – Single transaction, track min price.
-* [Best Time to Buy and Sell Stock II](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/) – Multiple transactions, sum all positive differences.
-* [Best Time to Buy and Sell Stock with Transaction Fee](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/) – Account for transaction costs.
-
-### **10. Heap/Priority Queue Greedy**
-
-**Greedy Choice Property:**
-Always process the element with highest/lowest priority first, using a heap to efficiently track the optimal next choice.
-
-**Key Insight:** When you need to repeatedly find min/max elements while adding/removing, heap maintains greedy ordering automatically.
-
-**Examples:**
-* [Last Stone Weight](https://leetcode.com/problems/last-stone-weight/) – Always pick two heaviest stones.
-* [Minimum Cost to Connect Sticks](https://leetcode.com/problems/minimum-cost-to-connect-sticks/) – Always merge two smallest sticks.
-* [Find Median from Data Stream](https://leetcode.com/problems/find-median-from-data-stream/) – Two heaps to maintain median.
-* [Top K Frequent Elements](https://leetcode.com/problems/top-k-frequent-elements/) – Min heap of size K.
-* [Kth Largest Element in a Stream](https://leetcode.com/problems/kth-largest-element-in-a-stream/) – Min heap maintenance.
-* [Meeting Rooms III](https://leetcode.com/problems/meeting-rooms-iii/) – Priority queue for room assignment.
-
-### **11. String Construction / Character Arrangement**
-
-**Greedy Choice Property:**
-Build strings by placing characters in positions that maximize future flexibility or satisfy constraints optimally.
-
-**Key Insight:** Process characters by frequency or constraint priority, place in positions that don't block future placements.
-
-**Examples:**
-* [Remove Duplicate Letters](https://leetcode.com/problems/remove-duplicate-letters/) – Monotonic stack with greedy character placement.
-* [Smallest Subsequence of Distinct Characters](https://leetcode.com/problems/smallest-subsequence-of-distinct-characters/) – Similar to remove duplicate letters.
-* [Construct K Palindrome Strings](https://leetcode.com/problems/construct-k-palindrome-strings/) – Greedy palindrome construction.
-
-### **12. Graph Greedy Algorithms**
-
-**Greedy Choice Property:**
-At each step, choose the locally optimal edge or vertex that builds toward the global optimum (shortest path, minimum spanning tree).
-
-**Key Insight:** Classic graph algorithms like Dijkstra and Kruskal are fundamentally greedy approaches.
-
-**Examples:**
-* [Network Delay Time](https://leetcode.com/problems/network-delay-time/) – Dijkstra's shortest path.
-* [Path With Maximum Probability](https://leetcode.com/problems/path-with-maximum-probability/) – Modified Dijkstra.
-* [Minimum Spanning Tree](https://leetcode.com/problems/min-cost-to-connect-all-points/) – Kruskal's/Prim's algorithm.
-* [Cheapest Flights Within K Stops](https://leetcode.com/problems/cheapest-flights-within-k-stops/) – Modified shortest path with constraints.
-
-
 ## Trees
 
 - `Inorder successor(smallest element in left subtree from right node)` is next node element in inorder traversal(Sorted Element in BST)
@@ -1334,6 +1164,63 @@ Here are the descriptions for all four problems in the requested format:
 
 ---
 
+
+## Design
+
+
+###  1. Cache & Advanced DS Design (High Value)
+
+* [**Insert Delete GetRandom O(1)**](https://leetcode.com/problems/insert-delete-getrandom-o1/) – Design a data structure that supports insert, delete, and get random element in average O(1) time.
+
+* [**Insert Delete GetRandom O(1) – Duplicates allowed**](https://leetcode.com/problems/insert-delete-getrandom-o1-duplicates-allowed/) – Extend the above to handle duplicates while keeping O(1) operations.
+
+* [**All O\`one Data Structure**](https://leetcode.com/problems/all-oone-data-structure/) – Implement a structure that supports increment, decrement, and retrieving max/min keys in O(1).
+
+* [**LFU Cache**](https://leetcode.com/problems/lfu-cache/) – Design a Least Frequently Used cache with O(1) operations using hash map + doubly linked list.
+
+* [**Dinner Plate Stacks**](https://leetcode.com/problems/dinner-plate-stacks/) – Simulate stacks with capacity constraints, supporting push/pop efficiently with a priority queue.
+
+* [**Design Skiplist**](https://leetcode.com/problems/design-skiplist/) – Implement a probabilistic data structure (skip list) supporting search, insert, and erase in O(log n).
+
+* [**Snapshot Array**](https://leetcode.com/problems/snapshot-array/) – Create an array that supports snapshots (versioning) with efficient get and set operations.
+
+
+###  2. System / Real-World Inspired Designs (Medium–High Value)
+
+
+* [**Design Circular Deque**](https://leetcode.com/problems/design-circular-deque/) – Extend circular queue to allow insert/delete at both ends efficiently.
+
+* [**My Calendar I**](https://leetcode.com/problems/my-calendar-i/) – Book intervals in a calendar ensuring no overlaps using binary search tree.
+
+* [**My Calendar II**](https://leetcode.com/problems/my-calendar-ii/) – Extend calendar booking to allow double bookings but prevent triple overlaps.
+
+* [**My Calendar III**](https://leetcode.com/problems/my-calendar-iii/) – Further extend calendar to return the maximum number of concurrent bookings.
+
+* [**Maximum Frequency Stack**](https://leetcode.com/problems/maximum-frequency-stack/) – Implement a stack-like structure that pops the most frequent element first.
+
+* [**Online Stock Span**](https://leetcode.com/problems/online-stock-span/) – Compute stock spans using a monotonic stack for online queries.
+
+
+###  3. String / Trie Based Designs (Medium Value)
+
+* [**Implement Magic Dictionary**](https://leetcode.com/problems/implement-magic-dictionary/) – Build a dictionary supporting search with one-character modification.
+
+* [**Map Sum Pairs**](https://leetcode.com/problems/map-sum-pairs/) – Implement a map that allows prefix-sum queries using a Trie.
+
+* [**Stream of Characters**](https://leetcode.com/problems/stream-of-characters/) – Design a system that checks if recent characters form any word in a dictionary.
+
+* [**Encrypt and Decrypt Strings**](https://leetcode.com/problems/encrypt-and-decrypt-strings/) – Create a string encryption/decryption system using mapping rules.
+
+
+---
+
+## Number Theory
+
+
+
+
+
+---
 
 ## Bit Manipulation
 

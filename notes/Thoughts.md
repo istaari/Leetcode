@@ -28,51 +28,57 @@
 
 ## Greedy
 
-### 1. **Sorting-Based Greedy**
-- **When dealing with arrays or intervals,** first **sort the data** based on a key criterion.
-  - **Use Cases:**
-    - Interval scheduling / merging → Sort by start or end time.
-    - Activity selection → Sort by earliest finishing time.
-    - Job scheduling → Sort by profit or deadline.
-  - **Tip:** Think: "What decision can I make *now* that leaves the best options for *later*?"
+### 1. Sorting-Based Greedy
 
-### 2. **Heap-Based Greedy**
-- **When managing dynamic optimal elements, use a heap (priority queue)** to maintain access to the current **min or max**.
-  - **Use Cases:**
-    - Top K elements → Min-heap for smallest K.
-    - Meeting rooms → Min-heap by end time.
-    - Task scheduler → Max-heap by frequency.
-  - **Tip:** Push/pull tasks based on priority. Always ask: "What is the best next choice based on current values?"
+This is the most common pattern. The greedy choice is made possible by first sorting the data. The sorting criteria is the **key insight** that reveals the greedy strategy.
 
-### 3. **Stack-Based Greedy**
-- **When maintaining a "history" or handling order-sensitive sequences, use a stack**.
-  - **Use Cases:**
-    - Remove K digits → Maintain increasing stack.
-    - Build smallest lexicographical string → Pop when current is smaller than top.
-    - Monotonic stack problems → Keep track of previous/next greater or smaller.
-  - **Tip:** Think of a "clean-up" mechanism: "Can I pop from the stack to make a better decision?"
+* **Core Idea:** Sort the input based on a specific property (e.g., end time, cost, length) that helps make the optimal local decision at each step.
+* **When to Use:** When the problem seems to involve picking the "best" item, but the "best" isn't obvious until you order the options.
 
-### 4. **Greedy with Counting/Frequency**
-- **When tracking frequency or availability, use hash maps or arrays.**
-  - **Use Cases:**
-    - Reorganize string → Max-heap by frequency.
-    - Can place flowers → Count possible placements greedily.
-    - Task scheduler (cooldown) → Use frequency maps.
+* **Examples:**
+    * **Interval Problems:** Sort by end time to maximize the number of non-overlapping intervals. (e.g., `Non-overlapping Intervals`, `Meeting Rooms II`).
+    * **Cost/Benefit Problems:** Sort by cost or a cost-to-benefit ratio to make the most efficient choices. (e.g., `Maximum Bags With Full Capacity of Rocks`, `Minimum Cost to Hire K Workers`, `Assign Cookies`).
+    * **Monotonic Arrays:** Sort to create a consistent order that allows for a greedy sweep. (e.g., `Maximum Element After Decreasing and Rearranging`, `Minimum Replacements to Sort the Array`).
+    * **Two-Pointer/Paired Problems:** Sorting allows you to use two pointers to find optimal pairs. (e.g., `Boats to Save People`, `Maximum Number of Coins You Can Get`).
 
-### 5. **Greedy with Two Pointers / Sliding Window**
-- **When optimizing over a range or scanning a sequence, use two pointers.**
-  - **Use Cases:**
-    - Gas station → Greedily look for a valid starting point.
-    - Jump game → Track max reach at each step.
-    - Candy distribution → Greedy forward and backward passes.
 
-### 6. **Greedy Choice Property (Key Insight)**
-- Ask yourself: **Can I make a local decision without considering future consequences?**
-- If yes → A greedy strategy might work.
-- **Test this by trying:**
-  - Proof by contradiction.
-  - Greedy stays ahead method.
-  - Exchange argument.
+### 2. Heap-Based Greedy
+
+This is a specific kind of sorting-based greedy approach. Instead of a full sort, you use a heap to continuously get the next "best" item (the min or max) as you go.
+
+* **Core Idea:** Use a **min-heap** or **max-heap** to always have immediate access to the element that should be processed next based on a greedy criteria.
+* **When to Use:** When the "best" item changes dynamically as you make choices, and you need to repeatedly find the minimum or maximum from a changing set of values.
+
+* **Examples:**
+    * **Merging/Combining:** Repeatedly merge the two smallest elements. (e.g., `Minimum Cost to Connect Sticks`).
+    * **Constraint-based:** Always process the most frequent or most constrained item first. (e.g., `Task Scheduler`, `Reorganize String`).
+    * **Running Min/Max:** Maintain the k-th largest/smallest element or a median. (e.g., `Top K Frequent Elements`, `Last Stone Weight`).
+    * **Graph Algorithms:** Prioritize nodes with the shortest distance or lowest cost. (e.g., `Dijkstra's Algorithm`, `Prim's Algorithm`).
+
+
+### 3. Local Maxima/Farthest Jump
+
+This pattern is about making the most aggressive move at each step to reach a destination as quickly as possible.
+
+* **Core Idea:** At your current position, make a choice that gets you the farthest possible, with the goal of reaching the end in the minimum number of steps.
+* **When to Use:** Problems that involve movement, such as jumps, covering a range, or moving along a path.
+
+* **Examples:**
+    * **Jump Games:** Find the farthest reachable point from your current position. (e.g., `Jump Game`, `Jump Game II`).
+    * **Coverage Problems:** At each step, choose the interval or tap that extends your coverage the farthest. (e.g., `Minimum Number of Taps to Open to Water a Garden`, `Video Stitching`).
+    * **Pathfinding:** Find a path that maximizes or minimizes a value by greedily choosing the best next step. (e.g., `Gas Station`, `Wiggle Subsequence`).
+
+### 4. Reverse/Digit Greedy
+
+This is a clever pattern where it's easier to find the solution by working backward from the goal or by targeting the most significant parts of the input first.
+
+* **Core Idea:** Instead of building the solution forward, work backward from the target state or make changes to the most impactful digits first.
+* **When to Use:** When the forward path is complex, but the reverse path is clear, or when you need to make changes that have the greatest effect on the final value.
+
+* **Examples:**
+    * **Reverse Operations:** Work backward from the target to the start state, which is often a simpler path. (e.g., `Broken Calculator`).
+    * **Digit Manipulation:** Modify the most significant (leftmost) digits first, as they have the greatest impact on the number's value. (e.g., `Maximum 69 Number`, `Max Difference You Can Get From Changing an Integer`).
+
 
 ## Dynamic Programming
 
