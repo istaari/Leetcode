@@ -2,7 +2,7 @@ package leetcode.matrix;
 
 import java.util.Arrays;
 
-public class SpiralMatrix2 {
+public class SpiralMatrix_2 {
 
     public static int[][] generateMatrix(int n) {
         int[][] result = new int[n][n];

@@ -3,6 +3,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "ArrayDoubledPairs",
+            "request": "launch",
+            "mainClass": "ArrayDoubledPairs",
+            "projectName": "problem-solving_bfd47579"
+        },
+        {
+            "type": "java",
             "name": "PredictTheWinner",
             "request": "launch",
             "mainClass": "leetcode.dp.gameTheory.PredictTheWinner",

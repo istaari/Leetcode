@@ -17,5 +17,4 @@ public class WaterJugProblem {
         return target % GCD(x, y) == 0;
     }
 
-
 }

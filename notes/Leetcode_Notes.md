@@ -1245,18 +1245,19 @@ Here are the descriptions for all four problems in the requested format:
 
 ### Set Operations Using Bitmask
 
-| Operation        | Code Example               |
-|------------------|----------------------------|
-| Union            | `A \ B`                    |
-| Intersection     | `A & B`                    |
-| Subtraction      | `A & ~B`                   |
-| Negation         | `A ^ A` or `~A`            |
-| Set bit          | `A \= 1 << bit`            |
-| Clear bit        | `A &= ~(1 << bit)`         |
-| Test bit         | `(A & (1 << bit)) != 0`    |
-| Extract last bit | `A & -A` or `A & ~(A - 1)` |
-| Remove last bit  | `A & (A - 1)`              |
-| All 1-bits       | `~0`                       |
+
+| Operation | Code Example | Explanation with Example |
+| :--- | :--- | :--- |
+| **Union** | `A \| B` | Combines elements from both sets. Example: `5 \| 6` (`...00000101 \| ...00000110`) = `7` (`...00000111`). The resulting set is `{0, 1, 2}`. |
+| **Intersection** | `A & B` | Finds elements common to both sets. Example: `5 & 6` (`...00000101 & ...00000110`) = `4` (`...00000100`). The resulting set is `{2}`. |
+| **Subtraction** | `A & ~B` | Removes elements of B from A. Example: `5 & ~6`. `~6` is `...11111001`. `5 & ...11111001` = `1` (`...00000001`). The resulting set is `{0}`. |
+| **Negation** | `~A` | Creates a set of all elements *not* in A (the complement set). Example: `~5` (`~...00000101`) = `...11111010`. |
+| **Set bit** | `A \|= (1 << bit)` | Adds a specific element (`bit`) to the set. Example: Add element 3 to set A: `5 \|= (1 << 3)`. `(1 << 3)` is `...00001000`. `5 \|= 8` = `13` (`...00001101`). The new set is `{0, 2, 3}`. |
+| **Clear bit** | `A &= ~(1 << bit)` | Removes a specific element (`bit`) from the set. Example: Remove element 2 from set A: `5 &= ~(1 << 2)`. `~(1 << 2)` is `~4` or `...11111011`. `5 &= ~4` = `1` (`...00000001`). The new set is `{0}`. |
+| **Test bit** | `(A & (1 << bit)) != 0` | Checks if a specific element (`bit`) exists in the set. Example: Is element 2 in set A? `(5 & (1 << 2)) != 0`. `(5 & 4)` = `4`. Since `4 != 0`, the answer is true. |
+| **Extract last bit**| `A & -A` | Isolates the lowest-order `1` bit (the smallest element in the set). Example: `6 & -6`. In two's complement, `-6` is `...11111010`. `6 & -6` (`...00000110 & ...11111010`) = `2` (`...00000010`). This tells you the lowest element is `1` (since $2 = 2^1$). |
+| **Remove last bit**| `A & (A - 1)`| Clears the lowest-order `1` bit. Example: `6 & (6 - 1)`. `6 - 1 = 5`. `6 & 5` (`...00000110 & ...00000101`) = `4` (`...00000100`). The new set is `{2}`. |
+| **All 1-bits**| `~0` | Represents a universal set containing all possible elements (all bits are `1`). In a 32-bit integer, this is all `1`s. |
 
 
 ---
