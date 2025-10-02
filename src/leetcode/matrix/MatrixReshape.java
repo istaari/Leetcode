@@ -5,8 +5,7 @@ import java.util.Arrays;
 @SuppressWarnings("all")
 public class MatrixReshape {
 
-    // https://leetcode.com/problems/reshape-the-matrix/description/
-
+    //https://leetcode.com/problems/reshape-the-matrix/description/
     public static int[][] matrixReshape(int[][] mat, int r, int c) {
         int n = mat.length;
         int m = mat[0].length;
@@ -23,16 +22,11 @@ public class MatrixReshape {
                 temp[i * m + j] = mat[i][j];
             }
         }
-
-        // Then convert 1D array(i * columnLength + j) into required shape
-//        for (int i = 0; i < r; i++) {
-//            for (int j = 0; j < c; j++) {
-//                result[i][j] = temp[i * c + j];
-//            }
-//        }
-
-        for(int i = 0; i < temp.length; i++){
-            result[i / c][ i % c] = temp[i];
+        // Now convert 1D array to 2D array, i * columnLength + j, with new column length
+        for (int i = 0; i < r; i++) {
+            for (int j = 0; j < c; j++) {
+                result[i][j] = temp[i * c + j];
+            }
         }
 
         return result;

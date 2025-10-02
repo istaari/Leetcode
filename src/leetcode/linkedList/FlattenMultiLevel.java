@@ -3,7 +3,7 @@ package leetcode.linkedList;
 public class FlattenMultiLevel {
 
     // Definition for a Node.
-    class Node {
+    static class Node {
         public int val;
         public Node prev;
         public Node next;
@@ -11,7 +11,7 @@ public class FlattenMultiLevel {
     }
 
 
-    public Node flatten(Node head, Node tail) {
+    Node flatten(Node head, Node tail) {
         if (head == null) return tail;
 
         head.next = flatten(head.child, flatten(head.next, tail));
@@ -24,9 +24,8 @@ public class FlattenMultiLevel {
         return head;
     }
 
-    public Node flatten(Node head) {
+    Node flatten(Node head) {
         return flatten(head, null);
     }
-
 
 }

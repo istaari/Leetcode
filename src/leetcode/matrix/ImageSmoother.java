@@ -41,12 +41,7 @@ public class ImageSmoother {
     }
 
     public static void main(String[] args) {
-        int[][] img = {
-                {100, 200, 100},
-                {200, 50, 200},
-                {100, 200, 100}
-        };
-
+        int[][] img = {{100, 200, 100}, {200, 50, 200}, {100, 200, 100}};
         System.out.println(Arrays.deepToString(imageSmoother(img))); // [[137,141,137],[141,138,141],[137,141,137]]
     }
 }

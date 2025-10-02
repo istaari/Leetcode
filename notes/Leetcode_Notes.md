@@ -1,15 +1,6 @@
 
 # Algorithms and Data Structures
 
-
-## Formulas
-
-- Number of subarrays and substrings = `n(n+1) / 2`
-- Number of subsequences = `2^n - 1`
-- Number of subsets = `2^n`
-- Number of contiguous subarrays with size `k` = `n - k + 1`
-
-
 ## Sorting
 
 | **Sorting Algorithm** | **Type**                   | **Time Complexity (Avg/Worst)** | **Space Complexity** | **Stable?**   | **When to Use**                                                            |
@@ -166,17 +157,6 @@
 
 ## Array
 
-- For Circular Array, use `i % n` to get the correct index `i < n * 2`
-- For negative index, `(i % n + n) % n`
-- For odd length array  `n / 2` gives the `middle index`
-- For even length array `n / 2 - 1` -  lower middle index  and `n / 2` - upper middle index
-- Middle index based on last index
-   - For odd length array `lastIndex + 1 / 2` 
-   - For even length array `(lastIndex + 1 / 2) - 1` - Lower middle index and `(lastIndex + 1 / 2)` - Upper middle index
-- Rotated Index in Rotated Arrays
-   - `(i + k) % n` (for right rotation by k).
-   - `(i - k + n) % n` (for left rotation by k)
-
 **1. Subarrays** 
 
 - Total Subarrays = `n * (n + 1) / 2`
@@ -212,10 +192,6 @@
 
 ---
 ## Binary Search
-
-- `low + (high - low) / 2`  - Selects lower middle, if there are even elments 
-- `low + high / 2`  - Selects lower middle, if there are even elments 
-- `low + (high - low + 1) / 2`  - Selects upper middle, if there are even elments 
 
 - `Binary Search for the First True in a Boolean Array` or `Binary Search for the First Valid Element`
 
@@ -453,15 +429,6 @@
 ---
 
 ## Sliding Window
-
-- Window Size = `j - i + 1`
-- Remove first element from window `i - k` k is window size
-- Circular Sliding Window
-   - Start of the window - `i % n`
-   - End of the window - `(i + k - 1) % n` where k is the window size.
-- Digits - `count = new int[10]`, Small Aphabets - `count = new int[26]`, Big Aphabets - `count = new int[128]`
-- When `two strings` are invloved first create a map of frequency of first string, then compare with second string
-- When `one string or array` is involved, Inside the loop increment and decrement the count of that element in map
 
 **Examples:**
 
@@ -1225,77 +1192,10 @@ Here are the descriptions for all four problems in the requested format:
 ## Bit Manipulation
 
 
-### XOR Properties
-
-| Property                 | Meaning                       |
-|--------------------------|-------------------------------|
-| `a ^ b = c  ⇒ b ^ c = a` | You can reverse XOR           |
-| `x ^ 0 = x`              | XOR with 0 returns same value |
-| `x ^ x = 0`              | XOR with itself is 0          |
-
-
-### Bit Shift Tricks
-
-| Operation | Meaning       |
-|-----------|---------------|
-| `1 << n`  | Equals `2^n`  |
-| `a >> 1`  | Divide by 2   |
-| `a << 1`  | Multiply by 2 |
-
-
-### Set Operations Using Bitmask
-
-
-| Operation | Code Example | Explanation with Example |
-| :--- | :--- | :--- |
-| **Union** | `A \| B` | Combines elements from both sets. Example: `5 \| 6` (`...00000101 \| ...00000110`) = `7` (`...00000111`). The resulting set is `{0, 1, 2}`. |
-| **Intersection** | `A & B` | Finds elements common to both sets. Example: `5 & 6` (`...00000101 & ...00000110`) = `4` (`...00000100`). The resulting set is `{2}`. |
-| **Subtraction** | `A & ~B` | Removes elements of B from A. Example: `5 & ~6`. `~6` is `...11111001`. `5 & ...11111001` = `1` (`...00000001`). The resulting set is `{0}`. |
-| **Negation** | `~A` | Creates a set of all elements *not* in A (the complement set). Example: `~5` (`~...00000101`) = `...11111010`. |
-| **Set bit** | `A \|= (1 << bit)` | Adds a specific element (`bit`) to the set. Example: Add element 3 to set A: `5 \|= (1 << 3)`. `(1 << 3)` is `...00001000`. `5 \|= 8` = `13` (`...00001101`). The new set is `{0, 2, 3}`. |
-| **Clear bit** | `A &= ~(1 << bit)` | Removes a specific element (`bit`) from the set. Example: Remove element 2 from set A: `5 &= ~(1 << 2)`. `~(1 << 2)` is `~4` or `...11111011`. `5 &= ~4` = `1` (`...00000001`). The new set is `{0}`. |
-| **Test bit** | `(A & (1 << bit)) != 0` | Checks if a specific element (`bit`) exists in the set. Example: Is element 2 in set A? `(5 & (1 << 2)) != 0`. `(5 & 4)` = `4`. Since `4 != 0`, the answer is true. |
-| **Extract last bit**| `A & -A` | Isolates the lowest-order `1` bit (the smallest element in the set). Example: `6 & -6`. In two's complement, `-6` is `...11111010`. `6 & -6` (`...00000110 & ...11111010`) = `2` (`...00000010`). This tells you the lowest element is `1` (since $2 = 2^1$). |
-| **Remove last bit**| `A & (A - 1)`| Clears the lowest-order `1` bit. Example: `6 & (6 - 1)`. `6 - 1 = 5`. `6 & 5` (`...00000110 & ...00000101`) = `4` (`...00000100`). The new set is `{2}`. |
-| **All 1-bits**| `~0` | Represents a universal set containing all possible elements (all bits are `1`). In a 32-bit integer, this is all `1`s. |
 
 
 ---
 
-## Matrix Tricks
 
-**Basic Directions (left, right, top, down)**
+## Matrix
 
-- `{0, 1}` :  movement to the right
-- `{0, -1}`:  movement to the left
-- `{1, 0}` :  movement downwards
-- `{-1, 0}`:  movement upwards
-
-**Additional diagonal movements**
-
-- `{1, 1}` :  movement diagonally down and to the right
-- `{1, -1}` :  movement diagonally down and to the left
-- `{-1, 1}` :  movement diagonally up and to the right
-- `{-1, -1}`:  movement diagonally up and to the left
-
-**Matrix Formula**
-
-- Convert `n * m` matrix to an array : 
-
-  ```plaintext
-
-  a[row * m + col] = matrix[row][col] where n = matrix.length and m = matrix[0].length
-
-  ```
-
-- Convert array to `n * m` matrix : 
-
-  ```plaintext
-
-  matrix[i / m][i % m] = a[i] where n = matrix.length and m = matrix[0].length
-
-  ```
-
-- Grid Number = `(row / 3) * 3 + (col / 3)`
-
----

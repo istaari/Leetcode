@@ -412,6 +412,77 @@ You **must always define** the base case correctly — it anchors your solution.
 
 ### **5. Optimizations(State Machines, Maximum Subarray )** 
 
+**State Machines**
+
+
+Excellent notes\! Your understanding of why this problem maps to a Deterministic Finite State Machine (DFSM) is perfectly correct. 
+
+**State Machines for Stock Optimization**
+
+This problem is perfectly modeled by a **Deterministic Finite State Machine (DFSM)** because for any given state and action, the next state is uniquely determined. The goal is to find the path of actions that maximizes profit.
+
+**1. Defining the States**
+
+The key to solving this with a state machine is to define states based on what actions you are *allowed* to take on any given day `i`. This leads to three distinct states representing the maximum profit achievable up to that day.
+
+  * **`Hold`**: The maximum profit on day `i` if you **are holding a stock**.
+
+      * *Possible actions today*: Sell or continue to hold.
+
+  * **`Sold`**: The maximum profit on day `i` if you **sell a stock on this day**.
+
+      * *Constraint*: This state forces you into a "cooldown" on day `i+1`.
+
+  * **`Rest`**: The maximum profit on day `i` if you **do not hold a stock and are not in cooldown**.
+
+      * *Possible actions today*: Buy or continue to rest.
+
+**2. Visualizing State Transitions**
+
+A diagram makes the relationships much clearer:
+
+```mermaid
+graph TD
+    A[Rest] -- Buy --> B(Hold)
+    A -- Rest --> A
+    B -- Hold --> B
+    B -- Sell --> C(Sold)
+    C -- Cooldown --> A
+```
+
+*This diagram shows the actions that cause transitions between states.*
+
+**3. Deriving the DP Recurrence Relations (The Core Logic)**
+
+The state machine model directly translates into a Dynamic Programming solution. We calculate the maximum profit for each state for every day `i`.
+
+Let `price = prices[i]`.
+
+  * **`hold[i]`**: How can we be in the `Hold` state today?
+
+    1.  We were already holding yesterday (`hold[i-1]`) and did nothing.
+    2.  We were `Rest`ing yesterday (`rest[i-1]`) and decided to **buy** today.
+
+    > $$hold[i] = \max(hold[i-1], rest[i-1] - \text{price})$$
+
+  * **`sold[i]`**: How can we be in the `Sold` state today?
+
+    1.  We must have been in the `Hold` state yesterday (`hold[i-1]`) and decided to **sell** today.
+
+    > $$sold[i] = hold[i-1] + \text{price}$$
+
+  * **`rest[i]`**: How can we be in the `Rest` state today?
+
+    1.  We were already `Rest`ing yesterday (`rest[i-1]`) and did nothing.
+    2.  We `Sold` yesterday (`sold[i-1]`) and are now forced into cooldown, which ends in the `Rest` state.
+
+    > $$rest[i] = \max(rest[i-1], sold[i-1])$$
+
+**Final Answer:** The maximum profit at the end is the maximum of the final `Sold` and `Rest` states, since you can't end with a profit if you are still holding a stock.
+
+> $$\text{max\_profit} = \max(sold[n-1], rest[n-1])$$
+
+
 **Examples:**
 
 **1. Maximum Subarray/Contiguous Subarray Problems**
