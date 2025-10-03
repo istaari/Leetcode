@@ -48,75 +48,73 @@ Index:      0    1    2    3    (n = 4)
                   i = 2 (Focus on element '30')
 ```
 
-#### **1. Possible Start Indices (from the Left)**
+- **1. Possible Start Indices (from the Left)**
 
-These are all the indices `j` such that `j <= i`.
-The number of such indices is `i + 1`.
+    These are all the indices `j` such that `j <= i`.
+    The number of such indices is `i + 1`.
+    
+    ```
+    Array:    [ 10,  20,  30,  40 ]
+    Index:      0    1    2    3
+                <----------^--------->
+                | Possible start points (j <= i)
+                |
+                Start at index 0
+                Start at index 1
+                Start at index 2 (This is 'i')
+    
+    Number of possible start indices = i + 1
+                                     = 2 + 1
+                                     = 3
+    ```
 
-```
-Array:    [ 10,  20,  30,  40 ]
-Index:      0    1    2    3
-            <----------^--------->
-            | Possible start points (j <= i)
-            |
-            Start at index 0
-            Start at index 1
-            Start at index 2 (This is 'i')
-
-Number of possible start indices = i + 1
-                                 = 2 + 1
-                                 = 3
-```
-
-*Visual Representation of Possible Starting Points:*
-The `arr[i]` element (our `30`) can be part of a subarray that starts at:
-
-  * `arr[0]` (10)
+    *Visual Representation of Possible Starting Points:* The `arr[i]` element (our `30`) can be part of a subarray that starts at:
+    
+    * `arr[0]` (10)
     * `arr[1]` (20)
     * `arr[2]` (30 itself)
 
 
-#### **2. Possible End Indices (to the Right)**
+- **2. Possible End Indices (to the Right)**
 
-These are all the indices `k` such that `k >= i`.
-The number of such indices is `n - i`.
+    These are all the indices `k` such that `k >= i`.
+    The number of such indices is `n - i`.
+    
+    ```
+    Array:    [ 10,  20,  30,  40 ]
+    Index:      0    1    2    3
+                <----------^--------->
+                           | Possible end points (k >= i)
+                           |
+                           End at index 2 (This is 'i')
+                           End at index 3
+    
+    Number of possible end indices = n - i
+                                   = 4 - 2
+                                   = 2
+    ```
+    
+    *Visual Representation of Possible Ending Points:* The `arr[i]` element (our `30`) can be part of a subarray that ends at:
 
-```
-Array:    [ 10,  20,  30,  40 ]
-Index:      0    1    2    3
-            <----------^--------->
-                       | Possible end points (k >= i)
-                       |
-                       End at index 2 (This is 'i')
-                       End at index 3
-
-Number of possible end indices = n - i
-                               = 4 - 2
-                               = 2
-```
-
-*Visual Representation of Possible Ending Points:*
-The `arr[i]` element (our `30`) can be part of a subarray that ends at:
-
-  * `arr[2]` (30 itself)
+    * `arr[2]` (30 itself)
     * `arr[3]` (40)
 
 
-#### **3. Total Contribution of `arr[i]`**
+- **3. Total Contribution of `arr[i]`**
 
-To form a subarray that *includes* `arr[i]`, we need to pick **one** of the possible start indices AND **one** of the possible end indices.
-
-Since these choices are independent:
-
-**Total subarrays containing `arr[i]` = (Number of Possible Start Indices) \* (Number of Possible End Indices)**
-
-  * For `arr[2]` (element `30`):
-      * `= (i + 1) * (n - i)`
-      * `= (2 + 1) * (4 - 2)`
-      * `= 3 * 2`
-      * `= 6`
-
-This confirms that the element `30` contributes to 6 subarrays.
+    To form a subarray that *includes* `arr[i]`, we need to pick **one** of the possible start indices AND **one** of the possible end indices.
+    
+    Since these choices are independent:
+    
+    **Total subarrays containing `arr[i]` = (Number of Possible Start Indices) \* (Number of Possible End Indices)**
+    
+     * For `arr[2]` (element `30`):
+          * `= (i + 1) * (n - i)`
+          * `= (2 + 1) * (4 - 2)`
+          * `= 3 * 2`
+          * `= 6`
+    
+    This confirms that the element `30` contributes to 6 subarrays.
 
 **An O(n) technique to calculate sums over all subarrays without generating them.**
 
