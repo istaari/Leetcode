@@ -3,7 +3,6 @@ package leetcode.array;
 public class PivotIndex {
 
     public static int pivotIndex(int[] nums) {
-
         int n = nums.length;
         int[] prefix = new int[n];
         int[] postfix = new int[n];

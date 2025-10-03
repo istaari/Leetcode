@@ -25,6 +25,8 @@ public class ConstructKPalindromeStrings {
         return true;
     }
 
+
+
     public boolean canConstructOptimized(String s, int k) {
         if (s.length() == k) return true;
         if (k > s.length()) return false;
@@ -33,8 +35,9 @@ public class ConstructKPalindromeStrings {
         int[] counts = new int[26];
 
         for (int i = 0; i < s.length(); i++) {
-            counts[s.charAt(i) - 'a']++;
-            odds += counts[s.charAt(i) - 'a'] % 2 == 0 ? -1 : 1;
+            int index = s.charAt(i) - 'a';
+            counts[index]++;
+            odds += counts[index] % 2 == 0 ? -1 : 1;
         }
 
         return odds <= k;

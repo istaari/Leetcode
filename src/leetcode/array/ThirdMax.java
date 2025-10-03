@@ -1,40 +1,40 @@
 package leetcode.array;
 
-import java.util.Arrays;
-
 public class ThirdMax {
 
     public static int thirdMax(int[] nums) {
-        // Sorting the array in ascending order
-        Arrays.sort(nums);
+        // Use nullable Integer objects to correctly handle the Integer.MIN_VALUE edge case
+        // and to track if a max has been found yet.
+        Integer firstMax = null;
+        Integer secondMax = null;
+        Integer thirdMax = null;
 
-        // Reversing the array for descending order
-        for (int i = 0; i < nums.length / 2; i++) {
-            int temp = nums[i];
-            nums[i] = nums[nums.length - i - 1];
-            nums[nums.length - i - 1] = temp;
+        for (Integer num : nums) { // Use Integer wrapper to allow comparison with null
+            // Skip duplicates
+            if (num.equals(firstMax) || num.equals(secondMax) || num.equals(thirdMax)) {
+                continue;
+            }
+
+            // The cascade update logic
+            if (firstMax == null || num > firstMax) {
+                thirdMax = secondMax;
+                secondMax = firstMax;
+                firstMax = num;
+            } else if (secondMax == null || num > secondMax) {
+                thirdMax = secondMax;
+                secondMax = num;
+            } else if (thirdMax == null || num > thirdMax) {
+                thirdMax = num;
+            }
         }
 
-        int ans = nums[0];
-        int count = 1;
-        int prev = 0;
-        int max = nums[0];
-        for (int i = 1; i < nums.length; i++) {
-            prev = ans;
-            max = Math.max(prev, max);
-            if (nums[i] == prev) continue;
-
-            ans = nums[i];
-            count++;
-
-            if (count == 3) break;
-        }
-
-        return count == 3 ? ans : max;
+        // If thirdMax is null, it means there were fewer than three distinct numbers.
+        // In this case, we must return the absolute maximum (firstMax).
+        return thirdMax == null ? firstMax : thirdMax;
     }
 
     public static void main(String[] args) {
-        int[] a = new int[]{1, 1, 2};
+        int[] a = new int[]{2, 2, 3, 1};
     }
 
 }
