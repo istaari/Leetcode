@@ -1,4 +1,4 @@
-package dsa;
+package dsa.treeTrie;
 
 public class SegmentTree {
 

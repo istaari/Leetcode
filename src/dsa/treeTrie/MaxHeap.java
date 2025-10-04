@@ -1,4 +1,4 @@
-package dsa;
+package dsa.treeTrie;
 
 import java.util.ArrayList;
 import java.util.List;

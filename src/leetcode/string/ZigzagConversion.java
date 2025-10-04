@@ -3,7 +3,6 @@ package leetcode.string;
 public class ZigzagConversion {
 
     public static String convert(String s, int numRows) {
-
         StringBuilder[] stringBuilders = new StringBuilder[numRows];
 
         for (int i = 0; i < numRows; i++) {
@@ -37,7 +36,6 @@ public class ZigzagConversion {
     public static void main(String[] args) {
         String s = "PAYPALISHIRING";
         int numRows = 4;
-        System.out.println(convert(s, numRows)); // PAHNAPLSIIGYIR
+        System.out.println(convert(s, numRows));// PAHNAPLSIIGYIR
     }
-
 }

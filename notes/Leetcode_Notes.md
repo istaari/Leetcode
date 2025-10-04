@@ -1,614 +1,622 @@
 
 # Algorithms and Data Structures
 
-## Sorting
-
-| **Sorting Algorithm** | **Type**                   | **Time Complexity (Avg/Worst)** | **Space Complexity** | **Stable?**   | **When to Use**                                                            |
-|-----------------------|----------------------------|---------------------------------|----------------------|---------------|----------------------------------------------------------------------------|
-| **Bubble Sort**       | Comparison-based           | O(n²) / O(n²)                   | O(1)                 | Yes           | Educational purposes only. Easy to implement but very inefficient.         |
-| **Selection Sort**    | Comparison-based           | O(n²) / O(n²)                   | O(1)                 | No            | When memory is limited and stability isn't required. Rarely used.          |
-| **Insertion Sort**    | Comparison-based           | O(n²) / O(n²)                   | O(1)                 | Yes           | Good for small or nearly sorted datasets. Used in hybrid sorts.            |
-| **Merge Sort**        | Divide & Conquer           | O(n log n) / O(n log n)         | O(n)                 | Yes           | When stability is needed and memory isn't a constraint.                    |
-| **Quick Sort**        | Divide & Conquer           | O(n log n) / O(n²)              | O(log n)             | No            | Fastest general-purpose sort for large datasets, but unstable.             |
-| **Heap Sort**         | Comparison-based           | O(n log n) / O(n log n)         | O(1)                 | No            | Useful when constant space is required; not stable.                        |
-| **Counting Sort**     | Non-comparison             | O(n + k) / O(n + k)             | O(k)                 | Yes           | Best for small integer ranges. Very fast when applicable.                  |
-| **Radix Sort**        | Non-comparison             | O(nk) / O(nk)                   | O(n + k)             | Yes           | Good for fixed-length integers or strings. Fast and stable.                |
-| **Bucket Sort**       | Non-comparison             | O(n + k) / O(n²)                | O(n)                 | Yes (depends) | Great for uniformly distributed floating point numbers.                    |
-| **Tim Sort**          | Hybrid (Merge + Insertion) | O(n log n) / O(n log n)         | O(n)                 | Yes           | Used in Python (`sorted()`), Java (`Arrays.sort()`); efficient and stable. |
-| **Shell Sort**        | Comparison-based           | O(n log n) / O(n²)              | O(1)                 | No            | Better than Insertion Sort for medium datasets. Unstable but simple.       |
-
-**1. Bubble Sort**
-
-- Compare adjacent elements and swap them if they are in the wrong order.
--  In a single pass, the smallest or largest element reaches at the end of the array, its in sorted order.
-
-**2. Selection Sort**
-
-- Find the smallest or largest element in array and swap it with the first element. Which becomes sorted.
-
-**3. Insertion Sort**
-
-- Pick an element(2nd element) and compare it with the previous element, if it is smaller than the previous element, 
-- then move the prev element to the next position, at last insert the picked element at the correct position.
-
-**Examples:**
-
-- [Leetcode Insertion Sort Linked List](https://leetcode.com/problems/insertion-sort-list/description/)
-
-**4. Merge Sort**
-
-- Recursively Divide the array until it has only one element.
-- Then in the merge step, first create two array from left to mid and mid+1 to right.
-- Copy from original array to these two arrays.
-- Then merge these two arrays in sorted order.
-
-**Examples:**
-
-- [Leetcode Sort Linked List](https://leetcode.com/problems/sort-list/description/)
-
-**5. Quick Sort**
-
-- Select a pivot element, either first, last or random element.
-- then partition the array such that all elements less than pivot are on left and greater are on right.
-- The pivot element is at its sorted position.
-- Recursively apply the same steps to the left and right subarrays.
-
-**6. Heap Sort**
-
-**7. Counting Sort**
-
-- Find the max value, calculate then length
-- Count the occurrences
-- Store the cumulative count
-- From the last take the elements find the right index and place it in the output array
-
-**8. Bucket Sort**
-
-- The input is uniformly distributed over a range
-
-**9. Radix Sort**
-
-**10. Cyclic**
-
-```java
- void cyclicSort(int[] arr) {
-      int i = 0;
-      while (i < arr.length) {
-          // Calculate the correct index for the current element
-          int correctIndex = arr[i] - 1;
-          if (arr[i] != arr[correctIndex]) {
-              // Swap the current element with the one at its correct position
-              swap(arr, i, correctIndex);
-          } else {
-              // Move to the next element if it's in the correct position
-              i++;
-          }
-      }
-}
-```
-
 ---
 
 ## String
 
-**1. Basic String Manipulation or Processing** 
 
-**Examples:**
+### 1\. Hashing & Frequency Counting
 
-- [Shortest Distance to a Character](https://leetcode.com/problems/shortest-distance-to-a-character/description/)
+This is the most frequent pattern. The core idea is to use a hash map (or an array as a frequency map) to store counts of characters or words.
 
-  - Store the index of target character in `Treeset`
-  - Compute the distance to both the floor and ceiling indices `Math.min(Treeset.ceiling(i) - i,  i - Treeset.floor(i))`
+**Key Data Structures:** `HashMap<Character, Integer>`, `int[26]`, `int[128]`, `HashSet`
 
-- [Top K Frequent Words](https://leetcode.com/problems/top-k-frequent-words/description/?envType=problem-list-v2&envId=bucket-sort)
-  
-  - Use a `HashMap` to store the frequency of each word.
-  - Use a `PriorityQueue` to store the words based on frequency and lexicographical order with custom comparator.
-     ```java
-      Queue<String>  queue = new PriorityQueue<>((a, b) -> {
-        if(map.get(b) == map.get(a)) {
-          return a.compareTo(b); // Sort alphabetically in ascending order
-        }else{
-          return map.get(b) - map.get(a); // Sort by frequency in descending order
-        }
-      } );
-     ```
+**Common Problems:**
 
-- [String Compression](https://leetcode.com/problems/string-compression/description/) 
+  * Anagram detection (`s1` and `s2` have the same character counts).
+  * Isomorphic strings (character mapping).
+  * Finding duplicates or the first unique character.
 
-  - Count the adjacent charcters using `forward inner while loop` then add the character and count to the result
+**[Top K Frequent Words](https://leetcode.com/problems/top-k-frequent-words/)**
 
-  
-  
-**2. Palindrome Problems** 
+This problem is a classic combination of two patterns: **Hashing + Heap**.
 
-**Examples:**
+1.  **Hashing**: Use a `HashMap<String, Integer>` to store the frequency of each word.
+2.  **Heap (`PriorityQueue`)**: Use a `PriorityQueue` to find the top `k` elements efficiently. You need a custom comparator to handle the sorting logic.
 
-- [Total Palindrome substrings]()
-   
-   - Expand around the center, for each character in the string, expand around the center and check for palindrome
+*Your code snippet is perfect for this:*
 
-   ```java
-    int extendPalindrome(String s) {
-        int n = s.length();
-        int ans = 0;
-        for (int i = 0; i < n; i++) {
-            int odd = palindromeCount(s, i, i); // odd Length
-            int even = palindromeCount(s, i, i + 1); // even Length
-            ans += even + odd;
-        }
-        return ans;
+```java
+// Custom comparator for the PriorityQueue
+// 1. Sort by frequency in descending order.
+// 2. If frequencies are equal, sort alphabetically (lexicographically) in ascending order.
+Queue<String> queue = new PriorityQueue<>((a, b) -> {
+    if (map.get(a).equals(map.get(b))) {
+        return a.compareTo(b); 
+    } else {
+        return map.get(b) - map.get(a);
     }
+});
+```
 
-   int palindromeCount(String s, int left, int right) {
-        int count = 0;
-        int n = s.length();
-        while (left >= 0 && right < n && s.charAt(left) == s.charAt(right)) {
-            count++;
-            left--;
-            right++;
-        }
-        return count;
+### 2\. Two Pointers
+
+This technique uses two pointers to iterate through the string, often leading to optimal $O(N)$ time and $O(1)$ space solutions.
+
+**Common Approaches:**
+
+  * **Converging Pointers**: Pointers start at opposite ends and move toward the center (e.g., palindrome check).
+  * **Diverging Pointers**: Pointers start at the same place and move outwards (e.g., expand around center).
+  * **Read/Write Pointers**: One pointer reads ahead while the other writes to modify the string/array in place.
+
+**[String Compression](https://leetcode.com/problems/string-compression/)**
+
+This is a perfect example of the **Read/Write Pointers** approach.
+
+  * A `read` pointer scans the array to find groups of consecutive identical characters.
+  * A `write` pointer stays at the position where the next compressed character and count should be written.
+  * Your description is spot on: "Count the adjacent characters using a forward inner while loop then add the character and count to the result."
+
+### 3\. Palindrome-Specific Techniques
+
+**[Palindromic Substrings](https://leetcode.com/problems/palindromic-substrings/)**
+
+Your approach is the standard and most efficient one for this problem.
+
+  * **Technique**: **Expand Around Center**.
+  * **Logic**: Every palindrome has a center. This center can be a single character (for odd-length palindromes like "racecar") or the space between two characters (for even-length palindromes like "aabbaa"). We iterate through all possible centers and expand outwards as long as the characters match.
+
+*Your code snippet is an excellent implementation:*
+
+```java
+int countSubstrings(String s) {
+    int n = s.length();
+    int ans = 0;
+    for (int i = 0; i < n; i++) {
+        // Expand around a single character center (odd length)
+        ans += expandAndCount(s, i, i);
+        // Expand around a two-character center (even length)
+        ans += expandAndCount(s, i, i + 1);
     }
-   ```
+    return ans;
+}
 
+int expandAndCount(String s, int left, int right) {
+    int count = 0;
+    while (left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
+        count++; // Found a valid palindrome
+        left--;
+        right++;
+    }
+    return count;
+}
+```
+
+### 4\. Sliding Window
+
+A powerful technique for finding a substring that satisfies a certain condition. A "window" is maintained by two pointers, and it expands and contracts as it moves through the string.
+
+**Common Problems:**
+
+  * Longest Substring Without Repeating Characters.
+  * Minimum Window Substring.
+  * Finding all anagrams of a pattern string.
+
+### 5\. Advanced Techniques & Unique Patterns
+
+**[Shortest Distance to a Character](https://leetcode.com/problems/shortest-distance-to-a-character/)**
+
+This problem has several clever solutions.
+
+  * **Your Approach (TreeSet)**: This is an interesting solution.
+
+    1.  Store the indices of the target character in a `TreeSet`.
+    2.  For each index `i` in the string, use `TreeSet.floor(i)` and `TreeSet.ceiling(i)` to find the nearest target indices on both sides. This works and has a time complexity of $O(N \log K)$, where K is the number of target characters.
+
+  * **Alternative Common Pattern (Two-Pass)**: This is an important $O(N)$ pattern to know.
+
+    1.  **Left-to-Right Pass**: Iterate from left to right. `dist[i]` is the distance from `i` to the *previous* occurrence of the target character. `dist[i] = dist[i-1] + 1`.
+    2.  **Right-to-Left Pass**: Iterate from right to left. Update `dist[i]` by comparing with the distance to the *next* occurrence. `dist[i] = min(dist[i], dist[i+1] + 1)`.
+
+### 6\. Dynamic Programming on Strings
+
+Used for optimization problems where the solution is built upon solutions to subproblems. Usually involves a 2D `dp` table.
+
+**Common Problems:**
+
+  * **Longest Common Subsequence**: `dp[i][j]` = LCS of `s1[0..i]` and `s2[0..j]`.
+  * **Edit Distance**: `dp[i][j]` = min edits to make `s1[0..i]` equal to `s2[0..j]`.
+  * **Word Break**: `dp[i]` = true if `s[0..i]` can be segmented.
+
+### 7\. Backtracking & Recursion
+
+Used for generating all possible combinations or permutations of strings that satisfy a condition.
+
+**Common Problems:**
+
+  * Generate Parentheses.
+  * Letter Combinations of a Phone Number.
+  * Palindrome Partitioning.
+
+### 8\. Tries (Prefix Trees)
+
+A specialized tree data structure used for problems involving prefixes and dictionaries.
+
+**Common Problems:**
+
+  * Implement an Autocomplete System.
+  * Word Search II (finding words from a dictionary in a 2D grid).
 
 ---
 
 ## Array
 
-**1. Subarrays** 
-
-- Total Subarrays = `n * (n + 1) / 2`
-- Sum Of All Subarrays : `contribution = (i + 1) * (n - i)` and `sum += arr[i] * contribution`
-- Sum Odd Length Subarrays : `contribution = ( (i + 1) * (n - i) + 1 ) / 2` and `sum += arr[i] * contribution`
-- Use **`Map`** to store the **`index, pair, count`** of element to see in future and past and calculate distance between index, Like **`pair(count, last seen index, current index)`**
-
- - ```java
-    int sumOddLengthSubarrays(int[] arr) {
-        int sum = 0;
-        int n = arr.length;
-
-        for (int i = 0; i < n; i++) {
-            int contribution = ((i + 1) * (n - i) + 1) / 2;
-            sum += arr[i] * contribution;
-        }
-        
-        return sum;  
-    }
-   ``` 
-
-**Examples:**
-
-- [Check array is rotated and sorted](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/)
-
-  - Check deviations `nums[i] > nums[(i + 1) % nums.length]`, If array is sorted and rotated array there will 0 or 1 incorrectly Positioned element
-
-
-- [Remove Duplicates(In place)](), [Move Zeroes at end(In place)](), [Remove Elements(In place)]()
-   
-   - Solve using two pointers, one for `iterating` and one for `placing` the element
-   - Create a `placing index`, then replace or swap `iterating index` with placing index based on condition
 
 ---
+
+
 ## Binary Search
 
-- `Binary Search for the First True in a Boolean Array` or `Binary Search for the First Valid Element`
+### **Pattern 1: Standard Binary Search & Its Variations**
 
-  ```java
-    // int[] scores = {-1, -1, -1, 50, 60, 70, 80}; // Sorted array with -1 representing absent students
-    int findFirstValidScore(int[] scores) {
-          int left = -1; // Left boundary (starts before the array)
-          int right = scores.length; // Right boundary (starts after the array)
+#### Template 1: Exact Match (`while (low <= high)`)
 
-          // Binary search to find the first valid score
-          while (right - left > 1) {
-              int mid = left + (right - left) / 2; // Middle point
-              if (scores[mid] == -1) {
-                  left = mid; // If -1, move the left boundary
-              } else {
-                  right = mid; // If valid score, move the right boundary
-              }
-          }
+This template is ideal for when you are searching for an exact element and can exit as soon as it's found. The loop terminates when `low > high`.
 
-          // Return the index of the first valid score
-          return right;
-      }
-  ```
+```java
+int low = 0, high = nums.length - 1;
+while (low <= high) {
+    int mid = low + (high - low) / 2;
+    if (nums[mid] == target) {
+        return mid; // Found
+    } else if (nums[mid] < target) {
+        low = mid + 1;
+    } else {
+        high = mid - 1;
+    }
+}
+return -1; // Not found
+```
 
 
-**1. Classic Binary Search**
+#### Template 2: The "Leftmost" Boundary (Round Down)
+
+This template is designed to find the `lower_bound`—the index of the first element that is greater than or equal to the target.
+
+```java
+// Finds the FIRST element >= target
+int low = 0, high = nums.length - 1;
+while (low < high) {
+    int mid = low + (high - low) / 2; // Standard mid, rounds down
+    if (nums[mid] >= target) {
+        high = mid;
+    } else {
+        low = mid + 1;
+    }
+}
+// After loop, low == high. Check if this candidate is the target.
+return nums.length > 0 && nums[low] == target ? low : -1;
+```
+
+**Use Cases for Template 2:**
+
+1.  **The first occurrence of an element.**
+2.  **The `ceil` of a number:** Finding the smallest element `>= target`.
+3.  **Search Insert Position:** This template directly solves this problem (the final `low` is the answer).
+4.  Any problem that requires finding the **leftmost boundary** or the first time a condition becomes true.
+
+
+#### Template 3: The "Rightmost" Boundary (Round Up)
+
+This template is designed to find the index of the last element that is less than or equal to the target.
+
+```java
+// Finds the LAST element <= target
+int low = 0, high = nums.length - 1;
+while (low < high) {
+    int mid = low + (high - low + 1) / 2; // CRITICAL: Rounds UP
+    if (nums[mid] <= target) {
+        low = mid;
+    } else {
+        high = mid - 1;
+    }
+}
+// After loop, low == high. Check if this candidate is the target.
+return nums.length > 0 && nums[low] == target ? low : -1;
+```
+
+**Use Cases for Template 3:**
+
+1.  **The last occurrence of an element.**
+2.  **The `floor` of a number:** Finding the largest element `<= target`.
+3.  Any problem that requires finding the **rightmost boundary** or the last time a condition is true.
+
+### **Pattern 2: Binary Search on the Answer**
+
+This is a powerful technique for optimization problems that ask for the "minimum possible" or "maximum possible" value that satisfies a certain condition.
+
+**Explanation:**
+Instead of searching for an element in an array, you binary search on the *range of possible answers*. For each `mid` value (which is a potential answer), you have a validation function `isPossible(mid)` that checks if it's feasible to achieve the goal with that value. The search space is monotonic: if an answer `X` is possible, all answers "better" than `X` (e.g., `X+1` for maximization, `X-1` for minimization) are also possible.
+
+**Template:**
+
+1.  **Define the Search Space:** Determine the `low` (minimum possible answer) and `high` (maximum possible answer).
+2.  **Create a Validation Function:** `boolean isPossible(value)`.
+3.  **Binary Search:**
+    * If `isPossible(mid)` is true, it means `mid` is a potential answer. We try for a "better" one (e.g., smaller for minimization problems, so `high = mid - 1`).
+    * If `isPossible(mid)` is false, `mid` is not a valid answer, so we must consider "worse" answers (e.g., `low = mid + 1`).
 
 **Examples:**
 
-- [Find First and Last Occurences of Element in Sorted Array](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/)
+* [Koko Eating Bananas](https://leetcode.com/problems/koko-eating-bananas/):
+    * **Answer Range:** Speed `k` can be from `1` to `max(piles)`.
+    * **`isPossible(speed)`:** Can Koko eat all bananas within `h` hours at the given `speed`?
+* [Capacity to Ship Packages Within D Days](https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/):
+    * **Answer Range:** Capacity can be from `max(weights)` to `sum(weights)`.
+    * **`isPossible(capacity)`:** Can all packages be shipped within `D` days with the given `capacity`?
+* [Minimum Number of Days to Make m Bouquets](https://leetcode.com/problems/minimum-number-of-days-to-make-m-bouquets/description/):
+    * **Answer Range:** Days can be from `1` to `max(bloomDay)`.
+    * **`isPossible(days)`:** Can we make `m` bouquets if we wait for the given number of `days`?
 
-    - When target is found for first occurrence, move `right = mid-1`
-    - When target is found for last occurrence, move `left = mid+1`
+### **Pattern 3: Searching in Rotated Sorted Arrays**
 
-- Floor and Ceil of a number in a sorted array
+This pattern applies to an array that was sorted and then rotated some number of times. The array consists of two sorted subarrays.
 
-    - If `target > mid`, then ` floor = mid and low = mid + 1`
-    - If `target < mid`, then ` ceil = mid and high = mid - 1`
+**Explanation:**
 
-- [Search Insert Position](https://leetcode.com/problems/search-insert-position/)
+At each step, perform two checks:
 
-    - ```java 
-        int searchInsert(int[] nums, int target) {
-            int low = 0;
-            int high = nums.length; // Full Length
+1.  **Find the sorted half:** Is `[low...mid]` or `[mid...high]` sorted?
+    * For `nums = [4, 5, 6, 7, 0, 1, 2]`, if `mid` points to `7`, the left half `[4, 5, 6, 7]` is the sorted one.
 
-            while (low < high) {
-                int mid = low + (high - low) / 2;
-                if (target <= nums[mid]) {
-                    high = mid;
-                } else {
-                    low = mid + 1;
-                }
-            }
-            
-            return low;
+2.  **Locate the target:** Is the `target` within the range of that sorted half? If yes, search it; if no, search the other half.
+    * If `target = 5`, it is within the sorted half's range `[4...7]`, so you search that part.
+    * If `target = 1`, it is not in that range, so you must search the other half `[0, 1, 2]`.
+
+**Template:**
+
+```java
+while (low <= high) {
+    int mid = low + (high - low) / 2;
+    if (nums[mid] == target) return mid;
+
+    // Check if the left half (low...mid) is sorted
+    if (nums[low] <= nums[mid]) {
+        if (target >= nums[low] && target < nums[mid]) {
+            high = mid - 1; // Target is in the sorted left half
+        } else {
+            low = mid + 1;  // Target is in the right half
         }
-      ```
-
-
-**2. Binary Search on the Result**
-
-**Examples:**
-
-- [Minimum Number of Days to Make m Bouquets](https://leetcode.com/problems/minimum-number-of-days-to-make-m-bouquets/description/) - Find the minimum number of days required to make m bouquets
-
-  - Apply binary search on the range of days, then validate if it is possible to make m bouquets in `mid` days.
-  - Only adjacent flowers can be used to make a bouquet, so reset the count of flowers when `bloomDay > day`
-
-- [Koko Eating Bananas](https://leetcode.com/problems/koko-eating-bananas/) - Minimize the speed k at which Koko eats bananas to finish in time.
-
-  - Consider the range like max value in array, then apply `modified binary search on the range(1...N)`
-  - Validate the condition, if it is possible to eat all bananas in `mid` speed(k).
-
-- [Capacity to Ship Packages Within D Days](https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/) - Minimize the capacity needed to ship packages in a given time.
-
-
-**3. Rotated Sorted Arrays**
-
-- Use Modified Binary Search, find smallest or pivot `if(nums[mid] <= nums[high])`, then apply Binary Search on left or right part.
-- Normal Binary Search `mid = (low + high) / 2 , realMidValue = (mid + rotationPoint) % n`
+    } 
+    // Otherwise, the right half (mid...high) must be sorted
+    else {
+        if (target > nums[mid] && target <= nums[high]) {
+            low = mid + 1; // Target is in the sorted right half
+        } else {
+            high = mid - 1; // Target is in the left half
+        }
+    }
+}
+```
 
 **Examples:**
 
-- [Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/) 
+* [Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/)
+* [Find Minimum in Rotated Sorted Array](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/)
+* [Find Minimum in Rotated Sorted Array (with Duplicates)](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array-ii/)
 
-- [Find Minimum in Rotated Sorted Array](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/) 
+### **Pattern 4: Searching on Monotonic(Peaks/Valleys)**
 
-- [Find Minimum in Rotated Sorted Array Contains Duplicates ](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array-ii/)
+This pattern is used on arrays where values increase and then decrease (a "mountain" or bitonic array), and the goal is to find the peak element.
 
-  - ```java 
-      int findMin(int[] nums) {
-          int low = 0;
-          int high = nums.length - 1;
+**Explanation:**
 
-          while (low < high) {
-              int mid = low + (high - low) / 2;
-              if (nums[mid] < nums[high]) {
-                  high = mid;
-              } else if (nums[mid] > nums[high]) {
-                  low = mid + 1;
-              } else { // nums[mid] == nums[hi])
+The strategy is to find the peak by checking the "slope" at the midpoint. By comparing `nums[mid]` with its right neighbor `nums[mid+1]`, you can tell if you are on an upward or downward slope, allowing you to discard half the array.
 
-                  if (nums[high - 1] > nums[high]) {
-                      low = high; // low is Pivot index or min element
-                      break;
-                  }
-                  high--;
-              }
-          }
-          return nums[low];
-      } 
-    ```
+Let's use the example `nums = [0, 2, 4, 6, 3, 1]`. The peak is `6`.
+
+* **Initial Step:** `low = 0`, `high = 5`. Let's say `mid = 2` (`nums[mid] = 4`).
+
+    * We compare `nums[mid]` (4) with `nums[mid+1]` (6).
+    * Since `4 < 6`, we are on the **uphill** slope. This means the peak must be to the right of `mid`.
+    * **Action:** We discard the left half by setting `low = mid + 1`.
+
+* **Next Step:** The search space is now `[3, 5]`. Let's say `mid = 4` (`nums[mid] = 3`).
+
+    * We compare `nums[mid]` (3) with `nums[mid+1]` (1).
+    * Since `3 > 1`, we are on the **downhill** slope. This means `mid` could be the peak, or the peak is to its left.
+    * **Action:** We discard the right half by setting `high = mid`.
+
+The loop continues until `low` and `high` converge on the single index of the peak element.
+
+**Template:**
+
+This template uses the `while (low < high)` structure, which is perfect for converging on a single point.
+
+```java
+/**
+ * Finds the index of a peak element in a mountain array.
+ */
+int findPeakElement(int[] nums) {
+    int low = 0;
+    int high = nums.length - 1;
+
+    while (low < high) {
+        int mid = low + (high - low) / 2;
+        
+        // Check the slope at mid
+        if (nums[mid] < nums[mid + 1]) {
+            // Uphill slope: Peak is to the right of mid.
+            low = mid + 1;
+        } else {
+            // Downhill slope: mid could be the peak, or the peak is to the left.
+            high = mid;
+        }
+    }
+    
+    // The loop terminates when low == high, which is the index of the peak.
+    return low;
+}
+```
 
 
-**4. Searching in Monotonic Functions**
+### **Pattern 5: Searching in 2D Matrices**
 
-**Examples:**
-- [Find Peak Element](https://leetcode.com/problems/find-peak-element/) – Find a local maximum in the array.
-  - `if (arr[mid] < arr[mid+1])`
-- [Peak Index in a Mountain Array](https://leetcode.com/problems/peak-index-in-a-mountain-array/) – Find the peak in a "mountain array."
-  - `if (nums[mid - 1] < nums[mid] && nums[mid] > nums[mid + 1])`
-- [Find a Peak Element II](https://leetcode.com/problems/find-a-peak-element-ii/) – Find a peak in a 2D grid.
+Binary search can be adapted to 2D matrices that have specific sorting properties.
 
+**Explanation:**
+There are two main sub-patterns:
 
-**5. Searching in Multi-Dimensional Arrays**
-  - Treat the matrix as a flat array `matrix[mid / n][mid % n]`, where n is column length
-  - Exploit row/column properties.
+1.  **Matrix as a Flattened 1D Array:** If the matrix is sorted such that the last element of row `i` is less than the first element of row `i+1`, you can treat the entire `M x N` matrix as a single sorted array of length `M*N`. An index `mid` in this virtual array maps to `matrix[mid / N][mid % N]`.
 
-**Examples:**
-- [Search a 2D Matrix](https://leetcode.com/problems/search-a-2d-matrix/) – Search in a matrix where rows and columns are sorted.
-- [Search a 2D Matrix II](https://leetcode.com/problems/search-a-2d-matrix-ii/) – Search in a matrix with sorted rows and columns.
-  
+    * **Example:** [Search a 2D Matrix](https://leetcode.com/problems/search-a-2d-matrix/)
+
+2.  **Staircase / Saddleback Search:** If each row is sorted and each column is sorted, you can't flatten it. Instead, start at a strategic corner (e.g., top-right or bottom-left).
+
+    * From the **top-right** corner:
+        * If `target` is smaller than the current element, it can't be in this column (all elements below are larger), so move left (`col--`).
+        * If `target` is larger, it can't be in this row (all elements to the left are smaller), so move down (`row++`).
+    * This approach eliminates one row or one column at each step.
+    * **Example:** [Search a 2D Matrix II](https://leetcode.com/problems/search-a-2d-matrix-ii/)
+
+### **Pattern 6: Binary Search on Real Numbers**
+
+This pattern is for finding a value in a continuous range, like the square root of a number, where absolute precision is needed.
+
+**Explanation:**
+The core logic is the same, but the termination condition changes. Instead of the loop ending when `low` and `high` cross, it runs for a fixed number of iterations (e.g., 100) or until the search space `(high - low)` is smaller than a tiny epsilon value (e.g., `1e-7`). This guarantees the answer is found to the desired precision.
+
+**Template (for Square Root):**
+
+```java
+double low = 0, high = x;
+double epsilon = 1e-7; // Desired precision
+
+while ((high - low) > epsilon) {
+    double mid = low + (high - low) / 2;
+    if (mid * mid > x) {
+        high = mid;
+    } else {
+        low = mid;
+    }
+}
+// 'low' or 'high' is the answer to the required precision
+```
+
+**Example:**
+
+* [Minimize Max Distance to Gas Station](https://leetcode.com/problems/minimize-max-distance-to-gas-station/description/)
+
 ---
+
 ## Linked List
 
-- Todo
+
+### **Pattern 1: The Two Pointer Technique (Fast & Slow)**
+
+**Explanation:**
+This pattern uses two pointers to traverse a list at different speeds. The key to its power lies in the relative speed difference, which allows you to find specific points in the list in a single pass, achieving an `O(N)` time and `O(1)` space solution.
+
+**Algorithm Steps:**
+1.  **Initialization:** Create two pointers, `slow` and `fast`, and initialize both to the `head` of the list.
+2.  **Traversal:** In a loop, advance the pointers. The loop must continue as long as `fast` and `fast.next` are not `null`, to prevent errors when `fast` is at or near the end of the list.
+3.  **Movement:** Inside the loop, `slow` moves one step (`slow = slow.next`) and `fast` moves two steps (`fast = fast.next.next`).
+
+**Final State of Pointers (When Finding the Middle):**
+The loop terminates when `fast` can no longer move two full steps forward. The final positions of the pointers depend on whether the list has an odd or even number of nodes.
+
+* **For an Odd Length List (e.g., `1 -> 2 -> 3 -> 4 -> 5`):**
+    * The loop stops when `fast` is at the very last node (`fast.next == null`).
+    * **Final Values:**
+        * `fast` points to the last node (node 5).
+        * `slow` points to the **exact middle node** (node 3).
+
+* **For an Even Length List (e.g., `1 -> 2 -> 3 -> 4 -> 5 -> 6`):**
+    * The loop stops when `fast` becomes `null` (after being at the second-to-last node).
+    * **Final Values:**
+        * `fast` is `null`.
+        * `slow` points to the **start of the second half** (node 4). This is often called the "upper middle".
+
+**Examples:**
+* [Middle of the Linked List](https://leetcode.com/problems/middle-of-the-linked-list/): The canonical example. You directly return the `slow` pointer after the loop terminates.
+* [Linked List Cycle](https://leetcode.com/problems/linked-list-cycle/): If a cycle exists, the `fast` pointer, moving faster, is guaranteed to eventually "lap" and meet the `slow` pointer from behind. If `fast` reaches `null`, there is no cycle.
+* [Remove Nth Node From End of List](https://leetcode.com/problems/remove-nth-node-from-end-of-list/): A variation of the pattern. You start one pointer `n+1` steps ahead of the second pointer. When the first pointer reaches the end of the list, the second pointer will be right before the node that needs to be deleted.
+
+### **Pattern 2: The Sentinel (Dummy) Node**
+
+This is a powerful and practical coding trick used to simplify logic and eliminate edge cases, particularly for problems involving modifications to the head of a list.
+
+**Explanation:**
+A sentinel (or dummy) node is a placeholder node that is created and placed before the actual `head` of the list (`dummy.next = head`). You perform all operations starting from this dummy node. This way, the head of the list is treated just like any other node, avoiding special conditional checks like `if (head == ...)` for insertion or deletion. The final, modified list is simply returned as `dummy.next`.
+
+**Examples:**
+* [Merge Two Sorted Lists](https://leetcode.com/problems/merge-two-sorted-lists/): A dummy node provides a clean starting point for the merged list. A `current` pointer, initialized to the dummy, is used to build the new list without worrying about which node becomes the initial head.
+* [Remove Duplicates from Sorted List II](https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/): The dummy node is crucial here because the original `head` node itself might be a duplicate and need to be removed. The dummy node acts as a fixed anchor before the potentially changing start of the list.
+* [Add Two Numbers](https://leetcode.com/problems/add-two-numbers/): Using a dummy node is the standard way to begin building the result list, simplifying the loop logic for creating and linking new nodes.
+
+### **Pattern 3: Reversing a Linked List**
+
+**Explanation:**
+The standard iterative approach is highly efficient and requires three pointers: `prev` (initially `null`), `curr` (initially `head`), and `next_temp` (to temporarily store the next node). Inside a loop, you save the next node (`next_temp = curr.next`), re-wire the current node's pointer to the previous node (`curr.next = prev`), and then advance `prev` and `curr` one step forward. This achieves the reversal in `O(N)` time and `O(1)` space.
+
+**Examples:**
+* [Palindrome Linked List](https://leetcode.com/problems/palindrome-linked-list/): A common `O(1)` space solution involves finding the middle of the list (using the two-pointer pattern), reversing the entire second half, and then using two pointers to compare the first and second halves for equality.
+* [Reorder List](https://leetcode.com/problems/reorder-list/): This problem combines multiple patterns: find the middle, split the list, reverse the second half (this pattern), and then merge the two halves by interleaving their nodes.
+* [Reverse Nodes in k-Group](https://leetcode.com/problems/reverse-nodes-in-k-group/): This problem requires applying the reversal subroutine repeatedly on segments of the list of size `k`.
+
+### **Pattern 4: Using a Hash Map for Visited Nodes**
+
+**Explanation:**
+You can use a Hash Map (or a Hash Set) to keep track of nodes you have already processed or to create a mapping between nodes. You traverse the list and use the node's memory reference as the key. This allows for `O(1)` lookups to check if a node has been seen before or to find its corresponding node in another context (like a deep copy).
+
+**Examples:**
+* [Copy List with Random Pointer](https://leetcode.com/problems/copy-list-with-random-pointer/): The key challenge is to clone the `random` pointers. You use a hash map `Map<OldNode, NewNode>`. In the first pass, you create a copy of each node and store the mapping. In the second pass, you set the `next` and `random` pointers of the new nodes by looking up their counterparts in the map.
+* [Intersection of Two Linked Lists](https://leetcode.com/problems/intersection-of-two-linked-lists/): A straightforward hash map solution is to traverse the first list and store all its nodes in a hash set. Then, traverse the second list and return the first node you encounter that is already in the set.
+* [Linked List Cycle](https://leetcode.com/problems/linked-list-cycle/): This can be solved by adding each node to a hash set as you traverse the list. If you try to add a node that is already in the set, you have found a cycle.
 
 
 ---
 ## Stack
 
-**1. Stack Simulation**
+### **Pattern 1: LIFO Basics (Reversal and "Undo")**
 
-- [Decode String](https://leetcode.com/problems/decode-string/) -  Use a stack to decode nested encoded strings (e.g., `"3[a2[c]]"` becomes `"accaccacc"`).
+This is the most fundamental use of a stack. The LIFO property is perfect for problems that require reversing a sequence or simulating an "undo" or "backspace" operation.
 
-  - Use two stacks, one for numbers and one for strings.
-  - when digit is encountered, push into number stack
-  - When an open bracket is encountered, initialize a string variable
-  - When character is encountered, append to the string variable
-  - when close bracket is encountered, pop the number and repeat the string that many times.
-
-- [Remove All Adjacent Duplicates in String II](https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string-ii/) -  Use a stack to remove adjacent duplicates in a string when they occur \( k \) times consecutively.
-
-   - `Solution 1` : Use Two Stack one to store Cumulative frequency and one to store character, when TOP is K, then pop the K times from both the stack
-   - `Solution 2` : Use pair to store the char and total frequency, when count of TOP is K, then pop from stack
-
-- [Asteroid Collision](https://leetcode.com/problems/asteroid-collision/) - Simulate collisions between asteroids using stack mechanics.
-
-  - Asteroid Collision happens when `stack.peek() > 0 && asteroid[i] < 0`
-  
-- [Remove K Digits](https://leetcode.com/problems/remove-k-digits/) - Simulate the removal of digits to achieve the smallest possible number using a monotonic stack.
-
-- [Car Fleet](https://leetcode.com/problems/car-fleet/) - Simulate car fleets merging using a stack based on their speeds and positions. 
-
-
-
-**2. Valid Parentheses and Expressions Evaluation**
-
-- **Infix Expression**: The operators are written between the operands. Example: `A + B, (A + B) * C`.  
-  **How to Solve**: 
-
-- **Postfix Expression (Reverse Polish Notation)**: The operators are written after the operands. Example: `AB+, AB+C*`.  
-  **How to Solve**: 
-
-- **Prefix Expression (Polish Notation)**: The operators are written before the operands. Example: `+AB, *+ABC`.  
-  **How to Solve**: 
+**Explanation:**
+Items are pushed onto the stack in one order and popped in the reverse order. This provides a simple way to process sequences backwards or to manage a list where only the most recently added item can be removed.
 
 **Examples:**
-- [Valid Parentheses](https://leetcode.com/problems/valid-parentheses/) - Check if parentheses are balanced in a string.
+* **Reverse a String:** Push each character onto a stack, then pop them off to build the reversed string.
+* [Backspace String Compare](https://leetcode.com/problems/backspace-string-compare/): Use a stack to simulate typing. A non-'#' character is pushed, and a '#' character pops the stack, effectively handling the backspace.
 
-- [Minimum Add to Make Parentheses Valid](https://leetcode.com/problems/minimum-add-to-make-parentheses-valid/) - Count the minimum additions required to make a string of parentheses valid.
 
-- [Evaluate Reverse Polish Notation](https://leetcode.com/problems/evaluate-reverse-polish-notation/) - Evaluate a postfix expression using a stack.
+### **Pattern 2: Complex Simulation & State Tracking**
 
-- [Basic Calculator](https://leetcode.com/problems/basic-calculator/) - Handle parentheses and operators in infix expressions.
+For problems with complex, stateful interactions (like collisions or decoding), a stack is perfect for managing the "currently active" set of items and their properties (like counts, directions, or nested results).
 
-- [Basic Calculator II](https://leetcode.com/problems/basic-calculator-ii/) - Evaluate an infix arithmetic expression.
-  
-
-**3. Monotonic Stack Problems**
+**Explanation:**
+The top of the stack always represents the most current state or object. When a new element arrives, it only interacts with the element at the top of the stack. This simplifies problems that would otherwise require complex, nested logic.
 
 **Examples:**
-- [Daily Temperatures](https://leetcode.com/problems/daily-temperatures/) - Find the number of days until a warmer temperature.
+* [Decode String](https://leetcode.com/problems/decode-string/): Use two stacks (one for counts, one for partial strings) to handle nested decoding from the inside out. When you see `]`, you pop a count and a string, process them, and append the result to the new "current" string at the top of the string stack.
+* [Remove All Adjacent Duplicates in String II](https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string-ii/): Use a stack of pairs `(character, count)`. When a new character arrives, if it matches the top, increment the count. If the count reaches `k`, pop from the stack.
+* [Asteroid Collision](https://leetcode.com/problems/asteroid-collision/): A new asteroid only collides with the last one standing (the stack's top). This simplifies the collision logic to a pairwise check.
+* [Car Fleet](https://leetcode.com/problems/car-fleet/): After sorting cars by position, use a stack to merge fleets. A car becomes a fleet. If the car behind it is faster and would catch up, it gets absorbed into the fleet (do nothing). If it's slower (or can't catch up), it forms a new, distinct fleet (push its arrival time to the stack).
 
-- [Largest Rectangle in Histogram](https://leetcode.com/problems/largest-rectangle-in-histogram/) - Find the largest rectangular area in a histogram using a monotonic stack.
 
-- [Sum of Subarray Ranges](https://leetcode.com/problems/sum-of-subarray-ranges/) - Calculate the sum of the range (difference between maximum and minimum) of all subarrays.  
+### **Pattern 3: Parentheses, Paths, and Expression Evaluation**
 
-- [Sum of Subarray Minimums](https://leetcode.com/problems/sum-of-subarray-minimums/) - Calculate the sum of the minimum elements of all subarrays.
+The stack's ability to handle matching pairs and precedence makes it the go-to data structure for parsing file paths, validating paired tokens (like parentheses), and evaluating arithmetic expressions.
 
-- [Remove Duplicate Letters](https://leetcode.com/problems/remove-duplicate-letters/description/) - Remove duplicate letters to make the string lexicographically smallest.
+**Explanation:**
+When you encounter an "opening" token (like `(`, a directory name, or a number), you push it. When you encounter a "closing" token (`(`, `..`, or an operator), you process by popping from the stack.
 
-  ```java
-      String removeDuplicateLetters(String s) {
-          HashMap<Character, Integer> map = new HashMap<>();
-          for (char c : s.toCharArray()) {
-              map.put(c, map.getOrDefault(c, 0) + 1);
-          }
+* **Postfix (Reverse Polish Notation)**: `2 3 +`
+    * **How to Solve**: Iterate through tokens. If a number, push it onto the stack. If an operator, pop the top two numbers, perform the operation, and push the result back.
+* **Infix Notation**: `2 + 3`
+    * **How to Solve**: Use two stacks (one for numbers, one for operators). Handle operator precedence carefully. When you see an operator, process any operators on the stack that have higher or equal precedence before pushing the new one. This is the basis of the Shunting-yard algorithm.
+* **Prefix Notation (Polish Notation)**: `+ 2 3`
+    * **How to Solve**: Same as postfix, but you iterate through the tokens in reverse (from right to left).
 
-          Stack<Character> stack = new Stack<>();
-          HashSet<Character> seen = new HashSet<>();
+**Examples:**
+* [Valid Parentheses](https://leetcode.com/problems/valid-parentheses/): The classic example. Push opening brackets. When a closing bracket appears, check if it matches the top of the stack.
+* [Simplify Path](https://leetcode.com/problems/simplify-path/): Use a stack to manage directory names. `.` is ignored, `..` pops from the stack (goes up one level), and a name is pushed.
+* [Evaluate Reverse Polish Notation](https://leetcode.com/problems/evaluate-reverse-polish-notation/): A direct implementation of the postfix evaluation algorithm.
+* [Basic Calculator](https://leetcode.com/problems/basic-calculator/) series: These problems involve evaluating infix expressions with varying levels of complexity (parentheses, precedence).
 
-          for (char c : s.toCharArray()) {
-              map.put(c, map.get(c) - 1);
-              if (seen.contains(c)) continue;
 
-              while (!stack.isEmpty() && stack.peek() > c && map.get(stack.peek()) > 0) {
-                  seen.remove(stack.pop());
-              }
+### **Pattern 4: Monotonic Stack (Next/Previous Greater/Smaller)**
 
-              stack.push(c);
-              seen.add(c);
-          }
+A monotonic stack (either always increasing or always decreasing) is a powerful tool for efficiently finding the **Next Greater/Smaller Element** or **Previous Greater/Smaller Element** for all items in a sequence.
 
-          StringBuilder result = new StringBuilder();
-          for (Character c : stack) {
-              result.append(c);
-          }
+**Explanation:**
+You maintain a stack that is always sorted. When considering a new element, you pop from the stack any elements that would violate the monotonic property (e.g., in an increasing stack, pop all elements larger than the current one). The crucial insight is that for each element you pop, the current element is its **"Next Smaller Element"**.
 
-          return result.toString();
-      }
-  ```
+**Examples:**
+* [Next Greater Element I](https://leetcode.com/problems/next-greater-element-i/): The canonical problem to learn this pattern.
+* [Daily Temperatures](https://leetcode.com/problems/daily-temperatures/): A variation of "Next Greater Element," where you store indices and calculate the distance.
+* [Largest Rectangle in Histogram](https://leetcode.com/problems/largest-rectangle-in-histogram/): A hard but classic application. The stack is used to find the `previous smaller` and `next smaller` bar for each bar `i`. These boundaries define the width of the largest possible rectangle that has bar `i` as its height.
+* [Sum of Subarray Minimums](https://leetcode.com/problems/sum-of-subarray-minimums/): An advanced use case. For each element `A[i]`, a monotonic stack helps find its `previous smaller` and `next smaller` element. This tells you the number of subarrays for which `A[i]` is the minimum, allowing you to calculate its total contribution to the sum.
+* [Remove K Digits](https://leetcode.com/problems/remove-k-digits/): To get the smallest number, you want a monotonically increasing sequence of digits. You can use a stack to build this. If the current digit is smaller than the top of the stack, pop the top (simulating a removal) to maintain the increasing order.
+* [Remove Duplicate Letters](https://leetcode.com/problems/remove-duplicate-letters/): A clever variation. It builds a lexicographically smallest string using an increasing monotonic stack. You can pop a larger character `c1` to add a smaller one `c2`, but only if `c1` appears again later in the string.
 
 ---
 
-## Sliding Window
+## Sliding Widow
+
+The sliding window technique is a powerful method for solving problems involving subarrays or substrings. It optimizes solutions that would otherwise be O(N²) down to an efficient O(N) by avoiding re-computation.
+
+### **Pattern 1: Fixed-Size Sliding Window**
+
+This is the simplest pattern, used when the problem specifies a fixed window size `k`. The goal is to find a property (like the max/min sum, average, etc.) of all windows of that size.
+
+**Explanation:**
+You first create an initial window of size `k`. Then, you slide the window one element at a time to the right. In each step, you efficiently update your calculation by **adding the new element** that enters the window and **subtracting the leftmost element** that leaves it. This O(1) update is the key to its efficiency.
 
 **Examples:**
-
-**1. Fixed Window Size**
-
-- [Maximum Points From Cards](https://leetcode.com/problems/maximum-points-you-can-obtain-from-cards/) - Pick cards from either the beginning or the end to maximize the total points.
-
-  - Calculate total sum, then calculate `remaining window sum and size(arr.length - k)`, find sum of fixed remaining window size, deduct from total sum which give sum of k window size
-  - ```java
-       int maxScore(int[] cardPoints, int k) {
-          int totalSum = 0;
-          for (int point : cardPoints) {
-              totalSum += point;
-          }
-  
-          int remWindowSize = cardPoints.length - k;
-          int remWindowSum = 0;
-  
-          for (int i = 0; i < remWindowSize; i++) {
-              remWindowSum += cardPoints[i];
-          }
-  
-          int result = Math.max(0, totalSum - remWindowSum);
-  
-          for (int i = remWindowSize; i < cardPoints.length; i++) {
-              remWindowSum += cardPoints[i] - (cardPoints[i - remWindowSize]);
-              result = Math.max(result, totalSum - remWindowSum);
-          }
-  
-          return result;
-      }
-    ```
-
-**2. Variable Window Size**
-
-- [Permutations in String](https://leetcode.com/problems/permutation-in-string/) - Check if `s2` contains any permutation of `s1`,  s1 = "ab",  s2 = "eidbaooo"
-
-   - ```java
-        boolean checkInclusion(String s1, String s2) {
-          int left = 0;
-          int[] count = new int[26];
-  
-          for (int i = 0; i < s1.length(); i++) {
-              count[s1.charAt(i) - 'a']++;
-          }
-  
-          for (int right = 0; right < s2.length(); right++) {
-              char current = s2.charAt(right);
-              count[current - 'a']--;
-  
-              while (count[current - 'a'] < 0) { // negative means s2 does not contain in s1
-                  count[s2.charAt(left) - 'a']++;
-                  left++;
-              }
-  
-              if (right - left + 1 == s1.length()) return true;
-          }
-  
-          return false;
-      }
-     ```
-      
+* **Maximum Sum Subarray of Size K:** The canonical example. Find the sum of the first `k` elements. Then, slide the window, at each step adding the new element and subtracting the one that fell off, updating the max sum.
+* [Permutation in String](https://leetcode.com/problems/permutation-in-string/): This is conceptually a fixed-window problem. You are looking for a window in `s2` of size `s1.length()` that is a permutation of `s1`. You maintain a character count map and slide the window, updating the counts until you find a match.
+* [Maximum Points From Cards](https://leetcode.com/problems/maximum-points-you-can-obtain-from-cards/): A clever twist on the pattern. Taking `k` cards from the ends is the same as leaving a contiguous block of `n-k` cards in the middle. The problem becomes: "Find the minimum sum subarray of fixed size `n-k`." The answer is `total_sum - min_subarray_sum`.
 
 
-**3. Longest/Shortest Subarrays**
+### **Pattern 2: Variable-Size Sliding Window (Two Pointers)**
 
-- [Longest Subarray K Frequency](https://leetcode.com/problems/length-of-longest-subarray-with-at-most-k-frequency/description/) - Find the longest subarray with exactly `k` distinct elements.
+This is the most common pattern, used to find the **longest or shortest** subarray/substring that satisfies a given condition.
 
-    - Loop and put into a map, expand the window until map size is <= k, then remove the count from map from left side and shrink the window if exceeds k, at last update the max length
+**Explanation:**
+You use two pointers, `left` and `right`, to define the current window.
+1.  **Expand:** The `right` pointer always moves forward, expanding the window and adding new elements.
+2.  **Shrink:** When the window no longer satisfies the condition, the `left` pointer moves forward, shrinking the window from the left until the condition is met again.
+3.  **Update:** The answer (max/min length) is updated after each valid expansion.
 
-    ```java
-        int maxSubarrayLength(int[] nums, int k) {
-          Map<Integer, Integer> count = new HashMap<>();
+**Examples:**
+* [Longest Repeating Character Replacement](https://leetcode.com/problems/longest-repeating-character-replacement/): **Condition:** `window_length - count_of_most_frequent_char <= k`. Expand the window with `right`. If the condition is violated, shrink with `left`.
+* [Minimum Window Substring](https://leetcode.com/problems/minimum-window-substring/): **Condition:** The window must contain all characters from string `t`. Expand with `right` until the condition is met. Then, shrink with `left` as much as possible while keeping the condition valid, updating the minimum length at each step.
+* [Longest Subarray with at most K Frequency](https://leetcode.com/problems/length-of-longest-subarray-with-at-most-k-frequency/): **Condition:** The frequency of every element in the window must be `<= k`. Expand with `right`. If the frequency of the newly added element exceeds `k`, shrink with `left` until its frequency is back to `k`.
 
-          int left = 0;
-          int result = 0;
 
-          for (int right = 0; right < nums.length; right++) {
+### **Pattern 3: Counting Subarrays with the "At Most K" Trick**
 
-              count.put(nums[right], count.getOrDefault(nums[right], 0) + 1);
+This is a specific but powerful pattern for problems that ask for the **number of subarrays** that satisfy a condition with **exactly `k`** of something (e.g., odd numbers, distinct characters).
 
-              while (count.get(nums[right]) > k) {
-                  count.put(nums[left], count.get(nums[left]) - 1);
-                  left++;
-              }
+**Explanation:**
+Counting subarrays with *exactly* `k` is difficult. However, counting subarrays with *at most* `k` is much easier and can be solved with a standard variable-size window. The magic formula is:
+`count(exactly k) = count(at most k) - count(at most k - 1)`
+You write a helper function to solve the "at most k" version and call it twice.
 
-              result = Math.max(result, right - left + 1);
-          }
+**Examples:**
+* [Subarrays with K Different Integers](https://leetcode.com/problems/subarrays-with-k-different-integers/): The canonical example of this pattern. You implement a helper `countAtMostKDistinct(nums, k)` and return `helper(nums, k) - helper(nums, k - 1)`.
+* [Count Number of Nice Subarrays](https://leetcode.com/problems/count-number-of-nice-subarrays/): Same logic. The "something" to count is the number of odd integers in the subarray.
+* [Number of Substrings Containing All Three Characters](https://leetcode.com/problems/number-of-substrings-containing-all-three-characters/): This can be solved with a variation. Once the window `[left...right]` is valid (contains 'a', 'b', and 'c'), you know that this window, plus any window that extends further to the right (e.g., `[left...right+1]`, `[left...n-1]`), is also valid. The number of such windows is `n - right`. You add this to the total and then shrink from the left.
 
-          return result;
-      }
-    ```
 
-**4. Longest/Shortest Substrings**
+### **Pattern 4: Sliding Window with an Auxiliary Data Structure**
 
-- [Longest Repeating Character Replacement](https://leetcode.com/problems/longest-repeating-character-replacement/) - Given a string, replace up to `k` characters to find the longest substring with the same character.
+This pattern applies when simple variables or a hash map are not enough to track the window's property efficiently. A specialized data structure is used to maintain the property in O(1) or O(log N) time as the window slides.
 
-   - Calculate the most frequent character and reduce the window if its satisfies `(right - left + 1) - mostFrequent > k`
+**Explanation:**
+The core sliding window logic remains, but checking and maintaining the window's state requires a more complex tool. The most common is a **monotonic deque** (a double-ended queue that is always sorted).
 
-- [Minimum Window Substring](https://leetcode.com/problems/minimum-window-substring/) - Find the smallest substring in `s` that contains all characters from `t`.
+**Examples:**
+* [Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/): The canonical example. A monotonic decreasing deque is used to store indices of elements in the window. The front of the deque always holds the index of the maximum element.
+    1.  **Slide:** Before adding a new element's index, remove any indices from the back of the deque that correspond to smaller elements.
+    2.  **Maintain:** Remove the index from the front if it falls out of the current window's bounds.
+    3.  **Query:** The maximum element is always at `nums[deque.peekFirst()]`.
+* **Sliding Window Median (Hard):** This requires two heaps or a balanced binary search tree to keep track of the median of the elements within the window as it slides.
 
-   - Similiar concept to `Permutations in String`, Keep track of starting index and min length of window.
+---
 
-**5. Number of Subarrays**
+## Greedy
 
-- [Nice Subarrays](https://leetcode.com/problems/count-number-of-nice-subarrays/description/) - Find the number of subarrays where the number of odd integers is exactly `k`.
+- [Greedy Template](https://huaguo.substack.com/p/greedy-algorithm)
 
-  - `subarrayAtMostK(nums, k) - subarrayAtMostK(nums, k - 1)` - Total Subarrays with atmost k - Total Subarrays with atmost k-1
 
-  ```java
-    int subarrayAtMostK(int[] nums, int K) {
-        int result = 0;
-        int left = 0;
-        int right = 0;
-        int count = 0;
+---
 
-        while (right < nums.length) {
-            if (nums[right] % 2 == 1)  count++;
-          
-            while (count > K) {
-                if (nums[left] % 2 == 1)  count--;
-                left++;
-            }
+## Matrix
 
-            result += right - left + 1; // Total Subarrays
-            right++;
-        }
 
-        return result;
-    }
-
-    int numberOfSubarrays(int[] nums, int k) {
-        return subarrayAtMostK(nums, k) - subarrayAtMostK(nums, k - 1);
-    }
-  ```
-
-- [Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/) - Find the maximum value in each sliding window of size `k`.
-
-   ```java
-      int[] maxSlidingWindow(int[] nums, int k) {
-        int n = nums.length;
-        int[] result = new int[n - k + 1];
-        int index = 0;
-        Deque<Integer> deque = new ArrayDeque<>();
-
-        for (int i = 0; i < n; i++) {
-            // Check if the element exceeds the maximum size in deque
-            // i - k remove last element from window if its exceeds size
-            if (!deque.isEmpty() && deque.peekFirst() <= i - k) {
-                deque.removeFirst();
-            }
-
-            // Create a decreasing monotonic queue, like [5, 4, 3, 1]
-            while (!deque.isEmpty() && nums[deque.peekLast()] <= nums[i]) {
-                deque.removeLast();
-            }
-
-            deque.addLast(i);
-
-            // add all the elements of window
-            // First valid window i >= k - 1
-            if (i >= k - 1 && !deque.isEmpty()) {
-                result[index++] = nums[deque.peekFirst()];
-            }
-        }
-
-        return result;
-    }
-   ```
-
-- [Subarrays K Different Integers](https://leetcode.com/problems/subarrays-with-k-different-integers/) - Find the number of subarrays with exactly `k` different integers.
-
-  - `countAtMostKSubarrays(nums, k) - countAtMostKSubarrays(nums, k - 1)` - Total Subarrays with atmost k - Total Subarrays with atmost k-1
-
-**6. Number of Substrings**
-
-- [Substrings Containing 3 Characters](https://leetcode.com/problems/number-of-substrings-containing-all-three-characters/description/) - Find the number of substrings that contain exactly 3 distinct characters.
-
-   - `s.length() − right` total substrings can be formed including `[left-right] to N`
-    
 ---
 ## Prefix Sum
 
@@ -631,11 +639,6 @@
 
 
 ---
-## Greedy
-
-- [Greedy Template](https://huaguo.substack.com/p/greedy-algorithm)
-
-
 ## Trees
 
 - `Inorder successor(smallest element in left subtree from right node)` is next node element in inorder traversal(Sorted Element in BST)

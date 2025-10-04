@@ -1,4 +1,4 @@
-package dsa;
+package dsa.treeTrie;
 
 class TreeNode {
    public TreeNode left;

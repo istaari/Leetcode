@@ -9,7 +9,6 @@ public class FactorialTrailingZeroes {
             count += n / i;
         }
 
-
         return count;
     }
 

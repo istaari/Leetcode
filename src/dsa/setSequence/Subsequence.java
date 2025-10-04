@@ -1,4 +1,4 @@
-package dsa;
+package dsa.setSequence;
 
 import java.util.ArrayList;
 import java.util.List;

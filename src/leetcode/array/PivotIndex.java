@@ -10,7 +10,6 @@ public class PivotIndex {
         int pre = 0;
         int post = 0;
 
-
         for (int i = 0; i < n; i++) {
             prefix[i] = pre;
             pre += nums[i];

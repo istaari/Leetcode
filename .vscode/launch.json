@@ -3,6 +3,41 @@
     "configurations": [
         {
             "type": "java",
+            "name": "SearchInRotatedArray",
+            "request": "launch",
+            "mainClass": "leetcode.binarySearch.SearchInRotatedArray",
+            "projectName": "problem-solving_bfd47579"
+        },
+        {
+            "type": "java",
+            "name": "MinimumInSortedRotatedArray",
+            "request": "launch",
+            "mainClass": "leetcode.binarySearch.MinimumInSortedRotatedArray",
+            "projectName": "problem-solving_bfd47579"
+        },
+        {
+            "type": "java",
+            "name": "FloorCeilIngSortedArray",
+            "request": "launch",
+            "mainClass": "leetcode.binarySearch.FloorCeilIngSortedArray",
+            "projectName": "problem-solving_bfd47579"
+        },
+        {
+            "type": "java",
+            "name": "FirstLastOccurrences",
+            "request": "launch",
+            "mainClass": "leetcode.binarySearch.FirstLastOccurrences",
+            "projectName": "problem-solving_bfd47579"
+        },
+        {
+            "type": "java",
+            "name": "FindPeakElement",
+            "request": "launch",
+            "mainClass": "leetcode.binarySearch.FindPeakElement",
+            "projectName": "problem-solving_bfd47579"
+        },
+        {
+            "type": "java",
             "name": "ArrayDoubledPairs",
             "request": "launch",
             "mainClass": "ArrayDoubledPairs",

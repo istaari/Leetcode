@@ -1,4 +1,4 @@
-package dsa;
+package dsa.graph;
 
 
 import java.util.ArrayList;

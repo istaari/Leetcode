@@ -1,8 +1,6 @@
 package leetcode.array;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 // LeetCode 409: Longest Palindrome

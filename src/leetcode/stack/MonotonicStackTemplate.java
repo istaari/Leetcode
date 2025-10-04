@@ -2,7 +2,7 @@ package leetcode.stack;
 
 import java.util.Stack;
 
-public class MonotonicStack {
+public class MonotonicStackTemplate {
 
     // Increasing Stack (from bottom to top) [1, 2, 3, 4]
     int[] findPreviousSmallest(int[] arr) {

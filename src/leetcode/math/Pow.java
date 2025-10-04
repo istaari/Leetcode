@@ -18,7 +18,6 @@ public class Pow {
         }
 
         while (n != 0) {
-
             if (n % 2 != 0) {
                 result = result * x;
             }

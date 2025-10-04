@@ -1,8 +1,6 @@
 package leetcode.math;
 
 
-// BFS Solution : https://leetcode.com/problems/water-and-jug-problem/solutions/83716/java-programmatic-solution-bfs-without-gcd/
-
 public class WaterJugProblem {
 
     public static int GCD(int a, int b) {

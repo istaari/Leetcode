@@ -7,7 +7,6 @@ import java.util.List;
 public class FindCommonCharacters {
 
     public static List<String> commonChars(String[] words) {
-
         int[] mainCount = new int[26];
         Arrays.fill(mainCount, Integer.MAX_VALUE);
 
