@@ -1,7 +1,7 @@
 package leetcode.linkedList;
 
 public class Node {
-    Integer data;
+    int data;
     Node next;
     Node(int data) {
         this.data = data;

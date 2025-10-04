@@ -1,8 +1,6 @@
 
 # Algorithms and Data Structures
 
----
-
 ## String
 
 
@@ -412,69 +410,13 @@ while ((high - low) > epsilon) {
 
 ## Linked List
 
-
 ### **Pattern 1: The Two Pointer Technique (Fast & Slow)**
-
-**Explanation:**
-This pattern uses two pointers to traverse a list at different speeds. The key to its power lies in the relative speed difference, which allows you to find specific points in the list in a single pass, achieving an `O(N)` time and `O(1)` space solution.
-
-**Algorithm Steps:**
-1.  **Initialization:** Create two pointers, `slow` and `fast`, and initialize both to the `head` of the list.
-2.  **Traversal:** In a loop, advance the pointers. The loop must continue as long as `fast` and `fast.next` are not `null`, to prevent errors when `fast` is at or near the end of the list.
-3.  **Movement:** Inside the loop, `slow` moves one step (`slow = slow.next`) and `fast` moves two steps (`fast = fast.next.next`).
-
-**Final State of Pointers (When Finding the Middle):**
-The loop terminates when `fast` can no longer move two full steps forward. The final positions of the pointers depend on whether the list has an odd or even number of nodes.
-
-* **For an Odd Length List (e.g., `1 -> 2 -> 3 -> 4 -> 5`):**
-    * The loop stops when `fast` is at the very last node (`fast.next == null`).
-    * **Final Values:**
-        * `fast` points to the last node (node 5).
-        * `slow` points to the **exact middle node** (node 3).
-
-* **For an Even Length List (e.g., `1 -> 2 -> 3 -> 4 -> 5 -> 6`):**
-    * The loop stops when `fast` becomes `null` (after being at the second-to-last node).
-    * **Final Values:**
-        * `fast` is `null`.
-        * `slow` points to the **start of the second half** (node 4). This is often called the "upper middle".
-
-**Examples:**
-* [Middle of the Linked List](https://leetcode.com/problems/middle-of-the-linked-list/): The canonical example. You directly return the `slow` pointer after the loop terminates.
-* [Linked List Cycle](https://leetcode.com/problems/linked-list-cycle/): If a cycle exists, the `fast` pointer, moving faster, is guaranteed to eventually "lap" and meet the `slow` pointer from behind. If `fast` reaches `null`, there is no cycle.
-* [Remove Nth Node From End of List](https://leetcode.com/problems/remove-nth-node-from-end-of-list/): A variation of the pattern. You start one pointer `n+1` steps ahead of the second pointer. When the first pointer reaches the end of the list, the second pointer will be right before the node that needs to be deleted.
 
 ### **Pattern 2: The Sentinel (Dummy) Node**
 
-This is a powerful and practical coding trick used to simplify logic and eliminate edge cases, particularly for problems involving modifications to the head of a list.
-
-**Explanation:**
-A sentinel (or dummy) node is a placeholder node that is created and placed before the actual `head` of the list (`dummy.next = head`). You perform all operations starting from this dummy node. This way, the head of the list is treated just like any other node, avoiding special conditional checks like `if (head == ...)` for insertion or deletion. The final, modified list is simply returned as `dummy.next`.
-
-**Examples:**
-* [Merge Two Sorted Lists](https://leetcode.com/problems/merge-two-sorted-lists/): A dummy node provides a clean starting point for the merged list. A `current` pointer, initialized to the dummy, is used to build the new list without worrying about which node becomes the initial head.
-* [Remove Duplicates from Sorted List II](https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/): The dummy node is crucial here because the original `head` node itself might be a duplicate and need to be removed. The dummy node acts as a fixed anchor before the potentially changing start of the list.
-* [Add Two Numbers](https://leetcode.com/problems/add-two-numbers/): Using a dummy node is the standard way to begin building the result list, simplifying the loop logic for creating and linking new nodes.
-
 ### **Pattern 3: Reversing a Linked List**
 
-**Explanation:**
-The standard iterative approach is highly efficient and requires three pointers: `prev` (initially `null`), `curr` (initially `head`), and `next_temp` (to temporarily store the next node). Inside a loop, you save the next node (`next_temp = curr.next`), re-wire the current node's pointer to the previous node (`curr.next = prev`), and then advance `prev` and `curr` one step forward. This achieves the reversal in `O(N)` time and `O(1)` space.
-
-**Examples:**
-* [Palindrome Linked List](https://leetcode.com/problems/palindrome-linked-list/): A common `O(1)` space solution involves finding the middle of the list (using the two-pointer pattern), reversing the entire second half, and then using two pointers to compare the first and second halves for equality.
-* [Reorder List](https://leetcode.com/problems/reorder-list/): This problem combines multiple patterns: find the middle, split the list, reverse the second half (this pattern), and then merge the two halves by interleaving their nodes.
-* [Reverse Nodes in k-Group](https://leetcode.com/problems/reverse-nodes-in-k-group/): This problem requires applying the reversal subroutine repeatedly on segments of the list of size `k`.
-
 ### **Pattern 4: Using a Hash Map for Visited Nodes**
-
-**Explanation:**
-You can use a Hash Map (or a Hash Set) to keep track of nodes you have already processed or to create a mapping between nodes. You traverse the list and use the node's memory reference as the key. This allows for `O(1)` lookups to check if a node has been seen before or to find its corresponding node in another context (like a deep copy).
-
-**Examples:**
-* [Copy List with Random Pointer](https://leetcode.com/problems/copy-list-with-random-pointer/): The key challenge is to clone the `random` pointers. You use a hash map `Map<OldNode, NewNode>`. In the first pass, you create a copy of each node and store the mapping. In the second pass, you set the `next` and `random` pointers of the new nodes by looking up their counterparts in the map.
-* [Intersection of Two Linked Lists](https://leetcode.com/problems/intersection-of-two-linked-lists/): A straightforward hash map solution is to traverse the first list and store all its nodes in a hash set. Then, traverse the second list and return the first node you encounter that is already in the set.
-* [Linked List Cycle](https://leetcode.com/problems/linked-list-cycle/): This can be solved by adding each node to a hash set as you traverse the list. If you try to add a node that is already in the set, you have found a cycle.
-
 
 ---
 ## Stack

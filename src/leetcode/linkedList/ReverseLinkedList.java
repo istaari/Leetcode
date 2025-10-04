@@ -1,20 +1,24 @@
 package leetcode.linkedList;
 
 public class ReverseLinkedList {
+
     public static Node reverse(Node head) {
-        if (head != null) {
-            Node previous = null;
-            Node current = head;
-            Node next = null;
-            while (current != null) {
-                next = current.next;
-                current.next = previous;
-                previous = current;
-                current = next;
-            }
-            return previous;
+        if (head == null || head.next == null) {
+            return head;
         }
-        return null;
+
+        Node prev = null; // points to the previous node
+        Node curr = head; // points to the current node
+        Node next = null; // points to the next node
+
+        while (curr != null) {
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next; // At the end of the loop, curr will be null and prev will be the new head
+        }
+
+        return prev;
     }
 
     public static Node recursiveReverse(Node head) {
@@ -34,7 +38,4 @@ public class ReverseLinkedList {
         return newHead;
     }
 
-    public static void main(String[] args) {
-
-    }
 }

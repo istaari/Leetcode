@@ -3,10 +3,8 @@ package leetcode.linkedList;
 
 public class LinkedListIntersection {
 
-    // https://leetcode.com/problems/intersection-of-two-linked-lists/description/
     // Exchange the headA and headB to account for the length difference
     public static ListNode getIntersectionNode(ListNode headA, ListNode headB) {
-
         ListNode A = headA;
         ListNode B = headB;
 
@@ -20,7 +18,6 @@ public class LinkedListIntersection {
 
 
     public static void main(String[] args) {
-
         // Creating the intersecting part of the list [8 -> 4 -> 5]
         ListNode intersectingNode = new ListNode(8);
         intersectingNode.next = new ListNode(4);
