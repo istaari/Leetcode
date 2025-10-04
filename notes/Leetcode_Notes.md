@@ -418,6 +418,10 @@ while ((high - low) > epsilon) {
 
 ### **Pattern 4: Using a Hash Map for Visited Nodes**
 
+### **Pattern 4: Merging & Splitting (Divide and Conquer)**
+
+### **Pattern 4: Cycle Analysis (Advanced Two Pointers)**
+
 ---
 ## Stack
 
