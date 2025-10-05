@@ -14,7 +14,6 @@ public class ValidateIP {
         }
 
         for (int i = 0; i < original.length(); i++) {
-
             String part = original.substring(0, i + 1);
 
             if (part.length() > 3 || Integer.parseInt(part) < 0 || Integer.parseInt(part) > 255) continue;

@@ -30,15 +30,12 @@ import java.util.List;
  */
 public class WordSearchII {
 
-    // Inner class for the TrieNode structure
-    class TrieNode {
+
+    static class TrieNode {
         TrieNode[] children = new TrieNode[26];
         String word = null; // Store the full word at the end node
     }
 
-    /**
-     * The main driver method to find the words.
-     */
     public List<String> findWords(char[][] board, String[] words) {
         List<String> results = new ArrayList<>();
         TrieNode root = buildTrie(words);
@@ -72,14 +69,6 @@ public class WordSearchII {
         return root;
     }
 
-    /**
-     * The core recursive backtracking method that explores the board.
-     * @param board The character grid.
-     * @param r The current row.
-     * @param c The current column.
-     * @param parentNode The TrieNode corresponding to the prefix built so far.
-     * @param results The list to store the found words.
-     */
     void backtrack(char[][] board, int r, int c, TrieNode parentNode, List<String> results) {
         // 1. Constraint Check (Boundary & Visited):
         if (r < 0 || c < 0 || r >= board.length || c >= board[0].length || board[r][c] == '#') {

@@ -901,128 +901,75 @@ The core sliding window logic remains, but checking and maintaining the window's
 ---
 ## Backtracking
 
-- **Pruning the search** : We can often optimize backtracking by pruning the search tree.
-- **Meet in the middle** : Meet in the middle is a technique where the search space is divided into two parts of about equal size. A separate search is performed for both of the parts, and finally the results of the searches are combined. Example `subset sum` can be optimize using this technique
 
+### The Common Locations for Pruning
 
-### **1. Subsets (Power Set)**  
+Let's break down where pruning happens using our examples. There are generally two main places:
 
-**Examples:**  
+#### 1\. While Iterating Through Choices (Inside a `for` loop)
 
-- [Subsets](https://leetcode.com/problems/subsets/) - Generate all possible subsets of a given set.
+This is the most common place for pruning in **generation-style** problems (like combinations, subsets, permutations). Before you commit to a choice and make a recursive call, you check if that choice is valid or promising.
 
-  - Always Select the next element, then backtrack and remove the element
-  
-  ```java
-    void backtrack(int[] nums, List<Integer> list, List<List<Integer>> result, int start) {
-        result.add(new ArrayList<>(list));
-        for (int i = start; i < nums.length; i++) {
-            list.add(nums[i]);
-            backtrack(nums, list, result, i + 1);
-            list.removeLast();
-        }
+**Example 1: `Permutations` (Validity Prune)**
+
+```java
+for (int num : nums) {
+    // PRUNING HAPPENS HERE
+    // Checks: "Is this choice valid according to the rules?"
+    if (tempList.contains(num)) {
+        continue; // Don't explore paths with duplicate numbers.
     }
-  ```
-
-- [Subsets II](https://leetcode.com/problems/subsets-ii/) - Generate all possible subsets of a given set, handling duplicates.  
-
-  - Sort the elements and check if there is duplicates by comparing with previous element, then skip the duplicates
-
-
-### **2. Permutations**  
-
-**Examples:**  
-
-- [Permutations](https://leetcode.com/problems/permutations/) - Generate all possible permutations of a given set of numbers. 
-
-  - Recursive functions always starts with `i = 0` or first element and check duplicates in the list
-
-  ```java
-    void backtrack(int[] nums, List<Integer> list, List<List<Integer>> result) {
-        if (nums.length == list.size()) {
-            result.add(new ArrayList<>(list));
-            return;
-        }
-
-        for (int num : nums) {
-            if (list.contains(num)) continue;
-
-            list.add(num);
-            backtrack(nums, list, result);
-            list.removeLast();
-        }
-    }
-  ```
-
-
-- [Permutations II](https://leetcode.com/problems/permutations-ii/) - Generate all unique permutations of a given set, handling duplicates.  
-
-  - Can be used visited array to check duplicates
-    ```java
-      if (visited[i]) continue;
-      if (i > 0 && nums[i] == nums[i - 1] && !visited[i - 1]) continue;
-    ```
-
-
-### **3. Combinations**  
-
-**Examples:**  
-
-- [Combinations](https://leetcode.com/problems/combinations/) - Generate all possible combinations of `k` numbers from a given set. 
-
-  - Recursive Subset pattern can be used here, call recursive function with next starting index
-
-  - **Meet in the Middle Optimizations** : 
     
-    - For example, suppose that the list is [2,4,5,9] and x = 15. First, we divide the list into A= [2,4] and B= [5,9]. After this, we create lists SA = [0,2,4,6]
-  and SB = [0,5,9,14]. In this case, the sum x = 15 is possible to form, because SA contains the sum 6, SB contains the sum 9, and 6 + 9= 15. This corresponds to the solution [2,4,9].
+    tempList.add(num);
+    helper(...); // Only explore valid choices
+    tempList.remove(...);
+}
+```
 
+Here, you prune **before** making the recursive call to avoid exploring a branch that violates the problem's core rules (e.g., using a number more than once).
 
-- [Combination Sum](https://leetcode.com/problems/combination-sum/) - Find all unique combinations of numbers that sum up to a target.  
+**Example 2: `Combinations` (Optimization Prune)**
 
+```java
+for (int i = start; i <= n; i++) {
+    // PRUNING CAN HAPPEN HERE
+    // Asks: "Is it still possible to find a solution from here?"
+    if (/* elements needed > elements available */) {
+        break; // Stop exploring choices that can't possibly work.
+    }
 
-- [Combination Sum II](https://leetcode.com/problems/combination-sum-ii/) - Similar to Combination Sum but with each number used at most once.  
+    path.add(i);
+    backtrack(...);
+    path.remove(...);
+}
+```
 
+Here, you prune to make the algorithm more efficient by looking ahead and realizing that even if you make a choice, you won't have enough remaining options to complete a valid solution.
 
-- [Combination Sum III](https://leetcode.com/problems/combination-sum-iii/) - Find all valid combinations of `k` numbers that sum to `n`.  
+#### 2\. At the Start of the Recursive Call (As a Guard Clause)
 
+This is very common in **pathfinding-style** problems on a grid or graph (like a maze). The function is called with a new state (e.g., new coordinates), and the very first thing it does is validate that state.
 
-### **4. Word Search**  
+**Example: `RatInMaze` (Validity Prune)**
 
-**Examples:**  
+```java
+public static void helper(int[][] arr, int row, int col, ...) {
+    // Base case for success
+    if (row == m - 1 && col == n - 1) { ... }
 
-- [Word Search](https://leetcode.com/problems/word-search/) - Check if a word exists in a grid using backtracking.  
+    // PRUNING HAPPENS HERE
+    // Checks: "Is the current state (my location) valid?"
+    if (row < 0 || col < 0 || row >= m || col >= n || arr[row][col] == 0) {
+        return; // This path is invalid (out of bounds or a wall), so stop.
+    }
 
-- [Word Search II](https://leetcode.com/problems/word-search-ii/) - Find all words from a dictionary that exist in a grid.  
-
-
-
-### **5. Sudoku Solver**  
-
-**Examples:**  
-
-- [Sudoku Solver](https://leetcode.com/problems/sudoku-solver/) - Solve a Sudoku puzzle by filling empty cells with valid numbers.  
-
-- [Valid Sudoku](https://leetcode.com/problems/valid-sudoku/) - Check if a given Sudoku board configuration is valid.  
-
-
-### **6. N-Queens**  
-
-**Examples:**  
-
-- [N-Queens](https://leetcode.com/problems/n-queens/) - Place `N` queens on an `N×N` board without attacking each other.  
-
-- [N-Queens II](https://leetcode.com/problems/n-queens-ii/) - Count the number of distinct solutions to the N-Queens problem.  
-
-
-### **7. Backtracking with String**  
-
-**Examples:**  
-
-- [Letter Case Permutation](https://leetcode.com/problems/letter-case-permutation/) - Generate all possible case variations of a string containing letters.  
-
-- [Restore IP Addresses](https://leetcode.com/problems/restore-ip-addresses/) - Generate all possible valid IP addresses from a given string.  
-
+    // Mark visited and explore neighbors
+    arr[row][col] = 0; 
+    helper(arr, row + 1, col, ...); // Down
+    // ... other directions
+    arr[row][col] = 1;
+}
+```
 
 ---
 
@@ -1126,25 +1073,4 @@ Here are the descriptions for all four problems in the requested format:
 * [**Stream of Characters**](https://leetcode.com/problems/stream-of-characters/) – Design a system that checks if recent characters form any word in a dictionary.
 
 * [**Encrypt and Decrypt Strings**](https://leetcode.com/problems/encrypt-and-decrypt-strings/) – Create a string encryption/decryption system using mapping rules.
-
-
----
-
-## Number Theory
-
-
-
-
-
----
-
-## Bit Manipulation
-
-
-
-
----
-
-
-## Matrix
 

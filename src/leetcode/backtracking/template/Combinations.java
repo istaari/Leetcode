@@ -1,4 +1,4 @@
-package leetcode.backtracking;
+package leetcode.backtracking.template;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,16 +8,9 @@ import java.util.List;
  * It solves the classic LeetCode problem: "Combinations".
  * (Find all combinations of size k from numbers 1 to n).
  */
-public class BacktrackingTemplate {
+public class Combinations {
 
-    /**
-     * The core recursive backtracking method.
-     * @param results The list to store all valid solutions.
-     * @param path    The current combination being built.
-     * @param n       The upper bound of numbers to choose from.
-     * @param k       The target size for each combination.
-     * @param start   The starting number for the current loop of choices.
-     */
+
     private static void backtrack(List<List<Integer>> results, List<Integer> path, int n, int k, int start) {
         // 1. Base Case: Have we reached a valid, complete solution?
         // If the current path has k numbers, we've found a valid combination.
@@ -46,7 +39,7 @@ public class BacktrackingTemplate {
         }
     }
 
-    // Main method to test the template
+
     public static void main(String[] args) {
         int n = 4;
         int k = 2;

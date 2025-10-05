@@ -5,14 +5,6 @@ import java.util.Set;
 
 public class ReverseVowels {
 
-    public static void main(String[] args) {
-        String s = "IceCreAm";
-        //System.out.println(reverseVowels(s)); // AceCreIm
-
-        s = "leetcode";
-        System.out.println(reverseVowels(s)); // leotcede
-    }
-
     public static String reverseVowels(String s) {
         char[] ch = s.toCharArray();
         Set<Character> vowelSet = new HashSet<>(Set.of('a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'));
@@ -39,6 +31,14 @@ public class ReverseVowels {
         }
 
         return String.valueOf(ch);
+    }
+
+    public static void main(String[] args) {
+        String s = "icecream";
+        System.out.println("Icecream : " + reverseVowels(s)); // acecreim
+
+        s = "leetcode";
+        System.out.println("leetcode : " +  reverseVowels(s)); // leotcede
     }
 
 }

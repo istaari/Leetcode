@@ -12,7 +12,6 @@ public class GenerateParentheses {
 
 
     public List<String> helper(int n, int opening, int closing, List<String> result, String parenthesis) {
-
         if (parenthesis.length() == n * 2) {
             result.add(parenthesis);
         }
