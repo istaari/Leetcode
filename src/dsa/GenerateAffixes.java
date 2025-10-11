@@ -22,6 +22,11 @@ public class GenerateAffixes {
         for (int i = 1; i < n; i++) {
             // Prefixes are substrings from the beginning of the string.
             // s.substring(0, i) creates a substring from index 0 up to (but not including) i.
+            // For "level":
+            // i=1 -> s.substring(0, 1) -> "l"
+            // i=2 -> s.substring(0, 2) -> "le"
+            // i=3 -> s.substring(0, 3) -> "lev"
+            // i=4 -> s.substring(0, 4) -> "leve
             prefixes.add(s.substring(0, i));
 
             // Suffixes are substrings from the end of the string.

@@ -15,7 +15,7 @@ public class CartesianProduct {
      * 2. Processing: For each input string, create a new list temp to store combinations.
      * <p>
      * 3. Combination Generation: Append each character of the current input string to each string in result.
-     * Example:
+     * Example: 
      * <p>
      * With result = [""] and input "abc", temp becomes ["a", "b", "c"].
      * <p>

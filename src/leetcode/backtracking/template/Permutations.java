@@ -24,7 +24,6 @@ import java.util.List;
  */
 public class Permutations {
 
-
     public static List<List<Integer>> helper(int[] nums, List<Integer> tempList, List<List<Integer>> result) {
         // Base case: If the temporary list's size equals the input array's size,
         // a complete permutation has been found.

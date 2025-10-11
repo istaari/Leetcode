@@ -418,74 +418,74 @@ while ((high - low) > epsilon) {
 
 ### **Pattern 4: Using a Hash Map for Visited Nodes**
 
-### **Pattern 4: Merging & Splitting (Divide and Conquer)**
+### **Pattern 5: Merging & Splitting (Divide and Conquer)**
 
-### **Pattern 4: Cycle Analysis (Advanced Two Pointers)**
+### **Pattern 6: Cycle Analysis (Advanced Two Pointers)**
+
 
 ---
+
 ## Stack
+
 
 ### **Pattern 1: LIFO Basics (Reversal and "Undo")**
 
-This is the most fundamental use of a stack. The LIFO property is perfect for problems that require reversing a sequence or simulating an "undo" or "backspace" operation.
-
-**Explanation:**
-Items are pushed onto the stack in one order and popped in the reverse order. This provides a simple way to process sequences backwards or to manage a list where only the most recently added item can be removed.
-
-**Examples:**
-* **Reverse a String:** Push each character onto a stack, then pop them off to build the reversed string.
-* [Backspace String Compare](https://leetcode.com/problems/backspace-string-compare/): Use a stack to simulate typing. A non-'#' character is pushed, and a '#' character pops the stack, effectively handling the backspace.
 
 
 ### **Pattern 2: Complex Simulation & State Tracking**
 
-For problems with complex, stateful interactions (like collisions or decoding), a stack is perfect for managing the "currently active" set of items and their properties (like counts, directions, or nested results).
-
-**Explanation:**
-The top of the stack always represents the most current state or object. When a new element arrives, it only interacts with the element at the top of the stack. This simplifies problems that would otherwise require complex, nested logic.
-
-**Examples:**
-* [Decode String](https://leetcode.com/problems/decode-string/): Use two stacks (one for counts, one for partial strings) to handle nested decoding from the inside out. When you see `]`, you pop a count and a string, process them, and append the result to the new "current" string at the top of the string stack.
-* [Remove All Adjacent Duplicates in String II](https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string-ii/): Use a stack of pairs `(character, count)`. When a new character arrives, if it matches the top, increment the count. If the count reaches `k`, pop from the stack.
-* [Asteroid Collision](https://leetcode.com/problems/asteroid-collision/): A new asteroid only collides with the last one standing (the stack's top). This simplifies the collision logic to a pairwise check.
-* [Car Fleet](https://leetcode.com/problems/car-fleet/): After sorting cars by position, use a stack to merge fleets. A car becomes a fleet. If the car behind it is faster and would catch up, it gets absorbed into the fleet (do nothing). If it's slower (or can't catch up), it forms a new, distinct fleet (push its arrival time to the stack).
 
 
 ### **Pattern 3: Parentheses, Paths, and Expression Evaluation**
 
-The stack's ability to handle matching pairs and precedence makes it the go-to data structure for parsing file paths, validating paired tokens (like parentheses), and evaluating arithmetic expressions.
 
-**Explanation:**
-When you encounter an "opening" token (like `(`, a directory name, or a number), you push it. When you encounter a "closing" token (`(`, `..`, or an operator), you process by popping from the stack.
+### Three Main Patterns of Problems
 
-* **Postfix (Reverse Polish Notation)**: `2 3 +`
-    * **How to Solve**: Iterate through tokens. If a number, push it onto the stack. If an operator, pop the top two numbers, perform the operation, and push the result back.
-* **Infix Notation**: `2 + 3`
-    * **How to Solve**: Use two stacks (one for numbers, one for operators). Handle operator precedence carefully. When you see an operator, process any operators on the stack that have higher or equal precedence before pushing the new one. This is the basis of the Shunting-yard algorithm.
-* **Prefix Notation (Polish Notation)**: `+ 2 3`
-    * **How to Solve**: Same as postfix, but you iterate through the tokens in reverse (from right to left).
+You can generally group these problems into three categories of increasing complexity.
 
-**Examples:**
-* [Valid Parentheses](https://leetcode.com/problems/valid-parentheses/): The classic example. Push opening brackets. When a closing bracket appears, check if it matches the top of the stack.
-* [Simplify Path](https://leetcode.com/problems/simplify-path/): Use a stack to manage directory names. `.` is ignored, `..` pops from the stack (goes up one level), and a name is pushed.
-* [Evaluate Reverse Polish Notation](https://leetcode.com/problems/evaluate-reverse-polish-notation/): A direct implementation of the postfix evaluation algorithm.
-* [Basic Calculator](https://leetcode.com/problems/basic-calculator/) series: These problems involve evaluating infix expressions with varying levels of complexity (parentheses, precedence).
+#### 1. Validation Problems (e.g., "Valid Parentheses")
+
+* **The Question:** Is this sequence valid?
+* **The Strategy:** Use the stack as a checklist of required closing items.
+    * **Push Condition:** When you see an "opening" character (`(`, `{`, `[`), push its required "closing" counterpart onto the stack.
+    * **Pop Condition (The Trigger):** When you see a "closing" character.
+    * **Pop Logic:** Pop from the stack and check if the popped character matches the current closing character. If it doesn't match, or if the stack was empty, the string is invalid.
+    * **Final Check:** After the loop, the stack must be empty. If it's not, there are unfinished tasks (unclosed parentheses), and the string is invalid.
+
+#### 2. Processing & Transformation Problems (Your `RemoveOutermostParentheses` is a perfect example)
+
+* **The Question:** Simplify, process, or remove parts of a sequence.
+* **The Strategy:** Use the stack to track the "current valid state" or "depth." Your decision for the current character often depends on the state of the stack.
+    * **Push/Pop Conditions:** These are defined by the problem. In your code, you always push `(` and pop `)`.
+    * **Core Logic:** The most important part is the condition under which you add to your result. Your code brilliantly uses the stack's size as a proxy for depth.
+        * For an opening `(`: You check `if (!stack.isEmpty())`. This asks, "Am I already inside another pair of parentheses?" If yes, this `(` is not an outermost one, so we keep it.
+        * For a closing `)`: You `pop()` first, then check `if (!stack.isEmpty())`. This asks, "After closing this pair, am I still inside another pair?" If yes, this `)` was not an outermost one, so we keep it.
+    * **Another Example:** For "Simplify Path", you push directory names. If you see `..`, you pop. If you see `.`, you do nothing. The final stack contents are used to build the result.
+
+#### 3. Expression Evaluation Problems (e.g., "Basic Calculator")
+
+* **The Question:** Calculate the result of an arithmetic expression.
+* **The Strategy:** This is the most advanced pattern and often requires **two stacks**: one for numbers (operands) and one for operators.
+    * **The Challenge:** You have to handle operator precedence (`*` and `/` before `+` and `-`).
+    * **The Logic:**
+        1.  When you see a number, push it to the `number stack`.
+        2.  When you see an operator, look at the top of the `operator stack`.
+        3.  If the operator on the stack has higher or equal precedence than your current operator, you must perform that operation first. Pop the operator, pop two numbers, calculate the result, and push the result back onto the `number stack`.
+        4.  Repeat this until the operator on the stack has lower precedence, then push your current operator.
+        5.  Parentheses are handled by recursively solving the sub-expression or by pushing them onto the operator stack to create a "wall" that ignores precedence until a closing parenthesis is found.
+
+### A Mental Checklist for Any New Problem
+
+When you encounter a new problem of this type, ask yourself these questions:
+
+1.  **What am I putting on the stack?** (Characters, numbers, indices?)
+2.  **What is the "Push" condition?** (When do I add to the stack?)
+3.  **What is the "Trigger" for a reaction?** (What character makes me look at the stack? A `)`, an operator, etc.?)
+4.  **What is the "Pop" logic?** (When the trigger occurs, what do I do? Do I just pop? Do I compare the popped item? Do I use it in a calculation?)
+5.  **How is the final result built?** (Is it a boolean? Is it the last number on the stack? Do I build a string from the stack's contents?)
 
 
 ### **Pattern 4: Monotonic Stack (Next/Previous Greater/Smaller)**
-
-A monotonic stack (either always increasing or always decreasing) is a powerful tool for efficiently finding the **Next Greater/Smaller Element** or **Previous Greater/Smaller Element** for all items in a sequence.
-
-**Explanation:**
-You maintain a stack that is always sorted. When considering a new element, you pop from the stack any elements that would violate the monotonic property (e.g., in an increasing stack, pop all elements larger than the current one). The crucial insight is that for each element you pop, the current element is its **"Next Smaller Element"**.
-
-**Examples:**
-* [Next Greater Element I](https://leetcode.com/problems/next-greater-element-i/): The canonical problem to learn this pattern.
-* [Daily Temperatures](https://leetcode.com/problems/daily-temperatures/): A variation of "Next Greater Element," where you store indices and calculate the distance.
-* [Largest Rectangle in Histogram](https://leetcode.com/problems/largest-rectangle-in-histogram/): A hard but classic application. The stack is used to find the `previous smaller` and `next smaller` bar for each bar `i`. These boundaries define the width of the largest possible rectangle that has bar `i` as its height.
-* [Sum of Subarray Minimums](https://leetcode.com/problems/sum-of-subarray-minimums/): An advanced use case. For each element `A[i]`, a monotonic stack helps find its `previous smaller` and `next smaller` element. This tells you the number of subarrays for which `A[i]` is the minimum, allowing you to calculate its total contribution to the sum.
-* [Remove K Digits](https://leetcode.com/problems/remove-k-digits/): To get the smallest number, you want a monotonically increasing sequence of digits. You can use a stack to build this. If the current digit is smaller than the top of the stack, pop the top (simulating a removal) to maintain the increasing order.
-* [Remove Duplicate Letters](https://leetcode.com/problems/remove-duplicate-letters/): A clever variation. It builds a lexicographically smallest string using an increasing monotonic stack. You can pop a larger character `c1` to add a smaller one `c2`, but only if `c1` appears again later in the string.
 
 ---
 
@@ -556,11 +556,6 @@ The core sliding window logic remains, but checking and maintaining the window's
 ## Greedy
 
 - [Greedy Template](https://huaguo.substack.com/p/greedy-algorithm)
-
-
----
-
-## Matrix
 
 
 ---

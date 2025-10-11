@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * LeetCode Problem 774: Minimize Max Distance to Gas Station (Premium)
  *
- * You are given an integer array stations that represents the positions of gas
+ * You are given an integer array station that represents the positions of gas
  * stations on the x-axis. You are also given an integer k.
  *
  * You should add k new gas stations. You can add the stations anywhere on the
@@ -72,7 +72,7 @@ public class MinimizeMaxDistanceToGasStation {
             // The number of new stations needed to break a gap into segments of
             // size at most `maxDist` is `ceil(gap / maxDist) - 1`.
             if (gap > maxDist) {
-                stationsNeeded += Math.ceil(gap / maxDist) - 1;
+                stationsNeeded += (int) (Math.ceil(gap / maxDist) - 1);
             }
         }
         // If the total stations we need is within our budget `k`, it's possible.
