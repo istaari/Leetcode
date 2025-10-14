@@ -1,6 +1,5 @@
 package leetcode.graph.traversal;
 
-import leetcode.graph.representations.Graph;
 import leetcode.graph.representations.Node;
 
 import java.util.*;
@@ -58,6 +57,25 @@ public class CloneGraph {
     }
 
 
+    private static Node buildGraph(int[][] adjList) {
+        if (adjList.length == 0) {
+            return null;
+        }
+        Node[] nodes = new Node[adjList.length + 1];
+        for (int i = 1; i <= adjList.length; i++) {
+            nodes[i] = new Node(i, new ArrayList<>());
+        }
+
+        for (int i = 1; i <= adjList.length; i++) {
+            for (int neighbor : adjList[i - 1]) {
+                nodes[i].neighbors.add(nodes[neighbor]);
+            }
+        }
+
+        return nodes[1];
+    }
+
+
     public static void main(String[] args) {
         int[][] adjList = {
                 {2, 4}, // Node 1 neighbors
@@ -66,10 +84,9 @@ public class CloneGraph {
                 {1, 3}  // Node 4 neighbors
         };
 
-        Node node = new Graph().buildGraph(adjList);
+        Node node = buildGraph(adjList);
         Node clone = new CloneGraph().cloneGraph(node);
         System.out.println(clone);
     }
-
 
 }
