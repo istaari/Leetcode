@@ -5,11 +5,12 @@ public class LongestPalindromicSubstringExpandAround {
     public static String findLongestPalindromicSubstring(String s) {
         if (s == null || s.isEmpty()) return "";
 
-
         int n = s.length();
-        int start = 0, maxLength = 1;
+        int start = 0;
+        int maxLength = 1;
 
         for (int i = 0; i < n; i++) {
+
             // Check for odd length palindromes (centered at i)
             int left = i, right = i;
             while (left >= 0 && right < n && s.charAt(left) == s.charAt(right)) {
@@ -32,13 +33,14 @@ public class LongestPalindromicSubstringExpandAround {
                 left--;
                 right++;
             }
+
         }
 
         return s.substring(start, start + maxLength);
     }
 
 
-    public static void main(String[] args) {
+    static void main(String[] args) {
         String s = "babad";
         System.out.println(findLongestPalindromicSubstring(s));
     }
