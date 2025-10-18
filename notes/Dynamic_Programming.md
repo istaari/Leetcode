@@ -71,7 +71,7 @@ dp[1] = 1   # 1 way to take the first step
 You **must always define** the base case correctly — it anchors your solution.
 
 
-### **Optimization Techniques**
+# **Optimization Techniques**
 
 - Space Optimization (Reducing DP Array Dimensions, rolling arrays or swap between two arrays)
 - State Compression (Bitmask DP)
@@ -79,11 +79,6 @@ You **must always define** the base case correctly — it anchors your solution.
 - Divide and Conquer Optimization
 - Monotonic Queue Optimization
 - Knuth’s Optimization
-
-### **Misc.**
-
-- DP on Trees for hierarchical structures
-- DP with Binary Search for range-based decisions
 
 
 # Patterns
@@ -213,7 +208,7 @@ This pattern involves finding an optimal path (e.g., counting paths, finding a m
 ---
 
 
-## Decision-Making at Each Step (Subsequence & Knapsack Problems) 🎒
+## Subsequence & Knapsack Problems
 
 This powerful pattern solves problems where for each item in a collection, you must make a choice: either **include** it in your solution or **exclude** it. The goal is to optimize a certain value (e.g., reach a target sum, maximize profit, minimize items) based on a sequence of these choices.
 
@@ -427,7 +422,7 @@ This pattern is a highly efficient form of 1D DP. The core idea is that for each
 * **Solution:** `max(kadane_max, total_sum - kadane_min)` (with an edge case for when all numbers are negative).
 
 
-### Sub-Pattern B: State Machines (Stock Problems) 📈
+### Sub-Pattern B: State Machines (Stock Problems)
 
 For problems where decisions are constrained by previous actions (e.g., you can't sell if you haven't bought), a state machine is a perfect model. We define states based on the actions allowed and calculate the max profit for each state at every step.
 
@@ -465,7 +460,7 @@ For problems where decisions are constrained by previous actions (e.g., you can'
 ---
 
 
-## DP on Partitions and Subsets 🧩
+## DP on Partitions and Subsets
 
 This pattern covers two related but distinct techniques. The first involves **partitioning** a sequence (like a string or array) into valid segments. The second, **bitmasking**, is a powerful technique for solving problems involving subsets, especially when the number of elements is small.
 
@@ -521,7 +516,7 @@ This technique is used when the state depends on a **subset of items** being use
 
 ---
 
-## DP on Intervals (Matrix Chain Multiplication Style) 🔨
+## DP on Intervals (MCM)
 
 This advanced pattern solves problems where you need to find an optimal solution for an interval or sequence by making a series of choices. The key idea is that the optimal solution for an interval `[i, j]` can be found by iterating through all possible "split points" `k` and combining the optimal solutions of the resulting sub-intervals (e.g., `[i, k]` and `[k, j]`).
 
@@ -542,7 +537,7 @@ This pattern often feels like you're working "inside-out" or thinking backwards:
 
 ### **Example Analysis**
 
-#### 1. **Burst Balloons** 🎈
+#### 1. **Burst Balloons**
 * **The Challenge:** Bursting a balloon affects its neighbors, which changes the subproblems. A simple left-to-right approach doesn't work.
 * **The Reframe:** Instead of thinking about the *first* balloon to burst, think about the **last balloon to burst** in an interval `(i, j)`.
 * **State `dp[i][j]`:** The maximum coins obtainable by bursting all balloons in the open interval `(i, j)`. The balloons at `i` and `j` are the fixed boundaries that will be adjacent to the last balloon burst.
