@@ -63,15 +63,21 @@ Graphs come in various flavors, each with its own specific characteristics and u
 
 * **Unweighted Graph:** Edges have no assigned weights. The focus is purely on the connections themselves.
 
-* **Simple Graph:** A graph with no loops (edges that connect a vertex to itself) and no parallel edges (multiple edges between the same two vertices).
+* **Simple Graph:**
 
-* **Multigraph:** A graph that allows parallel edges between vertices and loops on the same vertex.
+  <img width="800" height="800" alt="image" src="https://github.com/user-attachments/assets/5d58b721-a23d-4725-af0c-948d210ba739" />
 
+* **Multigraph:** 
 
-* **Complete Graph:** A simple undirected graph where every pair of distinct vertices is connected by a unique edge. A complete graph with 'n' vertices is denoted as `Kn`.
+  <img width="800" height="800" alt="image" src="https://github.com/user-attachments/assets/0fb38a0a-facd-4ad9-8c2b-5de6de9e66e6" />
 
+* **Complete Graph:**
+  
+  <img width="800" height="800" alt="image" src="https://github.com/user-attachments/assets/d01e3516-c5ea-48e5-bde3-c2216bda1212" />
 
 * **Bipartite Graph:** A graph whose vertices can be divided into two disjoint and independent sets, U and V, such that every edge connects a vertex in U to one in V.
+
+  <img width="800" height="800" alt="image" src="https://github.com/user-attachments/assets/4470aa71-b43a-463d-b6ab-cdddfabeca3c" />
 
 * **Tree:** A connected graph with no cycles. Trees are fundamental data structures in computer science.
 
