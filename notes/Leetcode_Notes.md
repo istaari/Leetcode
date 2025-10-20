@@ -491,65 +491,13 @@ When you encounter a new problem of this type, ask yourself these questions:
 
 ## Sliding Widow
 
-The sliding window technique is a powerful method for solving problems involving subarrays or substrings. It optimizes solutions that would otherwise be O(N²) down to an efficient O(N) by avoiding re-computation.
-
 ### **Pattern 1: Fixed-Size Sliding Window**
-
-This is the simplest pattern, used when the problem specifies a fixed window size `k`. The goal is to find a property (like the max/min sum, average, etc.) of all windows of that size.
-
-**Explanation:**
-You first create an initial window of size `k`. Then, you slide the window one element at a time to the right. In each step, you efficiently update your calculation by **adding the new element** that enters the window and **subtracting the leftmost element** that leaves it. This O(1) update is the key to its efficiency.
-
-**Examples:**
-* **Maximum Sum Subarray of Size K:** The canonical example. Find the sum of the first `k` elements. Then, slide the window, at each step adding the new element and subtracting the one that fell off, updating the max sum.
-* [Permutation in String](https://leetcode.com/problems/permutation-in-string/): This is conceptually a fixed-window problem. You are looking for a window in `s2` of size `s1.length()` that is a permutation of `s1`. You maintain a character count map and slide the window, updating the counts until you find a match.
-* [Maximum Points From Cards](https://leetcode.com/problems/maximum-points-you-can-obtain-from-cards/): A clever twist on the pattern. Taking `k` cards from the ends is the same as leaving a contiguous block of `n-k` cards in the middle. The problem becomes: "Find the minimum sum subarray of fixed size `n-k`." The answer is `total_sum - min_subarray_sum`.
-
 
 ### **Pattern 2: Variable-Size Sliding Window (Two Pointers)**
 
-This is the most common pattern, used to find the **longest or shortest** subarray/substring that satisfies a given condition.
-
-**Explanation:**
-You use two pointers, `left` and `right`, to define the current window.
-1.  **Expand:** The `right` pointer always moves forward, expanding the window and adding new elements.
-2.  **Shrink:** When the window no longer satisfies the condition, the `left` pointer moves forward, shrinking the window from the left until the condition is met again.
-3.  **Update:** The answer (max/min length) is updated after each valid expansion.
-
-**Examples:**
-* [Longest Repeating Character Replacement](https://leetcode.com/problems/longest-repeating-character-replacement/): **Condition:** `window_length - count_of_most_frequent_char <= k`. Expand the window with `right`. If the condition is violated, shrink with `left`.
-* [Minimum Window Substring](https://leetcode.com/problems/minimum-window-substring/): **Condition:** The window must contain all characters from string `t`. Expand with `right` until the condition is met. Then, shrink with `left` as much as possible while keeping the condition valid, updating the minimum length at each step.
-* [Longest Subarray with at most K Frequency](https://leetcode.com/problems/length-of-longest-subarray-with-at-most-k-frequency/): **Condition:** The frequency of every element in the window must be `<= k`. Expand with `right`. If the frequency of the newly added element exceeds `k`, shrink with `left` until its frequency is back to `k`.
-
-
 ### **Pattern 3: Counting Subarrays with the "At Most K" Trick**
 
-This is a specific but powerful pattern for problems that ask for the **number of subarrays** that satisfy a condition with **exactly `k`** of something (e.g., odd numbers, distinct characters).
-
-**Explanation:**
-Counting subarrays with *exactly* `k` is difficult. However, counting subarrays with *at most* `k` is much easier and can be solved with a standard variable-size window. The magic formula is:
-`count(exactly k) = count(at most k) - count(at most k - 1)`
-You write a helper function to solve the "at most k" version and call it twice.
-
-**Examples:**
-* [Subarrays with K Different Integers](https://leetcode.com/problems/subarrays-with-k-different-integers/): The canonical example of this pattern. You implement a helper `countAtMostKDistinct(nums, k)` and return `helper(nums, k) - helper(nums, k - 1)`.
-* [Count Number of Nice Subarrays](https://leetcode.com/problems/count-number-of-nice-subarrays/): Same logic. The "something" to count is the number of odd integers in the subarray.
-* [Number of Substrings Containing All Three Characters](https://leetcode.com/problems/number-of-substrings-containing-all-three-characters/): This can be solved with a variation. Once the window `[left...right]` is valid (contains 'a', 'b', and 'c'), you know that this window, plus any window that extends further to the right (e.g., `[left...right+1]`, `[left...n-1]`), is also valid. The number of such windows is `n - right`. You add this to the total and then shrink from the left.
-
-
 ### **Pattern 4: Sliding Window with an Auxiliary Data Structure**
-
-This pattern applies when simple variables or a hash map are not enough to track the window's property efficiently. A specialized data structure is used to maintain the property in O(1) or O(log N) time as the window slides.
-
-**Explanation:**
-The core sliding window logic remains, but checking and maintaining the window's state requires a more complex tool. The most common is a **monotonic deque** (a double-ended queue that is always sorted).
-
-**Examples:**
-* [Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/): The canonical example. A monotonic decreasing deque is used to store indices of elements in the window. The front of the deque always holds the index of the maximum element.
-    1.  **Slide:** Before adding a new element's index, remove any indices from the back of the deque that correspond to smaller elements.
-    2.  **Maintain:** Remove the index from the front if it falls out of the current window's bounds.
-    3.  **Query:** The maximum element is always at `nums[deque.peekFirst()]`.
-* **Sliding Window Median (Hard):** This requires two heaps or a balanced binary search tree to keep track of the median of the elements within the window as it slides.
 
 ---
 
@@ -565,27 +513,10 @@ The core sliding window logic remains, but checking and maintaining the window's
 - `prefix[i - 1] = prefix[j] - k` , prefix[i - 1] is valid subarray with sum k
 - Subarray sum multuple of k, `prefix[j] % k = prefix[i - 1] % k` 
 
-
-**1. Subarray Problems with Prefix Sum**
-
-**Examples:**
-
-- [Range Sum Query 2D - Immutable](https://leetcode.com/problems/range-sum-query-2d-immutable/)
-
-- [Subarray Sum Equals K](https://leetcode.com/problems/subarray-sum-equals-k/)
-
-- [Continuous Subarray Sum](https://leetcode.com/problems/continuous-subarray-sum/)
-
-- [Longest Subarray with Sum Divisible by K](https://leetcode.com/problems/subarray-sums-divisible-by-k/)
-
-
 ---
 ## Trees
 
-- `Inorder successor(smallest element in left subtree from right node)` is next node element in inorder traversal(Sorted Element in BST)
-
-
-**0. Tree Representations in array**
+### **Tree Representations in array**
 
 - For 1-based indexing:
 
@@ -599,7 +530,7 @@ The core sliding window logic remains, but checking and maintaining the window's
   - **Right child** of node at index `i`: `2 * i + 2`
   - **Parent** of node at index `i`: `(i - 1) // 2` (only if `i > 0`)
 
-**1. Traversal**
+### **Traversal**
 
 `Note : Visualize with 3 nodes`
 
@@ -619,279 +550,128 @@ The core sliding window logic remains, but checking and maintaining the window's
   - Push root to a input stack, the pop from stack, then push the element to ouput stack
   - Push left node to input stack and right node to input stack
 
-**2. BST Operations**  
 
-- Insertions
+### 1\. Binary Search Tree (BST)
 
-  ```java
-      TreeNode insert(TreeNode root, int key) {
-          if (root == null) {
-              return new TreeNode(key);
-          }
-          if (key < root.val) {
-              root.left = insertHelper(root.left, key); // Fill the new node
-          } else if (key > root.val) {
-              root.right = insertHelper(root.right, key); // // Fill the new node
-          }
-          return root; // return or propagate the root, means fill the left and right child of parent node
-      }
-  ```
+A Binary Search Tree is a node-based binary tree with a special ordering property that allows for fast lookups, insertions, and deletions.
 
-- Deletions 
+### **Properties and Principles**
 
-  ```java
-    TreeNode delete(TreeNode root, int key) {
-        if (root == null) return null;
+  * **BST Invariant:** For any given node `N`:
+      * All values in its **left subtree** are **less than** `N`'s value.
+      * All values in its **right subtree** are **greater than** `N`'s value.
+      * Both its left and right subtrees must also be binary search trees.
+  * **No Duplicate Nodes:** A standard BST does not allow duplicate values.
+  * **In-order Traversal:** An in-order traversal of a BST yields its nodes' values in **sorted ascending order**.
+  * **Time Complexity:** For a balanced BST, operations like search, insertion, and deletion take $O(\log n)$ time. In the worst case (a skewed or degenerate tree), they take $O(n)$ time.
 
-        if (key < root.val)
-            root.left = deleteHelper(root.left, key); // If no child,  null is filled, if one node filled either one left or right node
-        else if (key > root.val)
-            root.right = deleteHelper(root.right, key);
-        else {
-            // Node with only one child or no child
-            if (root.left == null) return root.right;
-            else if (root.right == null)  return root.left;
+### **BST Operations**
 
-            root.val = inorderSuccessor(root.right); // Replace with Inorder Successor
-            root.right = deleteHelper(root.right, root.val); // Delete the inorder successor
-        }
+#### **Insertion**
 
-        return root;
-    }
-  ```
-
-**3. Depth/Height** 
-
-- [Diameter of Binary Tree](https://leetcode.com/problems/diameter-of-binary-tree/description/)
-
-  ```java
-    int diameter = 0;
-
-    int maxDepth(TreeNode root) {
-        if (root == null) return 0;
-
-        int left = maxDepth(root.left);
-        int right = maxDepth(root.right);
-
-        diameter = Math.max(diameter, left + right);
-
-        return Math.max(left, right) + 1;
-    }
-  ```
-
-- [Max Depth of binary Tree](https://leetcode.com/problems/maximum-depth-of-binary-tree/description/)
-
-  ```java 
-    int maxDepth(TreeNode root) {
-       if (root == null) {
-            return 0;
-        }
-        int left = maxDepth(root.left);
-        int right = maxDepth(root.right);
-        return Math.max(left , right) + 1;   
-    }
-  ```
-
-- [Maximum Depth of N-ary Tree](https://leetcode.com/problems/maximum-depth-of-n-ary-tree/description/)
-
-  ```java
-    int maxDepth(Node root) {
-        if (root == null) return 0;
-
-        if (root.children.isEmpty()) return 1;
-
-        int depth = 0;
-        for (Node child : root.children) {
-            depth = Math.max(depth, maxDepth(child)); // This find max depth for each children
-        }
-
-        return depth + 1; // max depth of a child and including root  
-    }
-  ```  
-
-
-**4. Path problem binary tree** 
-
-- Path from root to leaf for target sum
-
-  ```java
-    boolean hasPathSum(TreeNode root, int targetSum) {
-        if (root == null) return false;
-        
-        if ( root.left == null && root.right == null) {
-            return targetSum == root.val;
-        }
-
-        return hasPathSum(root.left, targetSum - root.val) || hasPathSum(root.right, targetSum - root.val);  
-    }
-  ```
-
-**5. Comparison on Two Trees**
-
-- In [Symmetric Tree](https://leetcode.com/problems/symmetric-tree/description/) Compare two subtree parallely.
-   
-  ```java
-    boolean helper(TreeNode p, TreeNode q) {
-        if (p == null && q == null) return true;
-
-        if (p == null || q == null) return false;
-
-        return (p.val == q.val) && helper(p.left, q.right) && helper(p.right, q.left);
-    }
-  ```
-
-**6. Counting nodes in Tree**
-
-
-**Examples**
-
-- [Count Good Nodes in Binary Tree](https://leetcode.com/problems/count-good-nodes-in-binary-tree/description/)
-   
-   - In function call keep one variable contains max value in tree path, then compare max value with root value, count good node and update the max value.
-
-   ```java
-      int good;
-      void DFS(TreeNode root, int max) {
-          if (root == null)
-              return;
-
-          if (root.val >= max)
-              good++;
-
-          max = Math.max(max, root.val);
-          DFS(root.left, max);
-          DFS(root.right, max);
-      }
-   ```  
-
-
-**7. Ancestor**
-
-- [Lowest Common Ancestor](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/) in BST
-
-  ```Java 
-      TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-          int small = Math.min(p.val, q.val);
-          int large = Math.max(p.val, q.val);
-          while (root != null) {
-              if (root.val > large) // p, q belong to the left subtree
-                  root = root.left;
-              else if (root.val < small) // p, q belong to the right subtree
-                  root = root.right;
-              else // Now, small <= root.val <= large -> This root is the LCA between p and q
-                  return root;
-          }
-          return null;
-      }
-  ```
-
-**8. Different view of tree**
-
-**Examples:**
-
-- [Binary Tree Right Side View](https://leetcode.com/problems/binary-tree-right-side-view/)
-  
-  - Process one node(right) at each level, maintain level parameter in function call
-
-  ```java
-     void helper(List<Integer> result, TreeNode root, int level) {
-          if (root == null) return;
-
-          if (level == result.size()) result.add(root.val);
-
-          helper(result, root.right, level + 1);
-          helper(result, root.left, level + 1);
-    }
-  ```
-- [Binary Tree Left Side View](https://leetcode.com/problems/binary-tree-right-side-view/solutions/3125913/java-all-tree-views-easy-fast/)
-
-  - Process one node(left) at each level, maintain level parameter in function call
-
-- [Binary Tree Top Side View](https://leetcode.com/problems/binary-tree-right-side-view/solutions/3125913/java-all-tree-views-easy-fast/)
-
-  - Use `level order traversal`, create pair of node and horizontal distance.
-  - Assign horizontal distance to each node, like root is 0, left child is -1, right child is +1
-  ```
-          1(0)
-        /     \
-      2(-1)    3(+1)
-    /  \     /   \
-  4(-2) 5(0) 6(0)  7(+2)
-
-  ```
-  - If distance does not exist in TreeMap, then add the node to TreeMap, Top view node will have unique distance
-
-- [Binary Tree Bottom Side View](https://leetcode.com/problems/binary-tree-right-side-view/solutions/3125913/java-all-tree-views-easy-fast/)
-
-  - Similar to top view, the only difference is that we need to replace the node in TreeMap with the same distance
-
-- [Binary Tree Diagonal View]()  
-
-  - start with root 0, for left node assign same distance and for right node assign distance + 1
-
-
-**9. Tree construction** 
-
-**Examples:**
-
-- [Construct Unique Binary Search Trees](https://leetcode.com/problems/unique-binary-search-trees-ii/description/)
-
-- [Number of Unique Binary Search Trees](https://leetcode.com/problems/unique-binary-search-trees/description/)
+To insert a value, you traverse the tree from the root. If the new value is less than the current node's value, you go left; otherwise, you go right. You continue until you reach a `null` spot, where you insert the new node.
 
 ```java
-
-   long binomialCoefficient(int n, int k) {
-        long res = 1;
-
-        if (k > n - k)
-            k = n - k; // Using the property: C(n, k) = C(n, n-k)
-
-        for (int i = 0; i < k; i++) {
-            res *= (n - i); // Multiply by decreasing numerator
-            res /= (i + 1); // Divide by increasing denominator
-            // Using the property of the associativity of multiplication and division:
-            // (a / b) × (c / d) = (a × c) / (b × d)
-        }
-
-        return res;
+TreeNode insert(TreeNode root, int key) {
+    if (root == null) {
+        return new TreeNode(key);
     }
-
-   int numTrees(int n) {
-        return (int) (binomialCoefficient(2 * n, n) / (n + 1));
+    if (key < root.val) {
+        // Recursively insert into the left subtree
+        root.left = insert(root.left, key);
+    } else if (key > root.val) {
+        // Recursively insert into the right subtree
+        root.right = insert(root.right, key);
     }
-
+    // Return the (possibly modified) root of the subtree
+    return root;
+}
 ```
 
-- [Construct Binary Tree from Preorder and Inorder Traversal](https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/description/)
+#### **Deletion**
 
-- [Construct Binary Tree from Inorder and Postorder Traversal](https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/description/)
-   
+Deletion is more complex and handles three cases for the node to be deleted:
 
-**10 Serialize and Deserialize**
+1.  **No children (leaf node):** Simply remove the node.
+2.  **One child:** Replace the node with its child.
+3.  **Two children:** Find the node's **in-order successor** (the smallest value in its right subtree), replace the node's value with the successor's value, and then recursively delete the successor node.
 
-**Examples:**
+<!-- end list -->
 
-- [Verify Preorder Serialization of a Binary Tree](https://leetcode.com/problems/verify-preorder-serialization-of-a-binary-tree/description/) - Serialized tree "9,3,4,#,#,1,#,#,2,#,6,#,#"
+```java
+TreeNode delete(TreeNode root, int key) {
+    if (root == null) return null;
 
-   - Use stack to collapse the nodes if prev 3 nodes are `4,#,#` pattern into single hash `#`
-   - If stack size is 1 and its `#` value then return true else false
+    if (key < root.val) {
+        root.left = delete(root.left, key);
+    } else if (key > root.val) {
+        root.right = delete(root.right, key);
+    } else { // Found the node to delete
+        // Case 1 & 2: Node with one or no child
+        if (root.left == null) return root.right;
+        if (root.right == null) return root.left;
 
-- [Serialize and Deserialize Binary Tree](https://leetcode.com/problems/serialize-and-deserialize-binary-tree/description/) 
+        // Case 3: Node with two children
+        // Find the in-order successor (smallest value in the right subtree)
+        TreeNode successor = findMin(root.right);
+        root.val = successor.val; // Replace node's value with successor's
+        root.right = delete(root.right, root.val); // Delete the successor
+    }
+    return root;
+}
 
-   - Use `preorder traversal` to serialize the tree
-   - Use `preorder traversal` to deserialize the tree 
+// Helper to find the minimum value node in a subtree
+TreeNode findMin(TreeNode node) {
+    while (node.left != null) {
+        node = node.left;
+    }
+    return node;
+}
+```
 
-**11. B and B+ Tree**  
+### **AVL Tree**
+
+  * **Principle:** An AVL Tree is a height-balanced BST. The heights of the two child subtrees of any node can differ by **at most one**. This difference, called the **Balance Factor**, must be in the set `{-1, 0, 1}`.
+  * **Properties:** It is the most rigidly balanced type of BST, which means search operations are extremely fast. However, insertions and deletions can be slower because they may require multiple re-balancing operations.
+  * **Operations & Balancing:**
+      * **Insertion/Deletion:** First, perform a standard BST insertion or deletion. Then, trace the path back up to the root, updating the height of each node.
+      * **Rebalancing:** If any node's balance factor becomes `-2` or `+2`, the tree is unbalanced. The tree performs **rotations** (single or double, such as Left-Left, Right-Right, Left-Right, or Right-Left cases) at the unbalanced node to restore the height property.
+
+### **Red-Black Tree**
+
+  * **Principle:** A Red-Black Tree is a color-balanced BST. It uses node "coloring" (red or black) to ensure that the path from the root to any leaf is roughly the same length.
+  * **Properties & Rules:**
+    1.  Every node is either **red** or **black**.
+    2.  The root is always **black**.
+    3.  There are no two adjacent red nodes (a red node cannot have a red parent or a red child).
+    4.  Every path from a given node to any of its descendant `NULL` nodes contains the same number of **black** nodes (the "black-height").
+  * **Operations & Balancing:**
+      * **Insertion/Deletion:** After a standard BST operation, a new node is typically colored red. This may violate rules 2 or 3.
+      * **Rebalancing:** The tree fixes violations using two main operations: **re-coloring** nodes and performing **rotations**. These operations are designed to be very fast, often resolving the imbalance locally without propagating up the entire tree.
+  * **Use Case:** It's slightly less strictly balanced than an AVL tree but requires fewer rotations on average, making it faster for write-heavy applications. It's used in many standard libraries, like `TreeMap` in Java and `std::map` in C++.
 
 
-**12. AVL Tree**   
+### **Segment Tree**
 
+  * **Principle:** A Segment Tree is a binary tree used for storing information about array intervals. Each leaf represents a single element, and each internal node represents a merged property (like sum, min, or max) of its children's intervals.
+  * **Properties:** It's a full binary tree built on top of an array. It allows for fast querying of a property over a given range and supports efficient updates to individual elements.
+  * **Operations:**
+      * **Build ($O(n)$):** A post-order recursive construction. The tree is built from the bottom up, with each internal node's value being calculated from its children.
+      * **Range Query ($O(\log n)$):** To query a range `[L, R]`, you traverse the tree. If a node's interval is completely within `[L, R]`, you use its pre-computed value. If it partially overlaps, you recurse on its children.
+      * **Point Update ($O(\log n)$):** To update an element at index `i`, you update the corresponding leaf and then recursively update all its ancestors up to the root.
 
-**13. Red-Black Tree**  
+### **B-Tree and B+ Tree**
 
-
-**14. Segment Tree**  
-
+  * **Principle:** These are self-balancing trees optimized for systems that read and write large blocks of data, such as **databases and filesystems**. Unlike binary trees, nodes in a B-Tree can have many children (a high "fanout").
+  * **Properties:**
+      * **High Fanout:** Nodes can store many keys and have many children, which keeps the tree's height extremely low. This minimizes the number of disk reads needed to find data.
+      * **All Leaves at Same Level:** This ensures that searches are always efficient and predictable.
+  * **Operations (B-Tree):**
+      * **Insertion:** Find the correct leaf to insert into. If the leaf is full, **split** it into two nodes and promote the median key to the parent. This splitting can propagate up to the root.
+      * **Deletion:** May cause a node to have too few keys. This is fixed by **merging** with a sibling or **borrowing** a key from a sibling.
+  * **B+ Tree Distinction:**
+      * **Data Storage:** All data records are stored **only** in the leaf nodes. Internal nodes only store keys to guide the search.
+      * **Linked Leaves:** Leaf nodes are linked together like a **linked list**, allowing for very efficient sequential traversal and range queries (e.g., `SELECT * WHERE age BETWEEN 20 AND 30`). This is the primary data structure used for indexing in most relational databases.
 
 ---
 ## Backtracking

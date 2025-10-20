@@ -1,4 +1,4 @@
-package leetcode.dp.path;
+package leetcode.dp;
 
 public class CanJump {
 

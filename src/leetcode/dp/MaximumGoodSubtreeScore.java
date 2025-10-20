@@ -1,4 +1,4 @@
-package leetcode.dp.trees;
+package leetcode.dp;
 
 // https://leetcode.com/problems/maximum-good-subtree-score/description/?envType=problem-list-v2&envId=ntel9tzc
 // https://leetcode.com/problems/minimize-malware-spread-ii/description/?envType=problem-list-v2&envId=ntel9tzc

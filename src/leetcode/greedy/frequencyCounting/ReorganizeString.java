@@ -5,78 +5,96 @@ import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
+/**
+ * LeetCode Problem: 767. Reorganize String
+ * <p>
+ * Question:
+ * Given a string `s`, rearrange the characters of `s` so that any two adjacent characters are not the same.
+ * Return any possible rearrangement of `s` or return "" if it is impossible.
+ * <p>
+ * Example 1:
+ * Input: s = "aab"
+ * Output: "aba"
+ * <p>
+ * Example 2:
+ * Input: s = "aaab"
+ * Output: ""
+ * <p>
+ * Constraints:
+ * - 1 <= s.length <= 500
+ * - s consists of lowercase English letters.
+ */
 public class ReorganizeString {
 
     public static String reorganizeString(String s) {
+        // --- The Greedy Strategy ---
+        // The core idea is to always append the most frequent character available that is different
+        // from the last character added. A max heap is the perfect data structure for this,
+        // as it always gives us the character with the highest remaining frequency.
+
+        // Step 1: Count the frequency of each character.
         Map<Character, Integer> map = new HashMap<>();
-        for (int i = 0; i < s.length(); i++) {
-            map.put(s.charAt(i), map.getOrDefault(s.charAt(i), 0) + 1);
+        for (char c : s.toCharArray()) {
+            map.put(c, map.getOrDefault(c, 0) + 1);
         }
-        // Max Heap on the key of map
+
+        // Step 2: Create a max heap (PriorityQueue) to store characters.
+        // The character with the highest frequency will have the highest priority.
         Queue<Character> queue = new PriorityQueue<>((a, b) -> map.get(b) - map.get(a));
-        // Push all the key in queue
         queue.addAll(map.keySet());
 
         StringBuilder result = new StringBuilder();
+
+        // Step 3: Greedily build the new string.
+        // We pull the two most frequent characters from the heap at each step.
+        // This ensures that the most frequent character is always separated by the second most frequent one.
         while (queue.size() >= 2) {
-            Character ch1 = queue.poll();
-            Character ch2 = queue.poll();
-            result.append(ch1);
-            result.append(ch2);
-            map.put(ch1, map.get(ch1) - 1);
-            map.put(ch2, map.get(ch2) - 1);
+            Character char1 = queue.poll();
+            Character char2 = queue.poll();
 
-            if (map.get(ch1) > 0) {
-                queue.add(ch1);
+            // Append them to the result
+            result.append(char1);
+            result.append(char2);
+
+            // Decrement their counts
+            map.put(char1, map.get(char1) - 1);
+            map.put(char2, map.get(char2) - 1);
+
+            // If the characters still have remaining counts, add them back to the heap.
+            // The heap will automatically re-order them based on their new frequencies.
+            if (map.get(char1) > 0) {
+                queue.add(char1);
             }
-            if (map.get(ch2) > 0) {
-                queue.add(ch2);
+            if (map.get(char2) > 0) {
+                queue.add(char2);
             }
         }
 
-        if (queue.isEmpty()) return result.toString();
+        // Step 4: Handle the last remaining character, if any.
+        if (!queue.isEmpty()) {
+            Character lastChar = queue.poll();
+            // If the last remaining character has a frequency greater than 1, it's impossible.
+            // This means we have, for example, 'a' left, but the string ends in 'a', so we can't place it.
+            if (map.get(lastChar) > 1) {
+                return "";
+            }
+            // Otherwise, it's safe to append the last character.
+            result.append(lastChar);
+        }
 
-        Character ch = queue.poll();
-        if (map.get(ch) > 1) return ""; // If count is greater than 1 than cannot reorganize
-
-        return result.append(ch).toString();
+        return result.toString();
     }
 
 
-    /**
-    public static String reorganizeStringSort(String s) {
-        HashMap<Character, Integer> freqMap = new HashMap<>();
-        for (char c : s.toCharArray()) {
-            freqMap.put(c, freqMap.getOrDefault(c, 0) + 1);
-        }
+    static void main(String[] args) {
+        String s1 = "aab";
+        System.out.println("Reorganized '" + s1 + "': " + reorganizeString(s1)); // Expected: "aba"
 
-        PriorityQueue<Character> maxHeap = new PriorityQueue<>((a, b) -> freqMap.get(b) - freqMap.get(a));
-        maxHeap.addAll(freqMap.keySet());
-        // Solution does not exist,  maxFrequency >  (n + 1) / 2
-        if (freqMap.get(maxHeap.peek()) > (s.length() + 1) / 2) {
-            return "";
-        }
+        String s2 = "aaab";
+        System.out.println("Reorganized '" + s2 + "': " + reorganizeString(s2)); // Expected: ""
 
-        char[] result = new char[s.length()];
-        int index = 0;
-        while (!maxHeap.isEmpty()) {
-            char c = maxHeap.poll();
-            // First fills the even index
-            // Then it fills the odd index
-            for (int j = 0; j < freqMap.get(c); j++) {
-                if (index >= s.length()) index = 1; // This will only execute once
-                result[index] = c;
-                index += 2;
-            }
-        }
-
-        return new String(result);
-    }
-    **/
-
-    public static void main(String[] args) {
-        String s = "aaabc";
-        System.out.println(reorganizeString(s));
+        String s3 = "aaabc";
+        System.out.println("Reorganized '" + s3 + "': " + reorganizeString(s3)); // Expected: "abaca"
     }
 
 }

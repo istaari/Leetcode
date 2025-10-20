@@ -1,4 +1,4 @@
-package leetcode.dp.string;
+package leetcode.string;
 
 public class LongestPalindromicSubstringExpandAround {
 

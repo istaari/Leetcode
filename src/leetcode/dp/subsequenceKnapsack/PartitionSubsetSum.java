@@ -1,4 +1,4 @@
-package leetcode.dp.subsequenceAndSets;
+package leetcode.dp.subsequenceKnapsack;
 
 
 @SuppressWarnings("all")

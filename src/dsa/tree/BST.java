@@ -1,6 +1,5 @@
 package dsa.tree;
 
-import dsa.trie.TreeNode;
 
 public  class BST {
 

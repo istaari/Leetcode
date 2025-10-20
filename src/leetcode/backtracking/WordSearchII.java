@@ -36,20 +36,6 @@ public class WordSearchII {
         String word = null; // Store the full word at the end node
     }
 
-    public List<String> findWords(char[][] board, String[] words) {
-        List<String> results = new ArrayList<>();
-        TrieNode root = buildTrie(words);
-
-        // Iterate through every cell on the board to start the search
-        for (int r = 0; r < board.length; r++) {
-            for (int c = 0; c < board[0].length; c++) {
-                backtrack(board, r, c, root, results);
-            }
-        }
-
-        return results;
-    }
-
     /**
      * Helper method to build the Trie from the dictionary of words.
      */
@@ -67,6 +53,20 @@ public class WordSearchII {
             node.word = w; // Store the complete word at the final node
         }
         return root;
+    }
+
+    public List<String> findWords(char[][] board, String[] words) {
+        List<String> results = new ArrayList<>();
+        TrieNode root = buildTrie(words);
+
+        // Iterate through every cell on the board to start the search
+        for (int r = 0; r < board.length; r++) {
+            for (int c = 0; c < board[0].length; c++) {
+                backtrack(board, r, c, root, results);
+            }
+        }
+
+        return results;
     }
 
     void backtrack(char[][] board, int r, int c, TrieNode parentNode, List<String> results) {
@@ -103,8 +103,10 @@ public class WordSearchII {
         board[r][c] = ch;
     }
 
+
+
     // Main method for testing
-    public static void main(String[] args) {
+    static void main(String[] args) {
         WordSearchII solver = new WordSearchII();
         char[][] board = {
                 {'o', 'a', 'a', 'n'},

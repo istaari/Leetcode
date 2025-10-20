@@ -1,4 +1,4 @@
-package leetcode.dp.gameTheory;
+package leetcode.dp;
 
 // This is called look ahead solution
 // Each recursive call assumes that "my opponent is trying to minimize my score"
