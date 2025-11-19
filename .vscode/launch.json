@@ -3,6 +3,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "BitwiseTricks",
+            "request": "launch",
+            "mainClass": "leetcode.bit.BitwiseTricks",
+            "projectName": "problem-solving_bfd47579"
+        },
+        {
+            "type": "java",
             "name": "SearchInRotatedArray",
             "request": "launch",
             "mainClass": "leetcode.binarySearch.SearchInRotatedArray",

@@ -55,27 +55,21 @@ public class Node {
         this.neighbors.add(neighbor);
     }
 
-
-    public static void main(String[] args) {
-        // 1. Create the nodes
-        Node node1 = new Node(1);
-        Node node2 = new Node(2);
-        Node node3 = new Node(3);
-
-        // 2. Create an undirected edge between node 1 and 2
-        // An edge must be added in both directions for it to be undirected.
-        node1.addEdge(node2);
-        node2.addEdge(node1);
-
-        // 3. Create a directed edge from node 1 to 3 (1 -> 3)
-        node1.addEdge(node3);
-
-        // Print neighbors of node 1 to verify
-        System.out.print("Node 1 is connected to: ");
-        for (Node neighbor : node1.neighbors) {
-            System.out.print(neighbor.val + " ");
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Node(val: ").append(val).append(", neighbors: [");
+        if (neighbors != null) {
+            for (int i = 0; i < neighbors.size(); i++) {
+                // We print neighbor.val to avoid infinite recursion in graphs with cycles
+                sb.append(neighbors.get(i).val);
+                if (i < neighbors.size() - 1) {
+                    sb.append(", ");
+                }
+            }
         }
-        // Expected Output: Node 1 is connected to: 2 3
+        sb.append("])");
+        return sb.toString();
     }
 
 }

@@ -4,11 +4,6 @@ import java.util.Arrays;
 
 public class SurroundedRegions {
 
-    /**
-     * Given a 2D board containing 'X' and 'O' (the letter O), capture all regions surrounded by 'X'.
-     *
-     * @param board 2D board containing 'X' and 'O'
-     */
     public static void solve(char[][] board) {
         if (board == null || board.length == 0) return;
 
@@ -35,13 +30,7 @@ public class SurroundedRegions {
         }
     }
 
-    /**
-     * Marks 0's as '*' if they are connected to the border and adjacent
-     *
-     * @param board 2D board containing 'X' and 'O'
-     * @param row   number of cell
-     * @param col   number of cell
-     */
+
     private static void flip(char[][] board, int row, int col) {
 
         if (row < 0 || row >= board.length || col < 0 || col >= board[0].length) return;
@@ -57,7 +46,7 @@ public class SurroundedRegions {
         }
     }
 
-    public static void main(String[] args) {
+    static void main(String[] args) {
         char[][] board = {{'X', 'X', 'X', 'X'}, {'X', 'O', 'O', 'X'}, {'X', 'X', 'O', 'X'}, {'X', 'O', 'X', 'X'}};
         solve(board);
         System.out.println(Arrays.deepToString(board));

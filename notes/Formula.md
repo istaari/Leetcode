@@ -225,18 +225,42 @@ Used in heaps and segment trees. Relies on integer division.
 #### **Set Operations Using Bitmask**
 
 
-| Operation            | Code Example            | Explanation with Example                                                                                                                                                                                                                                      |
-|:---------------------|:------------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Union**            | `A \| B`                | Combines elements from both sets. Example: `5 \| 6` (`...00000101 \| ...00000110`) = `7` (`...00000111`). The resulting set is `{0, 1, 2}`.                                                                                                                   |
-| **Intersection**     | `A & B`                 | Finds elements common to both sets. Example: `5 & 6` (`...00000101 & ...00000110`) = `4` (`...00000100`). The resulting set is `{2}`.                                                                                                                         |
-| **Subtraction**      | `A & ~B`                | Removes elements of B from A. Example: `5 & ~6`. `~6` is `...11111001`. `5 & ...11111001` = `1` (`...00000001`). The resulting set is `{0}`.                                                                                                                  |
-| **Negation**         | `~A`                    | Creates a set of all elements *not* in A (the complement set). Example: `~5` (`~...00000101`) = `...11111010`.                                                                                                                                                |
-| **Set bit**          | `A \|= (1 << bit)`      | Adds a specific element (`bit`) to the set. Example: Add element 3 to set A: `5 \|= (1 << 3)`. `(1 << 3)` is `...00001000`. `5 \|= 8` = `13` (`...00001101`). The new set is `{0, 2, 3}`.                                                                     |
-| **Clear bit**        | `A &= ~(1 << bit)`      | Removes a specific element (`bit`) from the set. Example: Remove element 2 from set A: `5 &= ~(1 << 2)`. `~(1 << 2)` is `~4` or `...11111011`. `5 &= ~4` = `1` (`...00000001`). The new set is `{0}`.                                                         |
-| **Test bit**         | `(A & (1 << bit)) != 0` | Checks if a specific element (`bit`) exists in the set. Example: Is element 2 in set A? `(5 & (1 << 2)) != 0`. `(5 & 4)` = `4`. Since `4 != 0`, the answer is true.                                                                                           |
-| **Extract last bit** | `A & -A`                | Isolates the lowest-order `1` bit (the smallest element in the set). Example: `6 & -6`. In two's complement, `-6` is `...11111010`. `6 & -6` (`...00000110 & ...11111010`) = `2` (`...00000010`). This tells you the lowest element is `1` (since $2 = 2^1$). |
-| **Remove last bit**  | `A & (A - 1)`           | Clears the lowest-order `1` bit. Example: `6 & (6 - 1)`. `6 - 1 = 5`. `6 & 5` (`...00000110 & ...00000101`) = `4` (`...00000100`). The new set is `{2}`.                                                                                                      |
-| **All 1-bits**       | `~0`                    | Represents a universal set containing all possible elements (all bits are `1`). In a 32-bit integer, this is all `1`s.                                                                                                                                        |
+The key idea is that **an integer can represent a set**. Each bit position (0, 1, 2, 3, etc.) corresponds to an element. If the bit is `1` ("on"), the element is **in** the set. If the bit is `0` ("off"), the element is **not** in the set.
+
+Let's use two simple sets for all our examples:
+
+  * **Set A = 5**
+
+      * Binary: `...00000101`
+      * Bits 0 and 2 are `1`.
+      * This represents the set **`{0, 2}`**.
+
+  * **Set B = 6**
+
+      * Binary: `...00000110`
+      * Bits 1 and 2 are `1`.
+      * This represents the set **`{1, 2}`**.
+
+Here is the refined table, explaining each operation using these two sets.
+
+-----
+
+### **Simplified Set Operations (Bitmask)**
+
+| Operation | Code | Simplified Explanation (Using A = `{0, 2}` and B = `{1, 2}`) |
+| :--- | :--- | :--- |
+| **Union** ($A \cup B$) | `A \| B` | **Goal:** Get all elements from A *or* B.<br>**Set:** `{0, 2}` $\cup$ `{1, 2}` = `{0, 1, 2}`<br>**Bitmask:** `...0101 \| ...0110` = `...0111` (which is integer `7`) |
+| **Intersection** ($A \cap B$) | `A & B` | **Goal:** Get elements in *both* A and B.<br>**Set:** `{0, 2}` $\cap$ `{1, 2}` = `{2}`<br>**Bitmask:** `...0101 & ...0110` = `...0100` (which is integer `4`) |
+| **Subtraction** ($A - B$) | `A & ~B` | **Goal:** Get elements in A *but not* in B.<br>**Set:** `{0, 2}` - `{1, 2}` = `{0}`<br>**Bitmask:** `...0101 & ~...0110` = `...0101 & ...1001` = `...0001` (integer `1`) |
+| **Negation** (Complement) | `~A` | **Goal:** Get all elements *not* in A.<br>**Set:** Complement of `{0, 2}` is `{1, 3, 4, 5, ...}`<br>**Bitmask:** `~...00000101` = `...11111010` |
+| **Set bit** (Add) | `A \|= (1 << n)` | **Goal:** Add element **`n`** to the set.<br>**Example:** Add element **3** to A (`{0, 2}`).<br>**Bitmask:** `...0101 \| (1 << 3)` = `...0101 \| ...1000` = `...1101` (integer `13`).<br>**Result:** New set is `{0, 2, 3}`. |
+| **Clear bit** (Remove) | `A &= ~(1 << n)` | **Goal:** Remove element **`n`** from the set.<br>**Example:** Remove element **2** from A (`{0, 2}`).<br>**Bitmask:** `...0101 & ~(1 << 2)` = `...0101 & ~...0100` = `...0101 & ...1011` = `...0001` (integer `1`).<br>**Result:** New set is `{0}`. |
+| **Test bit** (Check) | `(A & (1 << n)) != 0` | **Goal:** Check if element **`n`** is in the set.<br>**Example:** Is element **2** in A (`{0, 2}`)?<br>**Bitmask:** `...0101 & (1 << 2)` = `...0101 & ...0100` = `...0100` (which is `4`).<br>**Result:** `4 != 0`, so **True**. |
+| **Extract last bit** | `A & -A` | **Goal:** Get just the *smallest* element from the set.<br>**Example:** Use B (`{1, 2}`), which is `...0110`.<br>**Bitmask:** `...0110 & -...0110` = `...0010` (integer `2`).<br>**Result:** The set `{1}`. This isolates the smallest element, **1**. |
+| **Remove last bit** | `A & (A - 1)` | **Goal:** Remove the *smallest* element from the set.<br>**Example:** Use B (`{1, 2}`), which is `...0110`.<br>**Bitmask:** `...0110 & (...0110 - 1)` = `...0110 & ...0101` = `...0100` (integer `4`).<br>**Result:** The new set is `{2}`. The smallest element, **1**, was removed. |
+| **All 1-bits** (Universal) | `~0` | **Goal:** Get a set containing *all* possible elements.<br>**Bitmask:** `~0` = `...11111111`<br>**Result:** The set `{0, 1, 2, 3, 4, ...}` |
+
+
 
 
 

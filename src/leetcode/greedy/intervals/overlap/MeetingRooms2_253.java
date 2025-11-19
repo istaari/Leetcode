@@ -5,7 +5,6 @@ import java.util.PriorityQueue;
 
 public class MeetingRooms2_253 {
 
-
     /*
      * Problem Statement
      * Given an array of meeting time intervals where each interval is represented

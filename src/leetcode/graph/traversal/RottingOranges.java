@@ -10,12 +10,6 @@ public class RottingOranges {
     private static final int[][] directions = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
     private record Pair(int x, int y) { }
 
-    /**
-     * In a given grid, each cell can have one of three values: the value 0 representing an empty cell, the value 1 representing a fresh orange, or the value 2 representing a rotten orange.
-     *
-     * @param grid 2D grid of oranges
-     * @return the minimum number of minutes that must elapse until no cell has a fresh orange
-     */
     public static int orangesRotting(int[][] grid) {
         Queue<Pair> queue = new LinkedList<>();
         int m = grid.length;
@@ -56,7 +50,8 @@ public class RottingOranges {
         return (freshOranges == 0) ? minutes : -1;
     }
 
-    public static void main(String[] args) {
+
+    static void main(String[] args) {
         int[][] grid = new int[][]{{2, 1, 1}, {1, 1, 0}, {0, 1, 1}};
         System.out.println(orangesRotting(grid)); // 4
         grid = new int[][]{{2, 1, 1}, {0, 1, 1}, {1, 0, 1}};

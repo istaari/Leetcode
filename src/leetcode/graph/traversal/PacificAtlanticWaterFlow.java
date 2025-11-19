@@ -4,7 +4,8 @@ import java.util.*;
 
 public class PacificAtlanticWaterFlow {
     private final int[][] Directions = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
-    public record CellCoordinate(int x, int y) { }
+    public record CellCoordinate(int x, int y) {
+    }
 
     private void BFS(Queue<CellCoordinate> queue, boolean[][] visited, int[][] heights) {
         int m = heights.length;
@@ -76,7 +77,8 @@ public class PacificAtlanticWaterFlow {
         return result;
     }
 
-    public static void main(String[] args){
+
+    static void main(String[] args){
         int[][] heights = { {1, 2, 2, 3, 5},
                             {3, 2, 3, 4, 4},
                             {2, 4, 5, 3, 1},

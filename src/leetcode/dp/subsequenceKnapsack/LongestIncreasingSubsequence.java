@@ -3,77 +3,61 @@ package leetcode.dp.subsequenceKnapsack;
 
 import java.util.Arrays;
 
+/**
+ * LeetCode Problem: 300. Longest Increasing Subsequence
+ *
+ * Question:
+ * Given an integer array `nums`, return the length of the longest strictly increasing subsequence.
+ * A subsequence is a sequence that can be derived from an array by deleting some or no elements without changing the order of the remaining elements.
+ *
+ * Example 1:
+ * Input: nums = [10, 9, 2, 5, 3, 7, 101, 18]
+ * Output: 4
+ * Explanation: The longest increasing subsequence is [2, 3, 7, 101], therefore the length is 4.
+ *
+ * Constraints:
+ * - 1 <= nums.length <= 2500
+ * - -10^4 <= nums[i] <= 10^4
+ */
 public class LongestIncreasingSubsequence {
 
-    public static Integer[][] dp;
-
-    public static int helper(int[] nums, int i, int prev) {
-        if (i >= nums.length) return 0;
-
-        if (dp[i][prev + 1] != null) {
-            return dp[i][prev + 1];
-        }
-
-        int exclude = helper(nums, i + 1, prev);
-
-        int include = 0;
-        if (prev == -1 || nums[i] > nums[prev]) {
-            include = 1 + helper(nums, i + 1, i);
-        }
-
-        dp[i][prev + 1] = Math.max(exclude, include);
-        return dp[i][prev + 1];
-    }
-
-
-    public static int recursive(int[] nums) {
-        dp = new Integer[nums.length][nums.length + 1];
-        return helper(nums, 0, -1);
-    }
-
-
+    // Subproblem: dp[i] = The length of the longest increasing subsequence that *ends* at index `i`.
     public static int iterative(int[] nums) {
         int n = nums.length;
+        if (n == 0) return 0;
+
         int[] dp = new int[n];
+        // Base case: Every element by itself is an increasing subsequence of length 1.
         Arrays.fill(dp, 1);
 
-        for (int i = 0; i < n; i++) {
+        int maxLIS = 1; // Variable to track the overall maximum LIS length.
+
+        // Build the solution from left to right.
+        for (int i = 1; i < n; i++) {
+            // For each element `i`, check all previous elements `j`.
             for (int j = 0; j < i; j++) {
+                // If `nums[i]` can extend the subsequence ending at `j`...
                 if (nums[i] > nums[j]) {
+                    // ...then the new LIS length ending at `i` could be `dp[j] + 1`.
+                    // We take the maximum of what we already had for `dp[i]` and this new possibility.
                     dp[i] = Math.max(dp[i], dp[j] + 1);
                 }
             }
+            // Update the overall maximum LIS found so far.
+            maxLIS = Math.max(maxLIS, dp[i]);
         }
 
-        return dp[n - 1];
-    }
-
-    public static int lengthOfLIS(int[] nums) {
-        return iterative(nums);
-    }
-
-
-    int binarySearch(int[] number) {
-        int[] dp = new int[number.length];
-        int len = 0;
-        for (int x : number) {
-            // Returns insertion point where element can be inserted if element is not found
-            int i = Arrays.binarySearch(dp, 0, len, x);
-
-            // Turns insertion point into valid index
-            if (i < 0) i = -(i + 1);
-
-            dp[i] = x;
-            if (i == len) len++;
-        }
-        return len;
+        // *** BUG FIX ***: The LIS can end at any index, not necessarily the last one.
+        // The original code `return dp[n-1]` was incorrect. We must return the max value in the dp array.
+        return maxLIS;
     }
 
 
-    public static void main(String[] args) {
+
+
+    static void main(String[] args) {
         int[] nums = {10, 9, 2, 5, 3, 7, 101, 18};
-        System.out.println(recursive(nums));
+        System.out.println("Iterative (O(n^2)): " + iterative(nums)); // Expected: 4
     }
-
 
 }

@@ -7,7 +7,8 @@ public class BitwiseTricks {
         int x = 1; // 00000000 00000000 00000000 00000001
 
         // 1 << 31: 10000000 00000000 00000000 00000000
-        System.out.println(x << 31); // Integer.MIN_VALUE
+        System.out.println(x << 31); // Integer.MIN_VALUE : -2147483648
+
 
         /**
          1 << 32: 00000000 00000000 00000000 00000001

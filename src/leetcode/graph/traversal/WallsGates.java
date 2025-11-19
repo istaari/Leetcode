@@ -1,50 +1,11 @@
 package leetcode.graph.traversal;
 
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.Queue;
 
 public class WallsGates {
-
     private static final int[][] directions = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
 
-    /**
-     * You are given m x n 2D grid initialized with these three possible values, -1 → A wall or an obstacle, Zero → A gate, INF → Infinity means an empty room.
-     * We use the value 231-1 = 2,147,483,647 to represent INF as you may assume that the distance to a gate is less than 2,147,483,647.
-     * Find the distance to the nearest gate for each room in the grid.
-     *
-     * @param rooms a 2D grid of rooms
-     */
-
-    public static void wallsAndGates(int[][] rooms) {
-        int m = rooms.length;
-        int n = rooms[0].length;
-        Queue<int[]> queue = new LinkedList<>();
-
-        /*
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (rooms[i][j] == 0) queue.offer(new int[]{i, j});
-            }
-        }
-        BFS(rooms, queue);
-
-        **/
-
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (rooms[i][j] == 0)
-                    DFS(rooms, i, j, 0);
-            }
-        }
-    }
-
-    /**
-     * Breadth First Search to find the shortest distance
-     *
-     * @param rooms a 2D grid of rooms
-     * @param queue a queue of rooms
-     */
     public static void BFS(int[][] rooms, Queue<int[]> queue) {
         int m = rooms.length;
         int n = rooms[0].length;
@@ -69,15 +30,6 @@ public class WallsGates {
     }
 
 
-    /**
-     * Depth First Search to find the shortest distance
-     *
-     * @param rooms a 2D grid of rooms
-     * @param i row index
-     * @param j column index
-     * @param distance distance from the gate
-     *
-     */
     private static void DFS(int[][] rooms, int i, int j, int distance) {
         int m = rooms.length;
         int n = rooms[0].length;
@@ -95,8 +47,18 @@ public class WallsGates {
     }
 
 
+    public static void wallsAndGates(int[][] rooms) {
+        int m = rooms.length;
+        int n = rooms[0].length;
 
-    public static void main(String[] args) {
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (rooms[i][j] == 0) DFS(rooms, i, j, 0);
+            }
+        }
+    }
+
+    static void main(String[] args) {
         int[][] rooms = {
                 {Integer.MAX_VALUE, -1, 0, Integer.MAX_VALUE},
                 {Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, -1},
