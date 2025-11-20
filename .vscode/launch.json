@@ -3,66 +3,10 @@
     "configurations": [
         {
             "type": "java",
-            "name": "BitwiseTricks",
-            "request": "launch",
-            "mainClass": "leetcode.bit.BitwiseTricks",
-            "projectName": "problem-solving_bfd47579"
-        },
-        {
-            "type": "java",
-            "name": "SearchInRotatedArray",
-            "request": "launch",
-            "mainClass": "leetcode.binarySearch.SearchInRotatedArray",
-            "projectName": "problem-solving_bfd47579"
-        },
-        {
-            "type": "java",
-            "name": "MinimumInSortedRotatedArray",
-            "request": "launch",
-            "mainClass": "leetcode.binarySearch.MinimumInSortedRotatedArray",
-            "projectName": "problem-solving_bfd47579"
-        },
-        {
-            "type": "java",
-            "name": "FloorCeilIngSortedArray",
-            "request": "launch",
-            "mainClass": "leetcode.binarySearch.FloorCeilIngSortedArray",
-            "projectName": "problem-solving_bfd47579"
-        },
-        {
-            "type": "java",
-            "name": "FirstLastOccurrences",
-            "request": "launch",
-            "mainClass": "leetcode.binarySearch.FirstLastOccurrences",
-            "projectName": "problem-solving_bfd47579"
-        },
-        {
-            "type": "java",
-            "name": "FindPeakElement",
-            "request": "launch",
-            "mainClass": "leetcode.binarySearch.FindPeakElement",
-            "projectName": "problem-solving_bfd47579"
-        },
-        {
-            "type": "java",
-            "name": "ArrayDoubledPairs",
-            "request": "launch",
-            "mainClass": "ArrayDoubledPairs",
-            "projectName": "problem-solving_bfd47579"
-        },
-        {
-            "type": "java",
-            "name": "PredictTheWinner",
-            "request": "launch",
-            "mainClass": "leetcode.dp.gameTheory.PredictTheWinner",
-            "projectName": "problem-solving_bfd47579"
-        },
-        {
-            "type": "java",
-            "name": "Run Current Java File",
+            "name": "Run Current File",
             "request": "launch",
             "mainClass": "${file}",
-            "projectName": "Problem Solving Leetcode"
+            "projectName": "problem-solving_bfd47579"
         }
     ]
 }
