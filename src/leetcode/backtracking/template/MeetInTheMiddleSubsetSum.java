@@ -1,6 +1,5 @@
 package leetcode.backtracking.template;
 
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,12 +7,16 @@ import java.util.Map;
  * Problem: Count of Subsets with a Given Sum (using Meet-in-the-Middle)
  *
  * Question:
- * Given an array of N integers (which can be positive, negative, or zero) and a target
- * sum S, find the total number of subsets of the array whose elements sum up to S.
+ * Given an array of N integers (which can be positive, negative, or zero) and a
+ * target
+ * sum S, find the total number of subsets of the array whose elements sum up to
+ * S.
  *
  * Why Meet-in-the-Middle?
- * A standard recursive or backtracking approach to generate all 2^N subsets would be too
- * slow for N > 25. This technique optimizes the solution from O(2^N) to O(2^(N/2)),
+ * A standard recursive or backtracking approach to generate all 2^N subsets
+ * would be too
+ * slow for N > 25. This technique optimizes the solution from O(2^N) to
+ * O(2^(N/2)),
  * making it feasible for N up to around 40-50 by trading space for time.
  *
  * Example:
@@ -24,7 +27,6 @@ import java.util.Map;
  */
 public class MeetInTheMiddleSubsetSum {
     static long totalSubsets = 0;
-
 
     public static void generateSubsetSums(int[] arr, int n, Map<Long, Integer> sumMap) {
         // There are 2^n possible subsets.
@@ -42,7 +44,8 @@ public class MeetInTheMiddleSubsetSum {
 
     public static long countSubsets(int[] nums, int S) {
         int n = nums.length;
-        if (n == 0) return 0;
+        if (n == 0)
+            return 0;
 
         // --- Step 1: Split the array into two halves ---
         int mid = n / 2;
@@ -56,12 +59,14 @@ public class MeetInTheMiddleSubsetSum {
         Map<Long, Integer> sums1 = new HashMap<>();
         generateSubsetSums(part1, part1.length, sums1);
 
-        // --- Step 3 & 4: Generate subset sums for the second half and meet in the middle ---
+        // --- Step 3 & 4: Generate subset sums for the second half and meet in the
+        // middle ---
         long count = 0;
         Map<Long, Integer> sums2 = new HashMap<>();
         generateSubsetSums(part2, part2.length, sums2);
 
-        // For each subset sum from the second half, find a matching sum from the first half.
+        // For each subset sum from the second half, find a matching sum from the first
+        // half.
         for (Map.Entry<Long, Integer> entry : sums2.entrySet()) {
             long sumB = entry.getKey();
             int freqB = entry.getValue();
@@ -77,7 +82,7 @@ public class MeetInTheMiddleSubsetSum {
     }
 
     public static void main(String[] args) {
-        int[] nums = {1, 2, 3, 4, 5, 6, -1, -2, -3}; // N = 9
+        int[] nums = { 1, 2, 3, 4, 5, 6, -1, -2, -3 }; // N = 9
         int S = 5;
         // Example valid subsets: [2, 3], [1, 4], [5], [6, -1], [1, 2, -1, 3], etc.
 
@@ -85,7 +90,8 @@ public class MeetInTheMiddleSubsetSum {
         System.out.println("Number of subsets with sum " + S + ": " + result);
 
         int[] largerNums = new int[40]; // Example for a large N
-        for (int i = 0; i < 40; i++) largerNums[i] = i + 1;
+        for (int i = 0; i < 40; i++)
+            largerNums[i] = i + 1;
         // A brute-force 2^40 would be impossible.
         // A 2^20 + 2^20 meet-in-the-middle is feasible.
     }
