@@ -1,147 +1,354 @@
-### **Notes**
+### **Core Definitions**
 
-- `Mutually Exclusive` refers to events or outcomes in probability theory that cannot occur at the same time. In other words, if two events are mutually exclusive, the occurrence of one event prevents the occurrence of the other.
+* **Mutually Exclusive Events:** Events that cannot happen at the same time. "If one happens, the other cannot."
+    * *Example:* Flipping a coin. It can be Heads **or** Tails, but never both at once.
+    * **Notation:** $P(A \cap B) = 0$
 
-   - `P(A ∩ B) = 0`
+---
 
-### **1. Basic Counting Principles**
+### **Basic Counting Principles**
 
-- **Addition Principle**: If events are mutually exclusive, the total number of outcomes is the sum of the individual outcomes.  
+These are the building blocks for all other counting rules.
 
-    - `Total outcomes = m + n`
+#### **A. Addition Principle ( The "OR" Rule)**
+Used when you must choose **one** option from multiple distinct groups.
+* **Rule:** If events are mutually exclusive, add the number of outcomes.
+* **Formula:** $\text{Total} = m + n$
+* **Example:** You are at a restaurant. You can pick **one** drink. They have 3 sodas and 2 juices.
+    * Total choices = $3 + 2 = 5$ choices.
 
-- **Multiplication Principle**: If events are independent, the total number of outcomes is the product of the individual outcomes.  
+#### **B. Multiplication Principle (The "AND" Rule)**
+Used when you must make a sequence of choices (one after another).
+* **Rule:** If events are independent (the first choice doesn't affect the second), multiply the outcomes.
+* **Formula:** $\text{Total} = m \times n$
+* **Example:** You need to pick an outfit consisting of **one** shirt and **one** pair of pants. You have 3 shirts and 2 pairs of pants.
+    * Total outfits = $3 \times 2 = 6$ outfits.
 
-    - `Total outcomes = m * n`
+#### **C. Inclusion-Exclusion Principle**
+Used when sets overlap, to ensure you don't count the overlapping items twice.
+* **Formula:** $|A \cup B| = |A| + |B| - |A \cap B|$
+* **Example:** In a class of 30 students:
+    * 15 play Soccer ($A$)
+    * 10 play Basketball ($B$)
+    * 5 play **both** ($A \cap B$)
+    * How many play at least one sport?
+    * $\text{Total} = 15 + 10 - 5 = 20$ students.
 
-- **Inclusion-Exclusion Principle**: If events overlap, the total number of outcomes is the sum of the individual outcomes, minus the overlap (to avoid double-counting).  
-  
-    - `Total outcomes = |A| + |B| - |A ∩ B|`
 
-### **2. Permutations and Combinations**
 
-- **Permutations**: The arrangement of objects where **order matters**.  
-- **Combinations**: The selection of objects where **order doesn’t matter**.  
+---
+
+### **Permutations vs. Combinations**
+
+This is the most common confusion point. The key question to ask is: **"Does the order matter?"**
+
+| Feature | Permutation | Combination |
+| :--- | :--- | :--- |
+| **Concept** | Arrangement / Ranking | Selection / Grouping |
+| **Order?** | **YES**, Order matters | **NO**, Order doesn't matter |
+| **Keywords** | Arrange, Schedule, Rank, Password | Choose, Select, Group, Team |
+| **Analogy** | A **Lock** code ($1\text{-}2\text{-}3$ is different from $3\text{-}2\text{-}1$) | A **Fruit Salad** (Apple & Banana is the same as Banana & Apple) |
 
 #### **1. Permutations (Order Matters)**
+The number of ways to arrange $r$ items from a set of $n$ distinct items.
 
-When you arrange items, and the order of the arrangement matters, you're dealing with permutations.
+* **Formula:**
+    $$P(n, r) = \frac{n!}{(n - r)!}$$
 
-**Formula for Permutations**:
-
-P(n, r) = <span style="font-size: larger;">n!</span> / <span style="font-size: larger;">(n - r)!</span>
-
-- **n**: Total number of items.
-- **r**: Number of items being arranged.
-- **n!**: The factorial of \(n\).
-
-**Examples**:
-
-1. **Simple Permutation**:  
-   Suppose you have 3 letters: \(A, B, C\). How many ways can you arrange 2 letters?  
-
-   Here \(n = 3\), \(r = 2\):  
- 
-   P(3, 2) = <span style="font-size: larger;">3!</span> / <span style="font-size: larger;">(3-2)!</span> = <span style="font-size: larger;">3 × 2 × 1</span> / <span style="font-size: larger;">1</span> = 6
-
-   The arrangements are:  
-   \(AB, AC, BA, BC, CA, CB\).
-
-2. **Permutations with all items \(r = n\)**:  
-   How many ways can you arrange \(A, B, C\)?  
-   \(n = 3\), \(r = 3\):  
-
-   P(3, 3) = <span style="font-size: larger;">3!</span> / <span style="font-size: larger;">(3-3)!</span> = <span style="font-size: larger;">3!</span> = 6
-   
-   Arrangements: \(ABC, ACB, BAC, BCA, CAB, CBA\).
-
+* **Example:**
+    There are 3 runners ($A, B, C$) competing for Gold and Silver (top 2 spots).
+    * $n=3$ (runners), $r=2$ (medals).
+    * $$P(3, 2) = \frac{3!}{(3-2)!} = \frac{3 \times 2 \times 1}{1} = 6$$
+    * *Outcomes:* $(A,B), (B,A), (A,C), (C,A), (B,C), (C,B)$.
+    * *Note:* $(A,B)$ means A gets Gold, B gets Silver. This is different from $(B,A)$.
 
 #### **2. Combinations (Order Doesn't Matter)**
+The number of ways to select $r$ items from a set of $n$ distinct items.
 
-When you're selecting items and the order doesn’t matter, you're dealing with combinations.
+* **Formula:**
+    $$C(n, r) \text{ or } \binom{n}{r} = \frac{n!}{r!(n - r)!}$$
 
-**Formula for Combinations**:
+* **Example:**
+    You have 3 friends ($A, B, C$) and want to invite 2 of them to dinner.
+    * $n=3$ (friends), $r=2$ (invites).
+    * $$C(3, 2) = \frac{3!}{2!(3-2)!} = \frac{6}{2 \times 1} = 3$$
+    * *Outcomes:* $\{A, B\}, \{A, C\}, \{B, C\}$.
+    * *Note:* Inviting A and B is the exact same distinct event as inviting B and A.
 
-C(n, r) = <span style="font-size: larger;">n!</span> / (<span style="font-size: larger;">r! × (n - r)!</span>)
+---
 
-- **n**: Total number of items.
-- **r**: Number of items being chosen.
+### **Handling Repetition**
 
-**Examples**:
+Sometimes you can pick the same item more than once (like a password `111` or scoops of ice cream).
 
-1. **Simple Combination**:  
-   Suppose you have 3 letters \(A, B, C\), and you want to select 2 letters. How many ways can you select them? 
+#### **1. Permutations with Repetition**
+Used when items can be reused in the arrangement.
 
-   \(n = 3\), \(r = 2\):  
-  
-   C(3, 2) = <span style="font-size: larger;">3!</span> / (<span style="font-size: larger;">2! × (3-2)!</span>) = <span style="font-size: larger;">3 × 2 × 1</span> / (<span style="font-size: larger;">2 × 1 × 1</span>) = 3
-   
-   The combinations are:  
-   \(\{A, B\}, \{A, C\}, \{B, C\}\).
+* **Formula:**
+    $$P_{rep} = n^r$$
 
-2. **Combinations with all items (\(r = n\))**:  
-   How many ways can you select all 3 letters?  
+* **Example:** A standard bicycle lock has 4 dials, each with digits 0-9 ($n=10$). How many codes are possible?
+    * $$10^4 = 10,000 \text{ codes.}$$
 
-   \(n = 3\), \(r = 3\):  
+#### **2. Combinations with Repetition**
+Used when you just want to fill a "bag" with items, and you can pick the same item multiple times. This is often called the **"Stars and Bars"** method.
 
-   C(3, 3) = <span style="font-size: larger;">3!</span> / (<span style="font-size: larger;">3! × (3-3)!</span>) = <span style="font-size: larger;">6</span> / (<span style="font-size: larger;">6 × 1</span>) = 1
-   
-   Only one way: \(\{A, B, C\}\).
+* **Formula:**
+    $$C_{rep}(n, r) = \binom{n + r - 1}{r} = \frac{(n + r - 1)!}{r!(n - 1)!}$$
 
-#### **3. Permutations with Repetition**:
+* **Example (The Ice Cream Rule):**
+    An ice cream shop has 3 flavors (Chocolate, Vanilla, Strawberry). You want to buy a bowl with 2 scoops. You can pick two of the same flavor.
+    * $n=3$ (flavors), $r=2$ (scoops).
+    * $$\binom{3 + 2 - 1}{2} = \binom{4}{2} = \frac{4 \times 3}{2 \times 1} = 6 \text{ ways.}$$
+    * *Outcomes:* $\{CC, CV, CS, VV, VS, SS\}$.
 
-The number of ways to arrange \(r\) items from \(n\) items when repetition is allowed:  
+---
 
-- P_rep(n, r) = <span style="font-size: larger;">n<sup>r</sup></span>
+### **Catalan Numbers**
+
+Catalan numbers describe a specific sequence of integers that appear in many recursive counting problems.
+
+* **Formula:**
+    $$C_n = \frac{1}{n+1}\binom{2n}{n} = \frac{(2n)!}{(n+1)! \, n!}$$
+
+* **The Sequence ($C_0, C_1, C_2...$):**
+    $1, 1, 2, 5, 14, 42, 132, \dots$
+
+* **Common Applications (When to use them):**
+    1.  **Valid Parentheses:** How many ways can $n$ pairs of parentheses be correctly matched?
+        * For $n=3$ ($C_3=5$): `((()))`, `()(())`, `()()()`, `(())()`, `(()())`
+    2.  **Binary Trees:** Number of different binary trees with $n$ nodes.
+    3.  **Polygon Triangulation:** Number of ways to cut a polygon with $n+2$ sides into triangles.
+
+To find (calculate) Catalan numbers efficiently, you have two main approaches: using the **Direct Formula** (best if you already have an `nCr` function) or using the **Iterative Recurrence** (best for calculating a specific Catalan number from scratch without overflow).
+
+Here is how to calculate them efficiently.
+
+#### **Method 1: The Iterative Way (Best for Coding)**
+
+Instead of calculating huge factorials like $(2n)!$, which overflow very quickly, we can use a simple relationship between $C_n$ and $C_{n-1}$.
+
+**The Formula:**
+$$C_n = \frac{2(2n - 1)}{n + 1} \times C_{n-1}$$
+
+**Why this is good:**
+
+  * **Time Complexity:** $O(n)$ (Linear).
+  * **Space Complexity:** $O(1)$.
+  * **Overflow Safety:** It keeps numbers smaller for longer compared to calculating $(2n)!$ directly.
+
+**Java Code (Compact & Iterative):**
+
+```java
+public class Catalan {
+    // Returns the nth Catalan number
+    public static long catalan(int n) {
+        long res = 1; // C_0 = 1
+
+        // Calculate C_n using the previous value (C_{i-1})
+        for (int i = 1; i <= n; i++) {
+            res = (res * 2 * (2 * i - 1)) / (i + 1);
+        }
+        return res;
+    }
+
+    public static void main(String[] args) {
+        System.out.println("C_5 = " + catalan(5)); // Output: 42
+    }
+}
+```
 
 
-**Examples**:
+#### **Method 2: The Direct Formula (Using nCr)**
 
-How many ways can you arrange 3 digits where repetition is allowed, and the digits are \(1, 2, 3\)?  
+If you already have a helper function to calculate Combinations ($\binom{n}{r}$), you can simply wrap it.
 
-- P_rep(3, 3) = <span style="font-size: larger;">3<sup>3</sup></span> = 27
+**The Formula:**
+$$C_n = \frac{1}{n+1} \times \binom{2n}{n}$$
 
-- Arrangements: \(111, 112, 113, 121, 122, 123, \....\).
+**Java Code:**
 
-
-#### **4. Combinations with Repetition**:
-The number of ways to choose \(r\) items from \(n\) items when repetition is allowed:  
-
-
-- C_rep(n, r) = <span style="font-size: larger;">(n + r - 1)!</span> / (<span style="font-size: larger;">r! × (n - 1)!</span>)
-
-
-#### Example:
-
-How many ways can you choose 3 items from 2 types of fruit (\(A, B\)), allowing repetition?  
+```java
+public static long catalanDirect(int n) {
+    // Assuming you have the nCr function we discussed earlier
+    long c = binomialCoeff(2 * n, n); 
+    return c / (n + 1);
+}
+```
 
 
-- C_rep(2, 3) = <span style="font-size: larger;">(2 + 3 - 1)!</span> / (<span style="font-size: larger;">3! × (2 - 1)!</span>) = <span style="font-size: larger;">4!</span> / (<span style="font-size: larger;">3! × 1!</span>) = <span style="font-size: larger;">24</span> / <span style="font-size: larger;">6</span> = 4
+#### **3. Why does this sequence happen? (The Recursive Insight)**
 
-- Selections: \(\{AAA, AAB, ABB, BBB\}\).
+If you are asking "How do we find/derive this sequence in a problem?", it usually comes from breaking a problem into two sub-problems (Left and Right).
 
+Take **Binary Trees** as an example. To form a tree with $n$ nodes:
 
-### Catlan Numbers:
-
-`Cₙ = (2n)! / ((n+1)! n!)`
-
-`C(n) = Ci(2n,n)/n+1`
-
-<p>Where:</p>
-<ul>
-  <li><code>(2n)! / (n! &bull; n!)</code> is the binomial coefficient <code>&#8658; binomial(2n, n)</code></li>
-  <li><code>n!</code> is the factorial of <code>n</code></li>
-</ul>
+1.  Pick 1 node as the **Root**.
+2.  You have $n-1$ nodes left.
+3.  You can split them: $i$ nodes go to the **Left** child, and remaining $n-1-i$ nodes go to the **Right**.
+4.  This creates the recursive sum (Segner's Recurrence):
+    $$C_n = \sum_{i=0}^{n-1} C_i \times C_{n-1-i}$$
 
 
+  * **Example for $n=3$:**
+      * (0 on Left, 2 on Right) + (1 on Left, 1 on Right) + (2 on Left, 0 on Right)
+      * $C_0C_2 + C_1C_1 + C_2C_0$
+      * $(1 \times 2) + (1 \times 1) + (2 \times 1) = 5$.
 
 
-#### Examples:
+-----
 
-- `C₀ = 1`
-- `C₁ = 1`
-- `C₂ = 2`
-- `C₃ = 5`
-- `C₄ = 14`
-- `C₅ = 42`
+### **Binomial Coefficients: $\binom{n}{k}$**
+
+Binomial coefficients represent the number of ways to choose $k$ items from a set of $n$ distinct items (order doesn't matter).
+
+#### **Method 1: Pascal's Triangle (Dynamic Programming)**
+
+This method uses the recurrence relation: $\binom{n}{k} = \binom{n-1}{k-1} + \binom{n-1}{k}$. This avoids large factorials and is perfect for computing values modulo a number.
+
+[Image of Pascal's Triangle]
+
+**Time Complexity:** $O(n^2)$
+
+```java
+public class BinomialDP {
+    public static long binomialCoeff(int n, int k) {
+        long[][] C = new long[n + 1][k + 1];
+
+        for (int i = 0; i <= n; i++) {
+            for (int j = 0; j <= Math.min(i, k); j++) {
+                // Base Cases: Choose 0 or Choose all = 1
+                if (j == 0 || j == i) {
+                    C[i][j] = 1;
+                } else {
+                    // Recurrence relation: sum of two values above
+                    C[i][j] = C[i - 1][j - 1] + C[i - 1][j];
+                }
+            }
+        }
+        return C[n][k];
+    }
+
+    public static void main(String[] args) {
+        System.out.println("C(5, 2) = " + binomialCoeff(5, 2)); // Output: 10
+    }
+}
+```
+
+#### **Method 2: Factorial Definition (Modular Inverse)**
+
+Uses the formula $\binom{n}{k} = \frac{n!}{k!(n-k)!}$.
+When working with large numbers (modulo $10^9+7$), division isn't allowed. Instead, we multiply by the **Modular Inverse** of the denominator using Fermat's Little Theorem ($a^{MOD-2} \equiv a^{-1} \pmod{MOD}$).
+
+**Time Complexity:** $O(n)$ (or $O(\log MOD)$ if factorials are precomputed).
+
+```java
+public class BinomialInverse {
+    static final int MOD = 1000000007;
+
+    // Function to compute (base^exp) % mod
+    static long power(long base, long exp) {
+        long res = 1;
+        base %= MOD;
+        while (exp > 0) {
+            if (exp % 2 == 1) res = (res * base) % MOD;
+            base = (base * base) % MOD;
+            exp /= 2;
+        }
+        return res;
+    }
+
+    static long modInverse(long n) {
+        return power(n, MOD - 2);
+    }
+
+    static long nCr(int n, int r) {
+        if (r < 0 || r > n) return 0;
+        if (r == 0 || r == n) return 1;
+        if (r > n / 2) r = n - r;
+
+        long[] fact = new long[n + 1];
+        fact[0] = 1;
+        for (int i = 1; i <= n; i++)
+            fact[i] = (fact[i - 1] * i) % MOD;
+
+        return (fact[n] * modInverse((fact[r] * fact[n - r]) % MOD)) % MOD;
+    }
+
+    public static void main(String[] args) {
+        System.out.println("C(5, 2) % MOD = " + nCr(5, 2));
+    }
+}
+```
+
+-----
+
+### **Derangements (\!n)**
+
+A Derangement is a permutation of elements where **no element appears in its original position**.
+*Example:* For set $\{1, 2, 3\}$, the derangements are $\{2, 3, 1\}$ and $\{3, 1, 2\}$. $\{1, 3, 2\}$ is NOT a derangement because $1$ is in the first spot.
+
+#### **Method 1: Principle of Inclusion-Exclusion**
+
+Formula: $D_n = n! \sum_{i=0}^{n} \frac{(-1)^i}{i!}$
+This expands to: $D_n = n! (1 - \frac{1}{1!} + \frac{1}{2!} - \frac{1}{3!} + \dots)$
+
+#### **Method 2: Dynamic Programming (Recurrence)**
+
+A simpler recurrence relation exists:
+$D_n = (n-1) \times (D_{n-1} + D_{n-2})$
+*Base cases:* $D_1 = 0, D_2 = 1$.
+
+```java
+public class Derangement {
+    public static long countDerangements(int n) {
+        if (n == 1) return 0;
+        if (n == 2) return 1;
+
+        long prev2 = 0; // D_1
+        long prev1 = 1; // D_2
+        long current = 0;
+
+        for (int i = 3; i <= n; i++) {
+            current = (i - 1) * (prev1 + prev2);
+            prev2 = prev1;
+            prev1 = current;
+        }
+        return current;
+    }
+
+    public static void main(String[] args) {
+        System.out.println("Derangements of 4 items: " + countDerangements(4)); // Output: 9
+    }
+}
+```
+
+-----
+
+### **Stars and Bars**
+
+This technique counts the number of ways to distribute $n$ identical items into $k$ distinct bins.
+
+  * **Theorem:** The number of ways is $\binom{n+k-1}{k-1}$ (or equivalently $\binom{n+k-1}{n}$).
+
+**Example:**
+How many ways can you distribute 7 indistinguishable coins among 3 distinct people?
+
+  * $n = 7$ (stars/coins), $k = 3$ (bars/people).
+  * Formula: $\binom{7+3-1}{3-1} = \binom{9}{2} = 36$ ways.
+
+<!-- end list -->
+
+```java
+// This relies on the nCr function defined in the first section
+public class StarsAndBars {
+    public static void main(String[] args) {
+        int coins = 7;
+        int people = 3;
+        // We use the nCr logic from before. 
+        // Note: For simplicity, assuming small numbers or using the BigInteger/DP approach
+        System.out.println("Ways to distribute: " + BinomialDP.binomialCoeff(coins + people - 1, people - 1));
+    }
+}
+```
 

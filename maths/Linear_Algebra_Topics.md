@@ -1,139 +1,119 @@
 ### **1. Linear Equations (Degree = 1)**
 
-A **linear equation** is an equation where the highest power of the variable is **1**. It represents a straight line
-when graphed.
+A **linear equation** is an equation where the highest power of the variable is **1**. It represents a straight line when graphed.
 
-<h4>General Form:</h4>
+* **General Form:** $ax + b = 0$
+* **Where:** $a, b$ are constants, $x$ is the variable, and $a \neq 0$.
 
-<p><code>ax + b = 0</code></p>
+**Core Principle: Isolation**
+The goal is to manipulate the equation so that the variable ($x$) stands alone on one side.
+* **The Golden Rule of Algebra:** Whatever operation you perform on one side of the equal sign, you **must** perform on the other side.
+* **Inverse Operations:** Cancel values using opposites (Addition $\leftrightarrow$ Subtraction, Multiplication $\leftrightarrow$ Division).
 
-<p>where:</p>
-<ul>
-  <li><code>a, b</code> are constants</li>
-  <li><code>x</code> is the variable</li>
-  <li><code>a != 0</code></li>
-</ul>
-
-<h4>Examples:<h4>
-
-<ul>
-  <li><code>3x + 5 = 0</code></li>
-  <li><code>2y - 7 = 3</code></li>
-  <li><code>x + y = 10</code> (a linear equation in two variables)</li>
-</ul>
+**Examples:**
+* $3x + 5 = 0$
+* $2y - 7 = 3$
+* $x + y = 10$
 
 
-**Graph:** A straight line.
+
+[Image of graph of linear equation y=mx+c]
+
+
+---
 
 ### **2. Quadratic Equations (Degree = 2)**
 
-A **quadratic equation** is a polynomial equation where the highest power of the variable is **2**. It represents a *
-*parabola** when graphed.
+A **quadratic equation** is a polynomial equation where the highest power of the variable is **2**. It represents a **parabola** (U-shape) when graphed.
 
-<h4>General Form:<h4>
+* **General Form:** $ax^2 + bx + c = 0$
+* **Where:** $a, b, c$ are constants and $a \neq 0$.
 
-<p><code>ax<sup>2</sup> + bx + c = 0</code></p>
+**Core Principle: Zero Product Property**
+You generally cannot "isolate" $x$ directly. Instead, you set the equation to zero.
+* **Zero Product Property:** If $a \cdot b = 0$, then either $a = 0$ or $b = 0$.
+* **The Discriminant ($\Delta = b^2 - 4ac$):** Determines the solution type:
+    * $\Delta > 0$: Two real roots.
+    * $\Delta = 0$: One repeated root.
+    * $\Delta < 0$: Two complex roots.
 
-<p>where:</p>
-<ul>
-  <li><code>a, b, c</code> are constants</li>
-  <li><code>a != 0</code></li>
-</ul>
+**Solution Methods:**
+1.  **Factoring** (if possible)
+2.  **Quadratic Formula:** $x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$
+3.  **Completing the square**
+4.  **Graphing**
 
-<h4>Examples:<h4>
-
-<ul>
-  <li><code>x<sup>2</sup> - 4x + 3 = 0</code></li>
-  <li><code>2y<sup>2</sup> + 5y - 7 = 0</code></li>
-  <li><code>t<sup>2</sup> - 9 = 0</code></li>
-</ul>
+**Examples:**
+* $x^2 - 4x + 3 = 0$
+* $t^2 - 9 = 0$
 
 
-### **Solution Methods:**
 
-- **Factoring** (if possible)
-- **Quadratic Formula**:  
-  - x = (-b ± √(b² - 4ac)) / 2a
-- **Completing the square**
-- **Graphing**
+[Image of parabola graph of quadratic equation]
 
-**Graph:** A **parabola** (U-shaped curve).
 
 ---
 
 ### **3. Cubic Equations (Degree = 3)**
 
-A **cubic equation** is a polynomial equation where the highest power of the variable is **3**. It represents a curve
-that may change direction twice.
+A **cubic equation** is a polynomial equation where the highest power of the variable is **3**. It represents a curve that may change direction twice (S-curve).
 
-<h4>General Form:<h4>
+* **General Form:** $ax^3 + bx^2 + cx + d = 0$
+* **Where:** $a, b, c, d$ are constants and $a \neq 0$.
 
-<p><code>ax<sup>3</sup> + bx<sup>2</sup> + cx + d = 0</code></p>
+**Core Principle: Depressing the Polynomial**
+The strategy is often to find *one* root, divide it out, and reduce the remaining equation to a Quadratic.
+* **Factoring by Grouping:** Split four terms into two pairs to find common binomial factors.
+* **Sum/Difference of Cubes:**
+    * $a^3 \pm b^3 = (a \pm b)(a^2 \mp ab + b^2)$
+* **Synthetic Division:** A shorthand division method used to test roots and break the cubic down.
 
-<p>where:</p>
-<ul>
-  <li><code>a, b, c, d</code> are constants</li>
-  <li><code>a != 0</code></li>
-</ul>
+**Solution Methods:**
+1.  **Factoring** (e.g., by grouping)
+2.  **Synthetic division**
+3.  **Graphing**
+4.  **Cardano’s formula** (for general cases)
 
-<h4>Examples:<h4>
-
-<ul>
-  <li><code>x<sup>3</sup> - 6x<sup>2</sup> + 11x - 6 = 0</code></li>
-  <li><code>2y<sup>3</sup> + 3y<sup>2</sup> - 5y + 1 = 0</code></li>
-  <li><code>t<sup>3</sup> - 4t = 0</code></li>
-</ul>
+**Examples:**
+* $x^3 - 6x^2 + 11x - 6 = 0$
+* $t^3 - 4t = 0$
 
 
-### **Solution Methods:**
 
-- **Factoring** (if possible)
-- **Synthetic division**
-- **Graphing**
-- **Cardano’s formula** (for general cubic equations)
+[Image of cubic function graph]
 
-**Graph:** A curve that may have one or two turning points.
 
 ---
 
 ### **4. Polynomial Equations (Degree = n)**
 
-A **polynomial equation** is a general equation where the highest power of the variable is **n** (which can be any whole
-number greater than or equal to 1).
+A **polynomial equation** is a general equation where the highest power of the variable is **n**.
 
-<h4>General Form:<h4>
+* **General Form:** $a_nx^n + a_{n-1}x^{n-1} + ... + a_1x + a_0 = 0$
+* **Where:** $n$ is a positive integer (the degree).
 
-<p><code>a<sub>n</sub>x<sup>n</sup> + a<sub>n-1</sub>x<sup>n-1</sup> + ... + a<sub>1</sub>x + a<sub>0</sub> = 0</code></p>
+**Core Principle: Root Behavior Theorems**
+For degrees $n > 2$, we rely on theorems to find roots rather than simple calculation steps.
+* **Fundamental Theorem of Algebra:** A polynomial of degree $n$ has exactly $n$ roots (counting complex/repeated ones).
+* **Rational Root Theorem:** Possible rational roots = $\pm \frac{\text{Factors of Constant Term}}{\text{Factors of Leading Coefficient}}$.
+* **Factor Theorem:** If $P(c) = 0$, then $(x - c)$ is a factor.
 
-<p>where:</p>
-<ul>
-  <li><code>a<sub>n</sub>, a<sub>n-1</sub>, ..., a<sub>1</sub>, a<sub>0</sub></code> are constants</li>
-  <li><code>a<sub>n</sub> != 0</code></li>
-  <li><code>n</code> is a positive integer (degree of the polynomial)</li>
-</ul>
+**Solution Methods:**
+1.  **Factoring**
+2.  **Numerical approximation** (e.g., Newton’s method)
+3.  **Graphing**
 
-<h4>Examples:<h4>
+**Examples:**
+* $x^4 - 3x^2 + 2 = 0$ (Quartic)
+* $x^5 - 4x + 3 = 0$ (Quintic)
 
-<ul>
-  <li><code>x<sup>4</sup> - 3x<sup>2</sup> + 2 = 0</code> (Quartic, Degree = 4)</li>
-  <li><code>x<sup>5</sup> - 4x + 3 = 0</code> (Quintic, Degree = 5)</li>
-  <li><code>3x<sup>6</sup> - 2x<sup>4</sup> + 5x<sup>2</sup> - x + 7 = 0</code> (General Polynomial)</li>
-</ul>
+---
 
+### **Summary Table**
 
-### **Solution Methods:**
-
-- **Factoring** (if possible)
-- **Numerical approximation methods** (like Newton’s method)
-- **Graphing**
-
-**Graph:** Depends on the degree. Higher-degree polynomials have more complex shapes.
-
-<h3>Table</h3>
-
-| Type of Equation | General Form                                                                       | Degree         | Graph Shape    |
-|------------------|------------------------------------------------------------------------------------|----------------|----------------|
-| Linear           | <code>ax + b = 0</code>                                                            | 1              | Straight line  |
-| Quadratic        | <code>ax<sup>2</sup> + bx + c = 0</code>                                           | 2              | Parabola       |
-| Cubic            | <code>ax<sup>3</sup> + bx<sup>2</sup> + cx + d = 0</code>                          | 3              | S-curve        |
-| Polynomial       | <code>a<sub>n</sub>x<sup>n</sup> + ... + a<sub>1</sub>x + a<sub>0</sub> = 0</code> | <code>n</code> | Complex curves |
+| Type of Equation | General Form | Degree | Graph Shape | Key Solving Principle |
+| :--- | :--- | :--- | :--- | :--- |
+| **Linear** | $ax + b = 0$ | 1 | Straight line | Isolation & Inverse Ops |
+| **Quadratic** | $ax^2 + bx + c = 0$ | 2 | Parabola | Zero Product Property |
+| **Cubic** | $ax^3 + bx^2 + cx + d = 0$ | 3 | S-curve | Depressing the Polynomial |
+| **Polynomial** | $a_nx^n + ... + a_0 = 0$ | $n$ | Complex curves | Rational Root Theorem |
