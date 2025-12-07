@@ -16,10 +16,6 @@ The goal is to manipulate the equation so that the variable ($x$) stands alone o
 * $x + y = 10$
 
 
-
-[Image of graph of linear equation y=mx+c]
-
-
 ---
 
 ### **2. Quadratic Equations (Degree = 2)**
@@ -46,10 +42,6 @@ You generally cannot "isolate" $x$ directly. Instead, you set the equation to ze
 **Examples:**
 * $x^2 - 4x + 3 = 0$
 * $t^2 - 9 = 0$
-
-
-
-[Image of parabola graph of quadratic equation]
 
 
 ---
