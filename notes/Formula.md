@@ -285,8 +285,6 @@ Here is the refined table, explaining each operation using these two sets.
 
 
 
-
-
 ### **Matrix / Grid Cheat Sheet**
 
 #### **Directional Vectors**

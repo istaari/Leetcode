@@ -156,7 +156,7 @@ A specialized tree data structure used for problems involving prefixes and dicti
 
 ## Binary Search
 
-### **Pattern 1: Standard Binary Search & Its Variations**
+### **Standard Binary Search & Its Variations**
 
 #### Template 1: Exact Match (`while (low <= high)`)
 
@@ -178,7 +178,7 @@ return -1; // Not found
 ```
 
 
-#### Template 2: The "Leftmost" Boundary (Round Down)
+#### The "Leftmost" Boundary (Round Down)
 
 This template is designed to find the `lower_bound`—the index of the first element that is greater than or equal to the target.
 
@@ -205,7 +205,7 @@ return nums.length > 0 && nums[low] == target ? low : -1;
 4.  Any problem that requires finding the **leftmost boundary** or the first time a condition becomes true.
 
 
-#### Template 3: The "Rightmost" Boundary (Round Up)
+#### The "Rightmost" Boundary (Round Up)
 
 This template is designed to find the index of the last element that is less than or equal to the target.
 
@@ -230,7 +230,7 @@ return nums.length > 0 && nums[low] == target ? low : -1;
 2.  **The `floor` of a number:** Finding the largest element `<= target`.
 3.  Any problem that requires finding the **rightmost boundary** or the last time a condition is true.
 
-### **Pattern 2: Binary Search on the Answer**
+### Binary Search on the Answer**
 
 This is a powerful technique for optimization problems that ask for the "minimum possible" or "maximum possible" value that satisfies a certain condition.
 
@@ -257,7 +257,7 @@ Instead of searching for an element in an array, you binary search on the *range
     * **Answer Range:** Days can be from `1` to `max(bloomDay)`.
     * **`isPossible(days)`:** Can we make `m` bouquets if we wait for the given number of `days`?
 
-### **Pattern 3: Searching in Rotated Sorted Arrays**
+### Searching in Rotated Sorted Arrays**
 
 This pattern applies to an array that was sorted and then rotated some number of times. The array consists of two sorted subarrays.
 
@@ -304,7 +304,7 @@ while (low <= high) {
 * [Find Minimum in Rotated Sorted Array](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/)
 * [Find Minimum in Rotated Sorted Array (with Duplicates)](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array-ii/)
 
-### **Pattern 4: Searching on Monotonic(Peaks/Valleys)**
+### Searching on Monotonic(Peaks/Valleys)**
 
 This pattern is used on arrays where values increase and then decrease (a "mountain" or bitonic array), and the goal is to find the peak element.
 
@@ -359,7 +359,7 @@ int findPeakElement(int[] nums) {
 ```
 
 
-### **Pattern 5: Searching in 2D Matrices**
+### Searching in 2D Matrices**
 
 Binary search can be adapted to 2D matrices that have specific sorting properties.
 
@@ -378,7 +378,7 @@ There are two main sub-patterns:
     * This approach eliminates one row or one column at each step.
     * **Example:** [Search a 2D Matrix II](https://leetcode.com/problems/search-a-2d-matrix-ii/)
 
-### **Pattern 6: Binary Search on Real Numbers**
+### Binary Search on Real Numbers**
 
 This pattern is for finding a value in a continuous range, like the square root of a number, where absolute precision is needed.
 
@@ -410,17 +410,17 @@ while ((high - low) > epsilon) {
 
 ## Linked List
 
-### **Pattern 1: The Two Pointer Technique (Fast & Slow)**
+### **The Two Pointer Technique (Fast & Slow)**
 
-### **Pattern 2: The Sentinel (Dummy) Node**
+### **The Sentinel (Dummy) Node**
 
-### **Pattern 3: Reversing a Linked List**
+### **Reversing a Linked List**
 
-### **Pattern 4: Using a Hash Map for Visited Nodes**
+### **Using a Hash Map for Visited Nodes**
 
-### **Pattern 5: Merging & Splitting (Divide and Conquer)**
+### **Merging & Splitting (Divide and Conquer)**
 
-### **Pattern 6: Cycle Analysis (Advanced Two Pointers)**
+### **Cycle Analysis (Advanced Two Pointers)**
 
 
 ---
@@ -428,15 +428,13 @@ while ((high - low) > epsilon) {
 ## Stack
 
 
-### **Pattern 1: LIFO Basics (Reversal and "Undo")**
+### **LIFO Basics (Reversal and "Undo")**
 
 
-
-### **Pattern 2: Complex Simulation & State Tracking**
-
+### **Complex Simulation & State Tracking**
 
 
-### **Pattern 3: Parentheses, Paths, and Expression Evaluation**
+### **Parentheses, Paths, and Expression Evaluation**
 
 
 ### Three Main Patterns of Problems
@@ -474,6 +472,9 @@ You can generally group these problems into three categories of increasing compl
         4.  Repeat this until the operator on the stack has lower precedence, then push your current operator.
         5.  Parentheses are handled by recursively solving the sub-expression or by pushing them onto the operator stack to create a "wall" that ignores precedence until a closing parenthesis is found.
 
+### **Monotonic Stack (Next/Previous Greater/Smaller)**
+
+
 ### A Mental Checklist for Any New Problem
 
 When you encounter a new problem of this type, ask yourself these questions:
@@ -484,34 +485,26 @@ When you encounter a new problem of this type, ask yourself these questions:
 4.  **What is the "Pop" logic?** (When the trigger occurs, what do I do? Do I just pop? Do I compare the popped item? Do I use it in a calculation?)
 5.  **How is the final result built?** (Is it a boolean? Is it the last number on the stack? Do I build a string from the stack's contents?)
 
-
-### **Pattern 4: Monotonic Stack (Next/Previous Greater/Smaller)**
-
 ---
 
 ## Sliding Widow
 
-### **Pattern 1: Fixed-Size Sliding Window**
+### **Fixed-Size Sliding Window**
 
-### **Pattern 2: Variable-Size Sliding Window (Two Pointers)**
+### **Variable-Size Sliding Window (Two Pointers)**
 
-### **Pattern 3: Counting Subarrays with the "At Most K" Trick**
+### **Counting Subarrays with the "At Most K" Trick**
 
-### **Pattern 4: Sliding Window with an Auxiliary Data Structure**
+### **Sliding Window with an Auxiliary Data Structure**
 
 ---
 
 ## Greedy
 
-- [Greedy Template](https://huaguo.substack.com/p/greedy-algorithm)
-
-
 ---
+
 ## Prefix Sum
 
-- `prefix[j] - prefix[i - 1] = k` sum of a subarray from index i to j is equal to k
-- `prefix[i - 1] = prefix[j] - k` , prefix[i - 1] is valid subarray with sum k
-- Subarray sum multuple of k, `prefix[j] % k = prefix[i - 1] % k` 
 
 ---
 ## Trees
@@ -541,7 +534,7 @@ When you encounter a new problem of this type, ask yourself these questions:
 
 A Binary Search Tree is a node-based binary tree with a special ordering property that allows for fast lookups, insertions, and deletions.
 
-#### **Properties and Principles**
+#### Properties
 
   * **BST Invariant:** For any given node `N`:
       * All values in its **left subtree** are **less than** `N`'s value.
@@ -551,9 +544,9 @@ A Binary Search Tree is a node-based binary tree with a special ordering propert
   * **In-order Traversal:** An in-order traversal of a BST yields its nodes' values in **sorted ascending order**.
   * **Time Complexity:** For a balanced BST, operations like search, insertion, and deletion take $O(\log n)$ time. In the worst case (a skewed or degenerate tree), they take $O(n)$ time.
 
-#### BST Operations
+#### Operations
 
-#### Insertion
+**Insertion**
 
 To insert a value, you traverse the tree from the root. If the new value is less than the current node's value, you go left; otherwise, you go right. You continue until you reach a `null` spot, where you insert the new node.
 
@@ -574,7 +567,7 @@ TreeNode insert(TreeNode root, int key) {
 }
 ```
 
-#### Deletion
+**Deletion**
 
 Deletion is more complex and handles three cases for the node to be deleted:
 
@@ -632,10 +625,10 @@ A **Range Query in a Tree** is a problem where you need to calculate a value (li
 1.  **Subtree Query:** "What is the sum of values in the entire subtree rooted at node $X$?"
 2.  **Path Query:** "What is the minimum value on the path between node $U$ and node $V$?"
 
-Standard tree traversal ($O(N)$) is too slow if you have thousands of queries. The **Euler Tour** technique solves this by "flattening" the tree into a linear array. Once the tree is an array, you can use standard fast tools like **Segment Trees** or **Fenwick Trees** to answer these queries in $O(\log N)$ time.
+Standard tree traversal is too slow if you have thousands of queries. The **Euler Tour** technique solves this by "flattening" the tree into a linear array. Once the tree is an array, you can use standard fast tools like **Segment Trees** or **Fenwick Trees** to answer these queries in $O(\log N)$ time.
 
 
-#### 3. Problems Solved by Euler Tour
+#### Problems Solved by Euler Tour
 
 #### A. Subtree Queries (Sum/Min/Max)
 * **Problem:** You have a tree where nodes have values. You need to update the value of a node and find the sum of values in any given subtree.
@@ -644,7 +637,7 @@ Standard tree traversal ($O(N)$) is too slow if you have thousands of queries. T
     2.  Build a **Segment Tree** or **Fenwick Tree** on this array.
     3.  A "Subtree Sum of $u$" becomes a standard "Range Sum Query" on indices $[\text{Entry}[u], \text{Exit}[u]]$.
 
-#### B. Ancestor Checking ($O(1)$)
+#### B. Ancestor Checking
 * **Problem:** Check if node $U$ is an ancestor of node $V$.
 * **Euler Solution:** Node $U$ is an ancestor of $V$ if and only if $U$'s interval completely encloses $V$'s interval.
     $$\text{Entry}[U] \le \text{Entry}[V] \quad \text{AND} \quad \text{Exit}[U] \ge \text{Exit}[V]$$
@@ -789,11 +782,9 @@ Here are the descriptions for all four problems in the requested format:
 
 ---
 
-
 ## Design
 
-
-###  1. Cache & Advanced DS Design (High Value)
+###  Cache & Advanced DS Design
 
 * [**Insert Delete GetRandom O(1)**](https://leetcode.com/problems/insert-delete-getrandom-o1/) – Design a data structure that supports insert, delete, and get random element in average O(1) time.
 
@@ -810,7 +801,7 @@ Here are the descriptions for all four problems in the requested format:
 * [**Snapshot Array**](https://leetcode.com/problems/snapshot-array/) – Create an array that supports snapshots (versioning) with efficient get and set operations.
 
 
-###  2. System / Real-World Inspired Designs (Medium–High Value)
+###  System / Real-World Inspired Designs
 
 
 * [**Design Circular Deque**](https://leetcode.com/problems/design-circular-deque/) – Extend circular queue to allow insert/delete at both ends efficiently.
@@ -826,7 +817,7 @@ Here are the descriptions for all four problems in the requested format:
 * [**Online Stock Span**](https://leetcode.com/problems/online-stock-span/) – Compute stock spans using a monotonic stack for online queries.
 
 
-###  3. String / Trie Based Designs (Medium Value)
+### String / Trie Based Designs
 
 * [**Implement Magic Dictionary**](https://leetcode.com/problems/implement-magic-dictionary/) – Build a dictionary supporting search with one-character modification.
 
