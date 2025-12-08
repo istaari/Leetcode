@@ -516,20 +516,6 @@ When you encounter a new problem of this type, ask yourself these questions:
 ---
 ## Trees
 
-### **Tree Representations in array**
-
-- For 1-based indexing:
-
-  - **Left child** of node at index `i`: `2 * i`
-  - **Right child** of node at index `i`: `2 * i + 1`
-  - **Parent** of node at index `i`: `i // 2` (only if `i > 1`)
-
-- For 0-based indexing:
-
-  - **Left child** of node at index `i`: `2 * i + 1`
-  - **Right child** of node at index `i`: `2 * i + 2`
-  - **Parent** of node at index `i`: `(i - 1) // 2` (only if `i > 0`)
-
 ### **Traversal**
 
 `Note : Visualize with 3 nodes`
@@ -551,11 +537,11 @@ When you encounter a new problem of this type, ask yourself these questions:
   - Push left node to input stack and right node to input stack
 
 
-### 1\. Binary Search Tree (BST)
+### 1\. **Binary Search Tree (BST)**
 
 A Binary Search Tree is a node-based binary tree with a special ordering property that allows for fast lookups, insertions, and deletions.
 
-### **Properties and Principles**
+#### **Properties and Principles**
 
   * **BST Invariant:** For any given node `N`:
       * All values in its **left subtree** are **less than** `N`'s value.
@@ -565,9 +551,9 @@ A Binary Search Tree is a node-based binary tree with a special ordering propert
   * **In-order Traversal:** An in-order traversal of a BST yields its nodes' values in **sorted ascending order**.
   * **Time Complexity:** For a balanced BST, operations like search, insertion, and deletion take $O(\log n)$ time. In the worst case (a skewed or degenerate tree), they take $O(n)$ time.
 
-### **BST Operations**
+#### BST Operations
 
-#### **Insertion**
+#### Insertion
 
 To insert a value, you traverse the tree from the root. If the new value is less than the current node's value, you go left; otherwise, you go right. You continue until you reach a `null` spot, where you insert the new node.
 
@@ -588,7 +574,7 @@ TreeNode insert(TreeNode root, int key) {
 }
 ```
 
-#### **Deletion**
+#### Deletion
 
 Deletion is more complex and handles three cases for the node to be deleted:
 
@@ -596,7 +582,6 @@ Deletion is more complex and handles three cases for the node to be deleted:
 2.  **One child:** Replace the node with its child.
 3.  **Two children:** Find the node's **in-order successor** (the smallest value in its right subtree), replace the node's value with the successor's value, and then recursively delete the successor node.
 
-<!-- end list -->
 
 ```java
 TreeNode delete(TreeNode root, int key) {
@@ -631,47 +616,49 @@ TreeNode findMin(TreeNode node) {
 
 ### **AVL Tree**
 
-  * **Principle:** An AVL Tree is a height-balanced BST. The heights of the two child subtrees of any node can differ by **at most one**. This difference, called the **Balance Factor**, must be in the set `{-1, 0, 1}`.
-  * **Properties:** It is the most rigidly balanced type of BST, which means search operations are extremely fast. However, insertions and deletions can be slower because they may require multiple re-balancing operations.
-  * **Operations & Balancing:**
-      * **Insertion/Deletion:** First, perform a standard BST insertion or deletion. Then, trace the path back up to the root, updating the height of each node.
-      * **Rebalancing:** If any node's balance factor becomes `-2` or `+2`, the tree is unbalanced. The tree performs **rotations** (single or double, such as Left-Left, Right-Right, Left-Right, or Right-Left cases) at the unbalanced node to restore the height property.
 
 ### **Red-Black Tree**
-
-  * **Principle:** A Red-Black Tree is a color-balanced BST. It uses node "coloring" (red or black) to ensure that the path from the root to any leaf is roughly the same length.
-  * **Properties & Rules:**
-    1.  Every node is either **red** or **black**.
-    2.  The root is always **black**.
-    3.  There are no two adjacent red nodes (a red node cannot have a red parent or a red child).
-    4.  Every path from a given node to any of its descendant `NULL` nodes contains the same number of **black** nodes (the "black-height").
-  * **Operations & Balancing:**
-      * **Insertion/Deletion:** After a standard BST operation, a new node is typically colored red. This may violate rules 2 or 3.
-      * **Rebalancing:** The tree fixes violations using two main operations: **re-coloring** nodes and performing **rotations**. These operations are designed to be very fast, often resolving the imbalance locally without propagating up the entire tree.
-  * **Use Case:** It's slightly less strictly balanced than an AVL tree but requires fewer rotations on average, making it faster for write-heavy applications. It's used in many standard libraries, like `TreeMap` in Java and `std::map` in C++.
 
 
 ### **Segment Tree**
 
-  * **Principle:** A Segment Tree is a binary tree used for storing information about array intervals. Each leaf represents a single element, and each internal node represents a merged property (like sum, min, or max) of its children's intervals.
-  * **Properties:** It's a full binary tree built on top of an array. It allows for fast querying of a property over a given range and supports efficient updates to individual elements.
-  * **Operations:**
-      * **Build ($O(n)$):** A post-order recursive construction. The tree is built from the bottom up, with each internal node's value being calculated from its children.
-      * **Range Query ($O(\log n)$):** To query a range `[L, R]`, you traverse the tree. If a node's interval is completely within `[L, R]`, you use its pre-computed value. If it partially overlaps, you recurse on its children.
-      * **Point Update ($O(\log n)$):** To update an element at index `i`, you update the corresponding leaf and then recursively update all its ancestors up to the root.
 
 ### **B-Tree and B+ Tree**
 
-  * **Principle:** These are self-balancing trees optimized for systems that read and write large blocks of data, such as **databases and filesystems**. Unlike binary trees, nodes in a B-Tree can have many children (a high "fanout").
-  * **Properties:**
-      * **High Fanout:** Nodes can store many keys and have many children, which keeps the tree's height extremely low. This minimizes the number of disk reads needed to find data.
-      * **All Leaves at Same Level:** This ensures that searches are always efficient and predictable.
-  * **Operations (B-Tree):**
-      * **Insertion:** Find the correct leaf to insert into. If the leaf is full, **split** it into two nodes and promote the median key to the parent. This splitting can propagate up to the root.
-      * **Deletion:** May cause a node to have too few keys. This is fixed by **merging** with a sibling or **borrowing** a key from a sibling.
-  * **B+ Tree Distinction:**
-      * **Data Storage:** All data records are stored **only** in the leaf nodes. Internal nodes only store keys to guide the search.
-      * **Linked Leaves:** Leaf nodes are linked together like a **linked list**, allowing for very efficient sequential traversal and range queries (e.g., `SELECT * WHERE age BETWEEN 20 AND 30`). This is the primary data structure used for indexing in most relational databases.
+
+### **Euler Tour Technique**
+
+A **Range Query in a Tree** is a problem where you need to calculate a value (like a sum, minimum, or maximum) for a specific set of nodes within a tree. Unlike arrays where a "range" is simply indices $[L, R]$, trees are non-linear, so "range" usually refers to one of two things:
+1.  **Subtree Query:** "What is the sum of values in the entire subtree rooted at node $X$?"
+2.  **Path Query:** "What is the minimum value on the path between node $U$ and node $V$?"
+
+Standard tree traversal ($O(N)$) is too slow if you have thousands of queries. The **Euler Tour** technique solves this by "flattening" the tree into a linear array. Once the tree is an array, you can use standard fast tools like **Segment Trees** or **Fenwick Trees** to answer these queries in $O(\log N)$ time.
+
+
+#### 3. Problems Solved by Euler Tour
+
+#### A. Subtree Queries (Sum/Min/Max)
+* **Problem:** You have a tree where nodes have values. You need to update the value of a node and find the sum of values in any given subtree.
+* **Euler Solution:**
+    1.  Flatten the tree into an array using Entry/Exit times.
+    2.  Build a **Segment Tree** or **Fenwick Tree** on this array.
+    3.  A "Subtree Sum of $u$" becomes a standard "Range Sum Query" on indices $[\text{Entry}[u], \text{Exit}[u]]$.
+
+#### B. Ancestor Checking ($O(1)$)
+* **Problem:** Check if node $U$ is an ancestor of node $V$.
+* **Euler Solution:** Node $U$ is an ancestor of $V$ if and only if $U$'s interval completely encloses $V$'s interval.
+    $$\text{Entry}[U] \le \text{Entry}[V] \quad \text{AND} \quad \text{Exit}[U] \ge \text{Exit}[V]$$
+
+#### C. Lowest Common Ancestor (LCA)
+* **Problem:** Find the lowest shared ancestor of nodes $U$ and $V$.
+* **Euler Solution:** By recording nodes in a specific Euler tour order (adding the node to a list every time the DFS visits it, not just entry/exit), the LCA problem reduces to a **Range Minimum Query (RMQ)**. The LCA is the node with the minimum depth that appears in the tour between the first occurrence of $U$ and the first occurrence of $V$.
+
+#### D. Path Queries (Advanced)
+* **Problem:** Find the sum of values on the path between $U$ and $V$.
+* **Euler Solution:** While Euler Tour primarily solves subtree problems, it is a building block for **Heavy-Light Decomposition (HLD)**, which chains multiple Euler tours together to solve path queries in $O(\log^2 N)$. Alternatively, for simple path sums, you can use the formula:
+    $$\text{Path}(u, v) = \text{Prefix}(u) + \text{Prefix}(v) - 2 \times \text{Prefix}(\text{LCA}(u, v))$$
+    *(Where `Prefix` is the sum from root to the node).*
+
 
 ---
 ## Backtracking

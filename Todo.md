@@ -14,5 +14,17 @@
 ## TODO
 
 - Number Theory and combinatorics
-- DP, Graph and Trees
+- DP and Graph
+- Segmnent Tree
+- Euler Tour
+- DP on trees
+- Trie Problems
+- Design Problems
+- KMP
 
+
+## Least Priority
+
+- B and B+ Trees
+- Red Black Trees
+- AVL Trees

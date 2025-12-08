@@ -187,7 +187,7 @@ Pre-calculates sums to answer range sum queries in O(1) time.
 
 ### **4. Data Structures**
 
-#### **Tree Representation in an Array**
+#### **Array Representation Complete Binary Tree**
 
 Used in heaps and segment trees. Relies on integer division.
 
@@ -199,6 +199,29 @@ Used in heaps and segment trees. Relies on integer division.
       * Left child of node `i`: `2 * i + 1`
       * Right child of node `i`: `2 * i + 2`
       * Parent of node `i`: `(i - 1) / 2`
+
+
+####  General Binary Tree Properties
+
+These formulas apply to any binary tree, where $N$ is the total number of nodes.
+
+| Property | Formula | Description |
+| :--- | :--- | :--- |
+| **Total Edges** | $E = N - 1$ | In a non-empty binary tree with $N$ nodes, there are always $N-1$ edges (connections). |
+| **Max Nodes at Level $l$** | $2^l$ | The maximum number of nodes possible at level $l$ (root is $l=0$). |
+| **Max Nodes for Height $h$** | $N_{max} = 2^{h+1} - 1$ | The maximum total number of nodes in a binary tree of height $h$ (occurs in a perfect binary tree). |
+| **Min Height for $N$ Nodes** | $h_{min} = \lfloor \log_2 N \rfloor$ | The minimum possible height for a binary tree with $N$ nodes (occurs in a complete binary tree). |
+
+
+#### Full Binary Tree Properties
+
+A **Full Binary Tree** is a tree where every node has either 0 or 2 children.
+
+| Property | Formula | Description |
+| :--- | :--- | :--- |
+| **Leaves vs. Internal Nodes** | $L = T + 1$ | The number of leaf nodes ($L$) is always one more than the number of internal nodes with two children ($T$). |
+| **Total Nodes** | $N = 2T + 1$ | The total number of nodes ($N$) in terms of internal nodes with two children ($T$). |
+| **Total Nodes** | $N = 2L - 1$ | The total number of nodes ($N$) in terms of leaf nodes ($L$). |
 
 
 ### **Bit Manipulation**

@@ -7,8 +7,9 @@ public class FlattenBinaryTreeLinkedList {
     TreeNode pre = null;
 
     // Reverse preorder traversal
-    public  void flatten(TreeNode root) {
-        if (root == null) return;
+    public void flatten(TreeNode root) {
+        if (root == null)
+            return;
 
         flatten(root.right);
         flatten(root.left);
@@ -16,8 +17,6 @@ public class FlattenBinaryTreeLinkedList {
         root.left = null;
         pre = root;
     }
-
-
 
     public static void main(String[] args) {
         // Creating nodes

@@ -4,13 +4,17 @@ public class KMP {
 
     // Compute LPS function
 
-    // The LPS (Longest Prefix Suffix) table stores the length of the longest proper prefix and longest proper suffix
-    // Proper Prefix: A prefix of a string that is not equal to the full string itself.
-    // Proper Suffix: A suffix of a string that is not equal to the full string itself.
+    // The LPS (Longest Prefix Suffix) table stores the length of the longest proper
+    // prefix and longest proper suffix
+    // Proper Prefix: A prefix of a string that is not equal to the full string
+    // itself.
+    // Proper Suffix: A suffix of a string that is not equal to the full string
+    // itself.
 
     // Interpretation of LPS Table:
     // For a given pattern P[0...i], the value at LPS[i] represents:
-    // The length of the longest proper prefix which is also a suffix in the substring P[0...i].
+    // The length of the longest proper prefix which is also a suffix in the
+    // substring P[0...i].
 
     // Step-by-step Explanation:
     // Index 0 ("A") → No proper prefix & suffix → LPS[0] = 0

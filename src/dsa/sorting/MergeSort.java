@@ -7,18 +7,18 @@ public class MergeSort {
 
     void merge(int[] arr, int left, int mid, int right) {
         // If there are two elements, left = 0, mid = 0, right = 1
-        int leftSubArraySize = mid - left + 1;  // leftSubArraySize = 0 - 0 + 1
+        int leftSubArraySize = mid - left + 1; // leftSubArraySize = 0 - 0 + 1
         int rightSubArraySize = right - mid; // leftSubArraySize = 1 - 0
 
         // Create temp arrays
         int[] leftSubArray = new int[leftSubArraySize];
         int[] rightSubArray = new int[rightSubArraySize];
 
-        //copy the left subarray elements from array, start from left
+        // copy the left subarray elements from array, start from left
         for (int i = 0; i < leftSubArraySize; i++)
             leftSubArray[i] = arr[left + i];
 
-        //copy the right subarray elements from array, start from right
+        // copy the right subarray elements from array, start from right
         for (int j = 0; j < rightSubArraySize; j++)
             rightSubArray[j] = arr[(mid + 1) + j];
 
@@ -57,17 +57,15 @@ public class MergeSort {
     void mergesort(int[] arr, int left, int right) {
         if (left < right) {
             int mid = (left + right) / 2;
-
             mergesort(arr, left, mid);
             mergesort(arr, mid + 1, right);
-
             merge(arr, left, mid, right);
         }
     }
 
     public static void main(String[] args) {
         MergeSort mergeSort = new MergeSort();
-        int[] arr = {12, 11};
+        int[] arr = { 12, 11 };
 
         System.out.println("Given Array");
         Arrays.stream(arr).forEach(i -> System.out.print(i + " "));
@@ -78,4 +76,3 @@ public class MergeSort {
         Arrays.stream(arr).forEach(i -> System.out.print(i + " "));
     }
 }
-

@@ -20,9 +20,8 @@ class InsertionSort {
         }
     }
 
-
     public static void main(String[] args) {
-        int[] data = {9, 5, 1, 4, 3};
+        int[] data = { 9, 5, 1, 4, 3 };
         insertionSort(data);
         System.out.println(Arrays.toString(data));
     }

@@ -3,6 +3,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CountingSort",
+            "request": "launch",
+            "mainClass": "dsa.sorting.CountingSort",
+            "projectName": "problem-solving_bfd47579"
+        },
+        {
+            "type": "java",
             "name": "Run Current File",
             "request": "launch",
             "mainClass": "${file}",

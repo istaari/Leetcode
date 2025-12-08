@@ -18,11 +18,11 @@ public class QuickSort {
 
     // Partitioning method to find the correct position of the pivot
     public static int partition(int[] array, int low, int high) {
-        // Choose the rightmost element as the pivot
-        int pivot = array[high]; // last element
+        // Choose the last element element as the pivot
+        int pivot = array[high];
 
-        // Keeps track of the boundary between elements that are less than or equal to the pivot and elements that are greater than the pivot.
-        // 0 ... boundary ->  lower elements than pivot element,  boundary + 1 -> greater elements  than pivot element
+        // 'boundary' tracks the rightmost index of elements smaller <= to the pivot.
+        // array[low...boundary] <= pivot, array[boundary+1...j-1] > pivot.
         int boundary = low - 1;
 
         for (int j = low; j < high; j++) {
@@ -43,7 +43,7 @@ public class QuickSort {
 
     // Main method to test the QuickSort algorithm
     public static void main(String[] args) {
-        int[] array = {12, 4, 5, 6, 7, 3, 1, 9};
+        int[] array = { 12, 4, 5, 6, 7, 3, 1, 9 };
         System.out.println("Original problems.array: " + Arrays.toString(array));
         quickSort(array, 0, array.length - 1);
         System.out.println("Sorted problems.array: " + Arrays.toString(array));

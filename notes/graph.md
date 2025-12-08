@@ -353,24 +353,6 @@ There are many ways to connect all four vertices, but we want the cheapest one. 
 
 ## **Connected Components**
 
-| **Type of Component**                  | **Definition**                                                                                                                       | **Example**                   | **Explanation**                                                                                                                                  | **Algorithm for Solving**                               |
-|----------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------|-------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------|
-| **Connected Component (CC)**           | Maximal subgraph in an **undirected graph** where all nodes are reachable from each other.                                           | **Graph:** `A -- B`, `C -- D` | In an undirected graph, two components: `{A, B}` and `{C, D}` because each pair is connected, but there’s no path between `{A, B}` and `{C, D}`. | **DFS**, **BFS**, **Union-Find (Disjoint Set)**         |
-| **Strongly Connected Component (SCC)** | Maximal subgraph in a **directed graph** where every node is reachable from every other node in **both directions**.                 | **Graph:** `A → B → C, C → A` | `{A, B, C}` forms a single SCC since all nodes can reach each other in both directions.                                                          | **Kosaraju’s Algorithm**, **Tarjan’s Algorithm**        |
-| **Weakly Connected Component (WCC)**   | Maximal subgraph in a **directed graph** where every node is reachable from every other node if edges are treated as **undirected**. | **Graph:** `A → B, D → E`     | `{A, B}` and `{D, E}` form two WCCs. If we treat the graph as undirected, both components become connected.                                      | **DFS**, **BFS** (after converting to undirected graph) |
-
-
-**Examples:**
-
-- [Number of Provinces](https://leetcode.com/problems/number-of-provinces/) - Count the number of connected provinces in a graph.
-
-- [Number of Operations to Make Network Connected](https://leetcode.com/problems/number-of-operations-to-make-network-connected/) - Find the minimum number of operations to make the network fully connected.
-
-- [Accounts Merge](https://leetcode.com/problems/accounts-merge/) - Merge accounts with common email addresses into a single account.
-
-- [Critical Connections in a Network](https://leetcode.com/problems/critical-connections-in-a-network/) - Identify the critical connections in a network that, if removed, would increase the number of connected components.
-
-- [Most Stones Removed with Same Row or Column](https://leetcode.com/problems/most-stones-removed-with-same-row-or-column/) - Find the maximum number of stones that can be removed in a grid.
 
 
 ## **Cycle Detection**
@@ -389,18 +371,6 @@ There are many ways to connect all four vertices, but we want the cheapest one. 
 
 - Kahn’s Algorithm(Specific Topological Sort Algorithm) 
 
-**Examples:**
-
-- [Course Schedule](https://leetcode.com/problems/course-schedule/) - Determine if it's possible to finish all courses given the prerequisite constraints.
-
-- [Course Schedule II](https://leetcode.com/problems/course-schedule-ii/) - Find the order of courses to take to finish all courses given the prerequisite constraints.
-
-- [Sequence Reconstruction](https://leetcode.com/problems/sequence-reconstruction/) - Reconstruct the original sequence from a set of sequences, ensuring that they are in the correct order.
-
-- [Alien Dictionary](https://leetcode.com/problems/alien-dictionary/solution/) - Determine the order of letters in an alien language based on a list of words.
-
-- [Longest Increasing Path in a Matrix](https://leetcode.com/problems/longest-increasing-path-in-a-matrix/) - Find the longest increasing path in a matrix.
-
 
 
 ## **Minimum Spanning Tree (MST)**
@@ -413,95 +383,18 @@ There are many ways to connect all four vertices, but we want the cheapest one. 
 
   - Uses nodes, expanding the MST from a starting node
 
-**Examples:**
-
-- [Connecting Cities With Minimum Cost](https://leetcode.com/problems/connecting-cities-with-minimum-cost/) - Connect all cities with the minimum cost, ensuring no cycles and a minimum spanning tree.
-
-- [Min Cost to Connect All Points](https://leetcode.com/problems/min-cost-to-connect-all-points/) - Connect all points with the minimum cost, ensuring all points are part of a minimum spanning tree.
-
 
 ## **Shortest Path Algorithms**
 
-| Graph Type                      | Use                             | Notes                                                             |
-|---------------------------------|---------------------------------|-------------------------------------------------------------------|
-| **Undirected, Unweighted**      | ✅ **BFS**                       | All edges have equal cost                                         |
-| **Undirected, Positive Weight** | ✅ **Dijkstra**                  | Add both directions manually                                      |
-| **Undirected, Negative Weight** | ✅ **Bellman-Ford**              | Add both directions manually, use with caution if negative cycles |
-| **Directed, Unweighted**        | ✅ **BFS**                       | Same as undirected BFS, but follow direction                      |
-| **Directed, Positive Weight**   | ✅ **Dijkstra**                  | Handles only non-negative weights                                 |
-| **Directed, Negative Weight**   | ✅ **Bellman-Ford**              | Good for sparse graphs, detects negative cycles                   |
-| **Directed, Negative Cycle**    | ⚠️ **Bellman-Ford** (to detect) | Cannot find shortest paths, but detects negative cycles           |
-| **Directed, All-Pairs**         | ✅ **Floyd-Warshall**            | Especially good for small graphs (V ≤ 100)                        |
-
-
 **BFS(Unweighted graph)**
 
-**Examples:**
+**Dijkstra's Algorithm(weighted graph with positive weights)** 
 
-- [Word Ladder I](https://leetcode.com/problems/word-ladder/) - Find the shortest transformation sequence from one word to another using a dictionary.
+**Bellman-Ford Algorithm(weighted graph with negative weights)**
 
-  - Problem can be represented as `unweighted and directed graph`, Use `BFS` to find the shortest path between two nodes
+- Single-Source Shortest Path (SSSP) algorithm
 
-    ```
-    graph = {
-        "hit": ["hot"],
-        "hot": ["hit", "dot", "lot"],
-        "dot": ["hot", "dog"],
-        "lot": ["hot", "log"],
-        "dog": ["dot", "cog"],
-        "log": ["lot", "cog"],
-        "cog": ["dog", "log"]
-    }
-    ```
+**Floyd-Warshall Algorithm(weighted graph with negative weights)**
 
-  - Transform each char from `a-z` and check if it is present in the dictionary to find the to find the shortest path from beginWord to endWord
-  - We can use Bidirectional BFS to optimize the solution
+- Floyd-Warshall is an All-Pairs Shortest Path (APSP) algorithm.
 
-- [Word Ladder II](https://leetcode.com/problems/word-ladder-ii/) - Find all the shortest transformation sequences from one word to another.
-
-  - Use BFS from `beginWord` to `endWord` to construct the reverse graph
-    ```
-      graph = {
-        "hot": ["hit"],
-        "dot": ["hot"],
-        "lot": ["hot"],
-        "dog": ["dot"],
-        "log": ["lot"],
-        "cog": ["dog", "log"]
-        }
-    ```
-  - Use backtracking and DFS to find all the shortest paths from `endWord` to `beginWord`
-
-- [Rotating Oranges](https://leetcode.com/problems/rotting-oranges/description/)  
-
-- [Cut Off Trees for Golf Event](https://leetcode.com/problems/cut-off-trees-for-golf-event/) - Minimize the number of steps required to cut off trees in a golf course.
-
-**Dijkstra's Algorithm(Weighted graph with positive weights)** 
-
-**Examples:**
-
-- [Path With Maximum Minimum Value](https://leetcode.com/problems/path-with-maximum-minimum-value/) - Find the path in a graph where the minimum value on the path is maximized.
-
-- [Network Delay Time](https://leetcode.com/problems/network-delay-time/) - Calculate the time it takes for all nodes to receive a signal from a source node.
-
-- [Path with Maximum Probability](https://leetcode.com/problems/path-with-maximum-probability/) - Find the path with the highest probability in a graph.
-
-- [Path With Minimum Effort](https://leetcode.com/problems/path-with-minimum-effort/) - Find the path with the smallest possible maximum effort in a 2D grid.
-
-- [Cheapest Flights Within K Stops](https://leetcode.com/problems/cheapest-flights-within-k-stops/) - Find the cheapest price for flights within a given number of stops.
-
-
-**Floyd-Warshall Algorithm(Weighted graph with negative weights)**
-
-**Examples:**
-
-- [Find the City With the Smallest Number of Neighbors at a Threshold Distance](https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/) - Find the city with the smallest number of neighboring cities at or below a certain distance threshold.
-
-- [Network Delay Time](https://leetcode.com/problems/network-delay-time/) - Calculate the time it takes for all nodes to receive a signal from a source node, considering all pairwise shortest paths.
-
-
-**Bellman-Ford Algorithm(Weighted graph with negative weights)**
-
-**Examples:**
-
-- [Network Delay Time](https://leetcode.com/problems/network-delay-time/) - Calculate the time it takes for all nodes to receive a signal from a source node, considering edge weights in the graph.
