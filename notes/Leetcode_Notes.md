@@ -148,12 +148,6 @@ A specialized tree data structure used for problems involving prefixes and dicti
 
 ---
 
-## Array
-
-
----
-
-
 ## Binary Search
 
 ### **Standard Binary Search & Its Variations**
@@ -497,19 +491,11 @@ When you encounter a new problem of this type, ask yourself these questions:
 
 ### **Sliding Window with an Auxiliary Data Structure**
 
----
-
-## Greedy
-
----
-
-## Prefix Sum
-
 
 ---
 ## Trees
 
-### **Traversal**
+### **TRAVERSALS**
 
 `Note : Visualize with 3 nodes`
 
@@ -530,7 +516,7 @@ When you encounter a new problem of this type, ask yourself these questions:
   - Push left node to input stack and right node to input stack
 
 
-### 1\. **Binary Search Tree (BST)**
+### **BINARY SEARCH TREE (BST)**
 
 A Binary Search Tree is a node-based binary tree with a special ordering property that allows for fast lookups, insertions, and deletions.
 
@@ -610,16 +596,16 @@ TreeNode findMin(TreeNode node) {
 ### **AVL Tree**
 
 
-### **Red-Black Tree**
+### **RED-BLACK TREE**
 
 
-### **Segment Tree**
+### **SEGMENT TREE**
 
 
-### **B-Tree and B+ Tree**
+### **B-TREE AND B+ TREE**
 
 
-### **Euler Tour Technique**
+### **EULER TOUR TECHNIQUE**
 
 A **Range Query in a Tree** is a problem where you need to calculate a value (like a sum, minimum, or maximum) for a specific set of nodes within a tree. Unlike arrays where a "range" is simply indices $[L, R]$, trees are non-linear, so "range" usually refers to one of two things:
 1.  **Subtree Query:** "What is the sum of values in the entire subtree rooted at node $X$?"
@@ -782,7 +768,7 @@ Here are the descriptions for all four problems in the requested format:
 
 ---
 
-## Design
+## Implementations
 
 ###  Cache & Advanced DS Design
 
