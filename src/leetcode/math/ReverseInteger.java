@@ -9,7 +9,9 @@ public class ReverseInteger {
             int last = (x % 10);
             int newResult = (result * 10) + last;
 
-            if (newResult / 10 != result) return 0;
+            if (newResult / 10 != result) {
+                return 0;
+            }
 
             result = newResult;
             x = x / 10;

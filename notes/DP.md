@@ -502,18 +502,6 @@ This technique is used when the state depends on a **subset of items** being use
 
 #### **Example Analysis**
 
-**1. Partition to K Equal Sum Subsets**
-* **The Challenge:** We need to keep track of which numbers have already been placed into a subset to avoid reusing them. A bitmask is perfect for this.
-* **Approach:** This is best solved with a top-down DP (memoized recursion) approach.
-* **State `memo[mask]`:** A boolean, `true` if the subset of numbers represented by `mask` can be successfully partitioned.
-* **Recursive Function `can_partition(mask, current_sum)`:**
-    * **Base Case:** If `mask` has all bits set to `1`, all numbers have been used, so we return `true`.
-    * **Logic:** Iterate through each number `nums[i]`. If the `i`-th bit in `mask` is `0` (meaning `nums[i]` is unused):
-        1. Try adding `nums[i]` to the current subset.
-        2. Recursively call `can_partition(new_mask, new_sum)`, where `new_mask` has the `i`-th bit set and `new_sum` is `(current_sum + nums[i]) % target_subset_sum`.
-        3. If the recursive call returns `true`, it means a valid partition was found, so we can propagate `true` up.
-* **Memoization:** Store the result for each `mask` in `memo[mask]` to avoid re-solving the same subproblem.
-
 ---
 
 ## DP on Intervals (MCM)

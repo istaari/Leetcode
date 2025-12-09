@@ -34,7 +34,7 @@ public class CellsOddValuesMatrix {
     public static void main(String[] args) {
         int m = 2;
         int n = 3;
-        int[][] indices = {{0, 1}, {1, 1}};
+        int[][] indices = { { 0, 1 }, { 1, 1 } };
         System.out.println(oddCells(m, n, indices));
     }
 }

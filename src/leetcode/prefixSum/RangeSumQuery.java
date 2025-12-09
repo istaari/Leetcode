@@ -1,4 +1,4 @@
-package leetcode.matrix;
+package leetcode.prefixSum;
 
 public class RangeSumQuery {
 
@@ -26,17 +26,19 @@ public class RangeSumQuery {
                 prefixSum[row1][col1];
     }
 
-
     public static void main(String[] args) {
         // Input 2D array
         int[][] matrix = {
-                {3, 0, 1, 4, 2},
-                {5, 6, 3, 2, 1},
-                {1, 2, 0, 1, 5},
-                {4, 1, 0, 1, 7},
-                {1, 0, 3, 0, 5}
+                { 3, 0, 1, 4, 2 },
+                { 5, 6, 3, 2, 1 },
+                { 1, 2, 0, 1, 5 },
+                { 4, 1, 0, 1, 7 },
+                { 1, 0, 3, 0, 5 }
         };
 
         RangeSumQuery rangeSumQuery = new RangeSumQuery(matrix);
+        System.out.println(rangeSumQuery.sumRegion(2, 1, 4, 3));
+        System.out.println(rangeSumQuery.sumRegion(1, 1, 2, 2));
+        System.out.println(rangeSumQuery.sumRegion(1, 2, 2, 4));
     }
 }

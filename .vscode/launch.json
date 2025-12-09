@@ -3,6 +3,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "RangeSumQuery",
+            "request": "launch",
+            "mainClass": "leetcode.matrix.RangeSumQuery",
+            "projectName": "problem-solving_bfd47579"
+        },
+        {
+            "type": "java",
+            "name": "MatrixReshape",
+            "request": "launch",
+            "mainClass": "leetcode.matrix.MatrixReshape",
+            "projectName": "problem-solving_bfd47579"
+        },
+        {
+            "type": "java",
             "name": "CountingSort",
             "request": "launch",
             "mainClass": "dsa.sorting.CountingSort",

@@ -21,12 +21,10 @@ public class SpiralMatrix_2 {
             }
             top++;
 
-
             for (int i = top; i <= bottom; i++) {
                 result[i][right] = counter++;
             }
             right--;
-
 
             for (int i = right; i >= left; i--) {
                 result[bottom][i] = counter++;
@@ -43,7 +41,6 @@ public class SpiralMatrix_2 {
 
         return result;
     }
-
 
     public static void main(String[] args) {
         int n = 3;

@@ -148,12 +148,6 @@ A specialized tree data structure used for problems involving prefixes and dicti
 
 ---
 
-## Array
-
-
----
-
-
 ## Binary Search
 
 ### **Standard Binary Search & Its Variations**
@@ -230,7 +224,7 @@ return nums.length > 0 && nums[low] == target ? low : -1;
 2.  **The `floor` of a number:** Finding the largest element `<= target`.
 3.  Any problem that requires finding the **rightmost boundary** or the last time a condition is true.
 
-### Binary Search on the Answer**
+### Binary Search on the Answer
 
 This is a powerful technique for optimization problems that ask for the "minimum possible" or "maximum possible" value that satisfies a certain condition.
 
@@ -257,7 +251,7 @@ Instead of searching for an element in an array, you binary search on the *range
     * **Answer Range:** Days can be from `1` to `max(bloomDay)`.
     * **`isPossible(days)`:** Can we make `m` bouquets if we wait for the given number of `days`?
 
-### Searching in Rotated Sorted Arrays**
+### Searching in Rotated Sorted Arrays
 
 This pattern applies to an array that was sorted and then rotated some number of times. The array consists of two sorted subarrays.
 
@@ -304,7 +298,7 @@ while (low <= high) {
 * [Find Minimum in Rotated Sorted Array](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/)
 * [Find Minimum in Rotated Sorted Array (with Duplicates)](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array-ii/)
 
-### Searching on Monotonic(Peaks/Valleys)**
+### Searching on Monotonic(Peaks/Valleys)
 
 This pattern is used on arrays where values increase and then decrease (a "mountain" or bitonic array), and the goal is to find the peak element.
 
@@ -359,7 +353,7 @@ int findPeakElement(int[] nums) {
 ```
 
 
-### Searching in 2D Matrices**
+### Searching in 2D Matrices
 
 Binary search can be adapted to 2D matrices that have specific sorting properties.
 
@@ -497,19 +491,11 @@ When you encounter a new problem of this type, ask yourself these questions:
 
 ### **Sliding Window with an Auxiliary Data Structure**
 
----
-
-## Greedy
-
----
-
-## Prefix Sum
-
 
 ---
 ## Trees
 
-### **Traversal**
+### **TRAVERSALS**
 
 `Note : Visualize with 3 nodes`
 
@@ -530,7 +516,7 @@ When you encounter a new problem of this type, ask yourself these questions:
   - Push left node to input stack and right node to input stack
 
 
-### 1\. **Binary Search Tree (BST)**
+### **BINARY SEARCH TREE (BST)**
 
 A Binary Search Tree is a node-based binary tree with a special ordering property that allows for fast lookups, insertions, and deletions.
 
@@ -610,16 +596,16 @@ TreeNode findMin(TreeNode node) {
 ### **AVL Tree**
 
 
-### **Red-Black Tree**
+### **RED-BLACK TREE**
 
 
-### **Segment Tree**
+### **SEGMENT TREE**
 
 
-### **B-Tree and B+ Tree**
+### **B-TREE AND B+ TREE**
 
 
-### **Euler Tour Technique**
+### **EULER TOUR TECHNIQUE**
 
 A **Range Query in a Tree** is a problem where you need to calculate a value (like a sum, minimum, or maximum) for a specific set of nodes within a tree. Unlike arrays where a "range" is simply indices $[L, R]$, trees are non-linear, so "range" usually refers to one of two things:
 1.  **Subtree Query:** "What is the sum of values in the entire subtree rooted at node $X$?"
@@ -732,57 +718,42 @@ public static void helper(int[][] arr, int row, int col, ...) {
 
 **1. Basic Trie Implementation**
 
-**Examples:**
-
-- [Implement Trie (Prefix Tree)](https://leetcode.com/problems/implement-trie-prefix-tree/) - Build a Trie with insert, search, and prefix-check operations.
+- [**Implement Trie (Prefix Tree)**](https://leetcode.com/problems/implement-trie-prefix-tree/) - Build a Trie with insert, search, and prefix-check operations.
 
 - [Design Add and Search Words Data Structure](https://leetcode.com/problems/design-add-and-search-words-data-structure/) - Implement a Trie that supports adding words and searching words with `.` as a wildcard.
 
-
 **2. Word Search and Prefix Matching**
 
-**Examples:**
+- [**Concatenated Words**](https://leetcode.com/problems/concatenated-words/) - Find all words that can be formed by concatenating two or more dictionary words.
 
-- [Concatenated Words](https://leetcode.com/problems/concatenated-words/) - Find all words that can be formed by concatenating two or more dictionary words.
-
-- [Replace Words](https://leetcode.com/problems/replace-words/) - Replace words in a sentence with the shortest prefix found in a dictionary.
-
+- [**Replace Words**](https://leetcode.com/problems/replace-words/) - Replace words in a sentence with the shortest prefix found in a dictionary.
 
 **3. Autocomplete and Suggestions**
 
-**Examples:**
+- [**Design Search Autocomplete System**](https://leetcode.com/problems/design-search-autocomplete-system/) - Build an autocomplete system that suggests hot sentences based on user input.
 
-- [Design Search Autocomplete System](https://leetcode.com/problems/design-search-autocomplete-system/) - Build an autocomplete system that suggests hot sentences based on user input.
-
-- [Search Suggestions System](https://leetcode.com/problems/search-suggestions-system/) - Given a list of products, return lexicographically sorted product suggestions based on a search prefix.
-
+- [**Search Suggestions System**](https://leetcode.com/problems/search-suggestions-system/) - Given a list of products, return lexicographically sorted product suggestions based on a search prefix.
 
 **4. Dictionary and Word Manipulation**
 
-**Examples:**
+- [**Longest Word in Dictionary**](https://leetcode.com/problems/longest-word-in-dictionary/) - Find the longest word that can be built one character at a time using a given list of words.
 
-- [Longest Word in Dictionary](https://leetcode.com/problems/longest-word-in-dictionary/) - Find the longest word that can be built one character at a time using a given list of words.
+- [**Prefix and Suffix Search**](https://leetcode.com/problems/prefix-and-suffix-search/) - Design a data structure that finds words matching a given prefix and suffix.
 
-- [Prefix and Suffix Search](https://leetcode.com/problems/prefix-and-suffix-search/) - Design a data structure that finds words matching a given prefix and suffix.
-
-- [Map Sum Pairs](https://leetcode.com/problems/map-sum-pairs/) - Implement a Trie-based key-value mapping where keys share prefixes.
+- [**Map Sum Pairs**](https://leetcode.com/problems/map-sum-pairs/) - Implement a Trie-based key-value mapping where keys share prefixes.
 
 
 **5. Bit Manipulation and Trie**
 
-**Examples:**
+- [**Maximum XOR of Two Numbers in an Array**](https://leetcode.com/problems/maximum-xor-of-two-numbers-in-an-array/description/) - Find the maximum XOR of two numbers in an array by comparing all possible pairs.
 
-Here are the descriptions for all four problems in the requested format:
+- [**Maximum XOR with an Element from Array**](https://leetcode.com/problems/maximum-xor-with-an-element-from-array/description/)** - Compute the maximum XOR of a given element with any element from an array.
 
-1. [Maximum XOR of Two Numbers in an Array](https://leetcode.com/problems/maximum-xor-of-two-numbers-in-an-array/description/) - Find the maximum XOR of two numbers in an array by comparing all possible pairs.
-
-2. [Maximum XOR with an Element from Array](https://leetcode.com/problems/maximum-xor-with-an-element-from-array/description/)** - Compute the maximum XOR of a given element with any element from an array.
-
-3. [Maximum Strong Pair XOR I](https://leetcode.com/problems/maximum-strong-pair-xor-i/description/) - Determine the maximum XOR value of a strong pair from an array, where a strong pair is defined by specific conditions.
+- [**Maximum Strong Pair XOR I**](https://leetcode.com/problems/maximum-strong-pair-xor-i/description/) - Determine the maximum XOR value of a strong pair from an array, where a strong pair is defined by specific conditions.
 
 ---
 
-## Design
+## Implementations
 
 ###  Cache & Advanced DS Design
 

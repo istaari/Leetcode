@@ -30,10 +30,8 @@ public class FlippingImage {
 
     public static void main(String[] args) {
         // Initialize the 2D array with given values
-        int[][] image = {{1, 1, 0}, {1, 0, 1}, {0, 0, 0}};
-
+        int[][] image = { { 1, 1, 0 }, { 1, 0, 1 }, { 0, 0, 0 } };
         System.out.println(Arrays.deepToString(flipAndInvertImage(image)));
     }
-
 
 }

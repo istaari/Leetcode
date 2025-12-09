@@ -4,12 +4,9 @@ import java.util.Arrays;
 
 public class ImageSmoother {
 
-    // https://leetcode.com/problems/image-smoother/description/
-    // from current cell move in all 8 directions
-    // Can be optimized using bitwise operations
     public static int[][] imageSmoother(int[][] img) {
         // All 8 directions
-        int[][] directions = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}, {-1, -1}, {1, 1}, {-1, 1}, {1, -1}};
+        int[][] directions = { { 0, 1 }, { 0, -1 }, { 1, 0 }, { -1, 0 }, { -1, -1 }, { 1, 1 }, { -1, 1 }, { 1, -1 } };
 
         int m = img.length;
         int n = img[0].length;
@@ -41,7 +38,7 @@ public class ImageSmoother {
     }
 
     public static void main(String[] args) {
-        int[][] img = {{100, 200, 100}, {200, 50, 200}, {100, 200, 100}};
+        int[][] img = { { 100, 200, 100 }, { 200, 50, 200 }, { 100, 200, 100 } };
         System.out.println(Arrays.deepToString(imageSmoother(img))); // [[137,141,137],[141,138,141],[137,141,137]]
     }
 }

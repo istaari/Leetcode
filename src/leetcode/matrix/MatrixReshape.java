@@ -5,7 +5,6 @@ import java.util.Arrays;
 @SuppressWarnings("all")
 public class MatrixReshape {
 
-    //https://leetcode.com/problems/reshape-the-matrix/description/
     public static int[][] matrixReshape(int[][] mat, int r, int c) {
         int n = mat.length;
         int m = mat[0].length;
