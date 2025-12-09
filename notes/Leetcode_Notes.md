@@ -601,6 +601,94 @@ TreeNode findMin(TreeNode node) {
 
 ### **SEGMENT TREE**
 
+```mermaid
+
+graph TD
+    %% Array Reference Node
+    InputArray["<b>Input Array:</b><br/>[1, 4, 5, 5, 9, 10, 10, 12, 19, 31, 41]"]
+    
+    %% Style the input array to make it stand out (Yellow)
+    style InputArray fill:#ffecb3,stroke:#ffb74d,stroke-width:2px,color:black
+    
+    %% Link the array to the root
+    InputArray -.-> N1
+    
+    %% Tree Nodes
+    N1["Sum: 147<br/>[0-10]"]
+    N1 --> N2
+    N1 --> N3
+    
+    N2["Sum: 34<br/>[0-5]"]
+    N2 --> N4
+    N2 --> N5
+    
+    N3["Sum: 113<br/>[6-10]"]
+    N3 --> N6
+    N3 --> N7
+    
+    N4["Sum: 10<br/>[0-2]"]
+    N4 --> N8
+    N4 --> N9
+    
+    N5["Sum: 24<br/>[3-5]"]
+    N5 --> N10
+    N5 --> N11
+    
+    N6["Sum: 41<br/>[6-8]"]
+    N6 --> N12
+    N6 --> N13
+    
+    N7["Sum: 72<br/>[9-10]"]
+    N7 --> N14
+    N7 --> N15
+    
+    N8["Sum: 5<br/>[0-1]"]
+    N8 --> N16
+    N8 --> N17
+    
+    N9["Sum: 5<br/>[2-2]"]
+    style N9 fill:#e1f5fe,stroke:#01579b %% Leaf Node Styling
+    
+    N10["Sum: 14<br/>[3-4]"]
+    N10 --> N20
+    N10 --> N21
+    
+    N11["Sum: 10<br/>[5-5]"]
+    style N11 fill:#e1f5fe,stroke:#01579b %% Leaf Node Styling
+
+    N12["Sum: 22<br/>[6-7]"]
+    N12 --> N24
+    N12 --> N25
+    
+    N13["Sum: 19<br/>[8-8]"]
+    style N13 fill:#e1f5fe,stroke:#01579b %% Leaf Node Styling
+    
+    N14["Sum: 31<br/>[9-9]"]
+    style N14 fill:#e1f5fe,stroke:#01579b %% Leaf Node Styling
+    
+    N15["Sum: 41<br/>[10-10]"]
+    style N15 fill:#e1f5fe,stroke:#01579b %% Leaf Node Styling
+    
+    N16["Sum: 1<br/>[0-0]"]
+    style N16 fill:#e1f5fe,stroke:#01579b %% Leaf Node Styling
+    
+    N17["Sum: 4<br/>[1-1]"]
+    style N17 fill:#e1f5fe,stroke:#01579b %% Leaf Node Styling
+    
+    N20["Sum: 5<br/>[3-3]"]
+    style N20 fill:#e1f5fe,stroke:#01579b %% Leaf Node Styling
+    
+    N21["Sum: 9<br/>[4-4]"]
+    style N21 fill:#e1f5fe,stroke:#01579b %% Leaf Node Styling
+    
+    N24["Sum: 10<br/>[6-6]"]
+    style N24 fill:#e1f5fe,stroke:#01579b %% Leaf Node Styling
+    
+    N25["Sum: 12<br/>[7-7]"]
+    style N25 fill:#e1f5fe,stroke:#01579b %% Leaf Node Styling
+
+```
+
 
 ### **B-TREE AND B+ TREE**
 
