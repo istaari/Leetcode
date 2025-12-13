@@ -366,20 +366,6 @@ You want to find the longest sequence present in both strings (order preserved, 
   * **Recurrence:**
     $$dp[i][j] = \begin{cases} 1 + dp[i-1][j-1] & \text{if } A[i] == B[j] \\ \max(dp[i-1][j], dp[i][j-1]) & \text{else} \end{cases}$$
 
-**Visual Logic (Grid Moves):**
-
-```mermaid
-graph TD
-    subgraph "Grid Moves"
-    Match[Match A[i]==B[j]] -->|Diagonal + 1| Cell[dp i, j]
-    Mismatch[Mismatch] -->|Left| Cell
-    Mismatch -->|Up| Cell
-    end
-    
-    style Match fill:#9f9,stroke:#333
-    style Mismatch fill:#f99,stroke:#333
-```
-
 #### Pattern 2: Edit Distance / Transformation
 
 You need to convert String A to String B using operations (Insert, Delete, Replace).
