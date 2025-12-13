@@ -1,4 +1,4 @@
-package leetcode.dp.subsequenceKnapsack;
+package leetcode.dp.knapsack;
 
 /**
  * LeetCode Problem: 518. Coin Change 2
@@ -33,16 +33,10 @@ public class CoinChange_2 {
         // Base case: This path is invalid.
         if (amount < 0) return 0;
 
-        // Memoization check
         if (dp[index][amount] != null) return dp[index][amount];
 
-        // --- The Loop Choice ---
-        // Instead of a binary choice, we iterate through all possible coins we can use.
         int count = 0;
         for (int i = index; i < coins.length; i++) {
-            // Try using `coins[i]`. The recursive call passes `i` (not `i+1`)
-            // because we can use the same coin `i` again.
-            // By starting the loop at `index`, we avoid duplicate combinations (e.g., [1,2] and [2,1]).
             count =  count + helper(coins, amount - coins[i], i, dp);
         }
 
@@ -53,7 +47,6 @@ public class CoinChange_2 {
 
     public static int recursive(int amount, int[] coins) {
         Integer[][] memo = new Integer[coins.length][amount + 1];
-        // You can call either helper0 or helper here, as they solve the same problem.
         return helper(coins, amount, 0, memo);
     }
 

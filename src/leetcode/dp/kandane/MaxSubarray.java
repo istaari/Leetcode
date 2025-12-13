@@ -1,6 +1,6 @@
-package leetcode.dp.subarray;
+package leetcode.dp.kandane;
 
-public class MaximumSubarray {
+public class MaxSubarray {
 
     public static int maxSubArray(int[] nums) {
         int max = nums[0];

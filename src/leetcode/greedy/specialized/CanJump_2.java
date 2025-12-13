@@ -1,4 +1,4 @@
-package leetcode.dp;
+package leetcode.greedy.specialized;
 
 public class CanJump_2 {
 
@@ -20,9 +20,8 @@ public class CanJump_2 {
         return count;
     }
 
-
     public static void main(String[] args) {
-        int[] nums = {2, 3, 1, 1, 4};
+        int[] nums = { 2, 3, 1, 1, 4 };
         System.out.println(canJump(nums));
     }
 

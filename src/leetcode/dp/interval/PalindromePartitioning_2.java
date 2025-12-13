@@ -1,4 +1,4 @@
-package leetcode.dp.partitioning;
+package leetcode.dp.interval;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,13 +25,14 @@ public class PalindromePartitioning_2 {
         int minCut = Integer.MAX_VALUE;
 
         for (int i = start; i < s.length(); i++) {
-            // optimize further
+            // can be optimized further
             if (isPalindrome(s.substring(start, i + 1))) {
                 minCut = Math.min(minCut, 1 + backtrack(s, i + 1, memo));
             }
         }
 
         memo.put(start, minCut);
+        
         return minCut;
     }
 

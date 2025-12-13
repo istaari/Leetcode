@@ -3,6 +3,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "WordBreak_2",
+            "request": "launch",
+            "mainClass": "leetcode.dp.partitioning.WordBreak_2",
+            "projectName": "problem-solving_bfd47579"
+        },
+        {
+            "type": "java",
             "name": "RangeSumQuery",
             "request": "launch",
             "mainClass": "leetcode.matrix.RangeSumQuery",

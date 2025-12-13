@@ -1,6 +1,6 @@
-package leetcode.dp.subarray;
+package leetcode.dp.kandane;
 
-public class MaximumSumCircularSubarray {
+public class MaxSumCircularSubarray {
 
     public static int maxKadane(int[] nums) {
         int sum = nums[0];

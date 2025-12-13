@@ -1,7 +1,6 @@
-package leetcode.dp;
+package leetcode.dp.interval;
 
-// This is called look ahead solution
-// Each recursive call assumes that "my opponent is trying to minimize my score"
+
 public class PredictTheWinner {
 
     public static int recursive(int[] nums, int i, int j, Integer[][] dp) {

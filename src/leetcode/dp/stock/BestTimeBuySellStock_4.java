@@ -1,4 +1,4 @@
-package leetcode.dp.stockOptimization;
+package leetcode.dp.stock;
 
 import java.util.Arrays;
 
@@ -21,11 +21,11 @@ public class BestTimeBuySellStock_4 {
 
     public static void main(String[] args) {
         // Test case 1
-        int[] prices1 = {2, 4, 1};
-        System.out.println(maxProfit(2, prices1));  // Output: 2
+        int[] prices1 = { 2, 4, 1 };
+        System.out.println(maxProfit(2, prices1)); // Output: 2
 
         // Test case 2
-        int[] prices2 = {3, 2, 6, 5, 0, 3};
-        System.out.println(maxProfit(2, prices2));  // Output: 7
+        int[] prices2 = { 3, 2, 6, 5, 0, 3 };
+        System.out.println(maxProfit(2, prices2)); // Output: 7
     }
 }

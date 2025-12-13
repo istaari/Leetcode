@@ -31,10 +31,9 @@ public class BagOfTokens {
     }
 
     public static void main(String[] args) {
-        int[] tokens = {100, 200, 300, 400};
+        int[] tokens = { 100, 200, 300, 400 };
         int power = 200;
         System.out.println(bagOfTokensScore(tokens, power));
     }
-
 
 }

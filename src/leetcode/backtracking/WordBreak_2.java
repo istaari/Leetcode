@@ -1,4 +1,4 @@
-package leetcode.dp.partitioning;
+package leetcode.backtracking;
 
 import java.util.*;
 

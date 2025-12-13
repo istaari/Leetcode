@@ -1,4 +1,4 @@
-package leetcode.dp.subsequenceKnapsack;
+package leetcode.dp.knapsack;
 
 import java.util.Arrays;
 
@@ -28,25 +28,24 @@ public class PartitionSubsetSum {
 
     public static boolean recursive(int[] nums, int index, int target, Boolean[][] dp) {
         // Base case: We've reached the target sum exactly.
-        if (target == 0) return true;
+        if (target == 0) {
+            return true;
+        }
 
         // Base cases: We've run out of numbers or overshot the target.
-        if (index > nums.length - 1 || target < 0) return false;
+        if (index > nums.length - 1 || target < 0) {
+            return false;
+        }
 
-        // Memoization check: If we've already computed this state, return the result.
-        if (dp[index][target] != null) return dp[index][target];
+        if (dp[index][target] != null) {
+            return dp[index][target];
+        }
 
-        // --- The Core Choice (Recurrence Relation) ---
-        // We have two choices for the number at `nums[index]`:
-
-        // 1. INCLUDE the number: Try to find the remaining sum `target - nums[index]` using the rest of the numbers.
         boolean include = recursive(nums, index + 1, target - nums[index], dp);
-
-        // 2. EXCLUDE the number: Try to find the *same* `target` using the rest of the numbers.
         boolean exclude = recursive(nums, index + 1, target, dp);
 
-        // We can partition if *either* choice is successful.
         dp[index][target] = include || exclude;
+
         return dp[index][target];
     }
 
@@ -69,7 +68,6 @@ public class PartitionSubsetSum {
             dp[i][0] = true;
         }
 
-        // Fill the DP table
         for (int i = 1; i <= nums.length; i++) {
             int currentNum = nums[i - 1]; // The current number we are considering
             for (int j = 1; j <= targetSum; j++) {
@@ -92,11 +90,6 @@ public class PartitionSubsetSum {
 
 
     public static boolean canPartition(int[] nums) {
-        // --- The Core Insight ---
-        // The problem is to find two subsets with an equal sum.
-        // This is only possible if the total sum of the array is an EVEN number.
-        // If the sum is even, the problem becomes: "Can we find a subset that sums to exactly half of the total?"
-        // This is a classic "Subset Sum" problem.
         int totalSum = 0;
         for (int val : nums) {
             totalSum += val;
@@ -117,10 +110,6 @@ public class PartitionSubsetSum {
         // return iterativeOptimized(nums, targetSum);
     }
 
-
-    /**
-     * The main method to test the implemented solution.
-     */
     public static void main(String[] args) {
         int[] nums = {1, 5, 11, 5};
         System.out.println(canPartition(nums)); // Expected: true

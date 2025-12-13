@@ -1,4 +1,4 @@
-package leetcode.dp.subsequenceKnapsack;
+package leetcode.dp.knapsack;
 
 import java.util.Arrays;
 
@@ -34,24 +34,17 @@ public class CoinChange {
         // Base case: If the amount is zero, we've successfully made the change. 0 coins needed.
         if (amount == 0) return 0;
 
-        // Memoization check: If we've already computed this amount, return the stored result.
         if (memo[amount] != -2) return memo[amount];
 
         // Initialize minCount to -1 (representing "impossible" for this amount so far)
         int minCount = -1;
 
-        // Try every possible coin
         for (int coin : coins) {
-            // Recursively find the solution for the remaining amount (amount - coin)
             int count = helper(coins, amount - coin, memo);
 
-            // If the recursive call was successful (count >= 0)
             if (count >= 0) {
-                // We add 1 to include the current coin
                 int currentTotal = 1 + count;
 
-                // If this is the first valid path we've found for this amount,
-                // or if this path is better than the previous min, update minCount.
                 if (minCount == -1 || currentTotal < minCount) {
                     minCount = currentTotal;
                 }
@@ -104,9 +97,8 @@ public class CoinChange {
                 if (coin <= j) {
                     // We have two choices:
                     // 1. Don't use the current coin: `dp[i - 1][j]`
-                    // 2. Use the current coin: `1 + dp[i][j - coin]`
-                    //    (We use `dp[i]` here, not `dp[i-1]`, because it's an Unbounded Knapsack,
-                    //     meaning we can use the same coin multiple times).
+                    // 2. Use the current coin: `1 + dp[i][j - coin]` (We use `dp[i]` here, not `dp[i-1]`, because it's an Unbounded Knapsack,
+                    //  meaning we can use the same coin multiple times).
                     dp[i][j] = Math.min(dp[i - 1][j], 1 + dp[i][j - coin]);
                 } else {
                     // If the coin is larger than the amount, we can't use it.

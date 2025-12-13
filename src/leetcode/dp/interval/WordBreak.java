@@ -1,11 +1,12 @@
-package leetcode.dp.partitioning;
+package leetcode.dp.interval;
 
 import java.util.*;
 
 public class WordBreak {
 
     public static boolean helper(String s, int start, Set<String> set, Map<Integer, Boolean> memo) {
-        if (start >= s.length()) return true;
+        if (start >= s.length())
+            return true;
 
         if (memo.containsKey(start)) {
             return memo.get(start);
@@ -29,13 +30,15 @@ public class WordBreak {
         return helper(s, 0, set, new HashMap<>());
     }
 
-
     /**
      * dp = {
-     * 8: true,  // "leetcode" is fully segmented.
-     * 4: true,  // "code" can be segmented.
-     * 0: true   // "leet code" can be segmented.
+     * 8: true, // "leetcode" is fully segmented.
+     * 4: true, // "code" can be segmented.
+     * 0: true // "leet code" can be segmented.
      * }
+     * 
+     * dp[i] represents: Can the substring s[0...i-1] (the prefix of length i) be successfully segmented into valid dictionary words
+     * 
      **/
     public static boolean iterative(String s, List<String> wordDict) {
         Set<String> set = new HashSet<>(wordDict);

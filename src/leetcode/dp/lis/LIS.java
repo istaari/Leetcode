@@ -1,4 +1,4 @@
-package leetcode.dp.subsequenceKnapsack;
+package leetcode.dp.lis;
 
 
 import java.util.Arrays;
@@ -19,7 +19,7 @@ import java.util.Arrays;
  * - 1 <= nums.length <= 2500
  * - -10^4 <= nums[i] <= 10^4
  */
-public class LongestIncreasingSubsequence {
+public class LIS {
 
     // Subproblem: dp[i] = The length of the longest increasing subsequence that *ends* at index `i`.
     public static int iterative(int[] nums) {
@@ -30,7 +30,7 @@ public class LongestIncreasingSubsequence {
         // Base case: Every element by itself is an increasing subsequence of length 1.
         Arrays.fill(dp, 1);
 
-        int maxLIS = 1; // Variable to track the overall maximum LIS length.
+        int maxLIS = 1;
 
         // Build the solution from left to right.
         for (int i = 1; i < n; i++) {
@@ -38,22 +38,16 @@ public class LongestIncreasingSubsequence {
             for (int j = 0; j < i; j++) {
                 // If `nums[i]` can extend the subsequence ending at `j`...
                 if (nums[i] > nums[j]) {
-                    // ...then the new LIS length ending at `i` could be `dp[j] + 1`.
+                    // then the new LIS length ending at `i` could be `dp[j] + 1`. 
                     // We take the maximum of what we already had for `dp[i]` and this new possibility.
                     dp[i] = Math.max(dp[i], dp[j] + 1);
                 }
             }
-            // Update the overall maximum LIS found so far.
             maxLIS = Math.max(maxLIS, dp[i]);
         }
 
-        // *** BUG FIX ***: The LIS can end at any index, not necessarily the last one.
-        // The original code `return dp[n-1]` was incorrect. We must return the max value in the dp array.
         return maxLIS;
     }
-
-
-
 
     static void main(String[] args) {
         int[] nums = {10, 9, 2, 5, 3, 7, 101, 18};

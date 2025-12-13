@@ -1,4 +1,4 @@
-package leetcode.dp.fibonacci;
+package leetcode.dp.linear;
 
 /**
  * LeetCode Problem: 213. House Robber II
