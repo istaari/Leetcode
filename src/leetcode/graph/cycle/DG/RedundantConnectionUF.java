@@ -1,9 +1,9 @@
-package leetcode.graph.cycle.directedGraph;
+package leetcode.graph.cycle.DG;
 
 import java.util.Arrays;
 
 @SuppressWarnings("all")
-public class RedundantConnectionUnionFind {
+public class RedundantConnectionUF {
 
     private static class UnionFind {
         private final int[] parent;

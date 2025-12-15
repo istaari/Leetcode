@@ -1,6 +1,6 @@
-package leetcode.graph.connectedComponents.undirectedGraph;
+package leetcode.graph.connectedComponents.UG;
 
-public class ConnectedComponentsUndirectedGraph_323 {
+public class ConnectedComponentsUF {
 
     private static class UnionFind {
         private int count;

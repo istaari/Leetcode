@@ -644,12 +644,7 @@ public int bidirectionalBFS(Set<String> beginSet, Set<String> endSet, Set<String
 
   * **What it does:** Visits every node in a connected component. Once a node is visited, it is marked and **never visited again**. This is used for counting islands, flood fill, or checking connectivity.
   * **Key Behavior:** "Dive deep, mark visited, never look back."
-  * **LeetCode Problems:**
-      * [200. Number of Islands](https://leetcode.com/problems/number-of-islands/)
-      * [733. Flood Fill](https://leetcode.com/problems/flood-fill/)
-      * [547. Number of Provinces](https://leetcode.com/problems/number-of-provinces/)
 
-**Mermaid Logic:**
 The diagram shows a single deep path being fully explored before the next branch is touched.
 
 ```mermaid
@@ -701,11 +696,7 @@ public void dfs(char[][] grid, int r, int c, boolean[][] visited) {
 
   * **What it does:** Mimics the recursive stack using an explicit `Stack` data structure.
   * **Why use it?** To avoid `StackOverflowError` on very deep graphs (recursion limit is usually \~10,000 frames) or when recursion is forbidden.
-  * **LeetCode Problems:**
-      * [144. Binary Tree Preorder Traversal](https://leetcode.com/problems/binary-tree-preorder-traversal/)
-      * [328. Odd Even Linked List](https://leetcode.com/problems/odd-even-linked-list/) (Logic often used here)
 
-**Mermaid Logic:**
 Explicitly pushing nodes to a Stack LIFO (Last-In-First-Out).
 
 ```mermaid
@@ -749,12 +740,7 @@ public void iterativeDFS(Node start) {
 
   * **What it does:** Explores a path, and when it returns (backtracks), it **undoes** the "visited" state. This allows the same node to be used in *different* paths.
   * **Key Difference:** In Standard DFS, you mark `visited = true` and leave it. In Backtracking, you mark `visited = true`, recurse, and then mark `visited = false` (clean up).
-  * **LeetCode Problems:**
-      * [79. Word Search](https://leetcode.com/problems/word-search/)
-      * [46. Permutations](https://leetcode.com/problems/permutations/)
-      * [51. N-Queens](https://leetcode.com/problems/n-queens/)
 
-**Mermaid Logic:**
 Notice the "Reset" step. This is the hallmark of backtracking.
 
 ```mermaid
@@ -809,12 +795,7 @@ public boolean backtrack(char[][] board, String word, int i, int j, int index, b
     1.  **0 (White):** Unvisited.
     2.  **1 (Gray):** Visiting (currently in the recursion stack).
     3.  **2 (Black):** Visited (fully processed).
-  * **LeetCode Problems:**
-      * [207. Course Schedule](https://leetcode.com/problems/course-schedule/)
-      * [210. Course Schedule II](https://leetcode.com/problems/course-schedule-ii/)
-      * [802. Find Eventual Safe States](https://leetcode.com/problems/find-eventual-safe-states/)
 
-**Mermaid Logic:**
 A cycle is detected *only* if we point back to a "Gray" node (one that is currently being visited).
 
 ```mermaid
@@ -851,11 +832,7 @@ public boolean hasCycle(List<List<Integer>> graph, int u, int[] state) {
 
   * **What it does:** Orders nodes linearly such that for every edge $U \to V$, $U$ comes before $V$. Essential for dependency resolution (e.g., build systems, course prerequisites).
   * **How:** Perform a standard DFS, but add the node to a stack **only after** visiting all its children (Post-Order). Then reverse the stack.
-  * **LeetCode Problems:**
-      * [210. Course Schedule II](https://leetcode.com/problems/course-schedule-ii/)
-      * [329. Longest Increasing Path in a Matrix](https://leetcode.com/problems/longest-increasing-path-in-a-matrix/) (Implicit topo sort)
 
-**Mermaid Logic:**
 We only add to the "Result Stack" when we are *leaving* the node (returning from recursion).
 
 ```mermaid
@@ -906,11 +883,7 @@ public void topoDFS(List<List<Integer>> graph, int u, boolean[] visited) {
 
   * **What it does:** Uses DFS to assign a "discovery time" and a "low-link value" to every node. It identifies **"Bridges"** (edges that, if removed, disconnect the graph).
   * **The Logic:** If a node `u` has a child `v`, and `v` cannot reach back to `u` or `u`'s ancestors (i.e., `low[v] > disc[u]`), then the edge `u-v` is a bridge.
-  * **LeetCode Problems:**
-      * [1192. Critical Connections in a Network](https://leetcode.com/problems/critical-connections-in-a-network/) (Classic Hard problem)
-      * [1489. Find Critical and Pseudo-Critical Edges in MST](https://leetcode.com/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree/)
 
-**Mermaid Logic:**
 The diagram shows the "back edge" (dotted) allowing the child to reach an ancestor, updating its "Low Link" value.
 
 ```mermaid
@@ -960,12 +933,7 @@ public void dfs(int u, int parent, List<List<Integer>> graph, int[] disc, int[] 
 
   * **What it does:** Finds a path that visits **every edge exactly once**. This is different from standard DFS which visits *nodes*.
   * **Key Trick:** It's a "Post-Order Edge Removal" DFS. You eagerly follow edges, delete them as you cross them, and add the node to the result path *only when you get stuck* (no more outgoing edges).
-  * **LeetCode Problems:**
-      * [332. Reconstruct Itinerary](https://leetcode.com/problems/reconstruct-itinerary/)
-      * [753. Cracking the Safe](https://leetcode.com/problems/cracking-the-safe/)
-      * [2097. Valid Arrangement of Pairs](https://leetcode.com/problems/valid-arrangement-of-pairs/)
 
-**Mermaid Logic:**
 We spiral deep into the graph, deleting edges. The path is built in reverse order as the recursion unwinds.
 
 ```mermaid
@@ -1008,27 +976,279 @@ public void dfs(String u) {
 }
 ```
 
-## **Connected Components**
-
-
-
 ## **Cycle Detection**
 
-| **Topic**                                  | **Description**                                                                                                                                                                                                                                       | **Techniques to Detect Cycles**                                                                                                                       |
-|--------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Cycle Detection in an Undirected Graph** | A single edge between two vertices (`A <--> B`) **does not form a cycle** unless there is a self-loop (an edge from `A` to `A` or `B` to `B`).<br>A **cycle in an undirected graph must involve at least 3 vertices** (except when self-loops exist). | **DFS (Depth-First Search) with Parent Tracking**<br>**Union-Find (Disjoint Set Union)**                                                              |
-| **Cycle Detection in a Directed Graph**    | A cycle in a directed graph can exist with just 2 vertices (`A -> B -> A`).                                                                                                                                                                           | **Cycle Detection using Colors" (Three-State DFS Marking Method)**<br>**Topological Sorting (Kahn's Algorithm - BFS)**                                |
+### Unidirected Graph - `DFS with Parent Tracking`
 
-**Examples:**
+```java
+    class Graph {
+        private int V; // Number of vertices
+        private ArrayList<ArrayList<Integer>> adj; // Adjacency list
 
-- [Redundant Connection](https://leetcode.com/problems/redundant-connection/description/) - Find the redundant connection in a graph that results in a cycle.
+        Graph(int v) {
+            V = v;
+            adj = new ArrayList<>(v);
+            for (int i = 0; i < v; ++i)
+                adj.add(new ArrayList<>());
+        }
+
+        void addEdge(int v, int w) {
+            adj.get(v).add(w);
+            adj.get(w).add(v); // Undirected graph, so add edge in both directions
+        }
+    }
+
+    private boolean isCyclic(int u, boolean[] visited, int parent) {
+        visited[u] = true;
+
+        for (int v : adj.get(u)) {
+            if (!visited[v]) {
+                // Case 1: Not visited. Recurse, setting 'u' as the parent of 'v'.
+                if (isCyclic(v, visited, u))
+                    return true;
+            }
+            // Case 2: Visited, AND not the parent. Cycle detected!
+            else if (v != parent) {
+                return true;
+            }
+            // Case 3 (implied): Visited AND is the parent. Ignore.
+        }
+        return false;
+    }
+
+    private boolean isCyclicAlt1(int u, boolean[] visited, int parent) {
+        visited[u] = true;
+
+        for (int v : adj.get(u)) {
+
+            // --- Case 3: Skip the parent link ---
+            if (v == parent) {
+                continue;
+            }
+
+            // --- Case 2: Visited, NOT the parent, therefore a Cycle ---
+            if (visited[v]) {
+                return true;
+            }
+
+            // --- Case 1: Not visited (must be here if we didn't hit Case 3 or 2) ---
+            // Recurse, setting 'u' as the parent of 'v'.
+            if (isCyclicAlt1(v, visited, u)) {
+                return true;
+            }
+        }
+        return false;
+    }
+```
+
+### Directed Graph  - `Three-State DFS Marking`
 
 
-## **Topological Sorting in Directed Acyclic Graphs (DAGs)**
+We use three states to categorize the vertices during the DFS traversal:
 
-- Kahn’s Algorithm(Specific Topological Sort Algorithm) 
+1.  **WHITE (0):** The node is **unvisited**.
+2.  **GRAY (1):** The node is currently being visited (it is in the **recursion stack** of the current DFS path).
+3.  **BLACK (2):** The node and all its descendants have been fully explored.
+
+When visiting a node $u$:
+
+  * If we find a neighbor $v$ that is **GRAY**, it means $v$ is an ancestor of $u$ in the current path. Since the edge is $u \to v$, this creates a **back edge** and, therefore, a **cycle is detected**.
+  * If we find a neighbor $v$ that is **BLACK**, it means the path through $v$ has been fully explored and contains no cycle back to $u$'s ancestors, so we skip it.
+  * If we find a neighbor $v$ that is **WHITE**, we move to $v$, changing its state to GRAY.
 
 
+```java
+import java.util.ArrayList;
+
+class DirectedGraph {
+    private int V;
+    private ArrayList<ArrayList<Integer>> adj;
+    
+    // States: 0=WHITE (unvisited), 1=GRAY (visiting), 2=BLACK (visited/done)
+    private final int WHITE = 0;
+    private final int GRAY = 1;
+    private final int BLACK = 2;
+
+    DirectedGraph(int v) {
+        V = v;
+        adj = new ArrayList<>(v);
+        for (int i = 0; i < v; ++i)
+            adj.add(new ArrayList<>());
+    }
+
+    void addEdge(int v, int w) {
+        adj.get(v).add(w); // Directed edge: v -> w
+    }
+
+    private boolean isCyclicUtil(int u, int[] color) {
+        // 1. Mark the current node as GRAY (in recursion stack)
+        color[u] = GRAY;
+
+        for (int v : adj.get(u)) {
+            
+            if (color[v] == GRAY) {
+                // Cycle detected! Edge to a node already in the current path.
+                return true;
+            }
+
+            if (color[v] == WHITE) {
+                // Recurse on unvisited (WHITE) node.
+                if (isCyclicUtil(v, color))
+                    return true;
+            }
+            // If color[v] == BLACK, we skip it, as it's fully explored.
+        }
+
+        // 2. Mark the current node as BLACK (done exploring)
+        color[u] = BLACK;
+        return false;
+    }
+}
+```
+
+## **Topological Sorting(DAGs)**
+
+### Method 1: Depth-First Search (DFS)
+
+
+```java
+
+class TopologicalSortDFS {
+    private int V; // Number of vertices
+    private List<List<Integer>> adj; // Adjacency list
+
+    // Constants for the three-state coloring method
+    private final int WHITE = 0; // Unvisited
+    private final int GRAY = 1;  // Currently being visited (in recursion stack)
+    private final int BLACK = 2; // Finished processing
+
+    TopologicalSortDFS(int v) {
+        V = v;
+        adj = new ArrayList<>(v);
+        for (int i = 0; i < v; ++i)
+            adj.add(new LinkedList<>());
+    }
+
+    void addEdge(int u, int v) {
+        adj.get(u).add(v);
+    }
+
+    private boolean sortUtil(int u, int[] color, Stack<Integer> stack) {
+        // 1. Mark the current node as GRAY (it is now in the recursion stack)
+        color[u] = GRAY;
+
+        for (int v : adj.get(u)) {
+            
+            // --- CYCLE DETECTION CHECK ---
+            if (color[v] == GRAY) {
+                // If the neighbor 'v' is GRAY, it means 'v' is an ancestor of 'u'
+                // in the current DFS path. The edge u -> v forms a back edge (a cycle).
+                return true; // Cycle detected
+            }
+
+            // Case: Neighbor is WHITE (unvisited)
+            if (color[v] == WHITE) {
+                // Recurse. If the recursive call finds a cycle, propagate it immediately.
+                if (sortUtil(v, color, stack)) {
+                    return true;
+                }
+            }
+            // If color[v] is BLACK, we ignore it, as that path is fully processed.
+        }
+        
+        // 2. Mark the current node as BLACK (finished exploring its dependencies)
+        color[u] = BLACK;
+        
+        // 3. PUSH the current vertex onto the stack for the topological order
+        stack.push(u);
+        
+        return false; // No cycle found starting from this node
+    }
+
+    public void topologicalSort() {
+        Stack<Integer> stack = new Stack<>();
+        int[] color = new int[V]; // Initializes to WHITE (0) by default
+        boolean cycleFound = false;
+
+        // Call the recursive helper for every unvisited vertex
+        for (int i = 0; i < V; i++) {
+            if (color[i] == WHITE) {
+                if (sortUtil(i, color, stack)) {
+                    cycleFound = true;
+                    break;
+                }
+            }
+        }
+    }
+}
+
+```
+
+### Method 2: Kahn's Algorithm (In-Degree Based)
+
+```java
+
+class TopologicalSortKahn {
+    private int V;
+    private List<List<Integer>> adj;
+
+    TopologicalSortKahn(int v) {
+        V = v;
+        adj = new ArrayList<>(v);
+        for (int i = 0; i < v; ++i)
+            adj.add(new LinkedList<>());
+    }
+
+    void addEdge(int u, int v) {
+        adj.get(u).add(v);
+    }
+
+    public void topologicalSort() {
+        // Step 1: Compute In-degrees
+        int[] inDegree = new int[V];
+        for (int u = 0; u < V; u++) {
+            for (int v : adj.get(u)) {
+                inDegree[v]++;
+            }
+        }
+
+        // Step 2: Initialize Queue with all vertices having 0 in-degree
+        Queue<Integer> q = new LinkedList<>();
+        for (int i = 0; i < V; i++) {
+            if (inDegree[i] == 0)
+                q.add(i);
+        }
+
+        // To track the number of nodes in the sort (detect cycles)
+        int count = 0; 
+        List<Integer> topOrder = new ArrayList<>();
+
+        // Step 3: Process nodes
+        while (!q.isEmpty()) {
+            int u = q.poll();
+            topOrder.add(u);
+            count++;
+
+            // Step 4: For every neighbor v of u
+            for (int v : adj.get(u)) {
+                // Decrement in-degree of v and enqueue if it becomes 0
+                inDegree[v]--;
+                if (inDegree[v] == 0){
+                   q.add(v);
+                }     
+            }
+        }
+
+        // Cycle Detection Check
+        if (count != V) {
+            System.out.println("Graph has a cycle. Topological Sort is NOT possible.");
+            return;
+        }
+
+        System.out.println(topOrder);
+    }
+}
+```
 
 ## **Minimum Spanning Tree (MST)**
 
@@ -1041,17 +1261,258 @@ public void dfs(String u) {
   - Uses nodes, expanding the MST from a starting node
 
 
+## **Connected Components**
+
+
+### Undirected Graph
+
+**DFS**
+
+
+```java
+class DFSConnectedComponents {
+    private int V;
+    private List<List<Integer>> adj;
+
+    public DFSConnectedComponents(int v) {
+        this.V = v;
+        this.adj = new ArrayList<>(v);
+        for (int i = 0; i < v; ++i) {
+            this.adj.add(new ArrayList<>());
+        }
+    }
+
+    public void addEdge(int u, int v) {
+        adj.get(u).add(v);
+        adj.get(v).add(u); // Undirected
+    }
+
+    // DFS Helper Function: Explores and marks all nodes in the current component
+    private void DFS(int u, boolean[] visited) {
+        visited[u] = true;
+        
+        for (int v : adj.get(u)) {
+            if (!visited[v]) {
+                DFS(v, visited);
+            }
+        }
+    }
+
+    // Main Function: Counts the connected components
+    public int countComponentsDFS() {
+        boolean[] visited = new boolean[V];
+        int count = 0;
+
+        // Step 2 & 3: Iterate through all vertices and find unvisited ones
+        for (int i = 0; i < V; i++) {
+            if (!visited[i]) {
+                // Found a new component
+                DFS(i, visited);
+                count++;
+            }
+        }
+        return count;
+    }
+}
+```
+
+
+**BFS**
+
+```java
+
+import java.util.*;
+
+class BFSConnectedComponents {
+    private int V;
+    private List<List<Integer>> adj;
+
+    public BFSConnectedComponents(int v) {
+        this.V = v;
+        this.adj = new ArrayList<>(v);
+        for (int i = 0; i < v; ++i) {
+            this.adj.add(new ArrayList<>());
+        }
+    }
+
+    public void addEdge(int u, int v) {
+        adj.get(u).add(v);
+        adj.get(v).add(u); // Undirected
+    }
+
+    // Main Function: Counts the connected components
+    public int countComponentsBFS() {
+        boolean[] visited = new boolean[V];
+        int count = 0;
+
+        // Step 2 & 3: Iterate through all vertices and find unvisited ones
+        for (int i = 0; i < V; i++) {
+            if (!visited[i]) {
+                // Found a new component
+                count++;
+                
+                // Step 4: Start iterative BFS traversal
+                Queue<Integer> queue = new LinkedList<>();
+                queue.add(i);
+                visited[i] = true;
+
+                while (!queue.isEmpty()) {
+                    int u = queue.poll();
+                    
+                    for (int v : adj.get(u)) {
+                        if (!visited[v]) {
+                            visited[v] = true;
+                            queue.add(v);
+                        }
+                    }
+                }
+            }
+        }
+        return count;
+    }
+}
+```
+
+### Directed Graph
+
+- Kosaraju
+- Tarjans
+
+## **Union Find**
+
 ## **Shortest Path Algorithms**
 
-**BFS(Unweighted graph)**
+### **BFS(Unweighted graph)**
 
-**Dijkstra's Algorithm(weighted graph with positive weights)** 
+1.  **Start:** Begin at the designated starting node $S$.
+2.  **Distance Tracking:** Maintain an array (or map) to store the **shortest distance** from $S$ to every other node. Initialize $S$'s distance to $0$ and all others to infinity (or $-1$ in a simple integer array).
+3.  **Parent Tracking (Optional but Crucial):** Maintain a second array to store the **parent** of each node in the shortest path tree. This allows you to reconstruct the actual path after the BFS completes.
+4.  **Traversal:** Use a **Queue** for standard BFS. When processing a node $u$, iterate through its neighbors $v$:
+      * If $v$ has not been visited (or its distance is $-1$):
+          * Set $v$'s distance to $u$'s distance plus 1.
+          * Set $v$'s parent to $u$.
+          * Enqueue $v$.
 
-**Bellman-Ford Algorithm(weighted graph with negative weights)**
 
-- Single-Source Shortest Path (SSSP) algorithm
+```java
 
-**Floyd-Warshall Algorithm(weighted graph with negative weights)**
+public class ShortestPathBFS {
+    
+    private int V; // Number of vertices
+    private List<List<Integer>> adj; // Adjacency list for the graph
 
-- Floyd-Warshall is an All-Pairs Shortest Path (APSP) algorithm.
+    // Constructor to initialize the graph
+    public ShortestPathBFS(int v) {
+        this.V = v;
+        this.adj = new ArrayList<>(v);
+        for (int i = 0; i < v; ++i) {
+            this.adj.add(new ArrayList<>());
+        }
+    }
+
+    // Adds an edge between u and v (undirected)
+    public void addEdge(int u, int v) {
+        adj.get(u).add(v);
+        adj.get(v).add(u);
+    }
+
+
+    public void shortestPath(int s, int target) {
+        // Step 1: Initialize data structures. 
+        // 'dist': Stores shortest distance from 's' (initialized to -1 for unvisited).
+        // 'parent': Stores the predecessor node to reconstruct the path.
+        int[] dist = new int[V];
+        int[] parent = new int[V];
+        Arrays.fill(dist, -1);
+        Arrays.fill(parent, -1);
+        
+        Queue<Integer> queue = new LinkedList<>();
+
+        // Step 2: Start BFS from the source node 's'.
+        dist[s] = 0;
+        queue.add(s);
+
+        // Step 3: Core BFS Loop
+        while (!queue.isEmpty()) {
+            int u = queue.poll();
+
+            for (int v : adj.get(u)) {
+                // Check if neighbor 'v' has been visited.
+                if (dist[v] == -1) {
+                    // Step 3a: Update distance and parent.
+                    // The distance is guaranteed to be the shortest path length.
+                    dist[v] = dist[u] + 1; 
+                    parent[v] = u; 
+                    
+                    // Step 3b: Enqueue the neighbor for next level exploration.
+                    queue.add(v);
+                }
+            }
+        }
+        
+        // Step 4: Output Results (Distance and Path)
+        System.out.println("\n--- Results for Source Node " + s + " ---");
+        System.out.println("Shortest Distance to Node " + target + ": " + (dist[target] == -1 ? "Unreachable" : dist[target]));
+        
+        System.out.print("Shortest Path to Node " + target + ": ");
+        reconstructPath(s, target, parent);
+    }
+    
+    // Reconstructs the path from the target back to the source using the parent array.
+    private void reconstructPath(int s, int target, int[] parent) {
+        if (parent[target] == -1 && target != s) {
+            System.out.println("Path not found/Unreachable.");
+            return;
+        }
+
+        LinkedList<Integer> path = new LinkedList<>();
+        int curr = target;
+        
+        // Trace back from target using parent pointers
+        while (curr != -1) {
+            path.addFirst(curr); // Add at the beginning to reverse the order
+            curr = parent[curr];
+        }
+
+        System.out.println(path);
+    }
+    
+    
+    // Main method for testing
+    public static void main(String[] args) {
+        // Graph with 5 vertices (0 to 4)
+        ShortestPathBFS graph = new ShortestPathBFS(5);
+        
+        // Component 1: 0 -- 1 -- 2
+        graph.addEdge(0, 1);
+        graph.addEdge(1, 2);
+        
+        // Component 2: 3 -- 4
+        graph.addEdge(3, 4);
+
+        int source = 0;
+        int target1 = 2; // Expected path: [0, 1, 2], Distance: 2
+        int target2 = 4; // Expected: Unreachable
+
+        // Test Case 1: Reachable Target
+        graph.shortestPath(source, target1); 
+        
+        // Test Case 2: Unreachable Target
+        graph.shortestPath(source, target2); 
+    }
+}
+
+```
+
+### **Dijkstra's Algorithm** 
+
+
+### **Bellman-Ford Algorithm**
+
+  - Single-Source Shortest Path (SSSP) algorithm
+
+
+### **Floyd-Warshall Algorithm**
+
+  - Floyd-Warshall is an All-Pairs Shortest Path (APSP) algorithm.
 

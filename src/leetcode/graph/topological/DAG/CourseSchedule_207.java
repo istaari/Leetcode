@@ -5,10 +5,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-
 // Only Applicable in DAG
 public class CourseSchedule_207 {
-
 
     private static List<List<Integer>> buildGraph(int numCourses, int[][] prerequisites) {
         List<List<Integer>> adjacencyList = new ArrayList<>();
@@ -25,11 +23,11 @@ public class CourseSchedule_207 {
         return adjacencyList;
     }
 
-    //---------------------------------------------BFS-----------------------------------------------------
+    // ---------------------------------------------BFS-----------------------------------------------------
 
     // Topological Sort with Kahn’s Algorithm
     private static boolean hashCycle(int numCourses, List<List<Integer>> adjacencyList) {
-        //  1. Stores the in-degree of each course
+        // 1. Stores the in-degree of each course
         int[] inDegree = new int[numCourses];
         for (int i = 0; i < numCourses; i++) {
             for (int course : adjacencyList.get(i)) {
@@ -62,51 +60,14 @@ public class CourseSchedule_207 {
         return processedCount == numCourses; // If all the courses are processed then course can be finished
     }
 
-    //---------------------------------------------DFS-----------------------------------------------------
-
-    /**
-     * Cycle Detection using Colors (Three-State DFS Marking Method)
-     *
-     * 0 (Unvisited) - This indicates that the vertex (course) has not been visited
-     * 1 (Visiting/In Progress) - This indicates that the vertex is currently being visited
-     * 2 (Visited/Completed) - This indicates that the vertex and all its adjacent vertices have been fully explored
-     */
-    private static boolean hashCycle(int course, List<List<Integer>> adjacencyList, int[] visited) {
-        if (visited[course] == 1) {
-            return true;
-        }
-        if (visited[course] == 2) {
-            return false;
-        }
-
-        visited[course] = 1;
-
-        for (int nextCourse : adjacencyList.get(course)) {
-            if (hashCycle(nextCourse, adjacencyList, visited)) return true;
-        }
-
-        visited[course] = 2;
-
-        return false;
-    }
-
-
     public static boolean canFinish(int numCourses, int[][] prerequisites) {
         List<List<Integer>> adjacencyList = buildGraph(numCourses, prerequisites);
-
-        // Initialize to 0 which is
-        int[] visited = new int[numCourses];
-
-        for (int i = 0; i < numCourses; i++) {
-            if (visited[i] == 0 && hashCycle(i, adjacencyList, visited)) return false;
-        }
-
-        return true;
+        return hashCycle(numCourses, adjacencyList);
     }
 
     public static void main(String[] args) {
         int numCourses = 4;
-        int[][] prerequisites = {{1, 0}, {2, 0}, {3, 1}, {3, 2}};
+        int[][] prerequisites = { { 1, 0 }, { 2, 0 }, { 3, 1 }, { 3, 2 } };
         System.out.println(canFinish(numCourses, prerequisites));
     }
 }

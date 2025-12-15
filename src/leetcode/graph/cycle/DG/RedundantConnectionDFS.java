@@ -1,4 +1,4 @@
-package leetcode.graph.cycle.directedGraph;
+package leetcode.graph.cycle.DG;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -6,7 +6,6 @@ import java.util.List;
 
 public class RedundantConnectionDFS {
 
-    // Cycle Detection in an Undirected Graph using DFS (Depth-First Search) with Parent Tracking.
     private static boolean hasCycle(int current, int parent, boolean[] visited, List<List<Integer>> graph) {
         visited[current] = true;
 
@@ -54,7 +53,7 @@ public class RedundantConnectionDFS {
     }
 
     public static void main(String[] args) {
-        int[][] edges = {{1, 2}, {1, 3}, {2, 3}};
+        int[][] edges = { { 1, 2 }, { 1, 3 }, { 2, 3 } };
         int[] result = findRedundantConnection(edges);
         System.out.println(Arrays.toString(result));
     }

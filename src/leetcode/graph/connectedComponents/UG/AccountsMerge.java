@@ -1,4 +1,4 @@
-package leetcode.graph.connectedComponents.undirectedGraph;
+package leetcode.graph.connectedComponents.UG;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,24 +11,25 @@ import java.util.Set;
 
 public class AccountsMerge {
 
-   /**
-    emailToName {
-                    "johnsmith@mail.com"      -> ["john_newyork@mail.com", "john00@mail.com"],
-                    "john_newyork@mail.com"   -> ["johnsmith@mail.com"],
-                    "john00@mail.com"         -> ["johnsmith@mail.com"],
-                    "mary@mail.com"           -> ["mary@mail.com"],   // only one email, no edges
-                    "johnnybravo@mail.com"    -> ["johnnybravo@mail.com"] // same
-                }
-
-    graph   {
-                "johnsmith@mail.com": ["johnsmith@mail.com", "john_newyork@mail.com", "johnsmith@mail.com", "john00@mail.com"],
-                "john_newyork@mail.com": ["johnsmith@mail.com"],
-                "john00@mail.com": ["johnsmith@mail.com"],
-                "mary@mail.com": ["mary@mail.com"],
-                "johnnybravo@mail.com": ["johnnybravo@mail.com"]
-            }
-
-    **/
+    /**
+     * emailToName {
+     * "johnsmith@mail.com" -> ["john_newyork@mail.com", "john00@mail.com"],
+     * "john_newyork@mail.com" -> ["johnsmith@mail.com"],
+     * "john00@mail.com" -> ["johnsmith@mail.com"],
+     * "mary@mail.com" -> ["mary@mail.com"], // only one email, no edges
+     * "johnnybravo@mail.com" -> ["johnnybravo@mail.com"] // same
+     * }
+     * 
+     * graph {
+     * "johnsmith@mail.com": ["johnsmith@mail.com", "john_newyork@mail.com",
+     * "johnsmith@mail.com", "john00@mail.com"],
+     * "john_newyork@mail.com": ["johnsmith@mail.com"],
+     * "john00@mail.com": ["johnsmith@mail.com"],
+     * "mary@mail.com": ["mary@mail.com"],
+     * "johnnybravo@mail.com": ["johnnybravo@mail.com"]
+     * }
+     * 
+     **/
 
     public List<List<String>> accountsMerge(List<List<String>> accounts) {
         Map<String, String> emailToName = new HashMap<>();
@@ -36,15 +37,13 @@ public class AccountsMerge {
 
         for (List<String> account : accounts) {
             for (int i = 1; i < account.size(); i++) {
-                // Map Email to name
+                // Map Email to Name
                 emailToName.put(account.get(i), account.get(0));
-
-                // Build undirected graph
+                // Build Undirected Graph
                 graph.computeIfAbsent(account.get(1), k -> new ArrayList<>()).add(account.get(i));
                 graph.computeIfAbsent(account.get(i), k -> new ArrayList<>()).add(account.get(1));
             }
         }
-
 
         List<List<String>> result = new ArrayList<>();
         Set<String> visited = new HashSet<>();
