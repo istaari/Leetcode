@@ -1,4 +1,4 @@
-package leetcode.graph.minSpanningTree;
+package leetcode.graph.mst;
 
 import java.util.ArrayList;
 import java.util.Arrays;

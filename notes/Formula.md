@@ -159,6 +159,58 @@ Pre-calculates sums to answer range sum queries in O(1) time.
       * Logic: `(prefix[j] - prefix[i-1]) % k == 0`, which means `prefix[j] % k == prefix[i-1] % k`.
       * Use a hash map to count the frequencies of remainders (`prefix_sum % k`).
 
+#### **Prefix Sum 2D**
+
+#### **1. The Pre-computation Logic**
+
+In a 1D array, each element in the prefix array stores the sum from the start to that index. In 2D, `prefix[i][j]` stores the sum of all elements in the rectangle from `(0, 0)` to `(i, j)`.
+
+To calculate this efficiently, we use the principle of inclusion-exclusion:
+
+
+* **Add top neighbor:** `prefix[i-1][j]`
+* **Add left neighbor:** `prefix[i][j-1]`
+* **Subtract the diagonal overlap:** `prefix[i-1][j-1]` (because it was added twice by the neighbors).
+
+#### **2. Querying a Sub-rectangle Sum**
+
+To find the sum of a rectangle defined by top-left corner  and bottom-right corner , we use a similar inclusion-exclusion logic:
+
+* **Start with the total area:** `prefix[r2][c2]`
+* **Subtract the area above:** `prefix[r1-1][c2]`
+* **Subtract the area to the left:** `prefix[r2][c1-1]`
+* **Add back the top-left corner:** `prefix[r1-1][c1-1]` (it was subtracted twice).
+
+
+#### **3. Example Walkthrough**
+
+#### **Input Matrix**
+
+|  | 0 | 1 | 2 |
+| --- | --- | --- | --- |
+| **0** | 1 | 2 | 3 |
+| **1** | 4 | 5 | 6 |
+| **2** | 7 | 8 | 9 |
+
+#### **Calculated Prefix Sum Matrix**
+
+|  | 0 | 1 | 2 |
+| --- | --- | --- | --- |
+| **0** | 1 | 3 | 6 |
+| **1** | 5 | 12 | 21 |
+| **2** | 12 | 27 | 45 |
+
+> Calculation Example for `prefix[1][1]`:
+> `matrix[1][1]` (5) + `prefix[0][1]` (3) + `prefix[1][0]` (5) - `prefix[0][0]` (1) = **12**.
+
+#### **Query Example**
+
+Find the sum of the sub-rectangle from **(1, 1)** to **(2, 2)** (Values: 5, 6, 8, 9).
+
+* **Formula:** `prefix[2][2] - prefix[0][2] - prefix[2][0] + prefix[0][0]`
+* **Substitution:** 
+* **Verification:** 
+
 
 
 #### **E. Greedy**

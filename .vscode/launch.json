@@ -3,6 +3,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "MatchsticksToSquare",
+            "request": "launch",
+            "mainClass": "leetcode.dp.bitmask.MatchsticksToSquare",
+            "projectName": "problem-solving_bfd47579"
+        },
+        {
+            "type": "java",
+            "name": "Prims",
+            "request": "launch",
+            "mainClass": "dsa.graph.Prims",
+            "projectName": "problem-solving_bfd47579"
+        },
+        {
+            "type": "java",
             "name": "WordBreak_2",
             "request": "launch",
             "mainClass": "leetcode.dp.partitioning.WordBreak_2",

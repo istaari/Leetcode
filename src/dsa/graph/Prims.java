@@ -37,20 +37,24 @@ public class Prims {
         boolean[] visited = new boolean[V];
         // Create a priority queue, ascending order
         PriorityQueue<Edge> pq = new PriorityQueue<>((e1, e2) -> e1.weight - e2.weight);
+        // Start with Vertex 0 (conceptual edge with weight 0).
         pq.add(new Edge(0, 0));
         List<Edge> result = new ArrayList<>();
 
         while (!pq.isEmpty()) {
             Edge edge = pq.poll();
-
-            // If visited skip
+            // Skip if the destination vertex is already in the MST (prevents cycles).
             if (visited[edge.dest]) continue;
-            visited[edge.dest] = true;
-            // add in minimum spanning tree
-            result.add(new Edge(edge.dest, edge.weight));
 
+            // Add the new vertex to the MST set.
+            visited[edge.dest] = true;
+            
+            // Record the edge (except for the initial start edge).
+            result.add(new Edge(edge.dest, edge.weight));
+            
             // Expore the neighbors
             for (Edge neighbor : graph.get(edge.dest)) {
+                // If the neighbor is not yet in the MST, add it as a new candidate edge.
                 if (!visited[neighbor.dest]) {
                     pq.add(new Edge(neighbor.dest, neighbor.weight));
                 }
