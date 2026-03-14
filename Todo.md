@@ -22,7 +22,6 @@
 - Design Problems
 - KMP
 
-
 ## Least Priority
 
 - B and B+ Trees
