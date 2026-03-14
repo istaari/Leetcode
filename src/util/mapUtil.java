@@ -4,7 +4,7 @@ import java.util.*;
 
 public class mapUtil {
 
-    public static void main(String[] args) {
+    static void main(String[] args) {
 
         //--------------TreeMap---------------------//
         TreeMap<Integer, String> treeMap = new TreeMap<>();
@@ -32,15 +32,28 @@ public class mapUtil {
 
         Map<String, List<Integer>> hashMap2 = new HashMap<>();
         List<Integer> value1 = hashMap2.computeIfAbsent("A", key -> new ArrayList<>(List.of(1, 2, 3)));
+        System.out.println("value1 : " + value1);
         List<Integer> value2 = hashMap2.computeIfAbsent("A", key -> new ArrayList<>());
         System.out.println("value2 : " + value2);
 
 
-        Map<String, List<Integer>> hashMap3 = new HashMap<>();
-        List<Integer> value3 = hashMap3.computeIfPresent("A", (key, value0) -> new ArrayList<>());
-        System.out.println("computeIfPresent : " + value3); // return null
-        List<Integer> value4 = hashMap3.computeIfPresent("C", (key, value0) -> new ArrayList<>());
-
+        Map<String, List<Integer>> scores = new HashMap<>();
+        // 1. Manually put a list in for "Alice"
+        scores.put("Alice", new ArrayList<>(List.of(80, 85)));
+        // 2. Use computeIfPresent to add a new score
+        // This works because "Alice" is already in the map.
+        scores.computeIfPresent("Alice", (key, existingList) -> {
+            existingList.add(90);
+            return existingList;
+        });
+        // 3. Try to use computeIfPresent for "Bob"
+        // This will do NOTHING because "Bob" doesn't exist yet.
+        scores.computeIfPresent("Bob", (key, existingList) -> {
+            existingList.add(100);
+            return existingList;
+        });
+        System.out.println("Alice's scores: " + scores.get("Alice")); // [80, 85, 90]
+        System.out.println("Bob's scores: " + scores.get("Bob"));     // null
     }
 
 }
