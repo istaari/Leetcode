@@ -20,7 +20,6 @@
 - DP on trees
 - Trie Problems
 - Design Problems
-- KMP
 
 ## Least Priority
 

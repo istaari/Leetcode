@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🧠 LeetCode Tracker</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#0d1117;--surface:#161b22;--surface2:#1c2333;--border:#30363d;
+    --text:#e6edf3;--text2:#8b949e;--accent:#58a6ff;--accent2:#1f6feb;
+    --green:#3fb950;--green-bg:rgba(63,185,80,.12);--orange:#d29922;
+    --red:#f85149;--purple:#bc8cff;
+    --radius:8px;--shadow:0 2px 8px rgba(0,0,0,.3);
+  }
+  html{scroll-behavior:smooth}
+  body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding:0}
+
+  /* ── Header ── */
+  .header{background:linear-gradient(135deg,#0d1117 0%,#161b22 100%);border-bottom:1px solid var(--border);padding:24px 0;position:sticky;top:0;z-index:100;backdrop-filter:blur(12px)}
+  .header-inner{max-width:1100px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+  .logo{font-size:1.5rem;font-weight:700;display:flex;align-items:center;gap:10px}
+  .logo span{background:linear-gradient(135deg,var(--accent),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  .stats-bar{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+  .stat{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:6px 14px;font-size:.85rem;display:flex;align-items:center;gap:6px}
+  .stat .num{font-weight:700;color:var(--green);font-size:1rem}
+  .stat .total{color:var(--text2)}
+  .progress-ring{width:44px;height:44px}
+  .progress-ring circle{transition:stroke-dashoffset .4s ease}
+
+  /* ── Controls ── */
+  .controls{max-width:1100px;margin:20px auto;padding:0 24px;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  .search-box{flex:1;min-width:220px;position:relative}
+  .search-box input{width:100%;padding:10px 14px 10px 38px;border-radius:var(--radius);border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:.9rem;outline:none;transition:border .2s}
+  .search-box input:focus{border-color:var(--accent)}
+  .search-box svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text2)}
+  .btn{padding:10px 18px;border-radius:var(--radius);border:1px solid var(--border);background:var(--surface);color:var(--text);cursor:pointer;font-size:.85rem;font-weight:600;transition:all .2s;display:flex;align-items:center;gap:6px;white-space:nowrap}
+  .btn:hover{border-color:var(--accent);background:var(--surface2)}
+  .btn-primary{background:var(--accent2);border-color:var(--accent2);color:#fff}
+  .btn-primary:hover{background:var(--accent);border-color:var(--accent)}
+  .btn-danger{border-color:var(--red);color:var(--red)}
+  .btn-danger:hover{background:rgba(248,81,73,.1)}
+  .filter-pills{display:flex;gap:6px;flex-wrap:wrap}
+  .pill{padding:5px 12px;border-radius:20px;border:1px solid var(--border);background:var(--surface);color:var(--text2);cursor:pointer;font-size:.8rem;transition:all .2s}
+  .pill:hover,.pill.active{border-color:var(--accent);color:var(--accent);background:rgba(88,166,255,.08)}
+
+  /* ── Main ── */
+  .main{max-width:1100px;margin:0 auto;padding:0 24px 60px}
+  .problem-list{border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);overflow:hidden}
+
+  /* ── Problem Row ── */
+  .problem{display:flex;align-items:center;padding:10px 18px;transition:background .15s;gap:12px;border-bottom:1px solid rgba(48,54,61,.4)}
+  .problem:last-child{border-bottom:none}
+  .problem:hover{background:rgba(88,166,255,.04)}
+  .problem.solved{background:var(--green-bg)}
+  .problem.highlighted{background:rgba(210,153,34,.15);animation:pulse 1.5s ease 2}
+  @keyframes pulse{0%,100%{background:rgba(210,153,34,.15)}50%{background:rgba(210,153,34,.3)}}
+  .problem input[type=checkbox]{appearance:none;-webkit-appearance:none;width:18px;height:18px;border:2px solid var(--border);border-radius:4px;cursor:pointer;position:relative;flex-shrink:0;transition:all .2s}
+  .problem input[type=checkbox]:checked{background:var(--green);border-color:var(--green)}
+  .problem input[type=checkbox]:checked::after{content:'✓';position:absolute;top:-1px;left:2px;font-size:12px;color:#fff;font-weight:700}
+  .problem .num{color:var(--text2);font-size:.75rem;min-width:28px;text-align:right;font-variant-numeric:tabular-nums}
+  .problem a{color:var(--text);text-decoration:none;font-size:.88rem;flex:1;transition:color .15s}
+  .problem a:hover{color:var(--accent)}
+  .problem.solved a{color:var(--text2);text-decoration:line-through}
+
+  /* ── Toast ── */
+  .toast{position:fixed;bottom:24px;right:24px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:14px 20px;font-size:.9rem;box-shadow:var(--shadow);transform:translateY(100px);opacity:0;transition:all .3s;z-index:200;display:flex;align-items:center;gap:10px}
+  .toast.show{transform:translateY(0);opacity:1}
+
+  /* ── Modal ── */
+  .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:300;display:none;align-items:center;justify-content:center}
+  .modal-overlay.show{display:flex}
+  .modal{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:28px;max-width:480px;width:90%;box-shadow:0 8px 32px rgba(0,0,0,.5);text-align:center}
+  .modal h2{margin-bottom:12px;font-size:1.2rem}
+  .modal p{color:var(--text2);margin-bottom:8px;font-size:.9rem}
+  .modal a{color:var(--accent);font-size:1.1rem;font-weight:600;word-break:break-all}
+  .modal .btn{margin:16px auto 0;width:fit-content}
+
+  /* ── Empty State ── */
+  .empty{text-align:center;padding:48px 24px;color:var(--text2)}
+  .empty .icon{font-size:3rem;margin-bottom:12px}
+
+  /* ── Scrollbar ── */
+  ::-webkit-scrollbar{width:8px}
+  ::-webkit-scrollbar-track{background:var(--bg)}
+  ::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+  ::-webkit-scrollbar-thumb:hover{background:var(--text2)}
+
+  /* ── Responsive ── */
+  @media(max-width:640px){
+    .header-inner{flex-direction:column;align-items:flex-start}
+    .controls{flex-direction:column}
+    .search-box{min-width:100%}
+    .problem{padding:8px 12px}
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════ HEADER ═══════ -->
+<div class="header">
+  <div class="header-inner">
+    <div class="logo">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      <span>LeetCode Tracker</span>
+    </div>
+    <div class="stats-bar">
+      <div class="stat">
+        <svg class="progress-ring" viewBox="0 0 44 44">
+          <circle cx="22" cy="22" r="18" fill="none" stroke="var(--border)" stroke-width="4"/>
+          <circle id="progressCircle" cx="22" cy="22" r="18" fill="none" stroke="var(--green)" stroke-width="4" stroke-linecap="round" stroke-dasharray="113.1" stroke-dashoffset="113.1" transform="rotate(-90 22 22)"/>
+        </svg>
+        <div>
+          <div><span class="num" id="solvedCount">0</span> <span class="total">/ <span id="totalCount">0</span></span></div>
+          <div style="font-size:.75rem;color:var(--text2)">Solved</div>
+        </div>
+      </div>
+      <div class="stat" style="gap:4px">
+        🔥 <span class="num" id="streakCount">0</span> <span class="total">streak</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ CONTROLS ═══════ -->
+<div class="controls">
+  <div class="search-box">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input type="text" id="searchInput" placeholder="Search problems... (press /)">
+  </div>
+  <div class="filter-pills">
+    <div class="pill active" data-filter="all">All</div>
+    <div class="pill" data-filter="unsolved">Unsolved</div>
+    <div class="pill" data-filter="solved">Solved</div>
+  </div>
+  <button class="btn btn-primary" id="randomBtn">🎲 Pick Random</button>
+  <button class="btn btn-danger" id="resetBtn">🗑 Reset</button>
+</div>
+
+<!-- ═══════ MAIN ═══════ -->
+<div class="main" id="app"></div>
+
+<!-- ═══════ TOAST ═══════ -->
+<div class="toast" id="toast"></div>
+
+<!-- ═══════ MODAL ═══════ -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="modal">
+    <h2>🎲 Random Pick</h2>
+    <p id="modalCategory"></p>
+    <a id="modalLink" href="#" target="_blank"></a>
+    <br>
+    <button class="btn btn-primary" id="modalClose">Got it!</button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+//  RAW PROBLEMS — All questions (no greedy), flat list
+// ═══════════════════════════════════════════════════════════
+const RAW = [
+  ["Climbing Stairs", "https://leetcode.com/problems/climbing-stairs/"],
+  ["Best Time to Buy and Sell Stock", "https://leetcode.com/problems/best-time-to-buy-and-sell-stock/"],
+  ["Min Cost Climbing Stairs", "https://leetcode.com/problems/min-cost-climbing-stairs/"],
+  ["Decode Ways", "https://leetcode.com/problems/decode-ways/"],
+  ["Unique Binary Search Trees", "https://leetcode.com/problems/unique-binary-search-trees/"],
+  ["House Robber", "https://leetcode.com/problems/house-robber/"],
+  ["Perfect Squares", "https://leetcode.com/problems/perfect-squares/"],
+  ["Best Time to Buy and Sell Stock with Cooldown", "https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/"],
+  ["Coin Change", "https://leetcode.com/problems/coin-change/"],
+  ["Integer Break", "https://leetcode.com/problems/integer-break/"],
+  ["Partition Equal Subset Sum", "https://leetcode.com/problems/partition-equal-subset-sum/"],
+  ["Maximum Length of Pair Chain", "https://leetcode.com/problems/maximum-length-of-pair-chain/"],
+  ["Best Time to Buy and Sell Stock with Transaction Fee", "https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/"],
+  ["Delete and Earn", "https://leetcode.com/problems/delete-and-earn/"],
+  ["Domino and Tromino Tiling", "https://leetcode.com/problems/domino-and-tromino-tiling/"],
+  ["Knight Dialer", "https://leetcode.com/problems/knight-dialer/"],
+  ["Minimum Cost for Tickets", "https://leetcode.com/problems/minimum-cost-for-tickets/"],
+  ["Partition Array for Maximum Sum", "https://leetcode.com/problems/partition-array-for-maximum-sum/"],
+  ["Longest Arithmetic Subsequence of Given Difference", "https://leetcode.com/problems/longest-arithmetic-subsequence-of-given-difference/"],
+  ["Greatest Sum Divisible by Three", "https://leetcode.com/problems/greatest-sum-divisible-by-three/"],
+  ["Best Time to Buy and Sell Stock III", "https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/"],
+  ["Maximum Profit in Job Scheduling", "https://leetcode.com/problems/maximum-profit-in-job-scheduling/"],
+  ["Stone Game III", "https://leetcode.com/problems/stone-game-iii/"],
+  ["Stone Game IV", "https://leetcode.com/problems/stone-game-iv/"],
+  ["Coin Change 2", "https://leetcode.com/problems/coin-change-2/"],
+  ["House Robber II", "https://leetcode.com/problems/house-robber-ii/"],
+  ["Ones and Zeroes", "https://leetcode.com/problems/ones-and-zeroes/"],
+  ["Target Sum", "https://leetcode.com/problems/target-sum/"],
+  ["Shopping Offers", "https://leetcode.com/problems/shopping-offers/"],
+  ["2 Keys Keyboard", "https://leetcode.com/problems/2-keys-keyboard/"],
+  ["Minimum Swaps to Make Sequences Increasing", "https://leetcode.com/problems/minimum-swaps-to-make-sequences-increasing/"],
+  ["Best Team with No Conflicts", "https://leetcode.com/problems/best-team-with-no-conflicts/"],
+  ["Profitable Schemes", "https://leetcode.com/problems/profitable-schemes/"],
+  ["Tallest Billboard", "https://leetcode.com/problems/tallest-billboard/"],
+  ["Pizza with 3n Slices", "https://leetcode.com/problems/pizza-with-3n-slices/"],
+  ["Reducing Dishes", "https://leetcode.com/problems/reducing-dishes/"],
+  ["Painting the Walls", "https://leetcode.com/problems/painting-the-walls/"],
+  ["Triangle", "https://leetcode.com/problems/triangle/"],
+  ["Combination Sum IV", "https://leetcode.com/problems/combination-sum-iv/"],
+  ["Out of Boundary Paths", "https://leetcode.com/problems/out-of-boundary-paths/"],
+  ["Knight Probability in Chessboard", "https://leetcode.com/problems/knight-probability-in-chessboard/"],
+  ["Champagne Tower", "https://leetcode.com/problems/champagne-tower/"],
+  ["Minimum Falling Path Sum", "https://leetcode.com/problems/minimum-falling-path-sum/"],
+  ["Longest Arithmetic Subsequence", "https://leetcode.com/problems/longest-arithmetic-subsequence/"],
+  ["Stone Game II", "https://leetcode.com/problems/stone-game-ii/"],
+  ["Number of Dice Rolls with Target Sum", "https://leetcode.com/problems/number-of-dice-rolls-with-target-sum/"],
+  ["Best Time to Buy and Sell Stock IV", "https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/"],
+  ["Frog Jump", "https://leetcode.com/problems/frog-jump/"],
+  ["Split Array Largest Sum", "https://leetcode.com/problems/split-array-largest-sum/"],
+  ["Count Vowels Permutation", "https://leetcode.com/problems/count-vowels-permutation/"],
+  ["Minimum Difficulty of a Job Schedule", "https://leetcode.com/problems/minimum-difficulty-of-a-job-schedule/"],
+  ["Number of Ways to Paint N × 3 Grid", "https://leetcode.com/problems/number-of-ways-to-paint-n-3-grid/"],
+  ["Paint House III", "https://leetcode.com/problems/paint-house-iii/"],
+  ["Count All Possible Routes", "https://leetcode.com/problems/count-all-possible-routes/"],
+  ["Guess Number Higher or Lower II", "https://leetcode.com/problems/guess-number-higher-or-lower-ii/"],
+  ["Arithmetic Slices", "https://leetcode.com/problems/arithmetic-slices/"],
+  ["Predict the Winner", "https://leetcode.com/problems/predict-the-winner/"],
+  ["Palindromic Substrings", "https://leetcode.com/problems/palindromic-substrings/"],
+  ["Stone Game", "https://leetcode.com/problems/stone-game/"],
+  ["Minimum Score Triangulation of Polygon", "https://leetcode.com/problems/minimum-score-triangulation-of-polygon/"],
+  ["Last Stone Weight II", "https://leetcode.com/problems/last-stone-weight-ii/"],
+  ["Minimum Cost Tree from Leaf Values", "https://leetcode.com/problems/minimum-cost-tree-from-leaf-values/"],
+  ["Stone Game VII", "https://leetcode.com/problems/stone-game-vii/"],
+  ["Burst Balloons", "https://leetcode.com/problems/burst-balloons/"],
+  ["Remove Boxes", "https://leetcode.com/problems/remove-boxes/"],
+  ["Strange Printer", "https://leetcode.com/problems/strange-printer/"],
+  ["Minimum Cost to Merge Stones", "https://leetcode.com/problems/minimum-cost-to-merge-stones/"],
+  ["Allocate Mailboxes", "https://leetcode.com/problems/allocate-mailboxes/"],
+  ["Minimum Cost to Cut a Stick", "https://leetcode.com/problems/minimum-cost-to-cut-a-stick/"],
+  ["Stone Game V", "https://leetcode.com/problems/stone-game-v/"],
+  ["Can I Win", "https://leetcode.com/problems/can-i-win/"],
+  ["Partition to K Equal Sum Subsets", "https://leetcode.com/problems/partition-to-k-equal-sum-subsets/"],
+  ["Stickers to Spell Word", "https://leetcode.com/problems/stickers-to-spell-word/"],
+  ["Shortest Path Visiting All Nodes", "https://leetcode.com/problems/shortest-path-visiting-all-nodes/"],
+  ["Smallest Sufficient Team", "https://leetcode.com/problems/smallest-sufficient-team/"],
+  ["Maximum Students Taking Exam", "https://leetcode.com/problems/maximum-students-taking-exam/"],
+  ["Number of Ways to Wear Different Hats", "https://leetcode.com/problems/number-of-ways-to-wear-different-hats-to-each-other/"],
+  ["Find Minimum Time to Finish All Jobs", "https://leetcode.com/problems/find-minimum-time-to-finish-all-jobs/"],
+  ["Non-negative Integers without Consecutive Ones", "https://leetcode.com/problems/non-negative-integers-without-consecutive-ones/"],
+  ["Numbers At Most N Given Digit Set", "https://leetcode.com/problems/numbers-at-most-n-given-digit-set/"],
+  ["Numbers with Repeated Digits", "https://leetcode.com/problems/numbers-with-repeated-digits/"],
+  ["Unique Binary Search Trees II", "https://leetcode.com/problems/unique-binary-search-trees-ii/"],
+  ["House Robber III", "https://leetcode.com/problems/house-robber-iii/"],
+  ["Maximum Product of Splitted Binary Tree", "https://leetcode.com/problems/maximum-product-of-splitted-binary-tree/"],
+  ["Longest ZigZag Path in a Binary Tree", "https://leetcode.com/problems/longest-zigzag-path-in-a-binary-tree/"],
+  ["Binary Tree Cameras", "https://leetcode.com/problems/binary-tree-cameras/"],
+  ["Maximum Sum BST in Binary Tree", "https://leetcode.com/problems/maximum-sum-bst-in-binary-tree/"],
+  ["Is Subsequence", "https://leetcode.com/problems/is-subsequence/"],
+  ["Palindrome Partitioning", "https://leetcode.com/problems/palindrome-partitioning/"],
+  ["Palindrome Partitioning II", "https://leetcode.com/problems/palindrome-partitioning-ii/"],
+  ["Word Break", "https://leetcode.com/problems/word-break/"],
+  ["Unique Substrings in Wraparound String", "https://leetcode.com/problems/unique-substrings-in-wraparound-string/"],
+  ["Minimum ASCII Delete Sum for Two Strings", "https://leetcode.com/problems/minimum-ascii-delete-sum-for-two-strings/"],
+  ["Longest String Chain", "https://leetcode.com/problems/longest-string-chain/"],
+  ["Longest Valid Parentheses", "https://leetcode.com/problems/longest-valid-parentheses/"],
+  ["Distinct Subsequences", "https://leetcode.com/problems/distinct-subsequences/"],
+  ["Word Break II", "https://leetcode.com/problems/word-break-ii/"],
+  ["Concatenated Words", "https://leetcode.com/problems/concatenated-words/"],
+  ["Count Different Palindromic Subsequences", "https://leetcode.com/problems/count-different-palindromic-subsequences/"],
+  ["Distinct Subsequences II", "https://leetcode.com/problems/distinct-subsequences-ii/"],
+  ["Palindrome Partitioning III", "https://leetcode.com/problems/palindrome-partitioning-iii/"],
+  ["String Compression II", "https://leetcode.com/problems/string-compression-ii/"],
+  ["Number of Ways to Form a Target String Given a Dictionary", "https://leetcode.com/problems/number-of-ways-to-form-a-target-string-given-a-dictionary/"],
+  ["Soup Servings", "https://leetcode.com/problems/soup-servings/"],
+  ["New 21 Game", "https://leetcode.com/problems/new-21-game/"],
+  ["Airplane Seat Assignment Probability", "https://leetcode.com/problems/airplane-seat-assignment-probability/"],
+  ["Maximum Subarray", "https://leetcode.com/problems/maximum-subarray/"],
+  ["Maximum Product Subarray", "https://leetcode.com/problems/maximum-product-subarray/"],
+  ["Longest Turbulent Subarray", "https://leetcode.com/problems/longest-turbulent-subarray/"],
+  ["Maximum Subarray Sum with One Deletion", "https://leetcode.com/problems/maximum-subarray-sum-with-one-deletion/"],
+  ["K-Concatenation Maximum Sum", "https://leetcode.com/problems/k-concatenation-maximum-sum/"],
+  ["Largest Divisible Subset", "https://leetcode.com/problems/largest-divisible-subset/"],
+  ["Length of Longest Fibonacci Subsequence", "https://leetcode.com/problems/length-of-longest-fibonacci-subsequence/"],
+  ["Longest Palindromic Substring", "https://leetcode.com/problems/longest-palindromic-substring/"],
+  ["Longest Palindromic Subsequence", "https://leetcode.com/problems/longest-palindromic-subsequence/"],
+  ["Maximum Length of Repeated Subarray", "https://leetcode.com/problems/maximum-length-of-repeated-subarray/"],
+  ["Longest Common Subsequence", "https://leetcode.com/problems/longest-common-subsequence/"],
+  ["Regular Expression Matching", "https://leetcode.com/problems/regular-expression-matching/"],
+  ["Wildcard Matching", "https://leetcode.com/problems/wildcard-matching/"],
+  ["Edit Distance", "https://leetcode.com/problems/edit-distance/"],
+  ["Interleaving String", "https://leetcode.com/problems/interleaving-string/"],
+  ["Shortest Common Supersequence", "https://leetcode.com/problems/shortest-common-supersequence/"],
+  ["Minimum Insertion Steps to Make a String Palindrome", "https://leetcode.com/problems/minimum-insertion-steps-to-make-a-string-palindrome/"],
+  ["Longest Increasing Subsequence", "https://leetcode.com/problems/longest-increasing-subsequence/"],
+  ["Number of Longest Increasing Subsequence", "https://leetcode.com/problems/number-of-longest-increasing-subsequence/"],
+  ["Russian Doll Envelopes", "https://leetcode.com/problems/russian-doll-envelopes/"],
+  ["Minimum Number of Removals to Make Mountain Array", "https://leetcode.com/problems/minimum-number-of-removals-to-make-mountain-array/"],
+  ["Maximum Height by Stacking Cuboids", "https://leetcode.com/problems/maximum-height-by-stacking-cuboids/"],
+  ["Make Array Strictly Increasing", "https://leetcode.com/problems/make-array-strictly-increasing/"],
+  ["Wiggle Subsequence", "https://leetcode.com/problems/wiggle-subsequence/"],
+  ["Unique Paths", "https://leetcode.com/problems/unique-paths/"],
+  ["Unique Paths II", "https://leetcode.com/problems/unique-paths-ii/"],
+  ["Minimum Path Sum", "https://leetcode.com/problems/minimum-path-sum/"],
+  ["Dungeon Game", "https://leetcode.com/problems/dungeon-game/"],
+  ["Cherry Pickup", "https://leetcode.com/problems/cherry-pickup/"],
+  ["Cherry Pickup II", "https://leetcode.com/problems/cherry-pickup-ii/"],
+  ["Where Will the Ball Fall", "https://leetcode.com/problems/where-will-the-ball-fall/"],
+  ["Range Sum Query - Immutable", "https://leetcode.com/problems/range-sum-query-immutable/"],
+  ["Maximal Square", "https://leetcode.com/problems/maximal-square/"],
+  ["Range Sum Query 2D - Immutable", "https://leetcode.com/problems/range-sum-query-2d-immutable/"],
+  ["Count Square Submatrices with All Ones", "https://leetcode.com/problems/count-square-submatrices-with-all-ones/"],
+  ["Maximum Points You Can Obtain from Cards", "https://leetcode.com/problems/maximum-points-you-can-obtain-from-cards/"],
+  ["Maximal Rectangle", "https://leetcode.com/problems/maximal-rectangle/"],
+  ["Maximum Sum of 3 Non-Overlapping Subarrays", "https://leetcode.com/problems/maximum-sum-of-3-non-overlapping-subarrays/"],
+  ["Number of Submatrices That Sum to Target", "https://leetcode.com/problems/number-of-submatrices-that-sum-to-target/"],
+  ["Arithmetic Slices II - Subsequence", "https://leetcode.com/problems/arithmetic-slices-ii-subsequence/"],
+  ["Odd Even Jump", "https://leetcode.com/problems/odd-even-jump/"],
+  ["Constrained Subsequence Sum", "https://leetcode.com/problems/constrained-subsequence-sum/"],
+  ["Trapping Rain Water", "https://leetcode.com/problems/trapping-rain-water/"],
+  ["K Inverse Pairs Array", "https://leetcode.com/problems/k-inverse-pairs-array/"],
+  ["Continuous Subarray Sum", "https://leetcode.com/problems/continuous-subarray-sum/"],
+  ["Evaluate Division", "https://leetcode.com/problems/evaluate-division/"],
+  ["Keys and Rooms", "https://leetcode.com/problems/keys-and-rooms/"],
+  ["Find if Path Exists in Graph", "https://leetcode.com/problems/find-if-path-exists-in-graph/"],
+  ["Detonate the Maximum Bombs", "https://leetcode.com/problems/detonate-the-maximum-bombs/"],
+  ["Number of Islands", "https://leetcode.com/problems/number-of-islands/"],
+  ["Clone Graph", "https://leetcode.com/problems/clone-graph/"],
+  ["Find the Town Judge", "https://leetcode.com/problems/find-the-town-judge/"],
+  ["Minimum Number of Vertices to Reach All Nodes", "https://leetcode.com/problems/minimum-number-of-vertices-to-reach-all-nodes/"],
+  ["Maximal Network Rank", "https://leetcode.com/problems/maximal-network-rank/"],
+  ["Find Center of Star Graph", "https://leetcode.com/problems/find-center-of-star-graph/"],
+  ["Maximum Total Importance of Roads", "https://leetcode.com/problems/maximum-total-importance-of-roads/"],
+  ["Find Champion II", "https://leetcode.com/problems/find-champion-ii/"],
+  ["Course Schedule", "https://leetcode.com/problems/course-schedule/"],
+  ["Course Schedule II", "https://leetcode.com/problems/course-schedule-ii/"],
+  ["All Paths From Source to Target", "https://leetcode.com/problems/all-paths-from-source-to-target/"],
+  ["Find Eventual Safe States", "https://leetcode.com/problems/find-eventual-safe-states/"],
+  ["Sort Items by Groups Respecting Dependencies", "https://leetcode.com/problems/sort-items-by-groups-respecting-dependencies/"],
+  ["All Ancestors of a Node in a DAG", "https://leetcode.com/problems/all-ancestors-of-a-node-in-a-directed-acyclic-graph/"],
+  ["Parallel Courses III", "https://leetcode.com/problems/parallel-courses-iii/"],
+  ["Find All Possible Recipes from Given Supplies", "https://leetcode.com/problems/find-all-possible-recipes-from-given-supplies/"],
+  ["Build a Matrix with Conditions", "https://leetcode.com/problems/build-a-matrix-with-conditions/"],
+  ["Minimum Height Trees", "https://leetcode.com/problems/minimum-height-trees/"],
+  ["Number of Provinces", "https://leetcode.com/problems/number-of-provinces/"],
+  ["Redundant Connection", "https://leetcode.com/problems/redundant-connection/"],
+  ["Redundant Connection II", "https://leetcode.com/problems/redundant-connection-ii/"],
+  ["Most Stones Removed with Same Row or Column", "https://leetcode.com/problems/most-stones-removed-with-same-row-or-column/"],
+  ["Satisfiability of Equality Equations", "https://leetcode.com/problems/satisfiability-of-equality-equations/"],
+  ["Number of Operations to Make Network Connected", "https://leetcode.com/problems/number-of-operations-to-make-network-connected/"],
+  ["Remove Max Number of Edges to Keep Graph Fully Traversable", "https://leetcode.com/problems/remove-max-number-of-edges-to-keep-graph-fully-traversable/"],
+  ["Find All People with Secret", "https://leetcode.com/problems/find-all-people-with-secret/"],
+  ["Count Unreachable Pairs of Nodes", "https://leetcode.com/problems/count-unreachable-pairs-of-nodes-in-an-undirected-graph/"],
+  ["Accounts Merge", "https://leetcode.com/problems/accounts-merge/"],
+  ["Is Graph Bipartite?", "https://leetcode.com/problems/is-graph-bipartite/"],
+  ["Possible Bipartition", "https://leetcode.com/problems/possible-bipartition/"],
+  ["Network Delay Time", "https://leetcode.com/problems/network-delay-time/"],
+  ["Path with Maximum Probability", "https://leetcode.com/problems/path-with-maximum-probability/"],
+  ["Minimum Cost to Make at Least One Valid Path in a Grid", "https://leetcode.com/problems/minimum-cost-to-make-at-least-one-valid-path-in-a-grid/"],
+  ["Number of Ways to Arrive at Destination", "https://leetcode.com/problems/number-of-ways-to-arrive-at-destination/"],
+  ["Minimum Obstacle Removal to Reach Corner", "https://leetcode.com/problems/minimum-obstacle-removal-to-reach-corner/"],
+  ["Minimum Time to Visit a Cell in a Grid", "https://leetcode.com/problems/minimum-time-to-visit-a-cell-in-a-grid/"],
+  ["Swim in Rising Water", "https://leetcode.com/problems/swim-in-rising-water/"],
+  ["Path with Minimum Effort", "https://leetcode.com/problems/path-with-minimum-effort/"],
+  ["Shortest Path with Alternating Colors", "https://leetcode.com/problems/shortest-path-with-alternating-colors/"],
+  ["Cheapest Flights Within K Stops", "https://leetcode.com/problems/cheapest-flights-within-k-stops/"],
+  ["Find the City with the Smallest Number of Neighbors", "https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/"],
+  ["Design Graph with Shortest Path Calculator", "https://leetcode.com/problems/design-graph-with-shortest-path-calculator/"],
+  ["Minimum Cost to Convert String I", "https://leetcode.com/problems/minimum-cost-to-convert-string-i/"],
+  ["Largest Color Value in a Directed Graph", "https://leetcode.com/problems/largest-color-value-in-a-directed-graph/"],
+  ["Find Closest Node to Given Two Nodes", "https://leetcode.com/problems/find-closest-node-to-given-two-nodes/"],
+  ["Longest Cycle in a Graph", "https://leetcode.com/problems/longest-cycle-in-a-graph/"],
+  ["Shortest Cycle in a Graph", "https://leetcode.com/problems/shortest-cycle-in-a-graph/"],
+  ["Find Critical and Pseudo-Critical Edges in MST", "https://leetcode.com/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree/"],
+  ["Min Cost to Connect All Points", "https://leetcode.com/problems/min-cost-to-connect-all-points/"],
+  ["Critical Connections in a Network", "https://leetcode.com/problems/critical-connections-in-a-network/"],
+  ["Reconstruct Itinerary", "https://leetcode.com/problems/reconstruct-itinerary/"],
+  ["Valid Arrangement of Pairs", "https://leetcode.com/problems/valid-arrangement-of-pairs/"],
+  ["Cat and Mouse", "https://leetcode.com/problems/cat-and-mouse/"],
+  ["Flower Planting with No Adjacent", "https://leetcode.com/problems/flower-planting-with-no-adjacent/"],
+  ["Longest Increasing Path in a Matrix", "https://leetcode.com/problems/longest-increasing-path-in-a-matrix/"],
+  ["Number of Increasing Paths in a Grid", "https://leetcode.com/problems/number-of-increasing-paths-in-a-grid/"],
+  ["Implement Trie (Prefix Tree)", "https://leetcode.com/problems/implement-trie-prefix-tree/"],
+  ["Design Add and Search Words Data Structure", "https://leetcode.com/problems/design-add-and-search-words-data-structure/"],
+  ["Replace Words", "https://leetcode.com/problems/replace-words/"],
+  ["Search Suggestions System", "https://leetcode.com/problems/search-suggestions-system/"],
+  ["Longest Word in Dictionary", "https://leetcode.com/problems/longest-word-in-dictionary/"],
+  ["Prefix and Suffix Search", "https://leetcode.com/problems/prefix-and-suffix-search/"],
+  ["Map Sum Pairs", "https://leetcode.com/problems/map-sum-pairs/"],
+  ["Implement Magic Dictionary", "https://leetcode.com/problems/implement-magic-dictionary/"],
+  ["Stream of Characters", "https://leetcode.com/problems/stream-of-characters/"],
+  ["Maximum XOR of Two Numbers in an Array", "https://leetcode.com/problems/maximum-xor-of-two-numbers-in-an-array/"],
+  ["Maximum XOR with an Element from Array", "https://leetcode.com/problems/maximum-xor-with-an-element-from-array/"],
+  ["Insert Delete GetRandom O(1)", "https://leetcode.com/problems/insert-delete-getrandom-o1/"],
+  ["Insert Delete GetRandom O(1) – Duplicates Allowed", "https://leetcode.com/problems/insert-delete-getrandom-o1-duplicates-allowed/"],
+  ["All O'one Data Structure", "https://leetcode.com/problems/all-oone-data-structure/"],
+  ["LFU Cache", "https://leetcode.com/problems/lfu-cache/"],
+  ["Dinner Plate Stacks", "https://leetcode.com/problems/dinner-plate-stacks/"],
+  ["Design Skiplist", "https://leetcode.com/problems/design-skiplist/"],
+  ["Snapshot Array", "https://leetcode.com/problems/snapshot-array/"],
+  ["Design Circular Deque", "https://leetcode.com/problems/design-circular-deque/"],
+  ["My Calendar I", "https://leetcode.com/problems/my-calendar-i/"],
+  ["My Calendar II", "https://leetcode.com/problems/my-calendar-ii/"],
+  ["My Calendar III", "https://leetcode.com/problems/my-calendar-iii/"],
+  ["Maximum Frequency Stack", "https://leetcode.com/problems/maximum-frequency-stack/"],
+  ["Online Stock Span", "https://leetcode.com/problems/online-stock-span/"],
+  ["Encrypt and Decrypt Strings", "https://leetcode.com/problems/encrypt-and-decrypt-strings/"],
+];
+
+// ═══════════════════════════════════════════════════════════
+//  DEDUPLICATE + SHUFFLE (order persisted in localStorage)
+// ═══════════════════════════════════════════════════════════
+function slug(url) {
+  return url.replace(/https?:\/\/leetcode\.com\/problems\//, '').replace(/\/.*$/, '').replace(/\/$/, '');
+}
+
+const seen = new Set();
+const unique = [];
+RAW.forEach(([title, url]) => {
+  const s = slug(url);
+  if (!seen.has(s)) { seen.add(s); unique.push({ title, url, slug: s }); }
+});
+
+// Persist the shuffled order so it stays the same across reloads
+const ORDER_KEY = 'lc-shuffle-order-v3';
+let shuffledOrder = JSON.parse(localStorage.getItem(ORDER_KEY) || 'null');
+
+if (!shuffledOrder || shuffledOrder.length !== unique.length) {
+  shuffledOrder = unique.map((_, i) => i);
+  for (let i = shuffledOrder.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffledOrder[i], shuffledOrder[j]] = [shuffledOrder[j], shuffledOrder[i]];
+  }
+  localStorage.setItem(ORDER_KEY, JSON.stringify(shuffledOrder));
+}
+
+const allProblems = shuffledOrder.map(i => unique[i]);
+
+// ═══════════════════════════════════════════════════════════
+//  APP STATE  (same keys — your existing progress is kept!)
+// ═══════════════════════════════════════════════════════════
+const STORAGE_KEY = 'lc-tracker-v2';
+const STREAK_KEY = 'lc-streak-v2';
+
+function loadState() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { return {}; }
+}
+function saveState(state) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+function loadStreak() {
+  try { return JSON.parse(localStorage.getItem(STREAK_KEY)) || { count: 0, lastDate: null }; } catch { return { count: 0, lastDate: null }; }
+}
+function saveStreak(s) {
+  localStorage.setItem(STREAK_KEY, JSON.stringify(s));
+}
+function todayStr() {
+  return new Date().toISOString().slice(0, 10);
+}
+function updateStreak() {
+  const s = loadStreak();
+  const today = todayStr();
+  if (s.lastDate === today) return s;
+  const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+  if (s.lastDate === yesterday) { s.count++; } else { s.count = 1; }
+  s.lastDate = today;
+  saveStreak(s);
+  return s;
+}
+
+// ═══════════════════════════════════════════════════════════
+//  RENDER — flat shuffled list, no grouping
+// ═══════════════════════════════════════════════════════════
+const app = document.getElementById('app');
+let currentFilter = 'all';
+let searchTerm = '';
+
+function render() {
+  const state = loadState();
+  const streak = loadStreak();
+
+  let solvedCount = 0;
+  allProblems.forEach(p => { if (state[p.slug]) solvedCount++; });
+  const totalCount = allProblems.length;
+
+  document.getElementById('solvedCount').textContent = solvedCount;
+  document.getElementById('totalCount').textContent = totalCount;
+  document.getElementById('streakCount').textContent = streak.count;
+
+  const pct = totalCount ? solvedCount / totalCount : 0;
+  const circ = 2 * Math.PI * 18;
+  document.getElementById('progressCircle').setAttribute('stroke-dashoffset', circ * (1 - pct));
+
+  let rows = '';
+  let visibleIdx = 0;
+  allProblems.forEach(p => {
+    const isSolved = !!state[p.slug];
+    if (currentFilter === 'solved' && !isSolved) return;
+    if (currentFilter === 'unsolved' && isSolved) return;
+    if (searchTerm && !p.title.toLowerCase().includes(searchTerm)) return;
+    visibleIdx++;
+    rows += `<div class="problem ${isSolved ? 'solved' : ''}" data-slug="${p.slug}" id="p-${p.slug}">
+      <input type="checkbox" ${isSolved ? 'checked' : ''} data-slug="${p.slug}">
+      <span class="num">${visibleIdx}</span>
+      <a href="${p.url}" target="_blank" rel="noopener">${p.title}</a>
+    </div>`;
+  });
+
+  if (visibleIdx === 0) {
+    app.innerHTML = `<div class="empty"><div class="icon">🔍</div><p>No problems match your filter.</p></div>`;
+  } else {
+    app.innerHTML = `<div class="problem-list">${rows}</div>`;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
+//  EVENT HANDLERS
+// ═══════════════════════════════════════════════════════════
+
+app.addEventListener('change', (e) => {
+  if (e.target.type !== 'checkbox') return;
+  const s = e.target.dataset.slug;
+  const state = loadState();
+  if (e.target.checked) {
+    state[s] = true;
+    updateStreak();
+    showToast('✅ Marked as solved!');
+  } else {
+    delete state[s];
+    showToast('↩️ Marked as unsolved');
+  }
+  saveState(state);
+  render();
+});
+
+document.getElementById('searchInput').addEventListener('input', (e) => {
+  searchTerm = e.target.value.toLowerCase().trim();
+  render();
+});
+
+document.querySelectorAll('.pill').forEach(pill => {
+  pill.addEventListener('click', () => {
+    document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+    pill.classList.add('active');
+    currentFilter = pill.dataset.filter;
+    render();
+  });
+});
+
+document.getElementById('randomBtn').addEventListener('click', () => {
+  const state = loadState();
+  const unsolved = allProblems.filter(p => !state[p.slug]);
+  if (unsolved.length === 0) {
+    showToast('🎉 You solved everything! Amazing!');
+    return;
+  }
+  const pick = unsolved[Math.floor(Math.random() * unsolved.length)];
+
+  const overlay = document.getElementById('modalOverlay');
+  document.getElementById('modalCategory').textContent = `${unsolved.length} unsolved remaining`;
+  const link = document.getElementById('modalLink');
+  link.textContent = pick.title;
+  link.href = pick.url;
+  overlay.classList.add('show');
+
+  if (currentFilter !== 'all') {
+    document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+    document.querySelector('.pill[data-filter="all"]').classList.add('active');
+    currentFilter = 'all';
+    searchTerm = '';
+    document.getElementById('searchInput').value = '';
+    render();
+  }
+  const el = document.getElementById('p-' + pick.slug);
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    el.classList.add('highlighted');
+    setTimeout(() => el.classList.remove('highlighted'), 4000);
+  }
+});
+
+document.getElementById('modalClose').addEventListener('click', () => {
+  document.getElementById('modalOverlay').classList.remove('show');
+});
+document.getElementById('modalOverlay').addEventListener('click', (e) => {
+  if (e.target === e.currentTarget) e.currentTarget.classList.remove('show');
+});
+
+document.getElementById('resetBtn').addEventListener('click', () => {
+  if (confirm('⚠️ Reset ALL progress? This cannot be undone.')) {
+    localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(STREAK_KEY);
+    localStorage.removeItem(ORDER_KEY);
+    showToast('🗑 Progress reset');
+    location.reload();
+  }
+});
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === '/' && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
+    e.preventDefault();
+    document.getElementById('searchInput').focus();
+  }
+  if (e.key === 'Escape') {
+    document.getElementById('modalOverlay').classList.remove('show');
+  }
+});
+
+// ═══════════════════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════════════════
+render();
+</script>
+</body>
+</html>
+
