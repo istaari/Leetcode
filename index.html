@@ -86,6 +86,24 @@
   ::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
   ::-webkit-scrollbar-thumb:hover{background:var(--text2)}
 
+  /* ── Light Theme ── */
+  [data-theme="light"]{
+    --bg:#f6f8fa;--surface:#ffffff;--surface2:#f0f2f5;--border:#d0d7de;
+    --text:#1f2328;--text2:#656d76;--accent:#0969da;--accent2:#0550ae;
+    --green:#1a7f37;--green-bg:rgba(26,127,55,.1);--orange:#9a6700;
+    --red:#cf222e;--purple:#8250df;
+    --shadow:0 2px 8px rgba(0,0,0,.08);
+  }
+  [data-theme="light"] .header{background:linear-gradient(135deg,#f6f8fa 0%,#ffffff 100%)}
+  [data-theme="light"] .problem:hover{background:rgba(9,105,218,.04)}
+  [data-theme="light"] .problem.highlighted{background:rgba(154,103,0,.1);animation:pulse-light 1.5s ease 2}
+  @keyframes pulse-light{0%,100%{background:rgba(154,103,0,.1)}50%{background:rgba(154,103,0,.2)}}
+  [data-theme="light"] ::-webkit-scrollbar-track{background:#f6f8fa}
+
+  /* ── Theme Toggle ── */
+  .theme-toggle{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);width:38px;height:38px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.1rem;transition:all .2s;flex-shrink:0}
+  .theme-toggle:hover{border-color:var(--accent);background:var(--surface2)}
+
   /* ── Responsive ── */
   @media(max-width:640px){
     .header-inner{flex-direction:column;align-items:flex-start}
@@ -105,6 +123,7 @@
       <span>LeetCode Tracker</span>
     </div>
     <div class="stats-bar">
+      <button class="theme-toggle" id="themeToggle" title="Toggle theme">🌙</button>
       <div class="stat">
         <svg class="progress-ring" viewBox="0 0 44 44">
           <circle cx="22" cy="22" r="18" fill="none" stroke="var(--border)" stroke-width="4"/>
@@ -602,6 +621,24 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
     document.getElementById('modalOverlay').classList.remove('show');
   }
+});
+
+// ═══════════════════════════════════════════════════════════
+//  THEME TOGGLE
+// ═══════════════════════════════════════════════════════════
+const THEME_KEY = 'lc-theme';
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  document.getElementById('themeToggle').textContent = theme === 'light' ? '☀️' : '🌙';
+  localStorage.setItem(THEME_KEY, theme);
+}
+(function initTheme() {
+  const saved = localStorage.getItem(THEME_KEY);
+  if (saved) applyTheme(saved);
+})();
+document.getElementById('themeToggle').addEventListener('click', () => {
+  const current = document.documentElement.getAttribute('data-theme');
+  applyTheme(current === 'light' ? 'dark' : 'light');
 });
 
 // ═══════════════════════════════════════════════════════════

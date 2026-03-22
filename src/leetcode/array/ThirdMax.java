@@ -33,8 +33,4 @@ public class ThirdMax {
         return thirdMax == null ? firstMax : thirdMax;
     }
 
-    public static void main(String[] args) {
-        int[] a = new int[]{2, 2, 3, 1};
-    }
-
 }
