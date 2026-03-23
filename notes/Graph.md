@@ -404,7 +404,7 @@ graph TD
     S2 --> B
     S2 --> C
 
-    note["Queue Initial State: [S1, S2]"]
+    info["Queue Initial State: S1, S2"]
 ```
 
 **Java Template:**
@@ -574,7 +574,7 @@ public int shortestPathAllKeys(String[] grid) {
 ### 5\. Bidirectional BFS
 
 **Concept:**
-Instead of searching from Source $\rightarrow$ Target, we search from **Source $\rightarrow$ Middle $\leftarrow$ Target** simultaneously.
+Instead of searching from Source → Target, we search from **Source → Middle ← Target** simultaneously.
 This drastically reduces the search space (branching factor) because two small circles have a smaller area than one giant circle covering the same distance.
 
   * **Optimization:** Always expand the *smaller* set of nodes in the next iteration to balance the search.
@@ -601,8 +601,8 @@ graph TD
     style B1 fill:#ff9,stroke:#333
     style Y1 fill:#ff9,stroke:#333
     
-    linkStyle 6 stroke:red,stroke-width:4px,dasharray: 5 5;
-    note[Search Stops when sets intersect here]
+    linkStyle 6 stroke:red,stroke-width:4px,stroke-dasharray:5 5
+    info["Search Stops when sets intersect here"]
 ```
 
 **Java Template:**
@@ -666,7 +666,7 @@ graph TD
     style E fill:#dfd,stroke:#333
     style F fill:#eff,stroke:#333
     
-    note["1. A->B->C->D (Hit dead end)<br/>2. Backtrack to C<br/>3. Visit E<br/>4. Backtrack to A, then visit F"]
+    info["1. A→B→C→D Hit dead end<br/>2. Backtrack to C<br/>3. Visit E<br/>4. Backtrack to A, then visit F"]
 ```
 
 **Java Template:**
@@ -804,8 +804,8 @@ graph TD
     B --> C["Node C (Gray/Visiting)"]
     C --> A
     
-    linkStyle 2 stroke:red,stroke-width:4px,dasharray: 5 5;
-    note[Red Line points to Gray node = CYCLE]
+    linkStyle 2 stroke:red,stroke-width:4px,stroke-dasharray:5 5
+    info["Red Line points to Gray node = CYCLE"]
 ```
 
 **Java Template:**
@@ -853,7 +853,7 @@ graph TD
     1 -.-> 2
     2 -.-> 3
     
-    note[Last in Stack = First in Topo Order]
+    info["Last in Stack = First in Topo Order"]
 ```
 
 **Java Template:**
@@ -890,13 +890,13 @@ The diagram shows the "back edge" (dotted) allowing the child to reach an ancest
 graph TD
     A((Node A<br/>Time: 1<br/>Low: 1)) --> B((Node B<br/>Time: 2<br/>Low: 1))
     B --> C((Node C<br/>Time: 3<br/>Low: 1))
-    C -. Back Edge .-> A
+    C -."Back Edge".-> A
     B --> D((Node D<br/>Time: 4<br/>Low: 4))
     
     style C stroke-dasharray: 5 5
-    linkStyle 2 stroke:red,stroke-width:2px;
+    linkStyle 2 stroke:red,stroke-width:2px
     
-    note[C can reach A, so C & B inherit Low=1.<br/>D cannot reach above B. B-D is a BRIDGE.]
+    info["C can reach A, so C and B inherit Low=1.<br/>D cannot reach above B. B-D is a BRIDGE."]
 ```
 
 **Java Template:**
@@ -953,7 +953,7 @@ graph LR
     5[Push JFK]
     end
     
-    note[DFS removes edges.<br/>When stuck at LHR, push LHR.<br/>Backtrack to JFK, push JFK...]
+    info["DFS removes edges.<br/>When stuck at LHR, push LHR.<br/>Backtrack to JFK, push JFK..."]
 ```
 
 **Java Template:**
@@ -1614,18 +1614,18 @@ Finds all **SCCs** in a **single DFS pass** using **discovery times** and **low-
 
 ```mermaid
 graph TD
-    A["Visit node u: disc[u] = low[u] = time++"] --> B["Push u onto stack"]
+    A["Visit node u: disc_u = low_u = time++"] --> B["Push u onto stack"]
     B --> C["For each neighbor v of u"]
     C --> D{"v unvisited?"}
-    D -- "Yes" --> E["DFS(v), then low[u] = min(low[u], low[v])"]
+    D -- "Yes" --> E["DFS v, then low_u = min low_u, low_v"]
     D -- "No" --> F{"v on stack?"}
-    F -- "Yes" --> G["Back edge: low[u] = min(low[u], disc[v])"]
-    F -- "No" --> H["Cross edge to finished SCC — ignore"]
+    F -- "Yes" --> G["Back edge: low_u = min low_u, disc_v"]
+    F -- "No" --> H["Cross edge to finished SCC - ignore"]
     E --> C
     G --> C
     H --> C
-    C -- "All neighbors done" --> I{"disc[u] == low[u]?"}
-    I -- "Yes" --> J["🎯 u is SCC root: pop stack until u → one SCC"]
+    C -- "All neighbors done" --> I{"disc_u == low_u?"}
+    I -- "Yes" --> J["SCC root found: pop stack until u"]
     I -- "No" --> K["Return to parent"]
 
     style A fill:#1a1a2e,stroke:#e94560,color:#eee
@@ -2038,19 +2038,19 @@ Finds the shortest path from a **single source** to all other nodes in a graph w
 
 ```mermaid
 graph TD
-    A["Initialize: dist[source] = 0, all others = ∞"] --> B["Push (source, 0) into min-heap"]
+    A["Initialize: dist_source = 0, all others = INF"] --> B["Push source, 0 into min-heap"]
     B --> C["Pop node u with smallest dist"]
     C --> D{"u already visited?"}
     D -- "Yes" --> C
     D -- "No" --> E["Mark u as visited"]
     E --> F["For each neighbor v of u"]
-    F --> G{"dist[u] + weight < dist[v]?"}
-    G -- "Yes" --> H["Relax: dist[v] = dist[u] + weight"]
-    H --> I["Push (v, dist[v]) into heap"]
+    F --> G{"dist_u + weight less than dist_v?"}
+    G -- "Yes" --> H["Relax: dist_v = dist_u + weight"]
+    H --> I["Push v, dist_v into heap"]
     I --> F
     G -- "No" --> F
     F -- "Done" --> C
-    C -- "Heap empty" --> J["✅ dist[] contains all shortest paths"]
+    C -- "Heap empty" --> J["Done: dist contains all shortest paths"]
 
     style A fill:#1a1a2e,stroke:#e94560,color:#eee
     style H fill:#0f3460,stroke:#e94560,color:#eee
@@ -2160,17 +2160,17 @@ Finds the shortest path from a **single source** to all other nodes. Unlike Dijk
 
 ```mermaid
 graph TD
-    A["dist[source] = 0, all others = ∞"] --> B["Repeat V-1 times"]
-    B --> C["For EVERY edge (u, v, w) in graph"]
-    C --> D{"dist[u] + w < dist[v]?"}
-    D -- "Yes" --> E["Relax: dist[v] = dist[u] + w"]
+    A["dist_source = 0, all others = INF"] --> B["Repeat V-1 times"]
+    B --> C["For EVERY edge u, v, w in graph"]
+    C --> D{"dist_u + w less than dist_v?"}
+    D -- "Yes" --> E["Relax: dist_v = dist_u + w"]
     D -- "No" --> C
     E --> C
     C -- "All edges done" --> B
     B -- "V-1 rounds done" --> F["One more pass over all edges"]
     F --> G{"Any edge still relaxable?"}
-    G -- "Yes" --> H["⚠️ Negative cycle detected!"]
-    G -- "No" --> I["✅ dist[] is correct"]
+    G -- "Yes" --> H["Negative cycle detected!"]
+    G -- "No" --> I["Done: dist is correct"]
 
     style A fill:#1a1a2e,stroke:#e94560,color:#eee
     style H fill:#8b0000,stroke:#e94560,color:#eee
@@ -2283,16 +2283,16 @@ $$dist[i][j] = \min(dist[i][j],\ dist[i][k] + dist[k][j])$$
 
 ```mermaid
 graph TD
-    A["Initialize dist[][] from edge weights"] --> B["For each intermediate node k = 0 to V-1"]
+    A["Initialize dist matrix from edge weights"] --> B["For each intermediate node k = 0 to V-1"]
     B --> C["For each source i = 0 to V-1"]
     C --> D["For each destination j = 0 to V-1"]
-    D --> E{"dist[i][k] + dist[k][j] < dist[i][j]?"}
-    E -- "Yes" --> F["dist[i][j] = dist[i][k] + dist[k][j]"]
+    D --> E{"dist i,k + dist k,j less than dist i,j?"}
+    E -- "Yes" --> F["Update: dist i,j = dist i,k + dist k,j"]
     E -- "No" --> D
     F --> D
     D -- "Done" --> C
     C -- "Done" --> B
-    B -- "Done" --> G["✅ dist[i][j] = shortest path for all pairs"]
+    B -- "Done" --> G["Done: dist i,j = shortest path for all pairs"]
 
     style A fill:#1a1a2e,stroke:#e94560,color:#eee
     style F fill:#0f3460,stroke:#e94560,color:#eee
