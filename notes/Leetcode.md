@@ -595,8 +595,382 @@ TreeNode findMin(TreeNode node) {
 
 ### **AVL Tree**
 
+An **AVL Tree** (Adelson-Velsky & Landis) is a self-balancing BST where the **balance factor** of every node is in $\{-1, 0, 1\}$.
+
+$$\text{Balance Factor}(node) = \text{height}(node.left) - \text{height}(node.right)$$
+
+After every insertion or deletion, the tree checks balance factors bottom-up and applies **rotations** to restore balance. This guarantees $O(\log n)$ for search, insert, and delete.
+
+**Four Rotation Cases:**
+
+| Case | Trigger | Rotation |
+|------|---------|----------|
+| Left-Left (LL) | BF > 1 and inserted in left subtree of left child | Right Rotate |
+| Right-Right (RR) | BF < -1 and inserted in right subtree of right child | Left Rotate |
+| Left-Right (LR) | BF > 1 and inserted in right subtree of left child | Left Rotate on left child, then Right Rotate |
+| Right-Left (RL) | BF < -1 and inserted in left subtree of right child | Right Rotate on right child, then Left Rotate |
+
+```mermaid
+graph LR
+    subgraph "LL → Right Rotate"
+        direction TB
+        A1["z (BF=2)"] --> B1["y"] & X1["T4"]
+        B1 --> C1["x"] & D1["T3"]
+        C1 --> E1["T1"] & F1["T2"]
+    end
+
+    subgraph "After Right Rotate"
+        direction TB
+        A2["y (balanced)"] --> B2["x"] & C2["z"]
+        B2 --> D2["T1"] & E2["T2"]
+        C2 --> F2["T3"] & G2["T4"]
+    end
+```
+
+```java
+public class AVLTree {
+
+    private static class Node {
+        int key, height;
+        Node left, right;
+
+        Node(int key) {
+            this.key = key;
+            this.height = 1; // new node is a leaf with height 1
+        }
+    }
+
+    private Node root;
+
+    // ── Height & Balance Factor ──────────────────────────────────
+    private int height(Node n) {
+        return (n == null) ? 0 : n.height;
+    }
+
+    private int balanceFactor(Node n) {
+        return (n == null) ? 0 : height(n.left) - height(n.right);
+    }
+
+    private void updateHeight(Node n) {
+        n.height = 1 + Math.max(height(n.left), height(n.right));
+    }
+
+    // ── Rotations ────────────────────────────────────────────────
+    //
+    //  Right Rotate (y):         Left Rotate (x):
+    //       y            x            x            y
+    //      / \    →     / \          / \    →     / \
+    //     x   T3      T1   y       T1   y      x   T3
+    //    / \              / \          / \     / \
+    //  T1   T2          T2   T3     T2   T3  T1  T2
+    //
+    private Node rightRotate(Node y) {
+        Node x = y.left;
+        Node T2 = x.right;
+
+        x.right = y;       // rotate
+        y.left = T2;
+
+        updateHeight(y);   // update y first (it's now lower)
+        updateHeight(x);
+        return x;          // new root of this subtree
+    }
+
+    private Node leftRotate(Node x) {
+        Node y = x.right;
+        Node T2 = y.left;
+
+        y.left = x;        // rotate
+        x.right = T2;
+
+        updateHeight(x);   // update x first (it's now lower)
+        updateHeight(y);
+        return y;           // new root of this subtree
+    }
+
+    // ── Rebalance ────────────────────────────────────────────────
+    // Called after insert/delete. Checks BF and applies the
+    // appropriate single or double rotation.
+    private Node rebalance(Node node) {
+        updateHeight(node);
+        int bf = balanceFactor(node);
+
+        // Left-heavy
+        if (bf > 1) {
+            if (balanceFactor(node.left) < 0) {
+                node.left = leftRotate(node.left); // LR case
+            }
+            return rightRotate(node);              // LL case
+        }
+
+        // Right-heavy
+        if (bf < -1) {
+            if (balanceFactor(node.right) > 0) {
+                node.right = rightRotate(node.right); // RL case
+            }
+            return leftRotate(node);                  // RR case
+        }
+
+        return node; // balanced
+    }
+
+    // ── Insert ───────────────────────────────────────────────────
+    public void insert(int key) {
+        root = insert(root, key);
+    }
+
+    private Node insert(Node node, int key) {
+        if (node == null) return new Node(key);
+
+        if (key < node.key)      node.left  = insert(node.left, key);
+        else if (key > node.key) node.right = insert(node.right, key);
+        else                     return node; // duplicate keys not allowed
+
+        return rebalance(node);
+    }
+
+    // ── Delete ───────────────────────────────────────────────────
+    public void delete(int key) {
+        root = delete(root, key);
+    }
+
+    private Node delete(Node node, int key) {
+        if (node == null) return null;
+
+        if (key < node.key)      node.left  = delete(node.left, key);
+        else if (key > node.key) node.right = delete(node.right, key);
+        else {
+            // Found node to delete
+            if (node.left == null)  return node.right;
+            if (node.right == null) return node.left;
+
+            // Two children: replace with in-order successor (smallest in right subtree)
+            Node successor = node.right;
+            while (successor.left != null) successor = successor.left;
+            node.key = successor.key;
+            node.right = delete(node.right, successor.key);
+        }
+
+        return rebalance(node);
+    }
+
+    // ── Search ───────────────────────────────────────────────────
+    public boolean search(int key) {
+        Node curr = root;
+        while (curr != null) {
+            if (key == curr.key)      return true;
+            else if (key < curr.key)  curr = curr.left;
+            else                      curr = curr.right;
+        }
+        return false;
+    }
+}
+```
+
+**Walkthrough — Insert 10, 20, 30, 25, 28:**
+
+```
+Insert 10:       Insert 20:        Insert 30 (RR):     Insert 25:          Insert 28 (RL at 30):
+  10                10                 20                  20                    20
+                      \               /  \                /  \                  /  \
+                      20            10    30            10    30              10    28
+                                                            /                    /  \
+                                                          25                  25    30
+```
+
+**Complexity:**
+
+| Operation | Time | Space |
+|-----------|------|-------|
+| Search | $O(\log n)$ | $O(1)$ iterative |
+| Insert | $O(\log n)$ | $O(\log n)$ stack |
+| Delete | $O(\log n)$ | $O(\log n)$ stack |
+
+**When to use:** When you need guaranteed $O(\log n)$ lookups and the dataset has frequent lookups relative to inserts/deletes. AVL trees are more strictly balanced than Red-Black trees, so lookups are slightly faster but insertions/deletions may be slightly slower due to more rotations.
+
 
 ### **RED-BLACK TREE**
+
+A **Red-Black Tree** is a self-balancing BST where each node stores an extra bit: its **color** (Red or Black). The coloring rules ensure the tree stays approximately balanced.
+
+**Properties (Invariants):**
+
+1. Every node is either **Red** or **Black**.
+2. The **root** is always Black.
+3. Every `null` leaf (NIL) is Black.
+4. If a node is Red, **both its children must be Black** (no two consecutive reds).
+5. Every path from a node to its descendant NIL leaves has the **same number of Black nodes** (black-height).
+
+These rules guarantee: $h \le 2 \log_2(n+1)$, so all operations are $O(\log n)$.
+
+**Fixing Violations After Insert (new node is always Red):**
+
+| Case | Uncle Color | Action |
+|------|-------------|--------|
+| 1 | Uncle is **Red** | Recolor parent & uncle to Black, grandparent to Red. Move up. |
+| 2 | Uncle is **Black**, node is inner child | Rotate node's parent (transforms to Case 3) |
+| 3 | Uncle is **Black**, node is outer child | Rotate grandparent + recolor |
+
+```java
+public class RedBlackTree {
+
+    private static final boolean RED   = true;
+    private static final boolean BLACK = false;
+
+    private static class Node {
+        int key;
+        boolean color;
+        Node left, right, parent;
+
+        Node(int key) {
+            this.key   = key;
+            this.color = RED; // new nodes are always Red
+        }
+    }
+
+    private Node root;
+    private final Node NIL; // sentinel for null leaves
+
+    public RedBlackTree() {
+        NIL = new Node(0);
+        NIL.color = BLACK;
+        NIL.left = NIL.right = NIL.parent = NIL;
+        root = NIL;
+    }
+
+    // ── Rotations ────────────────────────────────────────────────
+    private void leftRotate(Node x) {
+        Node y = x.right;
+        x.right = y.left;
+        if (y.left != NIL) y.left.parent = x;
+
+        y.parent = x.parent;
+        if (x.parent == NIL)           root = y;
+        else if (x == x.parent.left)   x.parent.left = y;
+        else                           x.parent.right = y;
+
+        y.left = x;
+        x.parent = y;
+    }
+
+    private void rightRotate(Node y) {
+        Node x = y.left;
+        y.left = x.right;
+        if (x.right != NIL) x.right.parent = y;
+
+        x.parent = y.parent;
+        if (y.parent == NIL)           root = x;
+        else if (y == y.parent.left)   y.parent.left = x;
+        else                           y.parent.right = x;
+
+        x.right = y;
+        y.parent = x;
+    }
+
+    // ── Insert ───────────────────────────────────────────────────
+    public void insert(int key) {
+        Node z = new Node(key);
+        z.left = z.right = z.parent = NIL;
+
+        // Standard BST insert
+        Node parent = NIL, curr = root;
+        while (curr != NIL) {
+            parent = curr;
+            if (key < curr.key)      curr = curr.left;
+            else if (key > curr.key) curr = curr.right;
+            else                     return; // duplicate
+        }
+        z.parent = parent;
+        if (parent == NIL)           root = z;
+        else if (key < parent.key)   parent.left = z;
+        else                         parent.right = z;
+
+        // Fix Red-Black violations
+        insertFixup(z);
+    }
+
+    // ── Insert Fixup ─────────────────────────────────────────────
+    // We only violate Property 4 (red parent + red child).
+    // Walk up the tree, handling 3 symmetric cases per side.
+    private void insertFixup(Node z) {
+        while (z.parent.color == RED) {
+            if (z.parent == z.parent.parent.left) {
+                Node uncle = z.parent.parent.right;
+
+                if (uncle.color == RED) {
+                    // Case 1: Uncle is Red → recolor and move up
+                    z.parent.color = BLACK;
+                    uncle.color = BLACK;
+                    z.parent.parent.color = RED;
+                    z = z.parent.parent;
+                } else {
+                    if (z == z.parent.right) {
+                        // Case 2: z is right child → left rotate to make it Case 3
+                        z = z.parent;
+                        leftRotate(z);
+                    }
+                    // Case 3: z is left child → right rotate grandparent + recolor
+                    z.parent.color = BLACK;
+                    z.parent.parent.color = RED;
+                    rightRotate(z.parent.parent);
+                }
+            } else {
+                // Mirror: parent is right child of grandparent
+                Node uncle = z.parent.parent.left;
+
+                if (uncle.color == RED) {
+                    z.parent.color = BLACK;
+                    uncle.color = BLACK;
+                    z.parent.parent.color = RED;
+                    z = z.parent.parent;
+                } else {
+                    if (z == z.parent.left) {
+                        z = z.parent;
+                        rightRotate(z);
+                    }
+                    z.parent.color = BLACK;
+                    z.parent.parent.color = RED;
+                    leftRotate(z.parent.parent);
+                }
+            }
+        }
+        root.color = BLACK; // ensure root is always Black
+    }
+
+    // ── Search ───────────────────────────────────────────────────
+    public boolean search(int key) {
+        Node curr = root;
+        while (curr != NIL) {
+            if (key == curr.key)      return true;
+            else if (key < curr.key)  curr = curr.left;
+            else                      curr = curr.right;
+        }
+        return false;
+    }
+}
+```
+
+**Walkthrough — Insert 10, 20, 30, 15:**
+
+```
+Insert 10 (root→Black):     Insert 20:             Insert 30 (Case 3):     Insert 15 (Case 1):
+    10(B)                     10(B)                     20(B)                   20(B)
+                                \                      /    \                  /    \
+                               20(R)                10(R)  30(R)           10(B)  30(B)
+                                                                             \
+                                                                            15(R)
+```
+
+**AVL vs Red-Black Tree:**
+
+| Property | AVL Tree | Red-Black Tree |
+|----------|----------|----------------|
+| Balance | Strictly balanced (BF ∈ {-1,0,1}) | Approximately balanced (h ≤ 2 log n) |
+| Rotations per insert | Up to $O(\log n)$ | At most 2 |
+| Rotations per delete | Up to $O(\log n)$ | At most 3 |
+| Lookup speed | Slightly faster | Slightly slower |
+| Insert/Delete speed | Slightly slower | Slightly faster |
+| Use case | Read-heavy workloads | Write-heavy workloads (Java `TreeMap`, Linux kernel) |
 
 
 ### **SEGMENT TREE**
@@ -689,8 +1063,400 @@ graph TD
 
 ```
 
+**How it works:**
+- Each node stores an aggregate (here: sum) of a contiguous subarray.
+- The root covers the entire array `[0, n-1]`.
+- Its left child covers `[0, mid]`, right child covers `[mid+1, n-1]`, and so on recursively until each leaf covers a single element.
 
-### **B-TREE AND B+ TREE**
+**Tree layout (stored in a flat array, 0-indexed):**
+- Node `i`'s left child = `2*i + 1`
+- Node `i`'s right child = `2*i + 2`
+- We allocate `4*n` space to safely hold all nodes.
+
+**Time:** Build $O(n)$, Query $O(\log n)$, Update $O(\log n)$
+
+```java
+public class SegmentTree {
+
+    private final int[] tree; // internal array storing node values
+    private final int n;      // size of the original array
+
+    public SegmentTree(int[] arr) {
+        n = arr.length;
+        tree = new int[4 * n]; // 4*n guarantees enough space for any n
+        buildTree(arr, 0, 0, n - 1);
+    }
+
+    // ── BUILD ────────────────────────────────────────────────────
+    // Recursively construct the tree bottom-up.
+    //   node  = index in tree[] for the current segment
+    //   start = left boundary of the segment this node covers
+    //   end   = right boundary of the segment this node covers
+    //
+    // Base case: leaf (start == end) → store the array element.
+    // Recursive: build left & right children, then merge (sum).
+    // ─────────────────────────────────────────────────────────────
+    public void buildTree(int[] arr, int node, int start, int end) {
+        if (start == end) {
+            // Leaf: covers exactly one element arr[start]
+            tree[node] = arr[start];
+        } else {
+            int mid = (start + end) / 2;
+            buildTree(arr, 2 * node + 1, start, mid);      // left child
+            buildTree(arr, 2 * node + 2, mid + 1, end);    // right child
+            tree[node] = tree[2 * node + 1] + tree[2 * node + 2]; // merge
+        }
+    }
+
+    // ── QUERY ────────────────────────────────────────────────────
+    // Find the sum of elements in range [l, r].
+    //
+    // Three cases at each node covering [start, end]:
+    //   1. NO OVERLAP:    [start, end] completely outside [l, r] → return 0
+    //   2. TOTAL OVERLAP: [start, end] completely inside [l, r]  → return tree[node]
+    //   3. PARTIAL OVERLAP: split into children and combine
+    // ─────────────────────────────────────────────────────────────
+    public int query(int l, int r) {
+        return query(0, 0, n - 1, l, r);
+    }
+
+    private int query(int node, int start, int end, int l, int r) {
+        if (start > r || end < l) return 0;            // no overlap
+        if (start >= l && end <= r) return tree[node];  // total overlap
+
+        int mid = (start + end) / 2;
+        int leftSum  = query(2 * node + 1, start, mid, l, r);
+        int rightSum = query(2 * node + 2, mid + 1, end, l, r);
+        return leftSum + rightSum;
+    }
+
+    // ── POINT UPDATE ─────────────────────────────────────────────
+    // Set arr[index] = value, then propagate changes up the tree.
+    //
+    // Walk from root toward the leaf that holds arr[index].
+    // At each level, go left or right depending on where index falls.
+    // Once at the leaf, set its value. On the way back up,
+    // recalculate each ancestor as the sum of its two children.
+    // ─────────────────────────────────────────────────────────────
+    public void update(int index, int value) {
+        update(0, 0, n - 1, index, value);
+    }
+
+    private void update(int node, int start, int end, int index, int value) {
+        if (start == end) {
+            tree[node] = value; // leaf node — update
+            return;
+        }
+
+        int mid = (start + end) / 2;
+        if (index <= mid) {
+            update(2 * node + 1, start, mid, index, value);     // go left
+        } else {
+            update(2 * node + 2, mid + 1, end, index, value);   // go right
+        }
+        tree[node] = tree[2 * node + 1] + tree[2 * node + 2];  // recalculate
+    }
+}
+```
+
+
+### **B-TREE**
+
+A **B-Tree** of order $m$ is a self-balancing multi-way search tree optimized for systems that read/write large blocks of data (databases, file systems). Unlike binary trees, each node can hold **multiple keys** and have **multiple children**, minimizing disk I/O by keeping the tree height very small.
+
+**Properties of a B-Tree of order $m$:**
+
+| Property | Rule |
+|----------|------|
+| Max keys per node | $m - 1$ |
+| Max children per node | $m$ |
+| Min keys (non-root internal) | $\lceil m/2 \rceil - 1$ |
+| Min children (non-root internal) | $\lceil m/2 \rceil$ |
+| Root | At least 1 key (if non-empty) |
+| Leaves | All at the same depth |
+| Key ordering | Within a node, keys are sorted. Child $i$ contains keys between key $i-1$ and key $i$. |
+
+**Height:** $h \le \log_{\lceil m/2 \rceil} \frac{n+1}{2}$ → very flat even for millions of entries.
+
+```mermaid
+graph TD
+    subgraph "B-Tree of order 3 (2-3 Tree)"
+        R["[16]"] --> A["[4, 8]"] & B["[20, 24]"]
+        A --> C["[1, 2]"] & D["[5, 6]"] & E["[10, 12]"]
+        B --> F["[17, 18]"] & G["[21, 22]"] & H["[25, 30]"]
+    end
+```
+
+**Operations Overview:**
+
+- **Search:** Like BST search but at each node, scan through multiple keys to decide which child to follow. $O(\log n)$.
+- **Insert:** Find the correct leaf. If the leaf is full ($m-1$ keys), **split** it: move the median key up to the parent. Splits may cascade up to the root, which is the only way the tree grows taller.
+- **Delete:** Find and remove the key. If a node underflows (fewer than $\lceil m/2 \rceil - 1$ keys), fix by **borrowing** from a sibling or **merging** with a sibling.
+
+```java
+public class BTree {
+
+    private static final int ORDER = 3; // 2-3 tree (min degree t = 2)
+    private static final int MAX_KEYS = ORDER - 1;
+    private static final int MIN_KEYS = (ORDER + 1) / 2 - 1; // ceil(m/2) - 1
+
+    private static class Node {
+        int numKeys;
+        int[] keys = new int[MAX_KEYS];
+        Node[] children = new Node[ORDER];
+        boolean isLeaf;
+
+        Node(boolean isLeaf) {
+            this.isLeaf = isLeaf;
+        }
+    }
+
+    private Node root;
+
+    public BTree() {
+        root = new Node(true);
+    }
+
+    // ── Search ───────────────────────────────────────────────────
+    // At each node, find the first key ≥ target.
+    // If found, return true. Otherwise, recurse into the child.
+    public boolean search(int key) {
+        return search(root, key);
+    }
+
+    private boolean search(Node node, int key) {
+        int i = 0;
+        while (i < node.numKeys && key > node.keys[i]) i++;
+
+        if (i < node.numKeys && key == node.keys[i]) return true;
+        if (node.isLeaf) return false;
+        return search(node.children[i], key);
+    }
+
+    // ── Insert ───────────────────────────────────────────────────
+    // If root is full, split it first (tree grows one level).
+    // Then insert into the non-full tree.
+    public void insert(int key) {
+        Node r = root;
+        if (r.numKeys == MAX_KEYS) {
+            Node newRoot = new Node(false);
+            newRoot.children[0] = r;
+            splitChild(newRoot, 0, r);
+            root = newRoot;
+            insertNonFull(newRoot, key);
+        } else {
+            insertNonFull(r, key);
+        }
+    }
+
+    // Insert key into a node that is guaranteed not full.
+    // If leaf → shift keys right and insert.
+    // If internal → find correct child; split it if full, then recurse.
+    private void insertNonFull(Node node, int key) {
+        int i = node.numKeys - 1;
+
+        if (node.isLeaf) {
+            while (i >= 0 && key < node.keys[i]) {
+                node.keys[i + 1] = node.keys[i]; // shift right
+                i--;
+            }
+            node.keys[i + 1] = key;
+            node.numKeys++;
+        } else {
+            while (i >= 0 && key < node.keys[i]) i--;
+            i++;
+            if (node.children[i].numKeys == MAX_KEYS) {
+                splitChild(node, i, node.children[i]);
+                if (key > node.keys[i]) i++;
+            }
+            insertNonFull(node.children[i], key);
+        }
+    }
+
+    // ── Split Child ──────────────────────────────────────────────
+    // Node y = parent.children[index] is full.
+    // Create a new node z, move the upper half of y's keys to z,
+    // promote the median key to parent.
+    private void splitChild(Node parent, int index, Node y) {
+        Node z = new Node(y.isLeaf);
+        int mid = MAX_KEYS / 2;
+
+        // Move upper keys from y to z
+        z.numKeys = MAX_KEYS - mid - 1;
+        for (int j = 0; j < z.numKeys; j++) {
+            z.keys[j] = y.keys[mid + 1 + j];
+        }
+
+        // Move upper children if not leaf
+        if (!y.isLeaf) {
+            for (int j = 0; j <= z.numKeys; j++) {
+                z.children[j] = y.children[mid + 1 + j];
+            }
+        }
+
+        y.numKeys = mid;
+
+        // Shift parent's children/keys right to make room
+        for (int j = parent.numKeys; j > index; j--) {
+            parent.children[j + 1] = parent.children[j];
+        }
+        parent.children[index + 1] = z;
+
+        for (int j = parent.numKeys - 1; j >= index; j--) {
+            parent.keys[j + 1] = parent.keys[j];
+        }
+        parent.keys[index] = y.keys[mid]; // promote median
+        parent.numKeys++;
+    }
+}
+```
+
+**Walkthrough — Insert 10, 20, 5, 30, 15 into B-Tree of order 3:**
+
+```
+Insert 10:        Insert 20:          Insert 5 (full→split):    Insert 30:         Insert 15:
+  [10]              [10, 20]                [10]                   [10]               [10, 20]
+                                           /    \                 /    \              /   |   \
+                                         [5]   [20]            [5]  [20, 30]       [5] [15]  [30]
+```
+
+**Complexity (B-Tree of order $m$, $n$ keys):**
+
+| Operation | Time |
+|-----------|------|
+| Search | $O(\log n)$ |
+| Insert | $O(\log n)$ |
+| Delete | $O(\log n)$ |
+| Height | $O(\log_m n)$ — very flat |
+
+
+### **B+ TREE**
+
+A **B+ Tree** is a variation of a B-Tree with two key differences:
+
+1. **All data lives in leaf nodes only.** Internal nodes store only keys as "road signs" for navigation.
+2. **Leaf nodes are linked** in a doubly/singly linked list, enabling efficient range scans.
+
+This is the data structure behind virtually all database indexes (MySQL InnoDB, PostgreSQL, SQLite).
+
+**Why B+ Tree over B-Tree for databases?**
+
+| Feature | B-Tree | B+ Tree |
+|---------|--------|---------|
+| Data location | Any node | Leaves only |
+| Leaf linking | No | Yes (linked list) |
+| Range queries | Must traverse tree | Sequential scan via leaf links |
+| Internal node fan-out | Lower (keys + data) | Higher (keys only → more keys per node) |
+| Cache/Disk efficiency | Good | Better (internal nodes fit more in memory) |
+
+```mermaid
+graph TD
+    subgraph "B+ Tree"
+        R["[20]<br/><i>Internal</i>"] --> L["[5, 10]<br/><i>Internal</i>"] & Ri["[25, 30]<br/><i>Internal</i>"]
+        L --> A["[1,3,5]<br/>🔗→"] & B["[7,8,10]<br/>🔗→"]
+        Ri --> C["[20,22,25]<br/>🔗→"] & D["[28,30,35]"]
+    end
+    A --> |"next"| B --> |"next"| C --> |"next"| D
+```
+
+**Key Operations:**
+
+- **Search:** Navigate internal nodes (like B-Tree) until you reach a leaf. All searches end at a leaf.
+- **Range Query:** Find the starting leaf, then follow the linked list pointers — no need to re-traverse the tree.
+- **Insert:** Insert into the correct leaf. If the leaf overflows, split it and **copy** the middle key up (not move, since data stays in leaves).
+- **Delete:** Remove from the leaf. Handle underflow by borrowing or merging.
+
+```java
+public class BPlusTree {
+
+    private static final int ORDER = 4; // max children per internal node
+    private static final int MAX_KEYS = ORDER - 1;
+
+    // ── Leaf Node ────────────────────────────────────────────────
+    // Stores actual key-value pairs. Linked to the next leaf.
+    static class LeafNode {
+        int numKeys;
+        int[] keys = new int[MAX_KEYS];
+        int[] values = new int[MAX_KEYS]; // data/record pointers
+        LeafNode next; // pointer to next leaf for range scans
+    }
+
+    // ── Internal Node ────────────────────────────────────────────
+    // Stores only keys as separators (road signs).
+    // children[i] covers keys < keys[i]; children[numKeys] covers keys ≥ keys[numKeys-1].
+    static class InternalNode {
+        int numKeys;
+        int[] keys = new int[MAX_KEYS];
+        Object[] children = new Object[ORDER]; // InternalNode or LeafNode
+    }
+
+    private Object root; // can be InternalNode or LeafNode
+    private LeafNode firstLeaf; // head of the leaf linked list
+
+    public BPlusTree() {
+        LeafNode leaf = new LeafNode();
+        root = leaf;
+        firstLeaf = leaf;
+    }
+
+    // ── Search (exact key lookup) ────────────────────────────────
+    // Navigate internal nodes until we reach a leaf, then linear scan.
+    public int search(int key) {
+        LeafNode leaf = findLeaf(key);
+        for (int i = 0; i < leaf.numKeys; i++) {
+            if (leaf.keys[i] == key) return leaf.values[i];
+        }
+        return -1; // not found
+    }
+
+    // ── Range Query ──────────────────────────────────────────────
+    // Find the first leaf containing startKey, then follow next pointers.
+    public List<Integer> rangeQuery(int startKey, int endKey) {
+        List<Integer> result = new ArrayList<>();
+        LeafNode leaf = findLeaf(startKey);
+
+        while (leaf != null) {
+            for (int i = 0; i < leaf.numKeys; i++) {
+                if (leaf.keys[i] >= startKey && leaf.keys[i] <= endKey) {
+                    result.add(leaf.values[i]);
+                }
+                if (leaf.keys[i] > endKey) return result;
+            }
+            leaf = leaf.next; // follow linked list
+        }
+        return result;
+    }
+
+    // Navigate from root to the leaf that would contain key
+    private LeafNode findLeaf(int key) {
+        Object node = root;
+        while (node instanceof InternalNode) {
+            InternalNode internal = (InternalNode) node;
+            int i = 0;
+            while (i < internal.numKeys && key >= internal.keys[i]) i++;
+            node = internal.children[i];
+        }
+        return (LeafNode) node;
+    }
+}
+```
+
+**Database Index Example:**
+
+```
+SQL: SELECT * FROM users WHERE age BETWEEN 25 AND 35;
+
+B+ Tree Index on 'age':
+
+Internal:        [20 | 30 | 40]
+                /    |     |    \
+Leaves:  [15,18,20]→[22,25,28]→[30,32,35]→[38,40,45]
+              ↑ start here        ↑ stop here
+
+1. Navigate to leaf containing 25 → [22,25,28]
+2. Scan forward via next pointers: 25, 28, 30, 32, 35 → done
+3. No random I/O — all sequential reads!
+```
 
 
 ### **EULER TOUR TECHNIQUE**
@@ -726,6 +1492,119 @@ Standard tree traversal is too slow if you have thousands of queries. The **Eule
     $$\text{Path}(u, v) = \text{Prefix}(u) + \text{Prefix}(v) - 2 \times \text{Prefix}(\text{LCA}(u, v))$$
     *(Where `Prefix` is the sum from root to the node).*
 
+#### Java Implementation
+
+```java
+public class EulerTour {
+
+    private final List<List<Integer>> adj; // adjacency list of the tree
+    private final int n;                   // number of nodes
+
+    private int[] tin;    // tin[u]  = entry time (when DFS first visits u)
+    private int[] tout;   // tout[u] = exit time (when DFS finishes u's subtree)
+    private int[] order;  // order[t] = which node has entry time t (the flat array)
+    private int timer;    // global clock, incremented at each new visit
+
+    public EulerTour(int n) {
+        this.n = n;
+        this.adj = new ArrayList<>();
+        for (int i = 0; i < n; i++) adj.add(new ArrayList<>());
+    }
+
+    public void addEdge(int u, int v) {
+        adj.get(u).add(v);
+        adj.get(v).add(u);
+    }
+
+    // ── Compute the tour ─────────────────────────────────────────
+    // After this call:
+    //   tin[u]   = position in the flat array where node u appears
+    //   tout[u]  = last position belonging to u's subtree
+    //   order[i] = the node at position i in the flat array
+    //
+    // Subtree of u → contiguous range [tin[u], tout[u]] in order[].
+    // ─────────────────────────────────────────────────────────────
+    public void computeTour(int root) {
+        tin = new int[n];
+        tout = new int[n];
+        order = new int[n];
+        timer = 0;
+        dfs(root, -1);
+    }
+
+    private void dfs(int u, int parent) {
+        // Record entry time: u is the (timer)-th node we visit
+        tin[u] = timer;
+        order[timer] = u;
+        timer++;
+
+        // Visit all children (skip parent to avoid going back up)
+        for (int v : adj.get(u)) {
+            if (v != parent) {
+                dfs(v, u);
+            }
+        }
+
+        // Record exit time: all descendants of u have been visited
+        tout[u] = timer - 1;
+    }
+
+    public int tin(int u)  { return tin[u]; }
+    public int tout(int u) { return tout[u]; }
+    public int[] getOrder() { return order; }
+}
+```
+
+**Combining Euler Tour + Segment Tree for subtree queries:**
+
+```java
+// 1. Build the tree and compute Euler Tour
+EulerTour et = new EulerTour(n);
+// ... addEdge() calls ...
+et.computeTour(root);
+
+// 2. Build a flat array in Euler order: flat[i] = val[order[i]]
+int[] flat = new int[n];
+for (int i = 0; i < n; i++) {
+    flat[i] = val[et.getOrder()[i]];
+}
+
+// 3. Build Segment Tree over the flat array
+SegmentTree seg = new SegmentTree(flat);
+
+// 4. Subtree sum of node u → range query [tin[u], tout[u]]
+int subtreeSum = seg.query(et.tin(u), et.tout(u));
+
+// 5. Update node u's value → point update at tin[u]
+seg.update(et.tin(u), newValue);
+
+// 6. Ancestor check: u is ancestor of v iff tin[u] <= tin[v] && tout[u] >= tout[v]
+boolean isAncestor = (et.tin(u) <= et.tin(v) && et.tout(u) >= et.tout(v));
+```
+
+**Walkthrough Example:**
+
+```
+Tree (rooted at 0):         Node values: val = {1, 2, 3, 4, 5, 6}
+
+        0 (val=1)
+       / \
+      1   2 (val=3)
+     / \    \
+    3   4    5 (val=6)
+ (val=4)(val=5)
+
+Euler Tour from root 0:
+  Node:  0  1  2  3  4  5
+  tin:  [0, 1, 4, 2, 3, 5]
+  tout: [5, 3, 5, 2, 3, 5]
+  order:[0, 1, 3, 4, 2, 5]
+  flat: [1, 2, 4, 5, 3, 6]
+
+Subtree of node 1 → query(1, 3) → flat[1]+flat[2]+flat[3] = 2+4+5 = 11 ✓
+Subtree of node 0 → query(0, 5) → 1+2+4+5+3+6 = 21                  ✓
+Is 0 ancestor of 4? → tin[0]=0 <= tin[4]=3 && tout[0]=5 >= tout[4]=3 → YES ✓
+```
 
 ---
 ## Backtracking
@@ -802,4 +1681,235 @@ public static void helper(int[][] arr, int row, int col, ...) {
 
 ---
 
-## Trie
+## **Trie**
+
+A **Trie** (prefix tree) is a tree-like data structure where each node represents a single character. Paths from root to marked nodes form stored words. The key advantage: operations depend on **word length** $L$, not the number of stored words $n$.
+
+**Time Complexity:**
+
+| Operation | Time |
+|-----------|------|
+| Insert | $O(L)$ |
+| Search | $O(L)$ |
+| StartsWith (prefix) | $O(L)$ |
+| Delete | $O(L)$ |
+
+where $L$ = length of the word/prefix.
+
+```mermaid
+graph TD
+    R["root"] --> A["a"] & C["c"]
+    A --> AP["p"]
+    AP --> APP["p"]
+    APP --> APPL["l"]
+    APPL --> APPLE["e ✓"]
+    APP --> APPS["s ✓"]
+    C --> CA["a"]
+    CA --> CAR["r ✓"]
+    CA --> CAT["t ✓"]
+
+    style APPLE fill:#c8e6c9,stroke:#388e3c
+    style APPS fill:#c8e6c9,stroke:#388e3c
+    style CAR fill:#c8e6c9,stroke:#388e3c
+    style CAT fill:#c8e6c9,stroke:#388e3c
+```
+
+Words stored: `apple`, `apps`, `car`, `cat`. Green nodes have `isWord = true`.
+
+### **Array-Based Trie (lowercase a-z only)**
+
+Each node has a fixed array of 26 children. Fast lookups but uses more memory.
+
+```java
+public class Trie {
+
+    private final TrieNode root;
+
+    private static class TrieNode {
+        boolean isWord;                        // marks end of a complete word
+        TrieNode[] children = new TrieNode[26]; // one slot per letter a-z
+    }
+
+    public Trie() {
+        root = new TrieNode();
+    }
+
+    // ── Insert ───────────────────────────────────────────────────
+    // Walk down the trie character by character.
+    // Create new nodes for characters that don't exist yet.
+    // Mark the final node as a complete word.
+    public void insert(String word) {
+        TrieNode curr = root;
+        for (char ch : word.toCharArray()) {
+            int idx = ch - 'a';
+            if (curr.children[idx] == null) {
+                curr.children[idx] = new TrieNode();
+            }
+            curr = curr.children[idx];
+        }
+        curr.isWord = true;
+    }
+
+    // ── Search ───────────────────────────────────────────────────
+    // Walk down the trie. If any character is missing, word doesn't exist.
+    // If we reach the end, check isWord (prefix "app" exists but isn't a word).
+    public boolean search(String word) {
+        TrieNode node = getNode(word);
+        return node != null && node.isWord;
+    }
+
+    // ── Starts With ──────────────────────────────────────────────
+    // Same as search, but we don't need isWord — just check if the path exists.
+    public boolean startsWith(String prefix) {
+        return getNode(prefix) != null;
+    }
+
+    // ── Helper: traverse to the node representing the last char ──
+    private TrieNode getNode(String str) {
+        TrieNode curr = root;
+        for (char ch : str.toCharArray()) {
+            int idx = ch - 'a';
+            if (curr.children[idx] == null) return null;
+            curr = curr.children[idx];
+        }
+        return curr;
+    }
+}
+```
+
+### **HashMap-Based Trie (any character)**
+
+Uses a `HashMap` per node instead of a fixed array. Supports any character set (uppercase, digits, Unicode) and uses less memory when the alphabet is sparse.
+
+```java
+public class TrieWithMap {
+
+    private final TrieNode root;
+
+    private static class TrieNode {
+        HashMap<Character, TrieNode> children = new HashMap<>();
+        boolean isWord;
+    }
+
+    public TrieWithMap() {
+        root = new TrieNode();
+    }
+
+    public void insert(String word) {
+        TrieNode curr = root;
+        for (char ch : word.toCharArray()) {
+            // computeIfAbsent: get child or create it in one step
+            curr = curr.children.computeIfAbsent(ch, c -> new TrieNode());
+        }
+        curr.isWord = true;
+    }
+
+    public boolean search(String word) {
+        TrieNode node = getNode(word);
+        return node != null && node.isWord;
+    }
+
+    public boolean startsWith(String prefix) {
+        return getNode(prefix) != null;
+    }
+
+    private TrieNode getNode(String str) {
+        TrieNode curr = root;
+        for (char ch : str.toCharArray()) {
+            curr = curr.children.get(ch);
+            if (curr == null) return null;
+        }
+        return curr;
+    }
+}
+```
+
+### **Array vs Map Trie**
+
+| | Array `TrieNode[26]` | HashMap |
+|-|---------------------|---------|
+| Lookup per char | $O(1)$ array index | $O(1)$ amortized hash |
+| Memory per node | 26 pointers (fixed) | Only allocated children |
+| Character set | a-z only | Any character |
+| Best for | Leetcode, lowercase English | Real-world, mixed char sets |
+
+### **Common Trie Patterns in Leetcode**
+
+**1. Word Search II (LC 212) — Trie + Backtracking:**
+
+```java
+// Build a Trie from the word list, then DFS on the board.
+// At each cell, follow the Trie pointer. If no child matches, prune.
+// If isWord is true, add to results.
+// This avoids re-searching the board for each word independently.
+```
+
+**2. Longest Common Prefix — Walk Trie until branching:**
+
+```java
+public String longestCommonPrefix(String[] strs) {
+    Trie trie = new Trie();
+    for (String s : strs) trie.insert(s);
+
+    StringBuilder prefix = new StringBuilder();
+    TrieNode curr = trie.root;
+    while (true) {
+        // Count non-null children
+        int childCount = 0;
+        int nextIdx = -1;
+        for (int i = 0; i < 26; i++) {
+            if (curr.children[i] != null) {
+                childCount++;
+                nextIdx = i;
+            }
+        }
+        // Stop if branching or a word ends here
+        if (childCount != 1 || curr.isWord) break;
+        prefix.append((char) ('a' + nextIdx));
+        curr = curr.children[nextIdx];
+    }
+    return prefix.toString();
+}
+```
+
+**3. Auto-Complete / Prefix Matching — DFS from prefix node:**
+
+```java
+// 1. Navigate to the node for the prefix
+// 2. DFS from that node to collect all words below it
+public List<String> autocomplete(String prefix) {
+    List<String> results = new ArrayList<>();
+    TrieNode node = getNode(prefix);
+    if (node == null) return results;
+    dfs(node, new StringBuilder(prefix), results);
+    return results;
+}
+
+private void dfs(TrieNode node, StringBuilder path, List<String> results) {
+    if (node.isWord) results.add(path.toString());
+    for (int i = 0; i < 26; i++) {
+        if (node.children[i] != null) {
+            path.append((char) ('a' + i));
+            dfs(node.children[i], path, results);
+            path.deleteCharAt(path.length() - 1); // backtrack
+        }
+    }
+}
+```
+
+**Walkthrough — Insert "cat", "car", "card", then search/prefix:**
+
+```
+After inserting "cat", "car", "card":
+
+root
+ └─ c
+    └─ a
+       ├─ t ✓ (isWord=true)  → search("cat")=true
+       └─ r ✓ (isWord=true)  → search("car")=true
+          └─ d ✓              → search("card")=true
+
+startsWith("ca")  → true  (node 'a' exists under 'c')
+search("ca")      → false (node 'a' has isWord=false)
+startsWith("dog") → false (no 'd' child at root)
+```
