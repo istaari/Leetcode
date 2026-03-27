@@ -2,9 +2,39 @@ package leetcode.dp.interval;
 
 import java.util.*;
 
+/**
+ * 139. Word Break
+ * https://leetcode.com/problems/word-break/
+ *
+ * Given a string s and a dictionary of strings wordDict, return true if s
+ * can be segmented into a space-separated sequence of one or more dictionary words.
+ * The same word in the dictionary may be reused multiple times.
+ *
+ * Example 1: Input: s = "leetcode", wordDict = ["leet","code"] -> Output: true
+ * Example 2: Input: s = "applepenapple", wordDict = ["apple","pen"] -> Output: true
+ * Example 3: Input: s = "catsandog", wordDict = ["cats","dog","sand","and","cat"] -> Output: false
+ *
+ * Constraints:
+ *   1 <= s.length <= 300
+ *   1 <= wordDict.length <= 1000
+ *   1 <= wordDict[i].length <= 20
+ *
+ * ---
+ * Approach: DP (top-down memoization + bottom-up iterative)
+ *
+ * STATE:      dp[i] = true if s[0..i-1] can be segmented into dictionary words
+ * BASE:       dp[0] = true (empty prefix is trivially valid)
+ * TRANSITION: dp[i] = true if there exists j < i such that dp[j] == true AND s[j..i-1] is in dict
+ * ANSWER:     dp[n]
+ *
+ * Time:  O(n^2 * k) where k = average word length for substring comparison
+ * Space: O(n)
+ */
 public class WordBreak {
 
+    // Top-down: can we segment s[start..end] using dictionary words?
     public static boolean helper(String s, int start, Set<String> set, Map<Integer, Boolean> memo) {
+        // Base case: consumed the entire string
         if (start >= s.length())
             return true;
 
@@ -12,9 +42,11 @@ public class WordBreak {
             return memo.get(start);
         }
 
+        // Try every possible end point to form a word s[start..end]
         for (int end = start; end < s.length(); end++) {
             String word = s.substring(start, end + 1);
 
+            // If this word is in the dictionary AND the rest can be segmented
             if (set.contains(word) && helper(s, end + 1, set, memo)) {
                 memo.put(start, true);
                 return memo.get(start);

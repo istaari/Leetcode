@@ -2,6 +2,47 @@ package leetcode.dp.bitmask;
 
 import java.util.*;
 
+/**
+ * 1125. Smallest Sufficient Team
+ * https://leetcode.com/problems/smallest-sufficient-team/
+ *
+ * In a project, you have a list of required skills req_skills, and a list of people.
+ * The i-th person people[i] contains a list of skills that person has.
+ *
+ * Consider a sufficient team: a set of people such that for every required skill,
+ * there is at least one person in the team who has that skill.
+ * Return any sufficient team of the smallest possible size.
+ *
+ * Example 1:
+ *   Input: req_skills = ["java","nodejs","reactjs"],
+ *          people = [["java"],["nodejs"],["nodejs","reactjs"]]
+ *   Output: [0,2]
+ *
+ * Example 2:
+ *   Input: req_skills = ["algorithms","math","java","reactjs","csharp","aws"],
+ *          people = [["algorithms","math","java"],["algorithms","math","reactjs"],
+ *                    ["java","csharp","aws"],["reactjs","csharp"],
+ *                    ["csharp","math"],["aws","java"]]
+ *   Output: [1,2]
+ *
+ * Constraints:
+ *   1 <= req_skills.length <= 16
+ *   1 <= people.length <= 60
+ *   1 <= people[i].length <= 16
+ *
+ * ---
+ * Approach: Bitmask DP
+ *
+ * Since req_skills.length <= 16, we represent each skill set as a bitmask.
+ * dp[mask] = smallest list of people whose combined skills equal this mask.
+ *
+ * For each person, we iterate over all existing reachable masks and try
+ * combining the person's skill mask. If the combined mask yields a smaller
+ * team than currently known, we update it.
+ *
+ * Time:  O(2^n * p) where n = number of skills, p = number of people.
+ * Space: O(2^n)     for the dp map.
+ */
 public class SmallestSufficientTeam {
 
     /**

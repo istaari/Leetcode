@@ -2,6 +2,46 @@ package leetcode.dp.bitmask;
 
 import java.util.Arrays;
 
+/**
+ * 473. Matchsticks to Square
+ * https://leetcode.com/problems/matchsticks-to-square/
+ *
+ * You are given an integer array matchsticks where matchsticks[i] is the length
+ * of the i-th matchstick. You want to use all the matchsticks to make one square.
+ * You should not break any stick, but you can link them up, and each matchstick
+ * must be used exactly once.
+ *
+ * Return true if you can make this square and false otherwise.
+ *
+ * Example 1: Input: matchsticks = [1,1,2,2,2]  -> Output: true
+ *   Explanation: You can form a square with side length 2,
+ *   one side of the square is formed by two sticks of length 1.
+ *
+ * Example 2: Input: matchsticks = [3,3,3,3,4]  -> Output: false
+ *   Explanation: You cannot find a way to form a square with all the matchsticks.
+ *
+ * Constraints:
+ *   1 <= matchsticks.length <= 15
+ *   1 <= matchsticks[i] <= 10^8
+ *
+ * ---
+ * Approach: Bitmask DP
+ *
+ * Since n <= 15, we can represent every subset of matchsticks as a bitmask (2^15 = 32768 states).
+ *
+ * Key Idea:
+ *   We greedily fill one side of the square at a time. dp[mask] tracks the
+ *   "remainder" length on the current (incomplete) side after placing all sticks
+ *   in the subset represented by mask.
+ *
+ *   When dp[mask] reaches exactly `target` (side length), we take modulo to reset
+ *   it to 0, meaning that side is complete and we start filling the next side.
+ *
+ *   If dp[(1<<n) - 1] == 0, all sticks are used and all four sides are exactly filled.
+ *
+ * Time:  O(2^n * n)  — for each of the 2^n masks, we try n sticks.
+ * Space: O(2^n)      — for the dp array.
+ */
 public class MatchsticksToSquare {
 
     /**

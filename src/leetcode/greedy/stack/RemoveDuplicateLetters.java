@@ -4,6 +4,37 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Stack;
 
+/**
+ * 316. Remove Duplicate Letters
+ * https://leetcode.com/problems/remove-duplicate-letters/
+ *
+ * Given a string s, remove duplicate letters so that every letter appears once
+ * and only once. You must make sure your result is the smallest in
+ * lexicographical order among all possible results.
+ *
+ * Example 1: s = "bcabc" -> "abc"
+ * Example 2: s = "cbacdcbc" -> "acdb"
+ *
+ * Constraints:
+ *   1 <= s.length <= 10^4
+ *   s consists of lowercase English letters.
+ *
+ * ---
+ * Approach: Monotonic stack + greedy
+ *
+ * Use a stack to build the result. For each character:
+ *   1. If already in stack, skip (duplicates handled).
+ *   2. While stack top > current char AND stack top appears later in string,
+ *      pop it (we can add it back later for a smaller result).
+ *   3. Push current char.
+ *
+ * "Appears later" is tracked via a remaining-count map.
+ *
+ * This is the SAME problem as LC 1081 (Smallest Subsequence of Distinct Characters).
+ *
+ * Time:  O(n)
+ * Space: O(1) (26 letters max in stack)
+ */
 public class RemoveDuplicateLetters {
 
     public static String removeDuplicateLetters(String s) {

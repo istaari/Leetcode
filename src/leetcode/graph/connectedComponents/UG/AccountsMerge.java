@@ -9,6 +9,44 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * 721. Accounts Merge
+ * https://leetcode.com/problems/accounts-merge/
+ *
+ * Given a list of accounts where each element accounts[i] is a list of strings,
+ * where the first element accounts[i][0] is a name, and the rest of the elements
+ * are emails representing emails of the account.
+ *
+ * Now, we would like to merge these accounts. Two accounts belong to the same
+ * person if there is some common email to both accounts. After merging, return
+ * the accounts in the format: the first element is the name, the rest are emails
+ * in sorted order.
+ *
+ * Example:
+ *   Input: accounts = [["John","johnsmith@mail.com","john_newyork@mail.com"],
+ *                      ["John","johnsmith@mail.com","john00@mail.com"],
+ *                      ["Mary","mary@mail.com"],
+ *                      ["John","johnnybravo@mail.com"]]
+ *   Output: [["John","john00@mail.com","john_newyork@mail.com","johnsmith@mail.com"],
+ *            ["Mary","mary@mail.com"],
+ *            ["John","johnnybravo@mail.com"]]
+ *
+ * Constraints:
+ *   1 <= accounts.length <= 1000
+ *   2 <= accounts[i].length <= 10
+ *   1 <= accounts[i][j].length <= 30
+ *
+ * ---
+ * Approach: DFS on undirected graph of emails
+ *
+ * 1. Build a graph: for each account, connect the first email to all other emails
+ *    (they belong to the same person).
+ * 2. DFS/BFS to find connected components — each component is one merged account.
+ * 3. Sort the emails in each component and prepend the name.
+ *
+ * Time:  O(N * K * log(N * K)) where N = accounts, K = max emails per account
+ * Space: O(N * K)
+ */
 public class AccountsMerge {
 
     /**

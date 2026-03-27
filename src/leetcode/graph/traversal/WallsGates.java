@@ -3,6 +3,39 @@ package leetcode.graph.traversal;
 import java.util.Arrays;
 import java.util.Queue;
 
+/**
+ * 286. Walls and Gates
+ * https://leetcode.com/problems/walls-and-gates/
+ *
+ * You are given an m x n grid rooms initialized with these three possible values:
+ *   -1  — A wall or an obstacle.
+ *   0   — A gate.
+ *   INF — Infinity means an empty room. We use 2^31 - 1 = 2147483647.
+ *
+ * Fill each empty room with the distance to its nearest gate.
+ * If it is impossible to reach a gate, leave it as INF.
+ *
+ * Example:
+ *   Input:  [[INF,-1, 0,INF],[INF,INF,INF,-1],[INF,-1,INF,-1],[0,-1,INF,INF]]
+ *   Output: [[ 3, -1, 0, 1 ],[ 2,  2, 1, -1],[ 1, -1, 2, -1],[ 0, -1, 3, 4 ]]
+ *
+ * Constraints:
+ *   m == rooms.length, n == rooms[i].length
+ *   1 <= m, n <= 250
+ *   rooms[i][j] is -1, 0, or 2^31 - 1.
+ *
+ * ---
+ * Approach 1: Multi-source BFS
+ *   Enqueue all gates (value 0) at once. BFS level by level.
+ *   Each level = distance + 1. First time reaching a room is the shortest distance.
+ *
+ * Approach 2: DFS from each gate
+ *   For each gate, DFS outward. Update room distance if current path is shorter.
+ *   The condition rooms[i][j] < distance prunes already-optimal cells.
+ *
+ * Time:  O(m * n)
+ * Space: O(m * n)
+ */
 public class WallsGates {
     private static final int[][] directions = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
 

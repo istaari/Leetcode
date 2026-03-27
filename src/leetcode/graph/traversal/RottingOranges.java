@@ -3,6 +3,44 @@ package leetcode.graph.traversal;
 import java.util.LinkedList;
 import java.util.Queue;
 
+/**
+ * 994. Rotting Oranges
+ * https://leetcode.com/problems/rotting-oranges/
+ *
+ * You are given an m x n grid where each cell can have one of three values:
+ *   0 — empty cell
+ *   1 — fresh orange
+ *   2 — rotten orange
+ *
+ * Every minute, any fresh orange that is 4-directionally adjacent to a rotten
+ * orange becomes rotten. Return the minimum number of minutes that must elapse
+ * until no cell has a fresh orange. If this is impossible, return -1.
+ *
+ * Example 1:
+ *   Input: grid = [[2,1,1],[1,1,0],[0,1,1]]
+ *   Output: 4
+ *
+ * Example 2:
+ *   Input: grid = [[2,1,1],[0,1,1],[1,0,1]]
+ *   Output: -1 (bottom-left orange is unreachable)
+ *
+ * Constraints:
+ *   m == grid.length, n == grid[i].length
+ *   1 <= m, n <= 10
+ *
+ * ---
+ * Approach: Multi-source BFS
+ *
+ * 1. Enqueue ALL rotten oranges at once (multi-source).
+ * 2. BFS level by level. Each level = 1 minute.
+ * 3. Each rotten orange spreads to adjacent fresh oranges.
+ * 4. Track freshOranges count. If 0 at end -> return minutes. Else -> -1.
+ *
+ * This is the classic "simultaneous BFS from multiple sources" pattern.
+ *
+ * Time:  O(m * n)
+ * Space: O(m * n)
+ */
 public class RottingOranges {
 
     final static int FRESH_ORANGE = 1;

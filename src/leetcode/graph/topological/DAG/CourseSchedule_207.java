@@ -5,6 +5,44 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+/**
+ * 207. Course Schedule
+ * https://leetcode.com/problems/course-schedule/
+ *
+ * There are a total of numCourses courses you have to take, labeled from 0 to
+ * numCourses - 1. You are given an array prerequisites where
+ * prerequisites[i] = [ai, bi] indicates that you must take course bi first
+ * if you want to take course ai.
+ *
+ * Return true if you can finish all courses, i.e., there is no cyclic dependency.
+ *
+ * Example 1:
+ *   Input: numCourses = 2, prerequisites = [[1,0]]
+ *   Output: true  (Take 0 first, then 1)
+ *
+ * Example 2:
+ *   Input: numCourses = 2, prerequisites = [[1,0],[0,1]]
+ *   Output: false (Cycle: 0 -> 1 -> 0)
+ *
+ * Constraints:
+ *   1 <= numCourses <= 2000
+ *   0 <= prerequisites.length <= 5000
+ *
+ * ---
+ * Approach: Topological Sort (Kahn's Algorithm / BFS)
+ *
+ * 1. Build adjacency list and compute in-degree for each node.
+ * 2. Add all nodes with in-degree 0 to queue (no prerequisites).
+ * 3. Process queue: for each node, decrement in-degree of its neighbors.
+ *    If a neighbor's in-degree becomes 0, add it to the queue.
+ * 4. If all nodes are processed (count == numCourses), no cycle exists.
+ *
+ * Key insight: If a cycle exists, the nodes in the cycle will never have
+ * in-degree 0, so they'll never enter the queue.
+ *
+ * Time:  O(V + E)
+ * Space: O(V + E)
+ */
 // Only Applicable in DAG
 public class CourseSchedule_207 {
 

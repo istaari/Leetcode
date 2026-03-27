@@ -7,6 +7,33 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.TreeMap;
 
+/**
+ * Bottom View of Binary Tree (GeeksforGeeks)
+ * https://www.geeksforgeeks.org/problems/bottom-view-of-binary-tree/1
+ *
+ * Given a binary tree, return the bottom view from left to right.
+ * The bottom view contains the last node at each horizontal distance.
+ *
+ * Example:
+ *   Input:
+ *          20
+ *        /    \
+ *      8       22
+ *    /   \       \
+ *   5     3      25
+ *        / \
+ *      10   14
+ *   Output: [5, 10, 3, 14, 25]
+ *
+ * Approach: BFS + TreeMap (horizontal distance)
+ *   - Assign horizontal distance 0 to root, -1 for left, +1 for right.
+ *   - BFS level by level; for each node, overwrite the map entry at its
+ *     horizontal distance (last node at that position wins = bottom view).
+ *   - TreeMap keeps keys sorted for left-to-right output.
+ *
+ * Time Complexity: O(n)
+ * Space Complexity: O(n)
+ */
 public class BottomView {
 
     public static ArrayList<Integer> bottomView(TreeNode root) {

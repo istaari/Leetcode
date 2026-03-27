@@ -2,6 +2,37 @@ package leetcode.dp.string;
 
 import java.util.Arrays;
 
+/**
+ * 44. Wildcard Matching
+ * https://leetcode.com/problems/wildcard-matching/
+ *
+ * Given an input string s and a pattern p, implement wildcard pattern matching
+ * with support for '?' and '*' where:
+ *   '?' matches any single character.
+ *   '*' matches any sequence of characters (including the empty sequence).
+ * The matching should cover the entire input string.
+ *
+ * Example 1: Input: s = "aa", p = "a"   -> Output: false
+ * Example 2: Input: s = "aa", p = "*"   -> Output: true
+ * Example 3: Input: s = "cb", p = "?a"  -> Output: false
+ *
+ * Constraints:
+ *   0 <= s.length, p.length <= 2000
+ *   s contains only lowercase English letters.
+ *   p contains only lowercase English letters, '?' or '*'.
+ *
+ * ---
+ * Approach: 2D DP (top-down + bottom-up)
+ *
+ * STATE:      dp[i][j] = true if s[0..i-1] matches p[0..j-1]
+ * BASE:       dp[0][0] = true; dp[0][j] = true if p[0..j-1] are all '*'
+ * TRANSITION: If p[j-1] == s[i-1] or '?': dp[i][j] = dp[i-1][j-1]
+ *             If p[j-1] == '*': dp[i][j] = dp[i-1][j] || dp[i][j-1]
+ *               (match 1+ chars OR match empty)
+ *
+ * Time:  O(m * n)
+ * Space: O(m * n)
+ */
 public class WildcardMatching {
 
     private static boolean helper(String s, String p, int i, int j, int[][] dp) {
@@ -57,6 +88,26 @@ public class WildcardMatching {
     }
 
 
+    /**
+     * Bottom-up iterative DP
+     *
+     * Example: s = "abc", p = "a*c" -> true
+     *
+     * dp[i][j] = true if s[0..i-1] matches p[0..j-1]
+     *
+     *          ""    a     *     c
+     *     ""  [ T,   F,    F,    F ]   <- base: empty s vs pattern
+     *     a   [ F,   T,    T,    F ]   'a'=='a' → T; '*' → dp[0][2]||dp[1][1] = T
+     *     b   [ F,   F,    T,    F ]   '*' → dp[1][2]||dp[2][1] = T (absorbs 'b')
+     *     c   [ F,   F,    T,    T ]   <- answer: dp[3][3] = T
+     *
+     * Trace for dp[3][3] (s="abc", p="a*c"):
+     *   p[2]='c' == s[2]='c' → dp[2][2] = T
+     *
+     * Trace for dp[2][2] (s="ab", p="a*"):
+     *   p[1]='*' → dp[1][2] || dp[2][1] = T || F = T
+     *   ('*' matches "b" by extending: dp[1][2] means '*' already matched, absorb one more char)
+     */
     public static boolean iterative(String s, String p) {
         int m = s.length();
         int n = p.length();

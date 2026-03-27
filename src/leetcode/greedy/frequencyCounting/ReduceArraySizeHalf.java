@@ -2,6 +2,34 @@ package leetcode.greedy.frequencyCounting;
 
 import java.util.*;
 
+/**
+ * 1338. Reduce Array Size to The Half
+ * https://leetcode.com/problems/reduce-array-size-to-the-half/
+ *
+ * You are given an integer array arr. You can choose a set of integers and
+ * remove all the occurrences of these integers in the array.
+ *
+ * Return the minimum size of the set so that at least half of the integers
+ * of the array are removed.
+ *
+ * Example 1: arr = [3,3,3,3,5,5,5,2,2,7] -> 2 (remove {3,7} -> 6 removed >= 5)
+ * Example 2: arr = [7,7,7,7,7,7] -> 1
+ *
+ * Constraints:
+ *   2 <= arr.length <= 10^5
+ *   arr.length is even.
+ *   1 <= arr[i] <= 10^5
+ *
+ * ---
+ * Approach: Greedy — remove most frequent first
+ *
+ * 1. Count frequency of each number.
+ * 2. Sort frequencies in descending order.
+ * 3. Greedily remove the most frequent numbers until we've removed >= half.
+ *
+ * Time:  O(n log n)
+ * Space: O(n)
+ */
 public class ReduceArraySizeHalf {
 
     // The goal is to minimize the number of unique numbers removed.

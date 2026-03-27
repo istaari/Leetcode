@@ -5,6 +5,35 @@ import leetcode.tree.TreeNode;
 import java.util.LinkedList;
 import java.util.Queue;
 
+/**
+ * LeetCode 101: Symmetric Tree
+ * https://leetcode.com/problems/symmetric-tree/
+ *
+ * Given the root of a binary tree, check whether it is a mirror of itself
+ * (i.e., symmetric around its center).
+ *
+ * Example 1:
+ *   Input: root = [1,2,2,3,4,4,3]
+ *   Output: true
+ *
+ * Example 2:
+ *   Input: root = [1,2,2,null,3,null,3]
+ *   Output: false
+ *
+ * Constraints:
+ *   - The number of nodes is in [1, 1000]
+ *   - -100 <= Node.val <= 100
+ *
+ * Approach 1: Iterative BFS with Queue
+ *   - Enqueue left and right children in mirror order.
+ *   - Compare pairs: left.left with right.right, left.right with right.left.
+ *
+ * Approach 2: Recursive
+ *   - Compare two subtrees in parallel checking mirror symmetry.
+ *
+ * Time Complexity: O(n)
+ * Space Complexity: O(n)
+ */
 public class SymmetricTree {
 
 

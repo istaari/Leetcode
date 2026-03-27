@@ -1,5 +1,42 @@
 package leetcode.graph;
 
+/**
+ * 261. Graph Valid Tree
+ * https://leetcode.com/problems/graph-valid-tree/
+ *
+ * Given n nodes labeled from 0 to n-1 and a list of undirected edges
+ * (each edge is a pair of nodes), write a function to check whether
+ * these edges make up a valid tree.
+ *
+ * A valid tree must satisfy:
+ *   1. No cycles
+ *   2. All nodes are connected (exactly one connected component)
+ *   => Equivalently: n nodes and exactly n-1 edges with no cycle.
+ *
+ * Example 1:
+ *   Input: n = 5, edges = [[0,1],[0,2],[0,3],[1,4]]
+ *   Output: true
+ *
+ * Example 2:
+ *   Input: n = 5, edges = [[0,1],[1,2],[2,3],[1,3],[1,4]]
+ *   Output: false (cycle between 1-2-3)
+ *
+ * Constraints:
+ *   1 <= n <= 2000
+ *   0 <= edges.length <= 5000
+ *   edges[i].length == 2
+ *   No duplicate edges.
+ *
+ * ---
+ * Approach: Union-Find
+ *
+ * For each edge, union the two nodes:
+ *   - If they already share the same root -> cycle detected -> not a tree.
+ *   - After processing all edges, also need edges.length == n-1 for connectivity.
+ *
+ * Time:  O(E * α(N)) ≈ O(E) with path compression + union by rank
+ * Space: O(N)
+ */
 public class GraphValidTree_261 {
 
     private static class unionFind {

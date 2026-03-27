@@ -5,6 +5,44 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.PriorityQueue;
 
+/**
+ * 1584. Min Cost to Connect All Points
+ * https://leetcode.com/problems/min-cost-to-connect-all-points/
+ *
+ * You are given an array points where points[i] = [xi, yi] represents a point
+ * on the X-Y plane. The cost of connecting two points [xi, yi] and [xj, yj] is
+ * the Manhattan distance between them: |xi - xj| + |yi - yj|.
+ *
+ * Return the minimum cost to make all points connected. All points are connected
+ * if there is exactly one simple path between any two points.
+ *
+ * Example 1:
+ *   Input: points = [[0,0],[2,2],[3,10],[5,2],[7,0]]
+ *   Output: 20
+ *
+ * Example 2:
+ *   Input: points = [[3,12],[-2,5],[-4,1]]
+ *   Output: 18
+ *
+ * Constraints:
+ *   1 <= points.length <= 1000
+ *   -10^6 <= xi, yi <= 10^6
+ *   All pairs (xi, yi) are distinct.
+ *
+ * ---
+ * Approach: MST (Minimum Spanning Tree)
+ *
+ * The problem is finding an MST on a complete graph where edge weight = Manhattan distance.
+ *
+ * Two classic algorithms:
+ * 1. Kruskal's: Sort all edges by weight, greedily add edges using Union-Find to avoid cycles.
+ *    Time: O(N^2 log N) for sorting all N*(N-1)/2 edges.
+ * 2. Prim's: Grow the MST from a source, always picking the cheapest edge to an unvisited node.
+ *    Time: O(N^2) with adjacency matrix / O(N^2 log N) with priority queue.
+ *
+ * Time:  O(N^2 log N)
+ * Space: O(N^2)
+ */
 public class MinCostToConnectAllPoints {
 
     private static class UnionFind {

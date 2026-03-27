@@ -1,5 +1,37 @@
 package leetcode.greedy.specialized;
 
+/**
+ * 135. Candy
+ * https://leetcode.com/problems/candy/
+ *
+ * There are n children standing in a line. Each child is assigned a rating value
+ * given in the integer array ratings.
+ *
+ * You are giving candies to these children subjected to the following requirements:
+ *   1. Each child must have at least one candy.
+ *   2. Children with a higher rating than their neighbors get more candies.
+ *
+ * Return the minimum number of candies you need to have to distribute.
+ *
+ * Example 1: ratings = [1,0,2] -> 5 (candies = [2,1,2])
+ * Example 2: ratings = [1,2,2] -> 4 (candies = [1,2,1])
+ *
+ * Constraints:
+ *   n == ratings.length
+ *   1 <= n <= 2 * 10^4
+ *   0 <= ratings[i] <= 2 * 10^4
+ *
+ * ---
+ * Approach: Two-pass greedy
+ *
+ * Pass 1 (left to right): If ratings[i] > ratings[i-1], give one more candy than left neighbor.
+ * Pass 2 (right to left): If ratings[i] > ratings[i+1], ensure at least one more than right neighbor.
+ *
+ * Each pass satisfies one direction of the constraint. Together they satisfy both.
+ *
+ * Time:  O(n)
+ * Space: O(n)
+ */
 public class Candy {
 
     public static int candy(int[] ratings) {

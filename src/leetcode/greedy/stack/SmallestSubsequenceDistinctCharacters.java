@@ -6,6 +6,33 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
 
+/**
+ * 1081. Smallest Subsequence of Distinct Characters
+ * https://leetcode.com/problems/smallest-subsequence-of-distinct-characters/
+ *
+ * Return the lexicographically smallest subsequence of s that contains all
+ * the distinct characters of s exactly once.
+ *
+ * This is identical to LC 316 (Remove Duplicate Letters).
+ *
+ * Example 1: s = "bcabc" -> "abc"
+ * Example 2: s = "cbacdcbc" -> "acdb"
+ *
+ * Constraints:
+ *   1 <= s.length <= 1000
+ *   s consists of lowercase English letters.
+ *
+ * ---
+ * Approach: Monotonic stack + greedy (same as LC 316)
+ *
+ * Track last index of each char. Use a stack:
+ *   - Skip chars already in stack.
+ *   - Pop stack top if it's > current char AND it appears later.
+ *   - Push current char.
+ *
+ * Time:  O(n)
+ * Space: O(1)
+ */
 public class SmallestSubsequenceDistinctCharacters {
 
     public static String smallestSubsequence(String s) {

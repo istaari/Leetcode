@@ -4,6 +4,32 @@ import leetcode.tree.TreeNode;
 
 import java.util.*;
 
+/**
+ * LeetCode 501: Find Mode in Binary Search Tree
+ * https://leetcode.com/problems/find-mode-in-binary-search-tree/
+ *
+ * Given the root of a BST with duplicates, return all the mode(s)
+ * (i.e., the most frequently occurred element).
+ *
+ * Example 1:
+ *   Input: root = [1,null,2,2]
+ *   Output: [2]
+ *
+ * Example 2:
+ *   Input: root = [0]
+ *   Output: [0]
+ *
+ * Constraints:
+ *   - The number of nodes is in [1, 10^4]
+ *   - -10^5 <= Node.val <= 10^5
+ *
+ * Approach: Inorder Traversal + Frequency Map
+ *   - Inorder traversal to visit all nodes.
+ *   - Build a frequency map, then find the max frequency and collect all keys with that frequency.
+ *
+ * Time Complexity: O(n)
+ * Space Complexity: O(n)
+ */
 public class ModeInBST {
 
 

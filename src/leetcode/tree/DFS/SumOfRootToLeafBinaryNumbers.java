@@ -2,6 +2,36 @@ package leetcode.tree.DFS;
 
 import leetcode.tree.TreeNode;
 
+/**
+ * LeetCode 1022: Sum of Root To Leaf Binary Numbers
+ * https://leetcode.com/problems/sum-of-root-to-leaf-binary-numbers/
+ *
+ * You are given the root of a binary tree where each node has a value 0 or 1.
+ * Each root-to-leaf path represents a binary number starting with the most
+ * significant bit. Return the sum of these numbers.
+ *
+ * Example 1:
+ *   Input: root = [1,0,1,0,1,0,1]
+ *   Output: 22 (paths: 100=4, 101=5, 110=6, 111=7 -> 22)
+ *
+ * Example 2:
+ *   Input: root = [0]
+ *   Output: 0
+ *
+ * Constraints:
+ *   - The number of nodes is in [1, 1000]
+ *   - Node.val is 0 or 1
+ *
+ * Approach 1: DFS with String concatenation
+ *   - Build binary string along path, parse at leaf.
+ *
+ * Approach 2: DFS with Horner's method (optimal)
+ *   - sum = 2 * sum + node.val at each step.
+ *   - At leaf, return accumulated sum.
+ *
+ * Time Complexity: O(n)
+ * Space Complexity: O(h)
+ */
 public class SumOfRootToLeafBinaryNumbers {
 
     String bits = "";

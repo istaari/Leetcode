@@ -4,6 +4,35 @@ import leetcode.tree.TreeNode;
 
 import java.util.*;
 
+/**
+ * LeetCode 508: Most Frequent Subtree Sum
+ * https://leetcode.com/problems/most-frequent-subtree-sum/
+ *
+ * Given the root of a binary tree, return the most frequent subtree sum.
+ * The subtree sum of a node is the sum of all node values in its subtree
+ * (including itself). If there is a tie, return all values with the highest
+ * frequency in any order.
+ *
+ * Example 1:
+ *   Input: root = [5,2,-3]
+ *   Output: [2,-3,4]
+ *
+ * Example 2:
+ *   Input: root = [5,2,-5]
+ *   Output: [2]
+ *
+ * Constraints:
+ *   - The number of nodes is in [1, 10^4]
+ *   - -10^5 <= Node.val <= 10^5
+ *
+ * Approach: Postorder DFS + HashMap
+ *   - Compute subtree sum via postorder: left + right + root.val.
+ *   - Store each sum's frequency in a HashMap.
+ *   - Find max frequency, collect all sums with that frequency.
+ *
+ * Time Complexity: O(n)
+ * Space Complexity: O(n)
+ */
 @SuppressWarnings("all")
 public class MostFrequentSubtreeSum {
 
