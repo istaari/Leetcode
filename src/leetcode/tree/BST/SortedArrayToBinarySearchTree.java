@@ -31,9 +31,6 @@ import leetcode.tree.TreeNode;
  */
 public class SortedArrayToBinarySearchTree {
 
-    // https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/description/
-    // Binary Search and Divide and conquer
-    // constructing BST from a sorted array
     public static TreeNode sortedArrayToBST(int[] nums) {
         int left = 0;
         int right = nums.length - 1;
@@ -45,7 +42,8 @@ public class SortedArrayToBinarySearchTree {
 
     public static TreeNode helper(int[] nums, int left, int right) {
 
-        if (left > right) return null;
+        if (left > right)
+            return null;
 
         int mid = left + (right - left) / 2;
         TreeNode root = new TreeNode(nums[mid]);
@@ -56,6 +54,7 @@ public class SortedArrayToBinarySearchTree {
     }
 
     public static void main(String[] args) {
-        int[] nums = {-10, -3, 0, 5, 9};
+        int[] nums = { -10, -3, 0, 5, 9 };
+        System.out.println(sortedArrayToBST(nums));
     }
 }

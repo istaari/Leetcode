@@ -1,7 +1,5 @@
 package leetcode.greedy.frequencyCounting;
 
-import java.util.Arrays;
-
 /**
  * 621. Task Scheduler
  * https://leetcode.com/problems/task-scheduler/

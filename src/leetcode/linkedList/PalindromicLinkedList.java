@@ -1,7 +1,5 @@
 package leetcode.linkedList;
 
-import java.util.Objects;
-
 /**
  * LeetCode Problem 234: Palindrome Linked List
  *

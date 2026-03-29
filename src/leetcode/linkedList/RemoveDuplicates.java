@@ -1,7 +1,5 @@
 package leetcode.linkedList;
 
-import java.util.Objects;
-
 /**
  * LeetCode Problem 83: Remove Duplicates from Sorted List
  *

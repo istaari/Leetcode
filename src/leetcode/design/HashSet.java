@@ -1,7 +1,7 @@
 package leetcode.design;
 
 
-import dsa.tree.BST;
+import leetcode.tree.types.BST;
 
 /**
  * Chaining is used to handle collisions
