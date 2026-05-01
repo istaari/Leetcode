@@ -72,6 +72,29 @@ You **must always define** the base case correctly — it anchors your solution.
 
 ---
 
+
+# State 
+
+### Comprehensive DP State & Category Reference
+
+| Category | Typical State | Description |
+| :--- | :--- | :--- |
+| **Linear DP (1D)** | $dp[i]$ | The optimal result for the first $i$ elements. The transition typically depends on one or more previous indices (e.g., $i-1, i-2$). |
+| **Grid / Path Finding** | $dp[i][j]$ | The result (min cost, total paths) to reach cell $(i, j)$ from a starting point, usually constrained by "right" and "down" moves. |
+| **0/1 Knapsack** | $dp[i][w]$ | The maximum value achieved using a subset of the first $i$ items without exceeding capacity $w$. Each item is used at most once. |
+| **Unbounded Knapsack** | $dp[w]$ | The maximum value for capacity $w$ where items can be reused infinitely. The state often ignores the item index to optimize space. |
+| **LCS / String DP** | $dp[i][j]$ | The optimal value (common length, edit distance) when comparing the prefix of String A (length $i$) and String B (length $j$). |
+| **LIS (Subsequence)** | $dp[i]$ | The length of the longest subsequence that **ends specifically at index $i$**. This requires checking all $j < i$ where $arr[j] < arr[i]$. |
+| **Interval DP** | $dp[i][j]$ | The optimal result for a sub-range $[i, j]$. Solutions are built by merging smaller intervals $[i, k]$ and $[k+1, j]$. |
+| **State Machine DP** | $dp[i][state]$ | The max profit/result on day $i$ given the current mode (e.g., Holding Stock, Cooldown, or Empty). Transitions represent actions like "Buy" or "Sell." |
+| **Bitmask DP** | $dp[mask][i]$ | The optimal solution given a set of visited/used items (encoded in $mask$) with the last action occurring at item $i$. |
+| **Digit DP** | $dp[pos][tight][cond]$ | The count of numbers satisfying a condition from the $pos$-th digit to the end. `tight` tracks if the number is still bounded by the input limit. |
+| **DP on Trees** | $dp[u][status]$ | The optimal value for the subtree rooted at $u$. `status` defines a condition, such as whether node $u$ is included in an Independent Set. |
+| **Game Theory DP** | $dp[i][j]$ | The maximum score the current player can get from the range $[i, j]$, assuming both players play optimally (Minimax). |
+| **Probability DP** | $dp[i][j]$ | The probability of an event occurring after $i$ trials with $j$ specific outcomes, often used in dice or coin-flip problems. |
+
+---
+
 # Linear DP
 
 The most fundamental DP pattern. Process elements **one by one** (left to right), and `dp[i]` depends on previous entries.

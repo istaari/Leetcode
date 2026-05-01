@@ -404,17 +404,126 @@ while ((high - low) > epsilon) {
 
 ## Linked List
 
-### **The Two Pointer Technique (Fast & Slow)**
-
 ### **The Sentinel (Dummy) Node**
+
+A dummy head node simplifies edge cases (empty list, deleting head, inserting at head).
+
+```java
+// Delete all nodes with value = val
+ListNode deleteDuplicates(ListNode head, int val) {
+    ListNode dummy = new ListNode(0, head); // dummy → head → ...
+    ListNode prev = dummy;
+    while (prev.next != null) {
+        if (prev.next.val == val) prev.next = prev.next.next;
+        else prev = prev.next;
+    }
+    return dummy.next;
+}
+```
+
+### **Two Pointers (Fast & Slow)**
+
+```
+  Find middle:                    Detect cycle:
+  slow moves 1, fast moves 2     if fast meets slow → cycle
+
+  1 → 2 → 3 → 4 → 5             1 → 2 → 3 → 4
+      s       f                           ↑       ↓
+          s           f                   7 ← 6 ← 5
+              s  (done, fast=null)        s,f meet at some node
+  middle = slow = 3
+```
+
+```java
+// Find middle node
+ListNode slow = head, fast = head;
+while (fast != null && fast.next != null) {
+    slow = slow.next;
+    fast = fast.next.next;
+}
+// slow = middle
+
+// Detect cycle (Floyd's)
+ListNode slow = head, fast = head;
+while (fast != null && fast.next != null) {
+    slow = slow.next;
+    fast = fast.next.next;
+    if (slow == fast) return true; // cycle found
+}
+return false;
+
+// Find cycle start: after detection, reset one pointer to head
+slow = head;
+while (slow != fast) {
+    slow = slow.next;
+    fast = fast.next; // both move 1 step
+}
+return slow; // cycle start
+```
 
 ### **Reversing a Linked List**
 
-### **Using a Hash Map for Visited Nodes**
+```
+  Before:  1 → 2 → 3 → 4 → null
+  After:   4 → 3 → 2 → 1 → null
 
-### **Merging & Splitting (Divide and Conquer)**
+  Each step: save next, flip pointer, advance prev & curr
 
-### **Cycle Analysis (Advanced Two Pointers)**
+  prev=null, curr=1     prev=1, curr=2     prev=2, curr=3     prev=3, curr=4
+  null ← 1   2→3→4     null←1←2   3→4     null←1←2←3   4     null←1←2←3←4
+```
+
+```java
+// Iterative reverse
+ListNode prev = null, curr = head;
+while (curr != null) {
+    ListNode next = curr.next;
+    curr.next = prev;
+    prev = curr;
+    curr = next;
+}
+return prev; // new head
+
+// Reverse between positions left and right (1-indexed)
+ListNode reverseBetween(ListNode head, int left, int right) {
+    ListNode dummy = new ListNode(0, head);
+    ListNode pre = dummy;
+    for (int i = 1; i < left; i++) pre = pre.next;
+
+    ListNode curr = pre.next;
+    for (int i = 0; i < right - left; i++) {
+        ListNode next = curr.next;
+        curr.next = next.next;
+        next.next = pre.next;
+        pre.next = next;
+    }
+    return dummy.next;
+}
+```
+
+### **Merge Two Sorted Lists**
+
+```java
+ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+    ListNode dummy = new ListNode(0), tail = dummy;
+    while (l1 != null && l2 != null) {
+        if (l1.val <= l2.val) { tail.next = l1; l1 = l1.next; }
+        else                  { tail.next = l2; l2 = l2.next; }
+        tail = tail.next;
+    }
+    tail.next = (l1 != null) ? l1 : l2;
+    return dummy.next;
+}
+```
+
+### **Common Patterns Summary**
+
+| Pattern | When to Use | Key Idea |
+|---------|-------------|----------|
+| Dummy node | Insert/delete at head, merge lists | Avoid null checks |
+| Fast & slow | Find middle, detect cycle, find kth from end | Two speeds |
+| Reverse | Reverse whole/partial list | Flip `.next` pointers |
+| Hash set | Detect duplicates, find intersection | Store visited nodes |
 
 
 ---
@@ -422,1262 +531,417 @@ while ((high - low) > epsilon) {
 ## Stack
 
 
-### **LIFO Basics (Reversal and "Undo")**
+### **1. Parentheses Validation**
 
+Use stack to match opening brackets with closing brackets.
 
-### **Complex Simulation & State Tracking**
+```java
+// Valid Parentheses — O(n) time, O(n) space
+boolean isValid(String s) {
+    Deque<Character> stack = new ArrayDeque<>();
+    for (char c : s.toCharArray()) {
+        if (c == '(') stack.push(')');
+        else if (c == '{') stack.push('}');
+        else if (c == '[') stack.push(']');
+        else if (stack.isEmpty() || stack.pop() != c) return false;
+    }
+    return stack.isEmpty();
+}
+```
 
+```
+  Input: "({[]})"
 
-### **Parentheses, Paths, and Expression Evaluation**
+  Step:  (        ({       ({[      ({[]     ({       (        done
+  Stack: [)]      [),}]    [),},]]  [),}]    [)]      []       empty ✓
+         push )   push }   push ]   match ]  match }  match )
+```
 
+### **2. Expression Evaluation**
 
-### Three Main Patterns of Problems
+Two approaches: use operator precedence or simplify with sign tracking.
 
-You can generally group these problems into three categories of increasing complexity.
+```java
+// Basic Calculator II: "3+2*2" → 7
+// Process * and / immediately, defer + and - by pushing to stack
+int calculate(String s) {
+    Deque<Integer> stack = new ArrayDeque<>();
+    int num = 0;
+    char op = '+';
+    for (int i = 0; i < s.length(); i++) {
+        char c = s.charAt(i);
+        if (Character.isDigit(c)) num = num * 10 + (c - '0');
+        if ((!Character.isDigit(c) && c != ' ') || i == s.length() - 1) {
+            switch (op) {
+                case '+': stack.push(num); break;
+                case '-': stack.push(-num); break;
+                case '*': stack.push(stack.pop() * num); break;
+                case '/': stack.push(stack.pop() / num); break;
+            }
+            op = c;
+            num = 0;
+        }
+    }
+    int result = 0;
+    for (int n : stack) result += n;
+    return result;
+}
+```
 
-#### 1. Validation Problems (e.g., "Valid Parentheses")
+### **3. Monotonic Stack (Next/Previous Greater/Smaller)**
 
-* **The Question:** Is this sequence valid?
-* **The Strategy:** Use the stack as a checklist of required closing items.
-    * **Push Condition:** When you see an "opening" character (`(`, `{`, `[`), push its required "closing" counterpart onto the stack.
-    * **Pop Condition (The Trigger):** When you see a "closing" character.
-    * **Pop Logic:** Pop from the stack and check if the popped character matches the current closing character. If it doesn't match, or if the stack was empty, the string is invalid.
-    * **Final Check:** After the loop, the stack must be empty. If it's not, there are unfinished tasks (unclosed parentheses), and the string is invalid.
+Maintain a stack in increasing/decreasing order to find next greater/smaller element in $O(n)$.
 
-#### 2. Processing & Transformation Problems (Your `RemoveOutermostParentheses` is a perfect example)
+```
+  Next Greater Element for [2, 1, 2, 4, 3]
 
-* **The Question:** Simplify, process, or remove parts of a sequence.
-* **The Strategy:** Use the stack to track the "current valid state" or "depth." Your decision for the current character often depends on the state of the stack.
-    * **Push/Pop Conditions:** These are defined by the problem. In your code, you always push `(` and pop `)`.
-    * **Core Logic:** The most important part is the condition under which you add to your result. Your code brilliantly uses the stack's size as a proxy for depth.
-        * For an opening `(`: You check `if (!stack.isEmpty())`. This asks, "Am I already inside another pair of parentheses?" If yes, this `(` is not an outermost one, so we keep it.
-        * For a closing `)`: You `pop()` first, then check `if (!stack.isEmpty())`. This asks, "After closing this pair, am I still inside another pair?" If yes, this `)` was not an outermost one, so we keep it.
-    * **Another Example:** For "Simplify Path", you push directory names. If you see `..`, you pop. If you see `.`, you do nothing. The final stack contents are used to build the result.
+  i=0: num=2, stack=[]       → push 2         stack=[2]
+  i=1: num=1, stack=[2]      → 1<2, push 1    stack=[2,1]
+  i=2: num=2, stack=[2,1]    → 2>1, pop 1→ans[1]=2
+                              → 2=2, push 2    stack=[2,2]
+  i=3: num=4, stack=[2,2]    → 4>2, pop 2→ans[2]=4
+                              → 4>2, pop 2→ans[0]=4
+                              → push 4         stack=[4]
+  i=4: num=3, stack=[4]      → 3<4, push 3    stack=[4,3]
 
-#### 3. Expression Evaluation Problems (e.g., "Basic Calculator")
+  Remaining in stack → ans[3]=-1, ans[4]=-1
+  Result: [4, 2, 4, -1, -1]
+```
 
-* **The Question:** Calculate the result of an arithmetic expression.
-* **The Strategy:** This is the most advanced pattern and often requires **two stacks**: one for numbers (operands) and one for operators.
-    * **The Challenge:** You have to handle operator precedence (`*` and `/` before `+` and `-`).
-    * **The Logic:**
-        1.  When you see a number, push it to the `number stack`.
-        2.  When you see an operator, look at the top of the `operator stack`.
-        3.  If the operator on the stack has higher or equal precedence than your current operator, you must perform that operation first. Pop the operator, pop two numbers, calculate the result, and push the result back onto the `number stack`.
-        4.  Repeat this until the operator on the stack has lower precedence, then push your current operator.
-        5.  Parentheses are handled by recursively solving the sub-expression or by pushing them onto the operator stack to create a "wall" that ignores precedence until a closing parenthesis is found.
+```java
+// Next Greater Element — O(n)
+int[] nextGreater(int[] nums) {
+    int n = nums.length;
+    int[] ans = new int[n];
+    Arrays.fill(ans, -1);
+    Deque<Integer> stack = new ArrayDeque<>(); // stores indices
 
-### **Monotonic Stack (Next/Previous Greater/Smaller)**
+    for (int i = 0; i < n; i++) {
+        while (!stack.isEmpty() && nums[stack.peek()] < nums[i]) {
+            ans[stack.pop()] = nums[i];
+        }
+        stack.push(i);
+    }
+    return ans;
+}
+```
 
+**Monotonic Stack Variants:**
 
-### A Mental Checklist for Any New Problem
-
-When you encounter a new problem of this type, ask yourself these questions:
-
-1.  **What am I putting on the stack?** (Characters, numbers, indices?)
-2.  **What is the "Push" condition?** (When do I add to the stack?)
-3.  **What is the "Trigger" for a reaction?** (What character makes me look at the stack? A `)`, an operator, etc.?)
-4.  **What is the "Pop" logic?** (When the trigger occurs, what do I do? Do I just pop? Do I compare the popped item? Do I use it in a calculation?)
-5.  **How is the final result built?** (Is it a boolean? Is it the last number on the stack? Do I build a string from the stack's contents?)
+| Problem | Stack Order | Condition to Pop |
+|---------|------------|------------------|
+| Next Greater Element | Decreasing | `nums[stack.peek()] < nums[i]` |
+| Next Smaller Element | Increasing | `nums[stack.peek()] > nums[i]` |
+| Previous Greater | Decreasing | Process before push |
+| Largest Rectangle in Histogram | Increasing | `heights[stack.peek()] >= heights[i]` |
 
 ---
 
-## Sliding Widow
+## Sliding Window
 
-### **Fixed-Size Sliding Window**
+### **1. Fixed-Size Sliding Window**
 
-### **Variable-Size Sliding Window (Two Pointers)**
+Window size is given. Slide the window one step at a time, add the new element, remove the old.
 
-### **Counting Subarrays with the "At Most K" Trick**
-
-### **Sliding Window with an Auxiliary Data Structure**
-
-
----
-## Trees
-
-### **TRAVERSALS**
-
-`Note : Visualize with 3 nodes`
-
-  1. **Inorder Iterative(Left-Root-Right)**  
-
-  - Initialize `current variable` with root, push left node until its null
-  - Pop last left node process it, then initialize current variable with right node
-
-  2. **Preorder Iterative(Left-Root-Right)**
-
-  - First add root to stack
-  - While stack is not empty pop from stack process the element, then push right node and then left node
-
-  3. **Postorder Iterative(Left-Root-Right)**
-  
-  - Create two stack input and output
-  - Push root to a input stack, the pop from stack, then push the element to ouput stack
-  - Push left node to input stack and right node to input stack
-
-
-### **BINARY SEARCH TREE (BST)**
-
-A Binary Search Tree is a node-based binary tree with a special ordering property that allows for fast lookups, insertions, and deletions.
-
-#### Properties
-
-  * **BST Invariant:** For any given node `N`:
-      * All values in its **left subtree** are **less than** `N`'s value.
-      * All values in its **right subtree** are **greater than** `N`'s value.
-      * Both its left and right subtrees must also be binary search trees.
-  * **No Duplicate Nodes:** A standard BST does not allow duplicate values.
-  * **In-order Traversal:** An in-order traversal of a BST yields its nodes' values in **sorted ascending order**.
-  * **Time Complexity:** For a balanced BST, operations like search, insertion, and deletion take $O(\log n)$ time. In the worst case (a skewed or degenerate tree), they take $O(n)$ time.
-
-#### Operations
-
-**Insertion**
-
-To insert a value, you traverse the tree from the root. If the new value is less than the current node's value, you go left; otherwise, you go right. You continue until you reach a `null` spot, where you insert the new node.
-
-```java
-TreeNode insert(TreeNode root, int key) {
-    if (root == null) {
-        return new TreeNode(key);
-    }
-    if (key < root.val) {
-        // Recursively insert into the left subtree
-        root.left = insert(root.left, key);
-    } else if (key > root.val) {
-        // Recursively insert into the right subtree
-        root.right = insert(root.right, key);
-    }
-    // Return the (possibly modified) root of the subtree
-    return root;
-}
 ```
+  Max sum of subarray of size k=3:  nums = [2, 1, 5, 1, 3, 2]
 
-**Deletion**
-
-Deletion is more complex and handles three cases for the node to be deleted:
-
-1.  **No children (leaf node):** Simply remove the node.
-2.  **One child:** Replace the node with its child.
-3.  **Two children:** Find the node's **in-order successor** (the smallest value in its right subtree), replace the node's value with the successor's value, and then recursively delete the successor node.
-
-
-```java
-TreeNode delete(TreeNode root, int key) {
-    if (root == null) return null;
-
-    if (key < root.val) {
-        root.left = delete(root.left, key);
-    } else if (key > root.val) {
-        root.right = delete(root.right, key);
-    } else { // Found the node to delete
-        // Case 1 & 2: Node with one or no child
-        if (root.left == null) return root.right;
-        if (root.right == null) return root.left;
-
-        // Case 3: Node with two children
-        // Find the in-order successor (smallest value in the right subtree)
-        TreeNode successor = findMin(root.right);
-        root.val = successor.val; // Replace node's value with successor's
-        root.right = delete(root.right, root.val); // Delete the successor
-    }
-    return root;
-}
-
-// Helper to find the minimum value node in a subtree
-TreeNode findMin(TreeNode node) {
-    while (node.left != null) {
-        node = node.left;
-    }
-    return node;
-}
-```
-
-### **AVL Tree**
-
-An **AVL Tree** (Adelson-Velsky & Landis) is a self-balancing BST where the **balance factor** of every node is in $\{-1, 0, 1\}$.
-
-$$\text{Balance Factor}(node) = \text{height}(node.left) - \text{height}(node.right)$$
-
-After every insertion or deletion, the tree checks balance factors bottom-up and applies **rotations** to restore balance. This guarantees $O(\log n)$ for search, insert, and delete.
-
-**Four Rotation Cases:**
-
-| Case | Trigger | Rotation |
-|------|---------|----------|
-| Left-Left (LL) | BF > 1 and inserted in left subtree of left child | Right Rotate |
-| Right-Right (RR) | BF < -1 and inserted in right subtree of right child | Left Rotate |
-| Left-Right (LR) | BF > 1 and inserted in right subtree of left child | Left Rotate on left child, then Right Rotate |
-| Right-Left (RL) | BF < -1 and inserted in left subtree of right child | Right Rotate on right child, then Left Rotate |
-
-```mermaid
-graph LR
-    subgraph "LL → Right Rotate"
-        direction TB
-        A1["z (BF=2)"] --> B1["y"] & X1["T4"]
-        B1 --> C1["x"] & D1["T3"]
-        C1 --> E1["T1"] & F1["T2"]
-    end
-
-    subgraph "After Right Rotate"
-        direction TB
-        A2["y (balanced)"] --> B2["x"] & C2["z"]
-        B2 --> D2["T1"] & E2["T2"]
-        C2 --> F2["T3"] & G2["T4"]
-    end
+  [2, 1, 5] 1, 3, 2  → sum=8
+   2 [1, 5, 1] 3, 2  → sum=7  (add 1, remove 2)
+   2, 1 [5, 1, 3] 2  → sum=9  (add 3, remove 1)  ← max
+   2, 1, 5 [1, 3, 2] → sum=6  (add 2, remove 5)
 ```
 
 ```java
-public class AVLTree {
-
-    private static class Node {
-        int key, height;
-        Node left, right;
-
-        Node(int key) {
-            this.key = key;
-            this.height = 1; // new node is a leaf with height 1
-        }
+// Max sum of subarray of size k — O(n)
+int maxSumSubarray(int[] nums, int k) {
+    int windowSum = 0, maxSum = 0;
+    for (int i = 0; i < nums.length; i++) {
+        windowSum += nums[i];
+        if (i >= k) windowSum -= nums[i - k]; // shrink: remove leftmost
+        if (i >= k - 1) maxSum = Math.max(maxSum, windowSum);
     }
-
-    private Node root;
-
-    // ── Height & Balance Factor ──────────────────────────────────
-    private int height(Node n) {
-        return (n == null) ? 0 : n.height;
-    }
-
-    private int balanceFactor(Node n) {
-        return (n == null) ? 0 : height(n.left) - height(n.right);
-    }
-
-    private void updateHeight(Node n) {
-        n.height = 1 + Math.max(height(n.left), height(n.right));
-    }
-
-    // ── Rotations ────────────────────────────────────────────────
-    //
-    //  Right Rotate (y):         Left Rotate (x):
-    //       y            x            x            y
-    //      / \    →     / \          / \    →     / \
-    //     x   T3      T1   y       T1   y      x   T3
-    //    / \              / \          / \     / \
-    //  T1   T2          T2   T3     T2   T3  T1  T2
-    //
-    private Node rightRotate(Node y) {
-        Node x = y.left;
-        Node T2 = x.right;
-
-        x.right = y;       // rotate
-        y.left = T2;
-
-        updateHeight(y);   // update y first (it's now lower)
-        updateHeight(x);
-        return x;          // new root of this subtree
-    }
-
-    private Node leftRotate(Node x) {
-        Node y = x.right;
-        Node T2 = y.left;
-
-        y.left = x;        // rotate
-        x.right = T2;
-
-        updateHeight(x);   // update x first (it's now lower)
-        updateHeight(y);
-        return y;           // new root of this subtree
-    }
-
-    // ── Rebalance ────────────────────────────────────────────────
-    // Called after insert/delete. Checks BF and applies the
-    // appropriate single or double rotation.
-    private Node rebalance(Node node) {
-        updateHeight(node);
-        int bf = balanceFactor(node);
-
-        // Left-heavy
-        if (bf > 1) {
-            if (balanceFactor(node.left) < 0) {
-                node.left = leftRotate(node.left); // LR case
-            }
-            return rightRotate(node);              // LL case
-        }
-
-        // Right-heavy
-        if (bf < -1) {
-            if (balanceFactor(node.right) > 0) {
-                node.right = rightRotate(node.right); // RL case
-            }
-            return leftRotate(node);                  // RR case
-        }
-
-        return node; // balanced
-    }
-
-    // ── Insert ───────────────────────────────────────────────────
-    public void insert(int key) {
-        root = insert(root, key);
-    }
-
-    private Node insert(Node node, int key) {
-        if (node == null) return new Node(key);
-
-        if (key < node.key)      node.left  = insert(node.left, key);
-        else if (key > node.key) node.right = insert(node.right, key);
-        else                     return node; // duplicate keys not allowed
-
-        return rebalance(node);
-    }
-
-    // ── Delete ───────────────────────────────────────────────────
-    public void delete(int key) {
-        root = delete(root, key);
-    }
-
-    private Node delete(Node node, int key) {
-        if (node == null) return null;
-
-        if (key < node.key)      node.left  = delete(node.left, key);
-        else if (key > node.key) node.right = delete(node.right, key);
-        else {
-            // Found node to delete
-            if (node.left == null)  return node.right;
-            if (node.right == null) return node.left;
-
-            // Two children: replace with in-order successor (smallest in right subtree)
-            Node successor = node.right;
-            while (successor.left != null) successor = successor.left;
-            node.key = successor.key;
-            node.right = delete(node.right, successor.key);
-        }
-
-        return rebalance(node);
-    }
-
-    // ── Search ───────────────────────────────────────────────────
-    public boolean search(int key) {
-        Node curr = root;
-        while (curr != null) {
-            if (key == curr.key)      return true;
-            else if (key < curr.key)  curr = curr.left;
-            else                      curr = curr.right;
-        }
-        return false;
-    }
+    return maxSum;
 }
 ```
 
-**Walkthrough — Insert 10, 20, 30, 25, 28:**
+### **2. Variable-Size Sliding Window (Two Pointers)**
+
+Expand right to include, shrink left when condition breaks. Track the best window.
 
 ```
-Insert 10:       Insert 20:        Insert 30 (RR):     Insert 25:          Insert 28 (RL at 30):
-  10                10                 20                  20                    20
-                      \               /  \                /  \                  /  \
-                      20            10    30            10    30              10    28
-                                                            /                    /  \
-                                                          25                  25    30
+  Longest substring without repeating chars: "abcabcbb"
+
+  [a] b c a b c b b     → len=1
+  [a b] c a b c b b     → len=2
+  [a b c] a b c b b     → len=3
+   a [b c a] b c b b    → len=3 (shrink: 'a' repeated, move left past first 'a')
+   a b [c a b] c b b    → len=3
+   a b c [a b c] b b    → len=3
+   a b c a b [c b] b    → len=2 (shrink: 'b' repeated)
+   a b c a b c [b] b    → len=1
+  Answer: 3
 ```
-
-**Complexity:**
-
-| Operation | Time | Space |
-|-----------|------|-------|
-| Search | $O(\log n)$ | $O(1)$ iterative |
-| Insert | $O(\log n)$ | $O(\log n)$ stack |
-| Delete | $O(\log n)$ | $O(\log n)$ stack |
-
-**When to use:** When you need guaranteed $O(\log n)$ lookups and the dataset has frequent lookups relative to inserts/deletes. AVL trees are more strictly balanced than Red-Black trees, so lookups are slightly faster but insertions/deletions may be slightly slower due to more rotations.
-
-
-### **RED-BLACK TREE**
-
-A **Red-Black Tree** is a self-balancing BST where each node stores an extra bit: its **color** (Red or Black). The coloring rules ensure the tree stays approximately balanced.
-
-**Properties (Invariants):**
-
-1. Every node is either **Red** or **Black**.
-2. The **root** is always Black.
-3. Every `null` leaf (NIL) is Black.
-4. If a node is Red, **both its children must be Black** (no two consecutive reds).
-5. Every path from a node to its descendant NIL leaves has the **same number of Black nodes** (black-height).
-
-These rules guarantee: $h \le 2 \log_2(n+1)$, so all operations are $O(\log n)$.
-
-**Fixing Violations After Insert (new node is always Red):**
-
-| Case | Uncle Color | Action |
-|------|-------------|--------|
-| 1 | Uncle is **Red** | Recolor parent & uncle to Black, grandparent to Red. Move up. |
-| 2 | Uncle is **Black**, node is inner child | Rotate node's parent (transforms to Case 3) |
-| 3 | Uncle is **Black**, node is outer child | Rotate grandparent + recolor |
 
 ```java
-public class RedBlackTree {
+// Longest substring without repeating characters — O(n)
+int lengthOfLongestSubstring(String s) {
+    Map<Character, Integer> lastSeen = new HashMap<>();
+    int maxLen = 0, left = 0;
 
-    private static final boolean RED   = true;
-    private static final boolean BLACK = false;
-
-    private static class Node {
-        int key;
-        boolean color;
-        Node left, right, parent;
-
-        Node(int key) {
-            this.key   = key;
-            this.color = RED; // new nodes are always Red
+    for (int right = 0; right < s.length(); right++) {
+        char c = s.charAt(right);
+        if (lastSeen.containsKey(c) && lastSeen.get(c) >= left) {
+            left = lastSeen.get(c) + 1; // shrink window past duplicate
         }
+        lastSeen.put(c, right);
+        maxLen = Math.max(maxLen, right - left + 1);
     }
-
-    private Node root;
-    private final Node NIL; // sentinel for null leaves
-
-    public RedBlackTree() {
-        NIL = new Node(0);
-        NIL.color = BLACK;
-        NIL.left = NIL.right = NIL.parent = NIL;
-        root = NIL;
-    }
-
-    // ── Rotations ────────────────────────────────────────────────
-    private void leftRotate(Node x) {
-        Node y = x.right;
-        x.right = y.left;
-        if (y.left != NIL) y.left.parent = x;
-
-        y.parent = x.parent;
-        if (x.parent == NIL)           root = y;
-        else if (x == x.parent.left)   x.parent.left = y;
-        else                           x.parent.right = y;
-
-        y.left = x;
-        x.parent = y;
-    }
-
-    private void rightRotate(Node y) {
-        Node x = y.left;
-        y.left = x.right;
-        if (x.right != NIL) x.right.parent = y;
-
-        x.parent = y.parent;
-        if (y.parent == NIL)           root = x;
-        else if (y == y.parent.left)   y.parent.left = x;
-        else                           y.parent.right = x;
-
-        x.right = y;
-        y.parent = x;
-    }
-
-    // ── Insert ───────────────────────────────────────────────────
-    public void insert(int key) {
-        Node z = new Node(key);
-        z.left = z.right = z.parent = NIL;
-
-        // Standard BST insert
-        Node parent = NIL, curr = root;
-        while (curr != NIL) {
-            parent = curr;
-            if (key < curr.key)      curr = curr.left;
-            else if (key > curr.key) curr = curr.right;
-            else                     return; // duplicate
-        }
-        z.parent = parent;
-        if (parent == NIL)           root = z;
-        else if (key < parent.key)   parent.left = z;
-        else                         parent.right = z;
-
-        // Fix Red-Black violations
-        insertFixup(z);
-    }
-
-    // ── Insert Fixup ─────────────────────────────────────────────
-    // We only violate Property 4 (red parent + red child).
-    // Walk up the tree, handling 3 symmetric cases per side.
-    private void insertFixup(Node z) {
-        while (z.parent.color == RED) {
-            if (z.parent == z.parent.parent.left) {
-                Node uncle = z.parent.parent.right;
-
-                if (uncle.color == RED) {
-                    // Case 1: Uncle is Red → recolor and move up
-                    z.parent.color = BLACK;
-                    uncle.color = BLACK;
-                    z.parent.parent.color = RED;
-                    z = z.parent.parent;
-                } else {
-                    if (z == z.parent.right) {
-                        // Case 2: z is right child → left rotate to make it Case 3
-                        z = z.parent;
-                        leftRotate(z);
-                    }
-                    // Case 3: z is left child → right rotate grandparent + recolor
-                    z.parent.color = BLACK;
-                    z.parent.parent.color = RED;
-                    rightRotate(z.parent.parent);
-                }
-            } else {
-                // Mirror: parent is right child of grandparent
-                Node uncle = z.parent.parent.left;
-
-                if (uncle.color == RED) {
-                    z.parent.color = BLACK;
-                    uncle.color = BLACK;
-                    z.parent.parent.color = RED;
-                    z = z.parent.parent;
-                } else {
-                    if (z == z.parent.left) {
-                        z = z.parent;
-                        rightRotate(z);
-                    }
-                    z.parent.color = BLACK;
-                    z.parent.parent.color = RED;
-                    leftRotate(z.parent.parent);
-                }
-            }
-        }
-        root.color = BLACK; // ensure root is always Black
-    }
-
-    // ── Search ───────────────────────────────────────────────────
-    public boolean search(int key) {
-        Node curr = root;
-        while (curr != NIL) {
-            if (key == curr.key)      return true;
-            else if (key < curr.key)  curr = curr.left;
-            else                      curr = curr.right;
-        }
-        return false;
-    }
+    return maxLen;
 }
 ```
 
-**Walkthrough — Insert 10, 20, 30, 15:**
-
-```
-Insert 10 (root→Black):     Insert 20:             Insert 30 (Case 3):     Insert 15 (Case 1):
-    10(B)                     10(B)                     20(B)                   20(B)
-                                \                      /    \                  /    \
-                               20(R)                10(R)  30(R)           10(B)  30(B)
-                                                                             \
-                                                                            15(R)
-```
-
-**AVL vs Red-Black Tree:**
-
-| Property | AVL Tree | Red-Black Tree |
-|----------|----------|----------------|
-| Balance | Strictly balanced (BF ∈ {-1,0,1}) | Approximately balanced (h ≤ 2 log n) |
-| Rotations per insert | Up to $O(\log n)$ | At most 2 |
-| Rotations per delete | Up to $O(\log n)$ | At most 3 |
-| Lookup speed | Slightly faster | Slightly slower |
-| Insert/Delete speed | Slightly slower | Slightly faster |
-| Use case | Read-heavy workloads | Write-heavy workloads (Java `TreeMap`, Linux kernel) |
-
-
-### **SEGMENT TREE**
-
-```mermaid
-
-graph TD
-    %% Array Reference Node
-    InputArray["<b>Input Array:</b><br/>[1, 4, 5, 5, 9, 10, 10, 12, 19, 31, 41]"]
-    
-    %% Style the input array to make it stand out (Yellow)
-    style InputArray fill:#ffecb3,stroke:#ffb74d,stroke-width:2px,color:black
-    
-    %% Link the array to the root
-    InputArray -.-> N1
-    
-    %% Tree Nodes
-    N1["Sum: 147<br/>[0-10]"]
-    N1 --> N2
-    N1 --> N3
-    
-    N2["Sum: 34<br/>[0-5]"]
-    N2 --> N4
-    N2 --> N5
-    
-    N3["Sum: 113<br/>[6-10]"]
-    N3 --> N6
-    N3 --> N7
-    
-    N4["Sum: 10<br/>[0-2]"]
-    N4 --> N8
-    N4 --> N9
-    
-    N5["Sum: 24<br/>[3-5]"]
-    N5 --> N10
-    N5 --> N11
-    
-    N6["Sum: 41<br/>[6-8]"]
-    N6 --> N12
-    N6 --> N13
-    
-    N7["Sum: 72<br/>[9-10]"]
-    N7 --> N14
-    N7 --> N15
-    
-    N8["Sum: 5<br/>[0-1]"]
-    N8 --> N16
-    N8 --> N17
-    
-    N9["Sum: 5<br/>[2-2]"]
-    style N9 fill:#e1f5fe,stroke:#01579b %% Leaf Node Styling
-    
-    N10["Sum: 14<br/>[3-4]"]
-    N10 --> N20
-    N10 --> N21
-    
-    N11["Sum: 10<br/>[5-5]"]
-    style N11 fill:#e1f5fe,stroke:#01579b %% Leaf Node Styling
-
-    N12["Sum: 22<br/>[6-7]"]
-    N12 --> N24
-    N12 --> N25
-    
-    N13["Sum: 19<br/>[8-8]"]
-    style N13 fill:#e1f5fe,stroke:#01579b %% Leaf Node Styling
-    
-    N14["Sum: 31<br/>[9-9]"]
-    style N14 fill:#e1f5fe,stroke:#01579b %% Leaf Node Styling
-    
-    N15["Sum: 41<br/>[10-10]"]
-    style N15 fill:#e1f5fe,stroke:#01579b %% Leaf Node Styling
-    
-    N16["Sum: 1<br/>[0-0]"]
-    style N16 fill:#e1f5fe,stroke:#01579b %% Leaf Node Styling
-    
-    N17["Sum: 4<br/>[1-1]"]
-    style N17 fill:#e1f5fe,stroke:#01579b %% Leaf Node Styling
-    
-    N20["Sum: 5<br/>[3-3]"]
-    style N20 fill:#e1f5fe,stroke:#01579b %% Leaf Node Styling
-    
-    N21["Sum: 9<br/>[4-4]"]
-    style N21 fill:#e1f5fe,stroke:#01579b %% Leaf Node Styling
-    
-    N24["Sum: 10<br/>[6-6]"]
-    style N24 fill:#e1f5fe,stroke:#01579b %% Leaf Node Styling
-    
-    N25["Sum: 12<br/>[7-7]"]
-    style N25 fill:#e1f5fe,stroke:#01579b %% Leaf Node Styling
-
-```
-
-**How it works:**
-- Each node stores an aggregate (here: sum) of a contiguous subarray.
-- The root covers the entire array `[0, n-1]`.
-- Its left child covers `[0, mid]`, right child covers `[mid+1, n-1]`, and so on recursively until each leaf covers a single element.
-
-**Tree layout (stored in a flat array, 0-indexed):**
-- Node `i`'s left child = `2*i + 1`
-- Node `i`'s right child = `2*i + 2`
-- We allocate `4*n` space to safely hold all nodes.
-
-**Time:** Build $O(n)$, Query $O(\log n)$, Update $O(\log n)$
+**Variable window template:**
 
 ```java
-public class SegmentTree {
-
-    private final int[] tree; // internal array storing node values
-    private final int n;      // size of the original array
-
-    public SegmentTree(int[] arr) {
-        n = arr.length;
-        tree = new int[4 * n]; // 4*n guarantees enough space for any n
-        buildTree(arr, 0, 0, n - 1);
+int left = 0;
+for (int right = 0; right < n; right++) {
+    // expand: add nums[right] to window state
+    while (/* window is invalid */) {
+        // shrink: remove nums[left] from window state
+        left++;
     }
-
-    // ── BUILD ────────────────────────────────────────────────────
-    // Recursively construct the tree bottom-up.
-    //   node  = index in tree[] for the current segment
-    //   start = left boundary of the segment this node covers
-    //   end   = right boundary of the segment this node covers
-    //
-    // Base case: leaf (start == end) → store the array element.
-    // Recursive: build left & right children, then merge (sum).
-    // ─────────────────────────────────────────────────────────────
-    public void buildTree(int[] arr, int node, int start, int end) {
-        if (start == end) {
-            // Leaf: covers exactly one element arr[start]
-            tree[node] = arr[start];
-        } else {
-            int mid = (start + end) / 2;
-            buildTree(arr, 2 * node + 1, start, mid);      // left child
-            buildTree(arr, 2 * node + 2, mid + 1, end);    // right child
-            tree[node] = tree[2 * node + 1] + tree[2 * node + 2]; // merge
-        }
-    }
-
-    // ── QUERY ────────────────────────────────────────────────────
-    // Find the sum of elements in range [l, r].
-    //
-    // Three cases at each node covering [start, end]:
-    //   1. NO OVERLAP:    [start, end] completely outside [l, r] → return 0
-    //   2. TOTAL OVERLAP: [start, end] completely inside [l, r]  → return tree[node]
-    //   3. PARTIAL OVERLAP: split into children and combine
-    // ─────────────────────────────────────────────────────────────
-    public int query(int l, int r) {
-        return query(0, 0, n - 1, l, r);
-    }
-
-    private int query(int node, int start, int end, int l, int r) {
-        if (start > r || end < l) return 0;            // no overlap
-        if (start >= l && end <= r) return tree[node];  // total overlap
-
-        int mid = (start + end) / 2;
-        int leftSum  = query(2 * node + 1, start, mid, l, r);
-        int rightSum = query(2 * node + 2, mid + 1, end, l, r);
-        return leftSum + rightSum;
-    }
-
-    // ── POINT UPDATE ─────────────────────────────────────────────
-    // Set arr[index] = value, then propagate changes up the tree.
-    //
-    // Walk from root toward the leaf that holds arr[index].
-    // At each level, go left or right depending on where index falls.
-    // Once at the leaf, set its value. On the way back up,
-    // recalculate each ancestor as the sum of its two children.
-    // ─────────────────────────────────────────────────────────────
-    public void update(int index, int value) {
-        update(0, 0, n - 1, index, value);
-    }
-
-    private void update(int node, int start, int end, int index, int value) {
-        if (start == end) {
-            tree[node] = value; // leaf node — update
-            return;
-        }
-
-        int mid = (start + end) / 2;
-        if (index <= mid) {
-            update(2 * node + 1, start, mid, index, value);     // go left
-        } else {
-            update(2 * node + 2, mid + 1, end, index, value);   // go right
-        }
-        tree[node] = tree[2 * node + 1] + tree[2 * node + 2];  // recalculate
-    }
+    // update answer with current window [left, right]
 }
 ```
 
+### **3. Counting Subarrays with the "At Most K" Trick**
 
-### **B-TREE**
-
-A **B-Tree** of order $m$ is a self-balancing multi-way search tree optimized for systems that read/write large blocks of data (databases, file systems). Unlike binary trees, each node can hold **multiple keys** and have **multiple children**, minimizing disk I/O by keeping the tree height very small.
-
-**Properties of a B-Tree of order $m$:**
-
-| Property | Rule |
-|----------|------|
-| Max keys per node | $m - 1$ |
-| Max children per node | $m$ |
-| Min keys (non-root internal) | $\lceil m/2 \rceil - 1$ |
-| Min children (non-root internal) | $\lceil m/2 \rceil$ |
-| Root | At least 1 key (if non-empty) |
-| Leaves | All at the same depth |
-| Key ordering | Within a node, keys are sorted. Child $i$ contains keys between key $i-1$ and key $i$. |
-
-**Height:** $h \le \log_{\lceil m/2 \rceil} \frac{n+1}{2}$ → very flat even for millions of entries.
-
-```mermaid
-graph TD
-    subgraph "B-Tree of order 3 (2-3 Tree)"
-        R["[16]"] --> A["[4, 8]"] & B["[20, 24]"]
-        A --> C["[1, 2]"] & D["[5, 6]"] & E["[10, 12]"]
-        B --> F["[17, 18]"] & G["[21, 22]"] & H["[25, 30]"]
-    end
-```
-
-**Operations Overview:**
-
-- **Search:** Like BST search but at each node, scan through multiple keys to decide which child to follow. $O(\log n)$.
-- **Insert:** Find the correct leaf. If the leaf is full ($m-1$ keys), **split** it: move the median key up to the parent. Splits may cascade up to the root, which is the only way the tree grows taller.
-- **Delete:** Find and remove the key. If a node underflows (fewer than $\lceil m/2 \rceil - 1$ keys), fix by **borrowing** from a sibling or **merging** with a sibling.
+Count subarrays with **exactly K** distinct = `atMost(K) - atMost(K-1)`.
 
 ```java
-public class BTree {
+// Subarrays with exactly K distinct integers
+int subarraysWithKDistinct(int[] nums, int k) {
+    return atMost(nums, k) - atMost(nums, k - 1);
+}
 
-    private static final int ORDER = 3; // 2-3 tree (min degree t = 2)
-    private static final int MAX_KEYS = ORDER - 1;
-    private static final int MIN_KEYS = (ORDER + 1) / 2 - 1; // ceil(m/2) - 1
-
-    private static class Node {
-        int numKeys;
-        int[] keys = new int[MAX_KEYS];
-        Node[] children = new Node[ORDER];
-        boolean isLeaf;
-
-        Node(boolean isLeaf) {
-            this.isLeaf = isLeaf;
+int atMost(int[] nums, int k) {
+    Map<Integer, Integer> freq = new HashMap<>();
+    int left = 0, count = 0;
+    for (int right = 0; right < nums.length; right++) {
+        freq.merge(nums[right], 1, Integer::sum);
+        while (freq.size() > k) {
+            int val = nums[left++];
+            freq.merge(val, -1, Integer::sum);
+            if (freq.get(val) == 0) freq.remove(val);
         }
+        count += right - left + 1; // all subarrays ending at right
     }
-
-    private Node root;
-
-    public BTree() {
-        root = new Node(true);
-    }
-
-    // ── Search ───────────────────────────────────────────────────
-    // At each node, find the first key ≥ target.
-    // If found, return true. Otherwise, recurse into the child.
-    public boolean search(int key) {
-        return search(root, key);
-    }
-
-    private boolean search(Node node, int key) {
-        int i = 0;
-        while (i < node.numKeys && key > node.keys[i]) i++;
-
-        if (i < node.numKeys && key == node.keys[i]) return true;
-        if (node.isLeaf) return false;
-        return search(node.children[i], key);
-    }
-
-    // ── Insert ───────────────────────────────────────────────────
-    // If root is full, split it first (tree grows one level).
-    // Then insert into the non-full tree.
-    public void insert(int key) {
-        Node r = root;
-        if (r.numKeys == MAX_KEYS) {
-            Node newRoot = new Node(false);
-            newRoot.children[0] = r;
-            splitChild(newRoot, 0, r);
-            root = newRoot;
-            insertNonFull(newRoot, key);
-        } else {
-            insertNonFull(r, key);
-        }
-    }
-
-    // Insert key into a node that is guaranteed not full.
-    // If leaf → shift keys right and insert.
-    // If internal → find correct child; split it if full, then recurse.
-    private void insertNonFull(Node node, int key) {
-        int i = node.numKeys - 1;
-
-        if (node.isLeaf) {
-            while (i >= 0 && key < node.keys[i]) {
-                node.keys[i + 1] = node.keys[i]; // shift right
-                i--;
-            }
-            node.keys[i + 1] = key;
-            node.numKeys++;
-        } else {
-            while (i >= 0 && key < node.keys[i]) i--;
-            i++;
-            if (node.children[i].numKeys == MAX_KEYS) {
-                splitChild(node, i, node.children[i]);
-                if (key > node.keys[i]) i++;
-            }
-            insertNonFull(node.children[i], key);
-        }
-    }
-
-    // ── Split Child ──────────────────────────────────────────────
-    // Node y = parent.children[index] is full.
-    // Create a new node z, move the upper half of y's keys to z,
-    // promote the median key to parent.
-    private void splitChild(Node parent, int index, Node y) {
-        Node z = new Node(y.isLeaf);
-        int mid = MAX_KEYS / 2;
-
-        // Move upper keys from y to z
-        z.numKeys = MAX_KEYS - mid - 1;
-        for (int j = 0; j < z.numKeys; j++) {
-            z.keys[j] = y.keys[mid + 1 + j];
-        }
-
-        // Move upper children if not leaf
-        if (!y.isLeaf) {
-            for (int j = 0; j <= z.numKeys; j++) {
-                z.children[j] = y.children[mid + 1 + j];
-            }
-        }
-
-        y.numKeys = mid;
-
-        // Shift parent's children/keys right to make room
-        for (int j = parent.numKeys; j > index; j--) {
-            parent.children[j + 1] = parent.children[j];
-        }
-        parent.children[index + 1] = z;
-
-        for (int j = parent.numKeys - 1; j >= index; j--) {
-            parent.keys[j + 1] = parent.keys[j];
-        }
-        parent.keys[index] = y.keys[mid]; // promote median
-        parent.numKeys++;
-    }
+    return count;
 }
 ```
 
-**Walkthrough — Insert 10, 20, 5, 30, 15 into B-Tree of order 3:**
+### **4. Sliding Window with Auxiliary Data Structure**
+
+Use a `Deque` (monotonic) or `TreeMap` for max/min in current window.
 
 ```
-Insert 10:        Insert 20:          Insert 5 (full→split):    Insert 30:         Insert 15:
-  [10]              [10, 20]                [10]                   [10]               [10, 20]
-                                           /    \                 /    \              /   |   \
-                                         [5]   [20]            [5]  [20, 30]       [5] [15]  [30]
+  Sliding window maximum, k=3:  nums = [1, 3, -1, -3, 5, 3]
+
+  Window        Deque (stores indices, front=max)  Max
+  [1, 3, -1]   [1(3), 2(-1)]                       3
+  [3, -1, -3]  [1(3), 2(-1), 3(-3)]                3
+  [-1, -3, 5]  [4(5)]                               5
+  [-3, 5, 3]   [4(5), 5(3)]                         5
+
+  Result: [3, 3, 5, 5]
 ```
-
-**Complexity (B-Tree of order $m$, $n$ keys):**
-
-| Operation | Time |
-|-----------|------|
-| Search | $O(\log n)$ |
-| Insert | $O(\log n)$ |
-| Delete | $O(\log n)$ |
-| Height | $O(\log_m n)$ — very flat |
-
-
-### **B+ TREE**
-
-A **B+ Tree** is a variation of a B-Tree with two key differences:
-
-1. **All data lives in leaf nodes only.** Internal nodes store only keys as "road signs" for navigation.
-2. **Leaf nodes are linked** in a doubly/singly linked list, enabling efficient range scans.
-
-This is the data structure behind virtually all database indexes (MySQL InnoDB, PostgreSQL, SQLite).
-
-**Why B+ Tree over B-Tree for databases?**
-
-| Feature | B-Tree | B+ Tree |
-|---------|--------|---------|
-| Data location | Any node | Leaves only |
-| Leaf linking | No | Yes (linked list) |
-| Range queries | Must traverse tree | Sequential scan via leaf links |
-| Internal node fan-out | Lower (keys + data) | Higher (keys only → more keys per node) |
-| Cache/Disk efficiency | Good | Better (internal nodes fit more in memory) |
-
-```mermaid
-graph TD
-    subgraph "B+ Tree"
-        R["[20]<br/><i>Internal</i>"] --> L["[5, 10]<br/><i>Internal</i>"] & Ri["[25, 30]<br/><i>Internal</i>"]
-        L --> A["[1,3,5]<br/>🔗→"] & B["[7,8,10]<br/>🔗→"]
-        Ri --> C["[20,22,25]<br/>🔗→"] & D["[28,30,35]"]
-    end
-    A --> |"next"| B --> |"next"| C --> |"next"| D
-```
-
-**Key Operations:**
-
-- **Search:** Navigate internal nodes (like B-Tree) until you reach a leaf. All searches end at a leaf.
-- **Range Query:** Find the starting leaf, then follow the linked list pointers — no need to re-traverse the tree.
-- **Insert:** Insert into the correct leaf. If the leaf overflows, split it and **copy** the middle key up (not move, since data stays in leaves).
-- **Delete:** Remove from the leaf. Handle underflow by borrowing or merging.
 
 ```java
-public class BPlusTree {
+// Sliding window maximum — O(n) using monotonic deque
+int[] maxSlidingWindow(int[] nums, int k) {
+    Deque<Integer> dq = new ArrayDeque<>(); // stores indices
+    int[] result = new int[nums.length - k + 1];
 
-    private static final int ORDER = 4; // max children per internal node
-    private static final int MAX_KEYS = ORDER - 1;
-
-    // ── Leaf Node ────────────────────────────────────────────────
-    // Stores actual key-value pairs. Linked to the next leaf.
-    static class LeafNode {
-        int numKeys;
-        int[] keys = new int[MAX_KEYS];
-        int[] values = new int[MAX_KEYS]; // data/record pointers
-        LeafNode next; // pointer to next leaf for range scans
+    for (int i = 0; i < nums.length; i++) {
+        // Remove indices outside window
+        while (!dq.isEmpty() && dq.peekFirst() < i - k + 1) dq.pollFirst();
+        // Remove smaller elements (maintain decreasing order)
+        while (!dq.isEmpty() && nums[dq.peekLast()] < nums[i]) dq.pollLast();
+        dq.offerLast(i);
+        if (i >= k - 1) result[i - k + 1] = nums[dq.peekFirst()];
     }
-
-    // ── Internal Node ────────────────────────────────────────────
-    // Stores only keys as separators (road signs).
-    // children[i] covers keys < keys[i]; children[numKeys] covers keys ≥ keys[numKeys-1].
-    static class InternalNode {
-        int numKeys;
-        int[] keys = new int[MAX_KEYS];
-        Object[] children = new Object[ORDER]; // InternalNode or LeafNode
-    }
-
-    private Object root; // can be InternalNode or LeafNode
-    private LeafNode firstLeaf; // head of the leaf linked list
-
-    public BPlusTree() {
-        LeafNode leaf = new LeafNode();
-        root = leaf;
-        firstLeaf = leaf;
-    }
-
-    // ── Search (exact key lookup) ────────────────────────────────
-    // Navigate internal nodes until we reach a leaf, then linear scan.
-    public int search(int key) {
-        LeafNode leaf = findLeaf(key);
-        for (int i = 0; i < leaf.numKeys; i++) {
-            if (leaf.keys[i] == key) return leaf.values[i];
-        }
-        return -1; // not found
-    }
-
-    // ── Range Query ──────────────────────────────────────────────
-    // Find the first leaf containing startKey, then follow next pointers.
-    public List<Integer> rangeQuery(int startKey, int endKey) {
-        List<Integer> result = new ArrayList<>();
-        LeafNode leaf = findLeaf(startKey);
-
-        while (leaf != null) {
-            for (int i = 0; i < leaf.numKeys; i++) {
-                if (leaf.keys[i] >= startKey && leaf.keys[i] <= endKey) {
-                    result.add(leaf.values[i]);
-                }
-                if (leaf.keys[i] > endKey) return result;
-            }
-            leaf = leaf.next; // follow linked list
-        }
-        return result;
-    }
-
-    // Navigate from root to the leaf that would contain key
-    private LeafNode findLeaf(int key) {
-        Object node = root;
-        while (node instanceof InternalNode) {
-            InternalNode internal = (InternalNode) node;
-            int i = 0;
-            while (i < internal.numKeys && key >= internal.keys[i]) i++;
-            node = internal.children[i];
-        }
-        return (LeafNode) node;
-    }
+    return result;
 }
 ```
 
-**Database Index Example:**
+### **Sliding Window Patterns Summary**
 
-```
-SQL: SELECT * FROM users WHERE age BETWEEN 25 AND 35;
-
-B+ Tree Index on 'age':
-
-Internal:        [20 | 30 | 40]
-                /    |     |    \
-Leaves:  [15,18,20]→[22,25,28]→[30,32,35]→[38,40,45]
-              ↑ start here        ↑ stop here
-
-1. Navigate to leaf containing 25 → [22,25,28]
-2. Scan forward via next pointers: 25, 28, 30, 32, 35 → done
-3. No random I/O — all sequential reads!
-```
-
-
-### **EULER TOUR TECHNIQUE**
-
-A **Range Query in a Tree** is a problem where you need to calculate a value (like a sum, minimum, or maximum) for a specific set of nodes within a tree. Unlike arrays where a "range" is simply indices $[L, R]$, trees are non-linear, so "range" usually refers to one of two things:
-1.  **Subtree Query:** "What is the sum of values in the entire subtree rooted at node $X$?"
-2.  **Path Query:** "What is the minimum value on the path between node $U$ and node $V$?"
-
-Standard tree traversal is too slow if you have thousands of queries. The **Euler Tour** technique solves this by "flattening" the tree into a linear array. Once the tree is an array, you can use standard fast tools like **Segment Trees** or **Fenwick Trees** to answer these queries in $O(\log N)$ time.
-
-
-#### Problems Solved by Euler Tour
-
-#### A. Subtree Queries (Sum/Min/Max)
-* **Problem:** You have a tree where nodes have values. You need to update the value of a node and find the sum of values in any given subtree.
-* **Euler Solution:**
-    1.  Flatten the tree into an array using Entry/Exit times.
-    2.  Build a **Segment Tree** or **Fenwick Tree** on this array.
-    3.  A "Subtree Sum of $u$" becomes a standard "Range Sum Query" on indices $[\text{Entry}[u], \text{Exit}[u]]$.
-
-#### B. Ancestor Checking
-* **Problem:** Check if node $U$ is an ancestor of node $V$.
-* **Euler Solution:** Node $U$ is an ancestor of $V$ if and only if $U$'s interval completely encloses $V$'s interval.
-    $$\text{Entry}[U] \le \text{Entry}[V] \quad \text{AND} \quad \text{Exit}[U] \ge \text{Exit}[V]$$
-
-#### C. Lowest Common Ancestor (LCA)
-* **Problem:** Find the lowest shared ancestor of nodes $U$ and $V$.
-* **Euler Solution:** By recording nodes in a specific Euler tour order (adding the node to a list every time the DFS visits it, not just entry/exit), the LCA problem reduces to a **Range Minimum Query (RMQ)**. The LCA is the node with the minimum depth that appears in the tour between the first occurrence of $U$ and the first occurrence of $V$.
-
-#### D. Path Queries (Advanced)
-* **Problem:** Find the sum of values on the path between $U$ and $V$.
-* **Euler Solution:** While Euler Tour primarily solves subtree problems, it is a building block for **Heavy-Light Decomposition (HLD)**, which chains multiple Euler tours together to solve path queries in $O(\log^2 N)$. Alternatively, for simple path sums, you can use the formula:
-    $$\text{Path}(u, v) = \text{Prefix}(u) + \text{Prefix}(v) - 2 \times \text{Prefix}(\text{LCA}(u, v))$$
-    *(Where `Prefix` is the sum from root to the node).*
-
-#### Java Implementation
-
-```java
-public class EulerTour {
-
-    private final List<List<Integer>> adj; // adjacency list of the tree
-    private final int n;                   // number of nodes
-
-    private int[] tin;    // tin[u]  = entry time (when DFS first visits u)
-    private int[] tout;   // tout[u] = exit time (when DFS finishes u's subtree)
-    private int[] order;  // order[t] = which node has entry time t (the flat array)
-    private int timer;    // global clock, incremented at each new visit
-
-    public EulerTour(int n) {
-        this.n = n;
-        this.adj = new ArrayList<>();
-        for (int i = 0; i < n; i++) adj.add(new ArrayList<>());
-    }
-
-    public void addEdge(int u, int v) {
-        adj.get(u).add(v);
-        adj.get(v).add(u);
-    }
-
-    // ── Compute the tour ─────────────────────────────────────────
-    // After this call:
-    //   tin[u]   = position in the flat array where node u appears
-    //   tout[u]  = last position belonging to u's subtree
-    //   order[i] = the node at position i in the flat array
-    //
-    // Subtree of u → contiguous range [tin[u], tout[u]] in order[].
-    // ─────────────────────────────────────────────────────────────
-    public void computeTour(int root) {
-        tin = new int[n];
-        tout = new int[n];
-        order = new int[n];
-        timer = 0;
-        dfs(root, -1);
-    }
-
-    private void dfs(int u, int parent) {
-        // Record entry time: u is the (timer)-th node we visit
-        tin[u] = timer;
-        order[timer] = u;
-        timer++;
-
-        // Visit all children (skip parent to avoid going back up)
-        for (int v : adj.get(u)) {
-            if (v != parent) {
-                dfs(v, u);
-            }
-        }
-
-        // Record exit time: all descendants of u have been visited
-        tout[u] = timer - 1;
-    }
-
-    public int tin(int u)  { return tin[u]; }
-    public int tout(int u) { return tout[u]; }
-    public int[] getOrder() { return order; }
-}
-```
-
-**Combining Euler Tour + Segment Tree for subtree queries:**
-
-```java
-// 1. Build the tree and compute Euler Tour
-EulerTour et = new EulerTour(n);
-// ... addEdge() calls ...
-et.computeTour(root);
-
-// 2. Build a flat array in Euler order: flat[i] = val[order[i]]
-int[] flat = new int[n];
-for (int i = 0; i < n; i++) {
-    flat[i] = val[et.getOrder()[i]];
-}
-
-// 3. Build Segment Tree over the flat array
-SegmentTree seg = new SegmentTree(flat);
-
-// 4. Subtree sum of node u → range query [tin[u], tout[u]]
-int subtreeSum = seg.query(et.tin(u), et.tout(u));
-
-// 5. Update node u's value → point update at tin[u]
-seg.update(et.tin(u), newValue);
-
-// 6. Ancestor check: u is ancestor of v iff tin[u] <= tin[v] && tout[u] >= tout[v]
-boolean isAncestor = (et.tin(u) <= et.tin(v) && et.tout(u) >= et.tout(v));
-```
-
-**Walkthrough Example:**
-
-```
-Tree (rooted at 0):         Node values: val = {1, 2, 3, 4, 5, 6}
-
-        0 (val=1)
-       / \
-      1   2 (val=3)
-     / \    \
-    3   4    5 (val=6)
- (val=4)(val=5)
-
-Euler Tour from root 0:
-  Node:  0  1  2  3  4  5
-  tin:  [0, 1, 4, 2, 3, 5]
-  tout: [5, 3, 5, 2, 3, 5]
-  order:[0, 1, 3, 4, 2, 5]
-  flat: [1, 2, 4, 5, 3, 6]
-
-Subtree of node 1 → query(1, 3) → flat[1]+flat[2]+flat[3] = 2+4+5 = 11 ✓
-Subtree of node 0 → query(0, 5) → 1+2+4+5+3+6 = 21                  ✓
-Is 0 ancestor of 4? → tin[0]=0 <= tin[4]=3 && tout[0]=5 >= tout[4]=3 → YES ✓
-```
+| Pattern | Window Size | Key Idea | Example Problem |
+|---------|-------------|----------|-----------------|
+| Fixed | Given `k` | Add right, remove left when `i >= k` | Max sum subarray of size k |
+| Variable (shrink) | Dynamic | Expand right, shrink left when invalid | Longest substring without repeats |
+| At Most K trick | Dynamic | `exactly(K) = atMost(K) - atMost(K-1)` | Subarrays with K distinct |
+| With Deque/Map | Given `k` | Monotonic deque for O(1) max/min | Sliding window maximum |
 
 ---
 ## Backtracking
 
+Backtracking = DFS + choose/explore/unchoose. Build candidates incrementally, abandon a path as soon as it can't lead to a valid solution.
 
-### The Common Locations for Pruning
-
-Let's break down where pruning happens using our examples. There are generally two main places:
-
-#### 1\. While Iterating Through Choices (Inside a `for` loop)
-
-This is the most common place for pruning in **generation-style** problems (like combinations, subsets, permutations). Before you commit to a choice and make a recursive call, you check if that choice is valid or promising.
-
-**Example 1: `Permutations` (Validity Prune)**
+**Template:**
 
 ```java
-for (int num : nums) {
-    // PRUNING HAPPENS HERE
-    // Checks: "Is this choice valid according to the rules?"
-    if (tempList.contains(num)) {
-        continue; // Don't explore paths with duplicate numbers.
+void backtrack(List<List<Integer>> result, List<Integer> path, /* state */) {
+    if (/* base case: path is complete */) {
+        result.add(new ArrayList<>(path)); // copy!
+        return;
     }
-    
-    tempList.add(num);
-    helper(...); // Only explore valid choices
-    tempList.remove(...);
+    for (/* each choice */) {
+        if (/* prune: skip invalid/unpromising choices */) continue;
+        path.add(choice);           // choose
+        backtrack(result, path, /* updated state */);  // explore
+        path.removeLast();          // unchoose (backtrack)
+    }
 }
 ```
 
-Here, you prune **before** making the recursive call to avoid exploring a branch that violates the problem's core rules (e.g., using a number more than once).
+### **Core Problem Types**
 
-**Example 2: `Combinations` (Optimization Prune)**
+#### 1. Subsets — pick any combination of elements
+
+```
+  nums = [1, 2, 3]     Decision tree (include or skip each element):
+
+                          []
+                    /            \
+                  [1]             []
+                /     \         /    \
+            [1,2]     [1]    [2]     []
+            / \       / \    / \    / \
+        [1,2,3][1,2][1,3][1][2,3][2][3][]
+```
 
 ```java
-for (int i = start; i <= n; i++) {
-    // PRUNING CAN HAPPEN HERE
-    // Asks: "Is it still possible to find a solution from here?"
-    if (/* elements needed > elements available */) {
-        break; // Stop exploring choices that can't possibly work.
+// Subsets — O(2^n)
+void subsets(int[] nums, int start, List<Integer> path, List<List<Integer>> result) {
+    result.add(new ArrayList<>(path)); // every node is a valid subset
+    for (int i = start; i < nums.length; i++) {
+        path.add(nums[i]);
+        subsets(nums, i + 1, path, result); // i+1: don't reuse elements
+        path.removeLast();
     }
-
-    path.add(i);
-    backtrack(...);
-    path.remove(...);
 }
 ```
 
-Here, you prune to make the algorithm more efficient by looking ahead and realizing that even if you make a choice, you won't have enough remaining options to complete a valid solution.
+#### 2. Permutations — use all elements in every order
 
-#### 2\. At the Start of the Recursive Call (As a Guard Clause)
+```
+  nums = [1, 2, 3]
 
-This is very common in **pathfinding-style** problems on a grid or graph (like a maze). The function is called with a new state (e.g., new coordinates), and the very first thing it does is validate that state.
-
-**Example: `RatInMaze` (Validity Prune)**
+               []
+          /    |    \
+        [1]   [2]   [3]
+       / \    / \    / \
+    [1,2][1,3][2,1][2,3][3,1][3,2]
+     |     |    |    |    |    |
+  [1,2,3]...  ...  ...  ...  [3,2,1]
+```
 
 ```java
-public static void helper(int[][] arr, int row, int col, ...) {
-    // Base case for success
-    if (row == m - 1 && col == n - 1) { ... }
-
-    // PRUNING HAPPENS HERE
-    // Checks: "Is the current state (my location) valid?"
-    if (row < 0 || col < 0 || row >= m || col >= n || arr[row][col] == 0) {
-        return; // This path is invalid (out of bounds or a wall), so stop.
+// Permutations — O(n!)
+void permute(int[] nums, List<Integer> path, boolean[] used, List<List<Integer>> result) {
+    if (path.size() == nums.length) {
+        result.add(new ArrayList<>(path));
+        return;
     }
-
-    // Mark visited and explore neighbors
-    arr[row][col] = 0; 
-    helper(arr, row + 1, col, ...); // Down
-    // ... other directions
-    arr[row][col] = 1;
+    for (int i = 0; i < nums.length; i++) {
+        if (used[i]) continue;           // prune: already used
+        used[i] = true;
+        path.add(nums[i]);
+        permute(nums, path, used, result);
+        path.removeLast();
+        used[i] = false;
+    }
 }
 ```
+
+#### 3. Combinations — pick exactly k elements
+
+```java
+// Combinations C(n, k) — O(C(n,k))
+void combine(int n, int k, int start, List<Integer> path, List<List<Integer>> result) {
+    if (path.size() == k) {
+        result.add(new ArrayList<>(path));
+        return;
+    }
+    // Pruning: need (k - path.size()) more, only (n - i + 1) available
+    for (int i = start; i <= n - (k - path.size()) + 1; i++) {
+        path.add(i);
+        combine(n, k, i + 1, path, result);
+        path.removeLast();
+    }
+}
+```
+
+#### 4. Grid/Path search — explore all directions, mark visited
+
+```java
+// Rat in Maze — find all paths from (0,0) to (m-1,n-1)
+void solve(int[][] grid, int row, int col, String path, List<String> result) {
+    int m = grid.length, n = grid[0].length;
+    if (row == m - 1 && col == n - 1) { result.add(path); return; }
+    if (row < 0 || col < 0 || row >= m || col >= n || grid[row][col] == 0) return;
+
+    grid[row][col] = 0;  // mark visited
+    solve(grid, row + 1, col, path + "D", result);
+    solve(grid, row, col + 1, path + "R", result);
+    solve(grid, row - 1, col, path + "U", result);
+    solve(grid, row, col - 1, path + "L", result);
+    grid[row][col] = 1;  // unmark (backtrack)
+}
+```
+
+### **Handling Duplicates**
+
+When input has duplicates (e.g., `[1, 2, 2]`), sort first, then skip consecutive duplicates at the same decision level:
+
+```java
+Arrays.sort(nums);
+for (int i = start; i < nums.length; i++) {
+    if (i > start && nums[i] == nums[i - 1]) continue; // skip duplicate at same level
+    path.add(nums[i]);
+    backtrack(nums, i + 1, path, result);
+    path.removeLast();
+}
+```
+
+```
+  nums = [1, 2, 2] (sorted)
+
+  Without dedup:  [1,2], [1,2] ← duplicate subsets!
+  With dedup:     at i=2, nums[2]==nums[1] and i>start → skip
+                  Result: [], [1], [1,2], [1,2,2], [2], [2,2]  ✓
+```
+
+### **Where Pruning Happens**
+
+| Location | When | Example |
+|----------|------|---------|
+| Inside `for` loop (before recurse) | Generation problems: skip invalid/duplicate choices | Permutations: `if (used[i]) continue` |
+| Inside `for` loop (break early) | Optimization: not enough elements left | Combinations: `i <= n - (k - path.size()) + 1` |
+| Start of recursive call (guard) | Grid/graph: validate current state | Maze: bounds check, wall check, visited check |
+
+### **Quick Reference**
+
+| Problem Type | Loop starts at | Reuse? | Base case |
+|-------------|---------------|--------|-----------|
+| Subsets | `i = start` | No (`i+1`) | Every call adds to result |
+| Subsets with dup | `i = start` + skip | No (`i+1`) | Every call adds to result |
+| Permutations | `i = 0` | No (`used[]`) | `path.size() == n` |
+| Combinations | `i = start` | No (`i+1`) | `path.size() == k` |
+| Combination Sum (reuse) | `i = start` | Yes (`i`) | `target == 0` |
+| Grid search | 4 directions | No (mark/unmark) | Reached destination |
 
 ---
 

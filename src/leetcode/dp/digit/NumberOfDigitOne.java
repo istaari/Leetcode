@@ -83,6 +83,61 @@ public class NumberOfDigitOne {
     }
 
     /**
+     * Iterative (bottom-up) Digit DP
+     *
+     * Same states as the recursive version, processed right-to-left.
+     * dp[count][tight] at position pos = total 1s from pos onward,
+     * given 'count' 1s already placed and current tightness.
+     *
+     * Base case (pos == len): answer = count (we've formed a complete number).
+     * Transition: try each digit d (0 to limit), accumulate from dp of next position.
+     *
+     * Time:  O(len^2 * 10) where len = digits in n (~10)
+     * Space: O(len)
+     */
+    public static int countDigitOneIterative(int n) {
+        if (n <= 0) return 0;
+
+        String num = String.valueOf(n);
+        int len = num.length();
+
+        // dp[count][tight]: total 1s from current position onward
+        // count ranges 0..len, tight is 0 or 1
+        int[][] dp = new int[len + 1][2];
+
+        // Base case: at pos == len, result = count (the 1s accumulated so far)
+        for (int c = 0; c <= len; c++) {
+            dp[c][0] = c;
+            dp[c][1] = c;
+        }
+
+        // Fill from rightmost position (len-1) back to 0
+        for (int pos = len - 1; pos >= 0; pos--) {
+            int[][] newDp = new int[len + 1][2];
+
+            for (int count = 0; count <= pos; count++) {
+                for (int t = 0; t <= 1; t++) {
+                    int limit = (t == 1) ? (num.charAt(pos) - '0') : 9;
+                    int result = 0;
+
+                    for (int d = 0; d <= limit; d++) {
+                        int newCount = count + (d == 1 ? 1 : 0);
+                        int newTight = (t == 1 && d == limit) ? 1 : 0;
+                        result += dp[newCount][newTight];
+                    }
+
+                    newDp[count][t] = result;
+                }
+            }
+
+            dp = newDp;
+        }
+
+        // Start at pos=0, count=0, tight=true
+        return dp[0][1];
+    }
+
+    /**
      * Mathematical approach (O(log n) per digit position)
      *
      * For each position, count how many times digit 1 appears there
@@ -121,7 +176,9 @@ public class NumberOfDigitOne {
     public static void main(String[] args) {
         System.out.println("n=13 (DP):   " + countDigitOne(13));       // 6
         System.out.println("n=13 (Math): " + countDigitOneMath(13));   // 6
+        System.out.println("n=13 (Iter): " + countDigitOneIterative(13)); // 6
         System.out.println("n=100 (DP):  " + countDigitOne(100));      // 21
         System.out.println("n=100 (Math):" + countDigitOneMath(100));  // 21
+        System.out.println("n=100 (Iter):" + countDigitOneIterative(100)); // 21
     }
 }

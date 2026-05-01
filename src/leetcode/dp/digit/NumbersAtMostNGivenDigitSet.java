@@ -96,6 +96,55 @@ public class NumbersAtMostNGivenDigitSet {
         return count;
     }
 
+    /**
+     * Iterative DP: process digits of n from right to left.
+     *
+     * dp[i] = count of valid numbers formable from position i to end
+     *         while staying tight (matching n's prefix up to i).
+     *
+     * At each position i:
+     *   - For digits < n[i]: remaining (len-i-1) positions are free → d^(remaining)
+     *   - For digit == n[i]: must stay tight → dp[i+1]
+     *   - For digits > n[i]: skip (would exceed n)
+     *
+     * Final answer = (shorter-length numbers) + dp[0]
+     */
+    public static int atMostNGivenDigitSetIterative(String[] digits, int n) {
+        String num = String.valueOf(n);
+        int len = num.length();
+        int d = digits.length;
+
+        int count = 0;
+
+        // Part 1: Count all numbers with fewer digits than n.
+        for (int k = 1; k < len; k++) {
+            count += pow(d, k);
+        }
+
+        // Part 2: Iterative DP (right to left) for same-length numbers <= n.
+        // dp[i] = count of tight completions from position i onward
+        int[] dp = new int[len + 1];
+        dp[len] = 1; // base case: successfully formed a valid number
+
+        for (int i = len - 1; i >= 0; i--) {
+            int limit = num.charAt(i) - '0';
+            for (String digit : digits) {
+                int dig = digit.charAt(0) - '0';
+                if (dig < limit) {
+                    // Smaller than n's digit: all remaining positions are free
+                    dp[i] += pow(d, len - i - 1);
+                } else if (dig == limit) {
+                    // Matches n's digit: stay tight → depends on dp[i+1]
+                    dp[i] += dp[i + 1];
+                }
+                // dig > limit: would exceed n, skip
+            }
+        }
+
+        count += dp[0];
+        return count;
+    }
+
     private static int pow(int base, int exp) {
         int result = 1;
         for (int i = 0; i < exp; i++) {
@@ -113,5 +162,10 @@ public class NumbersAtMostNGivenDigitSet {
 
         String[] digits3 = {"7"};
         System.out.println("digits=[7], n=8: " + atMostNGivenDigitSet(digits3, 8)); // 1
+
+        System.out.println("--- Iterative DP ---");
+        System.out.println("digits=[1,3,5,7], n=100: " + atMostNGivenDigitSetIterative(digits1, 100)); // 20
+        System.out.println("digits=[1,4,9], n=1000000000: " + atMostNGivenDigitSetIterative(digits2, 1000000000)); // 29523
+        System.out.println("digits=[7], n=8: " + atMostNGivenDigitSetIterative(digits3, 8)); // 1
     }
 }

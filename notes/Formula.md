@@ -208,8 +208,8 @@ To find the sum of a rectangle defined by top-left corner  and bottom-right corn
 Find the sum of the sub-rectangle from **(1, 1)** to **(2, 2)** (Values: 5, 6, 8, 9).
 
 * **Formula:** `prefix[2][2] - prefix[0][2] - prefix[2][0] + prefix[0][0]`
-* **Substitution:** 
-* **Verification:** 
+* **Substitution:** `45 - 6 - 12 + 1 = 28`
+* **Verification:** `5 + 6 + 8 + 9 = 28` ✓
 
 
 
