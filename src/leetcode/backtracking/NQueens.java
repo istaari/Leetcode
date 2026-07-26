@@ -3,6 +3,27 @@ package leetcode.backtracking;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+ * LC 51 - N-Queens
+ *
+ * Place n queens on an n x n chessboard such that no two queens attack each other
+ * (no two queens share the same row, column, or diagonal).
+ * Return all distinct solutions. Each solution is a board configuration where
+ * 'Q' = queen and '.' = empty cell.
+ *
+ * Example:
+ *   Input:  n=4
+ *   Output: [[".Q..","...Q","Q...","..Q."],["..Q.","Q...","...Q",".Q.."]]
+ *
+ * Constraints:
+ *   1 <= n <= 9
+ *
+ * Approach: place one queen per row via backtracking.
+ *   Track attacked columns (columns[]), left diagonals (d1[row-col+n-1]),
+ *   and right diagonals (d2[row+col]) with boolean arrays for O(1) conflict checks.
+ *   Backtrack by unmarking when removing a queen.
+ * Time: O(n!)   Space: O(n) for tracking arrays + O(n²) per solution
+ */
 public class NQueens {
 
     public static List<List<String>> solveNQueens(int n) {

@@ -1,5 +1,30 @@
 package leetcode.backtracking;
 
+/*
+ * LC 463 - Island Perimeter
+ *
+ * You are given a row x col grid where grid[i][j] = 1 (land) or 0 (water).
+ * Grid cells are connected horizontally/vertically. There is exactly one island
+ * (no lakes inside). Find and return the perimeter of the island.
+ *
+ * Example 1:
+ *   Input:  [[0,1,0,0],[1,1,1,0],[0,1,0,0],[1,1,0,0]]
+ *   Output: 16
+ *
+ * Example 2:
+ *   Input:  [[1]]
+ *   Output: 4
+ *
+ * Constraints:
+ *   row == grid.length,  col == grid[i].length
+ *   1 <= row, col <= 100
+ *   grid[i][j] is 0 or 1. There is exactly one island.
+ *
+ * Approach: DFS from first land cell. Each step contributes 1 to perimeter if
+ *   it hits a boundary or water cell. Mark visited cells as -1 to avoid revisiting.
+ * Time: O(m*n)   Space: O(m*n) recursion stack
+ */
+
 public class IslandPerimeter {
 
     @SuppressWarnings("all")

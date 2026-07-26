@@ -1,7 +1,6 @@
 package leetcode.backtracking.template;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 

@@ -1,32 +1,36 @@
 package leetcode.backtracking;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * LeetCode 212: Word Search II
+/*
+ * LC 212 - Word Search II
  *
- * Problem Statement:
- * Given an m x n grid of characters `board` and a list of strings `words`, return all words from the list that can be found in the grid.
+ * Given an m x n board of characters and a list of strings words, return all
+ * words from the list that can be found in the board.
  *
- * A word can be formed by letters of sequentially adjacent cells, where "adjacent" cells are horizontally or vertically neighboring.
- * The same letter cell may not be used more than once in a word.
+ * A word must be constructed from letters of sequentially adjacent cells
+ * (horizontally or vertically). The same cell may not be used more than once per word.
  *
  * Example:
- * Input:
- * board = [["o","a","a","n"],["e","t","a","e"],["i","h","k","r"],["i","f","l","v"]]
- * words = ["oath","pea","eat","rain"]
+ *   Input:  board=[["o","a","a","n"],["e","t","a","e"],["i","h","k","r"],["i","f","l","v"]]
+ *           words=["oath","pea","eat","rain"]
+ *   Output: ["eat","oath"]
  *
- * Output: ["eat","oath"]
+ * Constraints:
+ *   m == board.length,  n == board[i].length
+ *   1 <= m, n <= 12
+ *   board[i][j] is a lowercase English letter.
+ *   1 <= words.length <= 3 * 10^4
+ *   1 <= words[i].length <= 10
  *
- * Approach:
- * This problem is a classic application of combining a Trie with a Backtracking (DFS) approach.
- * 1. Build a Trie from the list of `words`. The Trie allows for efficient prefix checking.
- * 2. Iterate through each cell of the `board` and start a DFS from that cell.
- * 3. The DFS function will explore adjacent cells, building a word character by character.
- * 4. At each step, we check if the current path forms a valid prefix in our Trie. If it doesn't, we prune the search by backtracking immediately, which is a massive optimization.
- * 5. If a complete word is found, add it to the results and mark it in the Trie to avoid duplicates.
+ * Approach: Trie + DFS backtracking.
+ *   1. Build a Trie from wordDict — allows prefix pruning during DFS.
+ *   2. From every cell, DFS in 4 directions matching characters in the Trie.
+ *   3. If current char not in Trie child → prune entire branch immediately.
+ *   4. If Trie node has a word → found it; set node.word=null to avoid duplicates.
+ *   5. Mark cell '#' before recursing, restore after (backtrack).
+ * Time: O(m*n * 4 * 3^(L-1)) where L = max word length   Space: O(W*L) for Trie
  */
 public class WordSearchII {
 

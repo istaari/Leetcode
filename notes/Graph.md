@@ -1,3 +1,45 @@
+## Table of Contents
+
+- [Introduction](#introduction)
+  - [The Building Blocks of a Graph](#the-building-blocks-of-a-graph)
+  - [Types of Graphs: A Visual Vocabulary](#types-of-graphs-a-visual-vocabulary)
+- [Patterns and Algorithms](#patterns-and-algorithms)
+  - [BFS Variations](#bfs-variations)
+    - [1. Standard BFS](#1-standard-bfs)
+    - [2. Multi-Source BFS](#2-multi-source-bfs)
+    - [3. 0-1 BFS](#3-0-1-bfs)
+    - [4. Stateful BFS (BFS + Bitmask)](#4-stateful-bfs-bfs--bitmask)
+    - [5. Bidirectional BFS](#5-bidirectional-bfs)
+  - [DFS Variations](#dfs-variations)
+    - [1. Standard DFS (Flood Fill / Connected Components)](#1-standard-dfs-flood-fill--connected-components)
+    - [2. Backtracking DFS (Find All Paths / Combinations)](#2-backtracking-dfs-find-all-paths--combinations)
+    - [3. Cycle Detection DFS (3-Color / Directed Graph)](#3-cycle-detection-dfs-3-color--directed-graph)
+    - [4. Topological Sort DFS (Post-Order)](#4-topological-sort-dfs-post-order)
+    - [5. Tarjan's Bridge-Finding DFS](#5-tarjans-bridge-finding-dfs)
+    - [6. Eulerian Path DFS (Hierholzer's Algorithm)](#6-eulerian-path-dfs-hierholzers-algorithm)
+  - [Cycle Detection](#cycle-detection)
+    - [Undirected Graph — DFS with Parent Tracking](#unidirected-graph---dfs-with-parent-tracking)
+    - [Directed Graph — Three-State DFS Marking](#directed-graph----three-state-dfs-marking)
+  - [Topological Sorting (DAGs)](#topological-sortingdags)
+    - [Method 1: DFS](#method-1-depth-first-search-dfs)
+    - [Method 2: Kahn's Algorithm (In-Degree)](#method-2-kahns-algorithm-in-degree-based)
+  - [Minimum Spanning Tree (MST)](#minimum-spanning-tree-mst)
+    - [Kruskal's Algorithm](#kruskals-algorithm)
+    - [Prim's Algorithm](#prims-algorithm)
+  - [Connected Components](#connected-components)
+    - [Undirected Graph](#undirected-graph)
+    - [Directed Graph — Kosaraju's Algorithm](#directed-graph)
+    - [Directed Graph — Tarjan's Algorithm](#tarjans-algorithm)
+  - [Union Find](#union-find)
+  - [Shortest Path Algorithms](#shortest-path-algorithms)
+    - [BFS (Unweighted)](#bfsunweighted-graph)
+    - [Dijkstra's Algorithm](#dijkstras-algorithm)
+    - [Bellman-Ford Algorithm](#bellman-ford-algorithm)
+    - [Floyd-Warshall Algorithm](#floyd-warshall-algorithm)
+    - [Comparison Table](#shortest-path-algorithm-comparison)
+
+---
+
 # **Introduction**
 
 ## The Building Blocks of a Graph
@@ -308,61 +350,25 @@ There are many ways to connect all four vertices, but we want the cheapest one. 
 
 ## BFS Variations
 
-### 1\. Standard BFS
+### 1. Standard BFS
 
-**Concept:**
-Standard BFS is used to traverse a graph or tree level by level. It guarantees the shortest path in an **unweighted** graph. It uses a **Queue (FIFO)** data structure to ensure nodes are processed in the order they are discovered.
+**Analogy:** Ripples in a pond — you drop a stone and waves spread outward in uniform rings. Every node at distance 1 is reached before any node at distance 2.
 
-**Mermaid Logic:**
-This diagram visualizes how BFS explores "concentric circles" (levels) moving away from the start node.
-
-```mermaid
-graph TD
-    subgraph Level_0
-    A((Start))
-    end
-    subgraph Level_1
-    B((B))
-    C((C))
-    end
-    subgraph Level_2
-    D((D))
-    E((E))
-    F((F))
-    end
-
-    A --> B
-    A --> C
-    B --> D
-    B --> E
-    C --> F
-
-    style A fill:#f9f,stroke:#333,stroke-width:2px
-    style B fill:#bbf,stroke:#333
-    style C fill:#bbf,stroke:#333
-    style D fill:#dfd,stroke:#333
-    style E fill:#dfd,stroke:#333
-    style F fill:#dfd,stroke:#333
-```
-
-**Java Template:**
+Use when you need the **shortest path in an unweighted graph**. Process nodes level by level using a Queue (FIFO).
 
 ```java
 public int standardBFS(List<List<Integer>> graph, int start, int target) {
     Queue<Integer> queue = new LinkedList<>();
     Set<Integer> visited = new HashSet<>();
-
     queue.offer(start);
     visited.add(start);
     int level = 0;
 
     while (!queue.isEmpty()) {
-        int size = queue.size(); // Process level by level
+        int size = queue.size();
         for (int i = 0; i < size; i++) {
             int curr = queue.poll();
-
             if (curr == target) return level;
-
             for (int neighbor : graph.get(curr)) {
                 if (!visited.contains(neighbor)) {
                     visited.add(neighbor);
@@ -372,42 +378,17 @@ public int standardBFS(List<List<Integer>> graph, int start, int target) {
         }
         level++;
     }
-    return -1; // Target not reachable
+    return -1;
 }
 ```
 
------
+---
 
-### 2\. Multi-Source BFS
+### 2. Multi-Source BFS
 
-**Concept:**
-Instead of initializing the queue with a single node, we initialize it with **all** source nodes simultaneously. This effectively calculates the shortest distance from *any* source to all other reachable nodes. Think of it as dropping multiple pebbles into a pond at once; the ripples expand and eventually merge.
+**Analogy:** Multiple fires burning simultaneously. Each fire spreads outward at the same rate — the first fire to reach a cell "owns" it. Seed the queue with **all sources at once** (distance 0).
 
-**Mermaid Logic:**
-Notice how `Source 1` and `Source 2` start the expansion at the exact same time (Level 0).
-
-```mermaid
-graph TD
-    subgraph Level_0_Sources
-    S1((Source 1))
-    S2((Source 2))
-    end
-
-    subgraph Level_1
-    A((A))
-    B((B))
-    C((C))
-    end
-
-    S1 --> A
-    S1 --> B
-    S2 --> B
-    S2 --> C
-
-    info["Queue Initial State: S1, S2"]
-```
-
-**Java Template:**
+Use when you need the shortest distance from *any* source — e.g., "distance to nearest 0" in a matrix.
 
 ```java
 public int[][] multiSourceBFS(char[][] grid) {
@@ -415,32 +396,20 @@ public int[][] multiSourceBFS(char[][] grid) {
     Queue<int[]> queue = new LinkedList<>();
     int[][] dist = new int[rows][cols];
 
-    // Initialize with ALL sources
-    for (int r = 0; r < rows; r++) {
-        for (int c = 0; c < cols; c++) {
-            if (grid[r][c] == 'SOURCE') {
-                queue.offer(new int[]{r, c});
-                dist[r][c] = 0;
-            } else {
-                dist[r][c] = Integer.MAX_VALUE; // Unvisited
-            }
-        }
-    }
+    for (int r = 0; r < rows; r++)
+        for (int c = 0; c < cols; c++)
+            if (grid[r][c] == ‘S’) queue.offer(new int[]{r, c});
+            else dist[r][c] = Integer.MAX_VALUE;
 
-    int[][] dirs = {{0,1}, {0,-1}, {1,0}, {-1,0}};
-
+    int[][] dirs = {{0,1},{0,-1},{1,0},{-1,0}};
     while (!queue.isEmpty()) {
         int[] curr = queue.poll();
         int r = curr[0], c = curr[1];
-
         for (int[] d : dirs) {
             int nr = r + d[0], nc = c + d[1];
-            // Check bounds and if we found a shorter path
-            if (nr >= 0 && nr < rows && nc >= 0 && nc < cols) {
-                if (dist[nr][nc] > dist[r][c] + 1) {
-                    dist[nr][nc] = dist[r][c] + 1;
-                    queue.offer(new int[]{nr, nc});
-                }
+            if (nr >= 0 && nr < rows && nc >= 0 && nc < cols && dist[nr][nc] > dist[r][c] + 1) {
+                dist[nr][nc] = dist[r][c] + 1;
+                queue.offer(new int[]{nr, nc});
             }
         }
     }
@@ -448,61 +417,31 @@ public int[][] multiSourceBFS(char[][] grid) {
 }
 ```
 
------
+---
 
-### 3\. 0-1 BFS
+### 3. 0-1 BFS
 
-**Concept:**
-This pattern is used when edge weights are either $0$ or $1$. It uses a **Deque (Double-Ended Queue)** instead of a standard Queue.
+**Analogy:** A highway with free shortcuts (weight 0) and toll roads (weight 1). Free shortcuts let you jump ahead in line — they go to the **front** of the deque. Toll roads go to the **back**.
 
-  * **Weight 0:** Push to the **FRONT** (prioritize processing immediately).
-  * **Weight 1:** Push to the **BACK** (process later, like standard BFS).
-    This is more efficient than Dijkstra's algorithm for this specific case ($O(V+E)$ vs $O(E \log V)$).
-
-**Mermaid Logic:**
-The decision diamond shows where the node is added based on the edge cost.
-
-```mermaid
-flowchart LR
-    Current[Current Node]
-    Check{Edge Weight?}
-    
-    Current -- Inspect Neighbor --> Check
-    
-    Check -- Weight 0 --> Front[Add to Deque FRONT]
-    Check -- Weight 1 --> Back[Add to Deque BACK]
-    
-    Front --> NextIter[Process Next]
-    Back --> NextIter
-```
-
-**Java Template:**
+Use instead of Dijkstra when edge weights are only 0 or 1. O(V+E) vs O(E log V).
 
 ```java
 public int zeroOneBFS(int n, List<List<int[]>> graph, int start, int end) {
     Deque<Integer> deque = new ArrayDeque<>();
     int[] dist = new int[n];
     Arrays.fill(dist, Integer.MAX_VALUE);
-
     deque.offerFirst(start);
     dist[start] = 0;
 
     while (!deque.isEmpty()) {
-        int u = deque.pollFirst(); // Always take from front
-
+        int u = deque.pollFirst();
         if (u == end) return dist[u];
-
         for (int[] edge : graph.get(u)) {
-            int v = edge[0];
-            int weight = edge[1]; // 0 or 1
-
-            if (dist[u] + weight < dist[v]) {
-                dist[v] = dist[u] + weight;
-                if (weight == 0) {
-                    deque.offerFirst(v); // High priority
-                } else {
-                    deque.offerLast(v);  // Low priority
-                }
+            int v = edge[0], w = edge[1]; // w is 0 or 1
+            if (dist[u] + w < dist[v]) {
+                dist[v] = dist[u] + w;
+                if (w == 0) deque.offerFirst(v);
+                else        deque.offerLast(v);
             }
         }
     }
@@ -510,469 +449,189 @@ public int zeroOneBFS(int n, List<List<int[]>> graph, int start, int end) {
 }
 ```
 
------
+---
 
-### 4\. BFS with Bitmasking (Stateful BFS)
+### 4. Stateful BFS (BFS + Bitmask)
 
-**Concept:**
-In standard BFS, if you visit a node, you mark it as visited and never return. In Stateful BFS, you can revisit a node **if you are in a different state** (e.g., holding a new key).
+**Analogy:** You’re navigating a dungeon. You can re-enter Room A if you now hold a key you didn’t have before. The **state is (position, keys held)** — not just position.
 
-  * **State:** Usually defined as `{currentNode, currentMask}`.
-  * **Visited Array:** Becomes 2D (or 3D): `visited[row][col][mask]`.
-
-**Mermaid Logic:**
-Here, Node A can be visited again because the state (keys held) is different.
-
-```mermaid
-stateDiagram-v2
-    [*] --> RoomA_NoKeys
-    RoomA_NoKeys --> RoomB_FoundKey1 : Move & Pick Key
-    RoomB_FoundKey1 --> RoomA_HasKey1 : Return to A
-    
-    note right of RoomA_HasKey1
-        We are back in Room A, 
-        but state is unique 
-        (Node: A, Mask: 1)
-    end note
-```
-
-**Java Template:**
+Use when a node can be revisited in a different state (e.g., collected keys, flipped switches). `visited[node][mask]` instead of `visited[node]`.
 
 ```java
-class State {
-    int r, c, mask, dist;
-    State(int r, int c, int mask, int dist) {
-        this.r = r; this.c = c; this.mask = mask; this.dist = dist;
-    }
-}
+// State = (row, col, keyMask)
+boolean[][][] visited = new boolean[m][n][1 << numKeys];
+Queue<int[]> q = new LinkedList<>();
+// q.offer(new int[]{startR, startC, 0});
 
-public int shortestPathAllKeys(String[] grid) {
-    int m = grid.length, n = grid[0].length();
-    // Dimensions: Row, Col, KeyState (up to 64 for bitmask usually)
-    boolean[][][] visited = new boolean[m][n][64]; 
-    Queue<State> q = new LinkedList<>();
-
-    // ... (Initialization code finding start node) ...
-    // q.offer(new State(startR, startC, 0, 0));
-    // visited[startR][startC][0] = true;
-
-    while (!q.isEmpty()) {
-        State curr = q.poll();
-        
-        // Logic to check bounds, walls, and keys
-        // If key found: newMask = curr.mask | (1 << keyIndex)
-        // If !visited[nr][nc][newMask]:
-        //     visited[nr][nc][newMask] = true
-        //     q.offer(new State(nr, nc, newMask, curr.dist + 1))
-    }
-    return -1;
+while (!q.isEmpty()) {
+    int[] curr = q.poll();
+    int r = curr[0], c = curr[1], mask = curr[2];
+    // if key at (nr,nc): newMask = mask | (1 << keyIndex)
+    // if !visited[nr][nc][newMask]: enqueue
 }
 ```
 
------
+---
 
-### 5\. Bidirectional BFS
+### 5. Bidirectional BFS
 
-**Concept:**
-Instead of searching from Source → Target, we search from **Source → Middle ← Target** simultaneously.
-This drastically reduces the search space (branching factor) because two small circles have a smaller area than one giant circle covering the same distance.
+**Analogy:** Two people walking toward each other through a maze. They cover the same total distance, but each walks only half — the search space shrinks from O(b^d) to O(b^(d/2)).
 
-  * **Optimization:** Always expand the *smaller* set of nodes in the next iteration to balance the search.
-
-**Mermaid Logic:**
-The search terminates immediately when the "Frontier Top" intersects with the "Frontier Bottom".
-
-```mermaid
-graph TD
-    subgraph Search_From_Start
-    S((Start)) --> A1
-    S --> A2
-    A1 --> B1
-    end
-
-    subgraph Search_From_End
-    E((End)) --> Z1
-    E --> Z2
-    Z1 --> Y1
-    end
-
-    B1 -.-> Y1 
-    
-    style B1 fill:#ff9,stroke:#333
-    style Y1 fill:#ff9,stroke:#333
-    
-    linkStyle 6 stroke:red,stroke-width:4px,stroke-dasharray:5 5
-    info["Search Stops when sets intersect here"]
-```
-
-**Java Template:**
-*Note: Using `Set` is often easier than `Queue` for checking intersections.*
+Use for shortest path when the graph is large and the target is known. Always expand the **smaller frontier** to stay balanced.
 
 ```java
 public int bidirectionalBFS(Set<String> beginSet, Set<String> endSet, Set<String> wordList, int level) {
     if (beginSet.isEmpty() || endSet.isEmpty()) return -1;
-
-    // Optimization: Always expand the smaller frontier
-    if (beginSet.size() > endSet.size()) {
+    if (beginSet.size() > endSet.size())
         return bidirectionalBFS(endSet, beginSet, wordList, level);
-    }
 
     Set<String> nextLevel = new HashSet<>();
-    
     for (String word : beginSet) {
-        // Generate all possible neighbors
-        // List<String> neighbors = getNeighbors(word);
-        
-        for (String neighbor : neighbors) {
-            if (endSet.contains(neighbor)) return level + 1; // Meet in middle
-            
+        for (String neighbor : getNeighbors(word)) {
+            if (endSet.contains(neighbor)) return level + 1;
             if (wordList.contains(neighbor)) {
                 nextLevel.add(neighbor);
-                wordList.remove(neighbor); // Mark visited
+                wordList.remove(neighbor);
             }
         }
     }
-    
     return bidirectionalBFS(nextLevel, endSet, wordList, level + 1);
 }
 ```
 
 ## **DFS Variations**
 
+### 1. Standard DFS (Flood Fill / Connected Components)
 
-### 1\. Standard Recursive DFS (Flood Fill / Connected Components)
+**Analogy:** Painting a room — you dip your roller once and spread paint to every connected surface. Once a wall is painted, you never paint it again.
 
-  * **What it does:** Visits every node in a connected component. Once a node is visited, it is marked and **never visited again**. This is used for counting islands, flood fill, or checking connectivity.
-  * **Key Behavior:** "Dive deep, mark visited, never look back."
-
-The diagram shows a single deep path being fully explored before the next branch is touched.
-
-```mermaid
-graph TD
-    A((Start)) --> B
-    B --> C
-    C --> D
-    D -.-> C
-    C --> E
-    E -.-> C
-    C -.-> B
-    B -.-> A
-    A --> F
-
-    style A fill:#f9f,stroke:#333,stroke-width:2px
-    style B fill:#bbf,stroke:#333
-    style C fill:#bbf,stroke:#333
-    style D fill:#dfd,stroke:#333
-    style E fill:#dfd,stroke:#333
-    style F fill:#eff,stroke:#333
-    
-    info["1. A→B→C→D Hit dead end<br/>2. Backtrack to C<br/>3. Visit E<br/>4. Backtrack to A, then visit F"]
-```
-
-**Java Template:**
+Use for counting connected components, flood fill, or any "visit everything reachable" problem.
 
 ```java
 public void dfs(char[][] grid, int r, int c, boolean[][] visited) {
-    int rows = grid.length, cols = grid[0].length;
-    
-    // Base cases: out of bounds or already visited or invalid cell
-    if (r < 0 || c < 0 || r >= rows || c >= cols || visited[r][c] || grid[r][c] == '0') {
-        return;
-    }
+    if (r < 0 || c < 0 || r >= grid.length || c >= grid[0].length
+            || visited[r][c] || grid[r][c] == ‘0’) return;
 
-    visited[r][c] = true; // Mark as visited permanently
-
-    // Recurse in all 4 directions
-    dfs(grid, r + 1, c, visited);
-    dfs(grid, r - 1, c, visited);
-    dfs(grid, r, c + 1, visited);
-    dfs(grid, r, c - 1, visited);
+    visited[r][c] = true;
+    dfs(grid, r+1, c, visited);
+    dfs(grid, r-1, c, visited);
+    dfs(grid, r, c+1, visited);
+    dfs(grid, r, c-1, visited);
 }
 ```
 
------
+---
 
-### 2\. Iterative DFS (Using Stack)
+### 2. Backtracking DFS (Find All Paths / Combinations)
 
-  * **What it does:** Mimics the recursive stack using an explicit `Stack` data structure.
-  * **Why use it?** To avoid `StackOverflowError` on very deep graphs (recursion limit is usually \~10,000 frames) or when recursion is forbidden.
+**Analogy:** Trying outfits — you put on a shirt, then try every pant option. When done, you **take the shirt off** and try the next one. The "un-choose" step is what makes it backtracking.
 
-Explicitly pushing nodes to a Stack LIFO (Last-In-First-Out).
-
-```mermaid
-flowchart LR
-    Node[Current Node]
-    Stack[Stack LIFO]
-    
-    Node -- 1. Pop --> Process[Process Node]
-    Process -- 2. Push Children --> Stack
-    Stack -- 3. Peek/Pop --> Node
-```
-
-**Java Template:**
-
-```java
-public void iterativeDFS(Node start) {
-    Stack<Node> stack = new Stack<>();
-    Set<Node> visited = new HashSet<>();
-    
-    stack.push(start);
-    visited.add(start);
-    
-    while(!stack.isEmpty()) {
-        Node curr = stack.pop();
-        // Process current node
-        System.out.println(curr.val);
-        
-        for(Node neighbor : curr.neighbors) {
-            if(!visited.contains(neighbor)) {
-                visited.add(neighbor);
-                stack.push(neighbor);
-            }
-        }
-    }
-}
-```
-
------
-
-### 3\. Backtracking DFS (Find All Paths)
-
-  * **What it does:** Explores a path, and when it returns (backtracks), it **undoes** the "visited" state. This allows the same node to be used in *different* paths.
-  * **Key Difference:** In Standard DFS, you mark `visited = true` and leave it. In Backtracking, you mark `visited = true`, recurse, and then mark `visited = false` (clean up).
-
-Notice the "Reset" step. This is the hallmark of backtracking.
-
-```mermaid
-stateDiagram-v2
-    [*] --> Choose_A
-    Choose_A --> Choose_B : Path (A, B)
-    Choose_B --> Dead_End : Invalid
-    Dead_End --> Choose_B : Return
-    Choose_B --> Choose_A : RESET State
-    
-    note right of Choose_A
-       Path is now just (A).
-       Ready to choose C.
-    end note
-    
-    Choose_A --> Choose_C : Path (A, C)
-```
-
-**Java Template:**
+Key difference from standard DFS: after recursing, **undo** the visited mark so the same cell can be used on a different path.
 
 ```java
 public boolean backtrack(char[][] board, String word, int i, int j, int index, boolean[][] visited) {
-    if (index == word.length()) return true; // Goal reached
-    
-    if (i < 0 || i >= board.length || j < 0 || j >= board[0].length || 
-        visited[i][j] || board[i][j] != word.charAt(index)) {
-        return false;
-    }
-    
-    // 1. Choose (Mark visited)
-    visited[i][j] = true;
-    
-    // 2. Explore (Recurse)
+    if (index == word.length()) return true;
+    if (i < 0 || i >= board.length || j < 0 || j >= board[0].length
+            || visited[i][j] || board[i][j] != word.charAt(index)) return false;
+
+    visited[i][j] = true;  // choose
     boolean found = backtrack(board, word, i+1, j, index+1, visited) ||
                     backtrack(board, word, i-1, j, index+1, visited) ||
                     backtrack(board, word, i, j+1, index+1, visited) ||
                     backtrack(board, word, i, j-1, index+1, visited);
-    
-    // 3. Un-Choose (Backtrack / Cleanup)
-    visited[i][j] = false; 
-    
+    visited[i][j] = false; // un-choose
     return found;
 }
 ```
 
------
+---
 
-### 4\. Cycle Detection DFS (Three Colors)
+### 3. Cycle Detection DFS (3-Color / Directed Graph)
 
-  * **What it does:** Detects cycles in a **Directed Graph**. It distinguishes between "visited in the past" (safe) and "visited in the current recursion stack" (cycle\!).
-  * **The 3 States:**
-    1.  **0 (White):** Unvisited.
-    2.  **1 (Gray):** Visiting (currently in the recursion stack).
-    3.  **2 (Black):** Visited (fully processed).
+**Analogy:** Following a trail with glow sticks. A **yellow** glow stick means "I’m currently on this trail." If you find a yellow stick ahead of you, you’ve looped back — that’s a cycle. A **green** stick means "this trail was fully explored, safe to skip."
 
-A cycle is detected *only* if we point back to a "Gray" node (one that is currently being visited).
-
-```mermaid
-graph TD
-    A["Node A (Gray/Visiting)"] --> B["Node B (Gray/Visiting)"]
-    B --> C["Node C (Gray/Visiting)"]
-    C --> A
-    
-    linkStyle 2 stroke:red,stroke-width:4px,stroke-dasharray:5 5
-    info["Red Line points to Gray node = CYCLE"]
-```
-
-**Java Template:**
+- **0 (White):** Unvisited
+- **1 (Gray):** In current recursion stack
+- **2 (Black):** Fully processed
 
 ```java
 public boolean hasCycle(List<List<Integer>> graph, int u, int[] state) {
-    if (state[u] == 1) return true;  // Found a node currently in stack -> CYCLE!
-    if (state[u] == 2) return false; // Already fully processed -> Safe
-    
-    state[u] = 1; // Mark as "Visiting"
-    
-    for (int v : graph.get(u)) {
+    if (state[u] == 1) return true;  // back edge to current path = cycle
+    if (state[u] == 2) return false;
+
+    state[u] = 1;
+    for (int v : graph.get(u))
         if (hasCycle(graph, v, state)) return true;
-    }
-    
-    state[u] = 2; // Mark as "Visited"
+    state[u] = 2;
     return false;
 }
 ```
 
------
+---
 
-### 5\. Topological Sort DFS
+### 4. Topological Sort DFS (Post-Order)
 
-  * **What it does:** Orders nodes linearly such that for every edge $U \to V$, $U$ comes before $V$. Essential for dependency resolution (e.g., build systems, course prerequisites).
-  * **How:** Perform a standard DFS, but add the node to a stack **only after** visiting all its children (Post-Order). Then reverse the stack.
+**Analogy:** Getting dressed — you must finish putting on each layer before deciding what’s "done." A node is added to the result **only after all its dependencies are resolved** (post-order). Reversing the post-order gives you the correct dependency sequence.
 
-We only add to the "Result Stack" when we are *leaving* the node (returning from recursion).
-
-```mermaid
-graph TD
-    subgraph DFS_Traversal
-    Start --> A
-    A --> B
-    B --> EndOfPath
-    end
-    
-    subgraph Result_Stack
-    1[Push B]
-    2[Push A]
-    3[Push Start]
-    end
-    
-    EndOfPath -.-> 1
-    1 -.-> 2
-    2 -.-> 3
-    
-    info["Last in Stack = First in Topo Order"]
-```
-
-**Java Template:**
+Use for course scheduling, build order, or any dependency resolution.
 
 ```java
-Stack<Integer> stack = new Stack<>(); // To store result
+Stack<Integer> result = new Stack<>();
 
 public void topoDFS(List<List<Integer>> graph, int u, boolean[] visited) {
     visited[u] = true;
-    
-    for (int v : graph.get(u)) {
-        if (!visited[v]) {
-            topoDFS(graph, v, visited);
-        }
-    }
-    
-    // Push to stack ONLY after children are done
-    stack.push(u); 
+    for (int v : graph.get(u))
+        if (!visited[v]) topoDFS(graph, v, visited);
+    result.push(u); // push AFTER all children are done
 }
-
-// To get result: Pop everything from stack
+// Pop result stack for topological order
 ```
 
+---
 
+### 5. Tarjan’s Bridge-Finding DFS
 
-### 6\. Time-Stamp DFS (Tarjan’s Bridge-Finding Algorithm)
+**Analogy:** A bridge over a river is critical infrastructure — remove it and the two sides disconnect. Each node tracks the **earliest ancestor it can reach** (`low`). If a child can’t reach back above its parent, the edge to that child is a bridge.
 
-  * **What it does:** Uses DFS to assign a "discovery time" and a "low-link value" to every node. It identifies **"Bridges"** (edges that, if removed, disconnect the graph).
-  * **The Logic:** If a node `u` has a child `v`, and `v` cannot reach back to `u` or `u`'s ancestors (i.e., `low[v] > disc[u]`), then the edge `u-v` is a bridge.
-
-The diagram shows the "back edge" (dotted) allowing the child to reach an ancestor, updating its "Low Link" value.
-
-```mermaid
-graph TD
-    A((Node A<br/>Time: 1<br/>Low: 1)) --> B((Node B<br/>Time: 2<br/>Low: 1))
-    B --> C((Node C<br/>Time: 3<br/>Low: 1))
-    C -."Back Edge".-> A
-    B --> D((Node D<br/>Time: 4<br/>Low: 4))
-    
-    style C stroke-dasharray: 5 5
-    linkStyle 2 stroke:red,stroke-width:2px
-    
-    info["C can reach A, so C and B inherit Low=1.<br/>D cannot reach above B. B-D is a BRIDGE."]
-```
-
-**Java Template:**
+- `disc[u]` — discovery time
+- `low[u]` — earliest time reachable via back-edges
+- Bridge condition: `low[v] > disc[u]`
 
 ```java
 int time = 0;
-public void dfs(int u, int parent, List<List<Integer>> graph, int[] disc, int[] low, List<List<Integer>> bridges) {
-    disc[u] = low[u] = ++time; // Initialize times
-    
+
+public void dfs(int u, int parent, List<List<Integer>> graph,
+                int[] disc, int[] low, List<List<Integer>> bridges) {
+    disc[u] = low[u] = ++time;
     for (int v : graph.get(u)) {
-        if (v == parent) continue; // Don't go back to immediate parent
-        
+        if (v == parent) continue;
         if (disc[v] != 0) {
-            // Back-edge found: Minimize low-link
             low[u] = Math.min(low[u], disc[v]);
         } else {
-            // Tree-edge: Recurse
             dfs(v, u, graph, disc, low, bridges);
-            // On return, propagate low-link from child to parent
             low[u] = Math.min(low[u], low[v]);
-            
-            // Bridge check
-            if (low[v] > disc[u]) {
+            if (low[v] > disc[u])
                 bridges.add(Arrays.asList(u, v));
-            }
         }
     }
 }
 ```
 
------
+---
 
-### 7\. Eulerian Path DFS (Hierholzer's Algorithm)
+### 6. Eulerian Path DFS (Hierholzer’s Algorithm)
 
-  * **What it does:** Finds a path that visits **every edge exactly once**. This is different from standard DFS which visits *nodes*.
-  * **Key Trick:** It's a "Post-Order Edge Removal" DFS. You eagerly follow edges, delete them as you cross them, and add the node to the result path *only when you get stuck* (no more outgoing edges).
-
-We spiral deep into the graph, deleting edges. The path is built in reverse order as the recursion unwinds.
-
-```mermaid
-graph LR
-    subgraph Graph
-    JFK --> SFO
-    SFO --> ATL
-    ATL --> JFK
-    JFK --> LHR
-    end
-
-    subgraph Path_Building_Stack
-    1[Push LHR]
-    2[Push JFK]
-    3[Push ATL]
-    4[Push SFO]
-    5[Push JFK]
-    end
-    
-    info["DFS removes edges.<br/>When stuck at LHR, push LHR.<br/>Backtrack to JFK, push JFK..."]
-```
-
-**Java Template:**
+**Analogy:** Drawing a figure without lifting your pen, using every stroke exactly once. You greedily follow edges and **delete them as you cross**. When you get stuck (no more edges), you add the dead-end node to the path. Unwinding builds the path in reverse.
 
 ```java
-// Use PriorityQueue for lexical order (if required by problem like #332)
 Map<String, PriorityQueue<String>> graph = new HashMap<>();
 LinkedList<String> route = new LinkedList<>();
 
 public void dfs(String u) {
-    PriorityQueue<String> arrivals = graph.get(u);
-    
-    while (arrivals != null && !arrivals.isEmpty()) {
-        // Eagerly consume the edge (Poll removes it)
-        String next = arrivals.poll();
-        dfs(next);
-    }
-    // Add to front only when stuck (Post-Order)
-    route.addFirst(u);
+    PriorityQueue<String> next = graph.get(u);
+    while (next != null && !next.isEmpty())
+        dfs(next.poll());
+    route.addFirst(u); // add only when stuck (post-order)
 }
 ```
 

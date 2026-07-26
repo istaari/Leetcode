@@ -73,7 +73,7 @@ public class HouseRobber3 {
      * Post-order DFS: returns [robThisNode, skipThisNode]
      */
     private static int[] dfs(TreeNode node) {
-        if (node == null) return new int[]{0, 0};
+        if (node == null) return new int[]{0, 0}; // [robThisNode, skipThisNode]
 
         int[] left = dfs(node.left);
         int[] right = dfs(node.right);
