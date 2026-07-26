@@ -1395,7 +1395,6 @@ Flattens a tree into a linear array so that **subtree queries** become **range q
 | LCA | RMQ on Euler tour between first occurrences of `u` and `v` |
 | Path queries | Building block for Heavy-Light Decomposition |
 
-#### Java Implementation
 
 ```java
 public class EulerTour {
