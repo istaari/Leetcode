@@ -1,233 +1,345 @@
-## How to approach a problem
+## Table of Contents
+- [How to Approach a Problem](#how-to-approach-a-problem)
+- [Subarray Patterns](#subarray-patterns)
+- [Two Pointer Patterns](#two-pointer-patterns)
+- [Binary Search Mental Model](#binary-search-mental-model)
+- [Recursion vs Iteration](#recursion-vs-iteration)
+- [Which Data Structure?](#which-data-structure)
+- [Amortized Analysis](#amortized-analysis)
+- [Problem Types](#problem-types)
+- [Edge Case Checklist](#edge-case-checklist)
+- [Design by Contract](#design-by-contract)
+- [Coding Tricks](#coding-tricks)
+- [Number System Conversion](#number-system-conversion)
 
-- Always read constraints
-- Break Down the Problem
-- Think in Terms of Patterns
-- Explore Brute Force First
-- Think from different angle, generalize or simplify the problem
+---
 
-### **Rule of Thumb for Common Constraints**
+## How to Approach a Problem
 
-| **Constraint**            | **Recommended Time Complexity**            | **Examples**                           |
-|---------------------------|--------------------------------------------|----------------------------------------|
-| <code>n &leq; 10</code>   | <code>O(n!)</code>, <code>O(2^n)</code>    | Backtracking, combinatorics            |
-| <code>n &leq; 100</code>  | <code>O(n^2)</code>, <code>O(n^3)</code>   | Dynamic programming, matrix algorithms |
-| <code>n &leq; 10^4</code> | <code>O(n log n)</code>, <code>O(n)</code> | Sorting, linear scans                  |
-| <code>n &leq; 10^6</code> | <code>O(n)</code>, <code>O(n log n)</code> | Sliding window, prefix sums            |
-| <code>n &leq; 10^9</code> | <code>O(log n)</code>, <code>O(1)</code>   | Binary search, modular arithmetic      |
+1. Read **constraints** first — they reveal the expected time complexity
+2. Identify the **pattern** from the constraint table below
+3. Start with **brute force**, then optimize
+4. **Generalize or simplify** — a complex problem is often a simpler one in disguise
 
+### Constraint → Time Complexity Cheatsheet
+
+| Constraint | Target Complexity | Typical Approaches |
+|---|---|---|
+| n ≤ 10 | O(n!) or O(2ⁿ) | Backtracking, combinatorics |
+| n ≤ 100 | O(n²) or O(n³) | DP, matrix algorithms |
+| n ≤ 10⁴ | O(n log n) | Sorting, binary search |
+| n ≤ 10⁶ | O(n) | Sliding window, prefix sums |
+| n ≤ 10⁹ | O(log n) or O(1) | Binary search, math |
+
+### Problem-Solving Decision Flowchart
+
+```
+Start
+  │
+  ├─ Shortest path / min steps?
+  │     ├─ Unweighted graph          → BFS
+  │     ├─ Weighted, no neg edges    → Dijkstra
+  │     └─ Negative edges            → Bellman-Ford
+  │
+  ├─ All paths / combinations / permutations?
+  │     └─ Backtracking (+ pruning)
+  │
+  ├─ Overlapping subproblems?
+  │     └─ Dynamic Programming
+  │           ├─ 1D array state      → Linear DP
+  │           └─ 2D / interval       → Grid / Interval DP
+  │
+  ├─ Sorted array / search for value?
+  │     └─ Binary Search
+  │
+  ├─ Contiguous subarray problem?
+  │     ├─ Max/min sum               → Kadane's
+  │     ├─ Fixed window size         → Sliding Window
+  │     ├─ Sum equals k              → Prefix Sum + HashMap
+  │     └─ Min/max contribution      → Monotonic Stack
+  │
+  ├─ Two elements satisfying condition?
+  │     ├─ Sorted array              → Two Pointers
+  │     └─ Unsorted                  → HashMap
+  │
+  ├─ Top-K / frequent elements?
+  │     └─ Heap (PriorityQueue)
+  │
+  └─ Connectivity / grouping?
+        ├─ Grid / graph              → BFS / DFS
+        └─ Dynamic merging           → Union-Find
+```
+
+---
+
+## Subarray Patterns
+
+> Pick the right tool based on *what* you're measuring.
+
+| Pattern | Use When | Analogy | Example |
+|---|---|---|---|
+| **Sliding Window** | Condition on count/distinct elements in a window | Camera panning across a scene — fixed or flexible frame | Subarrays with exactly k odd numbers |
+| **Monotonic Stack** | Each element's contribution as min/max across subarrays | Mountain peaks — each element "dominates" until a taller one arrives | Sum of (max − min) across all subarrays |
+| **Prefix Sum** | Subarray sum equals or divisible by k | Odometer — range distance = end − start reading | Count subarrays with sum = k |
+| **Kadane's DP** | Max/min contiguous sum or product | Running balance — reset when it goes negative | Max subarray sum, max circular subarray |
+
+---
+
+## Two Pointer Patterns
+
+> Two pointers eliminate the need for nested loops when the array has monotonic structure.
+
+### The 3 Setups
+
+| Setup | Start | Move When | Use For |
+|---|---|---|---|
+| **Opposite ends** | `left=0, right=n-1` | Shrink toward center based on comparison | Two Sum (sorted), container with most water |
+| **Same direction (fast/slow)** | Both at 0 | Fast advances every step, slow conditionally | Remove duplicates, find cycle in linked list |
+| **Sliding window** | Both at 0 | Right expands, left contracts when condition breaks | Longest substring without repeat |
+
+### Opposite Ends Template
+```java
+int left = 0, right = arr.length - 1;
+while (left < right) {
+    int sum = arr[left] + arr[right];
+    if (sum == target) return new int[]{left, right};
+    else if (sum < target) left++;
+    else right--;
+}
+```
+
+### Fast / Slow Template
+```java
+int slow = 0;
+for (int fast = 0; fast < arr.length; fast++) {
+    if (condition(arr[fast])) {
+        arr[slow++] = arr[fast]; // compact valid elements
+    }
+}
+// slow = new length
+```
+
+---
+
+## Binary Search Mental Model
+
+> **Analogy:** You're looking for a word in a dictionary. You never start from page 1 — you open the middle, decide "too early" or "too late", and halve the remaining search space.
+
+Binary search applies whenever the search space is **monotonic** — a predicate flips from `false` to `true` (or vice versa) at exactly one point.
+
+```
+false false false [TRUE TRUE TRUE TRUE]
+                  ↑
+              Find this boundary
+```
+
+### The 3 Variants
+
+| Goal | Condition | Template |
+|---|---|---|
+| Exact match | `arr[mid] == target` | Standard |
+| First `true` (left boundary) | `arr[mid] >= target` | `ans = mid; right = mid - 1` |
+| Last `false` (right boundary) | `arr[mid] <= target` | `ans = mid; left = mid + 1` |
+
+### Universal Template
+```java
+int left = 0, right = n - 1, ans = -1;
+while (left <= right) {
+    int mid = left + (right - left) / 2; // avoids overflow
+    if (condition(mid)) {
+        ans = mid;
+        right = mid - 1; // search left for first true
+        // left = mid + 1; // search right for last true
+    } else {
+        left = mid + 1;
+        // right = mid - 1;
+    }
+}
+```
+
+### When Is It Binary Search?
+- "Find minimum X such that condition holds" → binary search on answer
+- "Search in rotated/sorted array" → modified binary search
+- `O(n)` brute force, but the space is monotonic → try O(log n) binary search
+
+---
+
+## Recursion vs Iteration
+
+| | Recursion | Iteration |
+|---|---|---|
+| **Mental model** | Trust the function to solve subproblems | Explicit state management |
+| **Risk** | StackOverflow on deep inputs (~10k frames) | None |
+| **When to use** | Tree/graph traversal, divide & conquer, backtracking | Linear scans, BFS, when stack depth matters |
+| **Convert to iteration** | Use an explicit `Stack<>` | N/A |
+
+### Thinking Recursively — 3 Questions
+```
+1. What is the base case?        (when to stop)
+2. What does one step do?        (trust recursion for the rest)
+3. What do I return / accumulate?
+```
+
+**Example — Max depth of binary tree:**
+```java
+// Q1: null node → depth 0
+// Q2: depth = 1 + max(left depth, right depth)
+// Q3: return the integer depth
+int maxDepth(TreeNode root) {
+    if (root == null) return 0;
+    return 1 + Math.max(maxDepth(root.left), maxDepth(root.right));
+}
+```
+
+---
+
+## Which Data Structure?
+
+| Need | Best DS | Time |
+|---|---|---|
+| Fast lookup by key | `HashMap` | O(1) avg |
+| Sorted key lookup / range queries | `TreeMap` | O(log n) |
+| Min or max element fast | `PriorityQueue` (heap) | O(log n) push/pop |
+| Top-K elements | Min-heap of size K | O(n log k) |
+| LIFO — undo / DFS | `Stack` / `Deque` | O(1) |
+| FIFO — BFS / task queue | `Queue` / `ArrayDeque` | O(1) |
+| Unique elements, fast contains | `HashSet` | O(1) avg |
+| Sorted unique elements | `TreeSet` | O(log n) |
+| Prefix queries / range sum | Prefix sum array | O(1) query |
+| Dynamic connectivity | Union-Find | O(α(n)) ≈ O(1) |
+| Substring / prefix matching | Trie | O(L) per op |
+
+### Common Complexity Reference
+
+| Operation | Array | LinkedList | HashMap | TreeMap | Heap |
+|---|---|---|---|---|---|
+| Access by index | O(1) | O(n) | — | — | — |
+| Search | O(n) | O(n) | O(1) | O(log n) | O(n) |
+| Insert | O(n) | O(1) | O(1) | O(log n) | O(log n) |
+| Delete | O(n) | O(1) | O(1) | O(log n) | O(log n) |
+| Min/Max | O(n) | O(n) | — | O(log n) | O(1) |
+
+---
 
 ## Amortized Analysis
 
-### 1. Aggregate Method
-Calculate the total cost of n operations and divide by n.
+> "What's the *average* cost per operation over a long sequence — not the worst case of a single one?"
 
-**Example: Dynamic Array (ArrayList/Vector)**
+**Analogy:** Rent is paid once a month (expensive), daily coffee is cheap. Your *average daily cost* is low — rent is amortized across 30 days.
 
-Imagine you're trying to figure out your average daily expenses for the month.
+### The 3 Methods
 
-- Most days, you just spend a little on lunch and maybe a coffee. These are your cheap operations.
+| Method | How | Best For |
+|---|---|---|
+| **Aggregate** | Total cost ÷ n operations | Dynamic array resizing |
+| **Accounting** | Charge extra "credit" on cheap ops, bank it for expensive ones | Stack with multi-pop |
+| **Potential** | Assign a "potential energy" value to data structure state | Splay trees, Fibonacci heap |
 
-- But once a month, you have to pay your rent, which is a very large, expensive operation.
+### Example: Dynamic Array Resizing (Aggregate)
 
-If you only looked at the day you pay rent, you'd think your daily spending is incredibly high. The Aggregate Method says this is misleading. Instead, it tells you to add up all your expenses for the entire month (the total cost) and then divide by the number of days (the number of operations).
+Inserting 9 elements into an ArrayList that doubles on overflow:
 
-When you do this, the huge, one-time cost of rent is spread out over all the cheap days. Your calculated average or "amortized" daily cost ends up being very reasonable and a much more realistic picture of your finances.
+| Insert # | Insert Cost | Copy Cost (on resize) |
+|---|---|---|
+| 1 | 1 | 0 |
+| 2 | 1 | 1 |
+| 3 | 1 | 2 |
+| 5 | 1 | 4 |
+| 9 | 1 | 8 |
 
-**Analyzing the Results**
-
-Now, let's look at the totals after inserting **9 elements (N = 9)**.
-
-1.  **Total Insertion Cost:** We did 9 insertions, and each one had an insertion cost of 1.
-    * `Total Insertion Cost = 9` (This will always be `N`).
-
-2.  **Total Copy Cost:** Let's add up only the `Copy Cost` column.
-    * `Total Copy Cost = 0 + 1 + 2 + 4 + 8 = 15`
-
-3.  **Grand Total Cost:**
-    * `Grand Total Cost = (Total Insertion Cost) + (Total Copy Cost) = 9 + 15 = 24`
-
-## Total Subarray Problem
-
-### Sliding Window
-
-Used when you're scanning subarrays that satisfy a specific condition (like count of elements, distinct values, etc.).
-
-- Find number of subarrays where no. of odd integers is exactly k
-- Find the no. subarrays with exactly k different integers
-
-
-### Monotonic Stack
-
-Used for subarray problems where you're calculating the contribution of each element as min or max across subarrays.
-
-- Calculate the sum of the range difference between (max and min) of all subarray
-- Calculate the sum of the min elements of all subarrays
-
-
-### Prefix Sum
-
-Used when you're checking for subarray sums equal to or divisible by something.
-
-- Total no. of subarray whose sum is equals to k
-- The sum of the elements of the subarray is multiple of k
-- Total subarrays that have a sum divisible by k
-
-
-### Kandane DP
-
-Used when you're trying to find the max/min total sum or product of a contiguous subarray.
-
-- Find the largest sum of a contiguous subarray.
-- Find the maximum sum of a circular subarray.
-- Find the largest product of a contiguous subarray.
-
-
-## Problems Types
-
-
-### **Constructive Algorithms**
-
-**What they are:** Constructive algorithms are a type of problem where you are asked to **build or construct a solution** that satisfies a given set of constraints. Instead of just determining if a solution exists, you need to provide a concrete example. These problems often require a bit of creativity and logical thinking to come up with a valid construction.
-
-**Key characteristics:**
-* **Directly building a solution:** You're not searching for a pre-existing answer; you're creating one.
-* **Ad-hoc or greedy approaches:** Many constructive problems can be solved by making locally optimal choices at each step.
-* **Mathematical insights:** Sometimes, a mathematical property or pattern is the key to constructing the solution.
+Total = 9 (inserts) + 15 (copies) = **24 operations for 9 inserts → O(1) amortized**
 
 ---
 
-### **Implementation Algorithms**
+## Problem Types
 
-**What they are:** Implementation-heavy problems are less about discovering a clever algorithm and more about **carefully and accurately translating a given set of rules or a well-known algorithm into code**. These problems test your attention to detail, your ability to handle edge cases, and your coding proficiency.
+| Type | What It Is | Key Signals | Strategy |
+|---|---|---|---|
+| **Constructive** | Build *any* valid solution | "Find any...", "Construct..." | Greedy or math insight |
+| **Implementation** | Faithfully simulate given rules | Detailed spec, many edge cases | Careful, methodical coding |
+| **Brute Force** | Try every possibility | Small n ≤ 20, "all pairs/subsets" | Nested loops, recursion |
+| **Greedy** | Locally optimal choice = globally optimal | Prove exchange argument | Sort + scan |
+| **Divide & Conquer** | Split → solve → merge | Overlapping subproblems absent | Merge sort, binary search |
 
-**Key characteristics:**
-* **Clear instructions:** The problem statement usually describes a process or a set of rules to follow.
-* **Focus on details:** The main challenge is to handle all the specific conditions and constraints correctly.
-* **Data structures:** You might need to use specific data structures to manage the information efficiently.
+### Problem Examples
 
----
-
-### **Brute Force Algorithms**
-
-**What they are:** A brute force approach involves **systematically checking every possible solution** to a problem until you find the correct one. It's a straightforward, "try everything" method. While often inefficient, a brute force solution can be a good starting point and may be sufficient for problems with small constraints.
-
-**Key characteristics:**
-* **Exhaustive search:** It explores the entire search space of possible solutions.
-* **Simple to implement:** The logic is usually straightforward, involving loops to iterate through all possibilities.
-* **Time complexity:** Brute force solutions often have a high time complexity and may be too slow for larger inputs.
+| Platform | Constructive | Implementation | Brute Force |
+|---|---|---|---|
+| **Codeforces** | [1352C](https://codeforces.com/problemset/problem/1352/C), [1360B](https://codeforces.com/problemset/problem/1360/B) | [96A](https://codeforces.com/problemset/problem/96/A), [236A](https://codeforces.com/problemset/problem/236/A) | [231A](https://codeforces.com/problemset/problem/231/A), [69A](https://codeforces.com/problemset/problem/69/A) |
+| **LeetCode** | [484](https://leetcode.com/problems/find-permutation/), [526](https://leetcode.com/problems/beautiful-arrangement/) | [54](https://leetcode.com/problems/spiral-matrix/), [68](https://leetcode.com/problems/text-justification/) | [15](https://leetcode.com/problems/3sum/), [78](https://leetcode.com/problems/subsets/) |
 
 ---
 
-### **Examples on Codeforces and LeetCode**
+## Edge Case Checklist
 
-Sure, here is the same information reformatted with the problem types arranged column-wise.
+Before submitting, run through:
 
-### **Problem Examples by Type**
+```
+Input validity
+  □ Empty array / string / tree
+  □ Single element
+  □ All elements identical
 
-| Platform | Constructive 🧠 | Implementation 💻 | Brute Force 🐢 |
-| :--- | :--- | :--- | :--- |
-| **Codeforces** | [K-th Not Divisible by n (1352C)](https://codeforces.com/problemset/problem/1352/C)<br>[Honest Coach (1360B)](https://codeforces.com/problemset/problem/1360/B)<br>[Required Remainder (1374A)](https://codeforces.com/problemset/problem/1374/A) | [Football (96A)](https://codeforces.com/problemset/problem/96/A)<br>[Boy or Girl (236A)](https://codeforces.com/problemset/problem/236/A)<br>[Petya and Strings (112A)](https://codeforces.com/problemset/problem/112/A) | [Team (231A)](https://codeforces.com/problemset/problem/231/A)<br>[Young Physicist (69A)](https://codeforces.com/problemset/problem/69/A)<br>[Presents (136A)](https://codeforces.com/problemset/problem/136/A) |
-| **LeetCode** | [Find Permutation (484)](https://leetcode.com/problems/find-permutation/)<br>[Beautiful Arrangement (526)](https://leetcode.com/problems/beautiful-arrangement/)<br>[Construct Binary Tree (105)](https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/) | [Spiral Matrix (54)](https://leetcode.com/problems/spiral-matrix/)<br>[Text Justification (68)](https://leetcode.com/problems/text-justification/)<br>[Rotate Image (48)](https://leetcode.com/problems/rotate-image/) | [3Sum (15)](https://leetcode.com/problems/3sum/)<br>[Subsets (78)](https://leetcode.com/problems/subsets/)<br>[Permutations (46)](https://leetcode.com/problems/permutations/) |
+Numbers
+  □ Negative numbers
+  □ Integer overflow (use long, or Math.addExact)
+  □ Zero as input or divisor
 
+Array / String
+  □ Length 1 or 2
+  □ Already sorted / reverse sorted
+  □ Duplicates (does the problem allow them?)
+
+Graph
+  □ Disconnected components
+  □ Self-loops
+  □ No path exists (return -1 / false)
+
+Boundaries
+  □ Left/right pointer crossing
+  □ Off-by-one in loops (< vs <=)
+  □ Index out of bounds on grid edges
+```
+
+---
 
 ## Design by Contract
 
+**Analogy:** ATM transaction —
+- **Precondition:** Must insert valid card *(caller's job)*
+- **Invariant:** Balance stays consistent during transaction *(system's job)*
+- **Postcondition:** Cash dispensed, balance updated *(system's guarantee)*
 
-###  Preconditions
+| Concept | When | Owner | Example |
+|---|---|---|---|
+| **Precondition** | Before function runs | Caller | `sqrt(n)` requires `n ≥ 0` |
+| **Invariant** | During execution | Code itself | Loop: "first i elements are sorted" |
+| **Postcondition** | After function returns | Code itself | `sqrt(n)² ≈ n` |
 
-A **precondition** is a condition that **must be true *before* a function or method is called**. It's the "contract" that the calling code must fulfill to use the function correctly. The function itself *assumes* the precondition is met and doesn't bother checking for it.
+### Loop Invariant
 
-* **Analogy:** The precondition for using an ATM is that you **must insert a valid debit card**. The ATM doesn't try to function with a library card; it *assumes* you've met the requirement to start the process.
-* **Code Example:** For a function `calculateSquareRoot(number)`, a precondition is that `number >= 0`. The function relies on the caller to provide a non-negative number.
+A property that holds **before and after every iteration** — use it to prove correctness.
 
+```
+Insertion Sort invariant:
+  "After i iterations, A[0..i-1] is sorted relative to itself."
+  When i = n → A[0..n-1] is fully sorted ✓
 
-###  Postconditions
-
-A **postcondition** is a condition that the function **guarantees will be true *after* it finishes executing**, provided the preconditions were met. It's the promise the function makes about its result.
-
-* **Analogy:** The postcondition of a successful ATM withdrawal is that **you have received cash and your account balance has been updated correctly**. The machine guarantees this outcome.
-* **Code Example:** For the `calculateSquareRoot(number)` function, a postcondition is that the `(return_value * return_value)` will be very close to the original `number`.
-
-
-### **How They Relate to Invariants**
-
-This trio forms a powerful logical framework:
-
-| Concept | When it Must Be True | Whose Responsibility? |
-| :--- | :--- | :--- |
-| **Precondition** | **Before** the code runs. | The **Caller** |
-| **Invariant** | **During** the code's execution. | The **Code Itself** |
-| **Postcondition** | **After** the code finishes. | The **Code Itself** |
-
-Think of it like a journey:
-* **Precondition:** You must have a full tank of gas *before* you start your road trip.
-* **Invariant:** Your car's engine temperature must remain within a safe range *during* the entire trip.
-* **Postcondition:** You will have arrived at your destination *after* the trip is complete.
+If the invariant breaks mid-loop → the bug is in that iteration.
+```
 
 ---
 
-### What are Invariants?
-
-In computer science, an **invariant** is a condition or a property that remains true throughout the execution of a program or a part of it, like a loop or the lifetime of an object. Think of it as a rule that is never broken.
-
-Here's a simple analogy: Imagine you have a bag of marbles that only contains red and blue marbles. An invariant of this system could be: "The total number of marbles in the bag is always a non-negative integer." No matter how many marbles you add or remove, as long as you follow the rules of the system (don't add half a marble, for instance), this statement will always be true.
-
-### Types of Invariants in Programming
-
-Invariants are a powerful tool for reasoning about the correctness of your code. Here are some common types:
-
-* **Loop Invariants:** This is a condition that is true before a loop starts, and it remains true before and after each iteration of the loop. This is extremely useful for proving that a loop behaves as expected.
-
-    * **Example:** In an algorithm to find the maximum element in an array, a loop invariant could be: "At the end of each iteration `i`, the `max_so_far` variable holds the maximum value in the subarray from index 0 to `i`."
-
-* **Class Invariants:** In object-oriented programming, a class invariant is a condition that must be true for any object of that class whenever it is not in the middle of executing one of its methods. This ensures that the object is always in a valid state.
-
-    * **Example:** If you have a `Date` class with `day`, `month`, and `year` properties, a class invariant would be that the `day` is always between 1 and 31, the `month` is between 1 and 12, and so on.
-
-### Why are Invariants Important?
-
-Invariants are a fundamental concept in programming for several reasons:
-
-* **Correctness:** They help you prove that your algorithms are correct. If you can establish a loop invariant that, upon the loop's termination, implies the desired outcome, you have a strong argument for the correctness of your code.
-
-* **Debugging:** When a program fails, checking if an invariant has been violated can quickly lead you to the source of the bug. If an invariant is broken, you know that the error must have occurred in the code that was supposed to maintain it.
-
-* **Design:** Thinking about invariants helps you design better, more robust code. By defining the rules that your data structures and algorithms must follow, you can create more predictable and reliable systems.
-
-### Simple Analogy: Sorting an Array
-
-Let's consider sorting an array in ascending order. A common approach is to iterate through the array and place elements in their correct positions. A loop invariant for many sorting algorithms (like insertion sort) could be:
-
-> "After `i` iterations of the loop, the first `i` elements of the array are sorted relative to each other."
-
-This doesn't mean they are in their final, globally sorted positions, but that the subarray `A[0...i-1]` is sorted. By maintaining this invariant throughout the loop, you can be confident that when the loop finishes, the entire array will be sorted.
-
-In essence, invariants are a way of making formal, provable statements about the behavior of your code, which is a cornerstone of writing correct and reliable software.
-
 ## Coding Tricks
 
-
 **Reverse Loop with Post-Decrement**
-
 ```java
 int i = 3;
 while (i-- > 0)
-    a[i] = in.nextInt();
+    a[i] = in.nextInt(); // fills a[2], a[1], a[0]
 ```
 
-Let’s walk through it with `n = 3`:
-
-| Loop | i (before `--`) | `i-- > 0`? | `i` after `--` | `a[i]` gets value |
-| ---- | --------------- | ---------- | -------------- | ----------------- |
-| 1    | 3               | Yes        | 2              | a\[2] = ...       |
-| 2    | 2               | Yes        | 1              | a\[1] = ...       |
-| 3    | 1               | Yes        | 0              | a\[0] = ...       |
-| 4    | 0               | No         | -1             | stops             |
-
-
-**Fast I/O Template**
-
+**Fast I/O**
 ```java
 static class FastReader {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -239,124 +351,95 @@ static class FastReader {
         }
         return st.nextToken();
     }
-    int nextInt() { return Integer.parseInt(next()); }
+    int nextInt()  { return Integer.parseInt(next()); }
     long nextLong() { return Long.parseLong(next()); }
 }
 ```
 
 **Lambda Sorting**
-
 ```java
-// Ascending
-Arrays.sort(arr, (x, y) -> Integer.compare(x[0], y[0]));
-// Descending
-Arrays.sort(arr, (x, y) -> Integer.compare(y[0], x[0]));
+Arrays.sort(arr, (x, y) -> Integer.compare(x[0], y[0])); // ascending by first element
+Arrays.sort(arr, (x, y) -> Integer.compare(y[0], x[0])); // descending
+// Multi-key: sort by first asc, break ties by second desc
+Arrays.sort(arr, (x, y) -> x[0] != y[0] ? x[0] - y[0] : y[1] - x[1]);
 ```
 
-**Greedy Index Sorting**
-
+**Greedy Index Sorting** (sort indices by value, not values themselves)
 ```java
 Integer[] idx = new Integer[n];
 for (int i = 0; i < n; i++) idx[i] = i;
 Arrays.sort(idx, (i, j) -> Integer.compare(arr[i], arr[j]));
 ```
 
-**prefix sum technique**
-
+**Prefix Sum**
 ```java
-int[] a = {3, 5, 2, 7}; // n = 4
-
-int[] prefix = new int[5]; // size n + 1
-for (int i = 0; i < 4; i++)
+int[] prefix = new int[n + 1];
+for (int i = 0; i < n; i++)
     prefix[i + 1] = prefix[i] + a[i];
+// Range sum [l, r] = prefix[r+1] - prefix[l]
 ```
+
+**2D Prefix Sum**
+```java
+int[][] psum = new int[m+1][n+1];
+for (int i = 1; i <= m; i++)
+    for (int j = 1; j <= n; j++)
+        psum[i][j] = grid[i-1][j-1] + psum[i-1][j] + psum[i][j-1] - psum[i-1][j-1];
+// Rectangle sum (r1,c1) to (r2,c2):
+// psum[r2+1][c2+1] - psum[r1][c2+1] - psum[r2+1][c1] + psum[r1][c1]
+```
+
+**Frequency Map (one-liner)**
+```java
+Map<Integer, Integer> freq = new HashMap<>();
+for (int x : arr) freq.merge(x, 1, Integer::sum);
+```
+
+**Swap without temp**
+```java
+a ^= b; b ^= a; a ^= b;
+```
+
+**Check power of 2**
+```java
+boolean isPow2 = n > 0 && (n & (n - 1)) == 0;
+```
+
+**Integer ceiling division**
+```java
+int ceil = (a + b - 1) / b; // same as Math.ceil(a / b) without float
+```
+
+---
 
 ## Number System Conversion
 
-### 1. **Binary, Octal, Hexadecimal -> Decimal**
+### Quick Reference
 
-#### Binary to Decimal
+| From → To | Rule | Example |
+|---|---|---|
+| Binary → Decimal | Σ bit × 2^pos | `1011` = 8+2+1 = **11** |
+| Octal → Decimal | Σ digit × 8^pos | `342` = 192+32+2 = **226** |
+| Hex → Decimal | Σ digit × 16^pos | `3F` = 48+15 = **63** |
+| Decimal → Binary | Divide by 2, remainders bottom→top | `23` → `10111` |
+| Decimal → Octal | Divide by 8, remainders bottom→top | `83` → `123` |
+| Decimal → Hex | Divide by 16, remainders bottom→top | `255` → `FF` |
 
-- To convert binary to decimal, multiply each bit by 2 raised to the power of its position, starting
-  from 0 on the right.
+### Decimal → Any Base (Visual)
+```
+23 ÷ 2 = 11 r 1  ↑
+11 ÷ 2 = 5  r 1  │  read
+ 5 ÷ 2 = 2  r 1  │  bottom
+ 2 ÷ 2 = 1  r 0  │  to top
+ 1 ÷ 2 = 0  r 1  │
+                 → 10111
+```
 
-  ```
-  // Convert binary `1011` to decimal.
-
-  1011 (binary) = 1*2^3 + 0*2^2 + 1*2^1 + 1*2^0
-               = 8 + 0 + 2 + 1
-               = 11 (decimal)
-  ```
-
-#### Octal to Decimal
-
-- Multiply each digit by 8 raised to the power of its position from the right (starting from 0).
-
-  ```
-  // Convert octal `342` to decimal.
-
-  342 (octal) = 3*8^2 + 4*8^1 + 2*8^0
-              = 3*64 + 4*8 + 2*1
-              = 192 + 32 + 2
-              = 226 (decimal)
-  ```
-
-#### Hexadecimal to Decimal
-
-- Multiply each hex digit by 16 raised to the power of its position (starting from 0 from the right).
-
-  ```
-  // Convert hexadecimal 3F to decimal.
-
-  3F (hex) = 3*16^1 + 15*16^0
-           = 3*16 + 15*1
-           = 48 + 15
-           = 63 (decimal)
-  ```
-
-### 2. **Decimal -> Binary, Octal, Hexadecimal**
-
-#### Decimal to Binary
-
-- Divide the decimal number by 2, record the remainder, and repeat until the quotient is 0. The binary
-  result is the remainders read from bottom to top.
-
-  ```
-  // Convert decimal `23` to binary.
-
-  23 ÷ 2 = 11 remainder 1
-  11 ÷ 2 = 5 remainder 1
-  5 ÷ 2 = 2 remainder 1
-  2 ÷ 2 = 1 remainder 0
-  1 ÷ 2 = 0 remainder 1
-
-  So, 23 (decimal) = 10111 (binary)
-  ```
-
-#### Decimal to Octal
-
-- Divide the decimal number by 8, record the remainder, and repeat until the quotient is 0.
-
-  ```
-  // Convert decimal `83` to octal.
-
-  83 ÷ 8 = 10 remainder 3
-  10 ÷ 8 = 1 remainder 2
-  1 ÷ 8 = 0 remainder 1
-  
-  So, 83 (decimal) = 123 (octal)
-  ```
-
-#### Decimal to Hexadecimal
-
-- Divide the decimal number by 16, record the remainder, and repeat until the quotient is 0.
-
-  ```
-  // Convert decimal `255` to hexadecimal
-
-  255 ÷ 16 = 15 remainder 15
-  15 ÷ 16 = 0 remainder 15
-  
-  Since remainder 15 = F in hexadecimal,
-  So, 255 (decimal) = FF (hex)
-  ```
+### Java Conversions (Built-in)
+```java
+Integer.toBinaryString(23);   // "10111"
+Integer.toOctalString(83);    // "123"
+Integer.toHexString(255);     // "ff"
+Integer.parseInt("10111", 2); // 23  (binary → decimal)
+Integer.parseInt("FF", 16);   // 255 (hex → decimal)
+```

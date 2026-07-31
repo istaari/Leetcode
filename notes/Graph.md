@@ -44,308 +44,163 @@
 
 ## The Building Blocks of a Graph
 
-At its heart, a graph is a simple structure used to model relationships between objects.
+A graph `G = (V, E)` models **relationships** between objects: **Vertices** (nodes/entities) connected by **Edges** (links/relationships).
 
-* **Vertices (or Nodes):** These are the fundamental entities or points in the graph. Think of them as cities on a map, people in a social network, or web pages on the internet.
-* **Edges (or Links/Arcs):** These are the connections between pairs of vertices. They represent the relationship between the entities, like roads between cities, friendships between people, or hyperlinks between web pages.
+```
+   Vertex A ●─────── edge ───────● Vertex B
+```
 
-A graph is formally defined as a pair of sets: `G = (V, E)`, where `V` is the set of vertices and `E` is the set of edges.
+### Real-World Examples
 
-### Examples
+| Domain | Vertices | Edges | Edge Type |
+|---|---|---|---|
+| **Social (Facebook)** | User profiles | Friendships | Undirected (mutual) |
+| **Social (Twitter)** | User profiles | Follows | Directed (one-way) |
+| **Maps (Google Maps)** | Locations | Roads/routes | Weighted (distance, time, cost) |
+| **Recommendations (Netflix)** | Users + Items | Interactions | Bipartite, weighted (rating, plays) |
 
-**Social Networks**
-
-Social platforms model human connections and interactions as graphs.
-
-* **Vertices:** User profiles.
-* **Edges:** The relationship between users.
-    * **Undirected Edge:** On Facebook, a "friendship" is mutual, creating an undirected edge. If you are friends with someone, they are also friends with you.
-    * **Directed Edge:** On Twitter or Instagram, a "follow" is a directed edge. You can follow someone without them following you back.
-
-
-**Transportation and Maps**
-
-Navigation systems like Google Maps or Waze use weighted graphs to find the best routes.
-
-* **Vertices:** Specific locations, such as cities, street intersections, airports, or train stations.
-* **Edges:** The paths connecting these locations, like roads, highways, flight paths, or railway tracks. These edges are typically **weighted** by values such as:
-    * **Distance** (kilometers or miles)
-    * **Travel Time** (which can change based on real-time traffic)
-    * **Cost** (tolls or ticket prices)
-
-
-
-**Recommendation Engines**
-
-Services like Netflix, Spotify, and Amazon use graphs to suggest content or products you might like.
-
-* **Vertices:** Two types of nodes exist: **Users** and **Items** (e.g., movies, songs, products). This forms a *bipartite graph*.
-* **Edges:** An edge connects a User to an Item. The edge can be **weighted** by the user's interaction, such as:
-    * The rating a user gave a movie (e.g., 1 to 5 stars).
-    * The number of times a user has listened to a song.
-    * A simple binary value indicating whether a user purchased a product.
-
-The engine recommends items by finding users who are "close" to you in the graph (i.e., have similar tastes) and then suggesting items they liked that you haven't seen yet.
-
+---
 
 ## Types of Graphs: A Visual Vocabulary
 
-Graphs come in various flavors, each with its own specific characteristics and uses.
-
-### **Based on Edge Direction**
-
-* **Undirected Graph:** Edges have no direction. If an edge connects vertex A to vertex B, it also connects B to A. This is like a two-way street or a friendship on Facebook.
-
-* **Directed Graph (Digraph):** Edges have a direction, usually indicated by an arrow. An edge from A to B doesn't necessarily mean there's an edge from B to A. This is like a one-way street or following someone on Twitter.
-
-
-### **Based on Edge and Vertex Properties**
-
-* **Weighted Graph:** Each edge is assigned a numerical weight or cost. This weight can represent distance, time, or capacity. For example, a map with distances between cities would be a weighted graph.
-
-* **Unweighted Graph:** Edges have no assigned weights. The focus is purely on the connections themselves.
-
-* **Simple Graph:**
-
-  ![Simple Graph](images/simple_graph.png)
-
-* **Multigraph:** 
-
-  ![Multigraph](images/multi_graph.png)
-
-* **Complete Graph:**
-  
-  ![Complete Graph](images/complete_graph.png)
-
-* **Bipartite Graph:** A graph whose vertices can be divided into two disjoint and independent sets, U and V, such that every edge connects a vertex in U to one in V.
-
-  ![Bipartite Graph](images/bipartite_graph.png)
-
-* **Tree:** A connected graph with no cycles. Trees are fundamental data structures in computer science.
-
-
-### Fundamental Properties of Graphs 💡
-
-**Degree of a Vertex:** 
-
-In an undirected graph, the degree of a vertex is the number of edges connected to it. In a directed graph, we have:  
--  **In-degree:** The number of incoming edges.
--  **Out-degree:** The number of outgoing edges.
-
-**Path:**
-
-- **Path in an Undirected Graph**
-
-  In an undirected graph, a path is like a trail you can walk between nodes. The direction doesn't matter.
-
-  Consider this graph:
-
-  ```
-        A --------- B --------- E
-        |           |
-        |           |
-        C --------- D
-  ```
-
-    * A valid path from **A** to **E** is the sequence of vertices: `A → B → E`.
-    * Another valid path from **A** to **E** is: `A → C → D → B → E`.
-    * The sequence `A → E` is **not** a path because there is no direct edge connecting them.
-
-
-- **Path in a Directed Graph**
-
-  In a directed graph, a path is like a one-way street. You must follow the direction of the arrows.
-
-  Consider this graph:
-
-  ```
-        A ---------> B
-        |            |
-        v            v
-        C ---------> D <--------- E
-  ```
-
-    * A valid path from **A** to **D** is the sequence: `A → C → D`.
-    * Another valid path is: `A → B → D`.
-    * The sequence `A → C → B` is **not** a valid path because you cannot go from C to B against the arrow's direction.
-
-
-**Cycle**
-
-A cycle is a path that starts and ends at the same vertex, forming a loop.
-
-  * **In an Undirected Graph:** A cycle is a path where you can travel from a node, visit other nodes, and return to the start without reusing an edge.
-
-    ```
-       A --------- B
-       |           |
-       |           |
-       D --------- C
-    ```
-
-    The path `A → B → C → D → A` is a cycle.
-
-  * **In a Directed Graph:** A cycle must follow the direction of the arrows.
-
-    ```
-       A ---------> B
-       ^            |
-       |            |
-       |            v
-       D <--------- C
-    ```
-
-    The path `A → B → C → D → A` is a directed cycle. A graph with no cycles is called **acyclic**.   
-
-
-- **Cycle with One Vertex :** A cycle with just one vertex is only possible if that vertex has an edge that connects back to itself. This is called a **self-loop**.
-
-    * **Undirected Graph:** A self-loop on vertex A creates a cycle of length 1.
-
-      ```
-        ---
-      /   \
-      (     )
-      \   /
-        -A-
-      ```
-
-      The path starts at A, traverses the loop, and ends at A.
-
-    * **Directed Graph:** Similarly, a directed edge starting and ending at the same vertex forms a cycle.
-
-      ```
-        -->--
-      /     \
-      (   A   )
-      \     /
-        --<--
-      ```
-
-  **Without a self-loop, a single vertex cannot form a cycle.**
-
-- **Cycle with Two Vertices**
-
-  * **Undirected Graph:** In a **simple graph** (where there are no parallel edges), a two-vertex setup is **not considered a cycle**.
-
-    ```
-       A --------- B
-    ```
-
-    The path `A → B → A` is just traversing the same edge back and forth, which doesn't count as a true cycle. To be a cycle, a path typically can't immediately reuse the same edge in reverse.
-
-    However, a cycle *can* exist if you have **parallel edges** (making it a **multigraph**).
-
-    ```
-          /-----\
-       A           B
-          \-----/
-    ```
-
-    Here, you can go from `A` to `B` on the top edge and return from `B` to `A` on the bottom edge. This forms a valid cycle of length 2.
-
-  * **Directed Graph:** A cycle with two vertices is very common and straightforward. It happens when there is an edge from A to B **and** an edge from B back to A.
-
-    ```
-         ------>
-       A         B
-         <------
-    ```
-
-    The path `A → B → A` is a valid directed cycle because it follows two different directed edges.
-
-
-**Connected Graph**
-
-This term primarily applies to **undirected graphs**. A graph is connected if there is a path between every pair of vertices. In simple terms, the graph is "all one piece."
-
-  * **Connected Graph:** You can get from any node to any other node.
-
-    ```
-       A --- B --- C
-             |
-             D
-    ```
-
-  * **Disconnected Graph:** The graph is made of two or more separate components.
-
-    ```
-       A --- B      C --- D
-    ```
-
-    You cannot get from node A to node C.
-
-For **directed graphs**, the equivalent concepts are "weakly connected" (if the underlying undirected version is connected) and "strongly connected."
-
-**Strongly Connected Graph**
-
-This term is specifically for **directed graphs**. A directed graph is strongly connected if for every pair of vertices (A, B), there is a path from A to B **and** a path from B back to A.
-
-  * **Strongly Connected:** Every node can reach every other node.
-
-    ```
-       A <-------> B
-       ^ \       / ^
-       |  \     /  |
-       |   \   /   |
-       |    > v <  |
-       +----- C ---+
-    ```
-
-    From A, you can get to B and C. From B, you can get to A and C. From C, you can get to A and B.
-
-  * **Weakly Connected:**
-
-    ```
-       A ---------> B ---------> C
-    ```
-
-    You can get from A to C, but you **cannot** get back from C to A. Therefore, it is not strongly connected.
-
-
-* **Adjacency:** Two vertices are **adjacent** if they are connected by an edge.
-
-
-### Minimum Sapnning Tree
-
-A **Minimum Spanning Tree (MST)** is the cheapest possible way to connect all the "dots" (vertices) in a weighted graph into a single tree structure without forming any cycles.
-
-**Analogy: Connecting a New Neighborhood**
-
-Imagine you're a city planner tasked with providing internet to a new neighborhood. You have a map of all the houses (**vertices**) and the potential cable routes between them. Digging along each route has a different cost (**edge weights**).
-
-Your goal is to **connect every single house** to the network, directly or indirectly, using the **least amount of cable** to minimize the total cost.
-
-  * A **Spanning Tree** is any layout that connects all houses without creating redundant loops (cycles). A loop would be wasteful—like running a cable from House A to B, then B to C, and also directly from C back to A.
-  * The **Minimum Spanning Tree** is the specific layout that achieves this with the absolute lowest total cost. You're finding the cheapest possible "backbone" for the network.
-
-**Example**
-
-**Original Graph with All Possible Connections:**
+| Category | Type | Key Property | Analogy |
+|---|---|---|---|
+| **Direction** | Undirected | Edge A–B works both ways | Two-way street, Facebook friendship |
+| | Directed (Digraph) | Edge A→B ≠ B→A | One-way street, Twitter follow |
+| **Weight** | Weighted | Edges carry a cost/value | Road with distance |
+| | Unweighted | Only connections matter | Plain friendship graph |
+| **Structure** | Simple | No self-loops or parallel edges | — |
+| | Multigraph | Parallel edges allowed | Multiple flights between cities |
+| | Complete | Every pair connected | Everyone knows everyone |
+| | Bipartite | Two disjoint sets; edges only cross between them | Users ↔ Movies |
+| | Tree | Connected, **no cycles**, `n-1` edges | Org chart, file system |
+
+![Simple](images/simple_graph.png) ![Multigraph](images/multi_graph.png) ![Complete](images/complete_graph.png) ![Bipartite](images/bipartite_graph.png)
+
+---
+
+## Fundamental Properties 💡
+
+### Degree
+| Graph | Measure | Meaning |
+|---|---|---|
+| Undirected | **Degree** | # edges touching the vertex |
+| Directed | **In-degree** | # incoming edges |
+| Directed | **Out-degree** | # outgoing edges |
+
+### Path — a walk between vertices
+Directed paths **must follow arrows**; undirected paths ignore direction.
 
 ```
-      (1)
-   A ------- B
-   | \     / |
-   |  \   /  |
-(4)|   (5)  |(2)
-   |    \ /   |
-   |     X    |
-   |    / \   |
-(3)|   /   \  |(6)
-   |  /     \ |
-   C ------- D
-      (7)
+  Undirected                     Directed
+  A ─── B ─── E                  A ──▶ B
+  │     │                        │     │
+  C ─── D                        ▼     ▼
+                                 C ──▶ D ◀── E
+  A→B→E ✓   A→C→D→B→E ✓          A→C→D ✓   A→B→D ✓
+  A→E ✗ (no edge)                A→C→B ✗ (against arrow)
 ```
 
-There are many ways to connect all four vertices, but we want the cheapest one. An MST algorithm would select the following edges:
+### Cycle — a path that returns to its start
 
-1.  **A – B (Cost 1):** The cheapest edge overall.
-2.  **B – D (Cost 2):** The next cheapest edge.
-3.  **A – C (Cost 3):** The next cheapest. We can add this because it doesn't form a cycle. We don't add A-B-D-A or anything similar.
+```
+  Undirected cycle               Directed cycle
+  A ─── B                        A ──▶ B
+  │     │                        ▲     │
+  D ─── C                        │     ▼
+  A→B→C→D→A ✓                    D ◀── C   →  A→B→C→D→A ✓
+```
 
+| Vertices | Undirected | Directed |
+|---|---|---|
+| **1** | Cycle only via self-loop | Cycle only via self-loop |
+| **2** | ✗ in simple graph (edge reuse); ✓ only in multigraph | ✓ if A→B **and** B→A |
+| **3+** | Standard cycle | Standard cycle (following arrows) |
+
+> A graph with **no cycles** is **acyclic**. A directed acyclic graph = **DAG** (basis for topological sort).
+
+### Connectivity
+
+| Term | Applies to | Definition |
+|---|---|---|
+| **Connected** | Undirected | Path exists between every pair — "all one piece" |
+| **Disconnected** | Undirected | Splits into ≥ 2 separate components |
+| **Strongly Connected** | Directed | For every pair (A,B): path A→B **and** B→A |
+| **Weakly Connected** | Directed | Connected only if you ignore edge directions |
+| **Adjacent** | Both | Two vertices joined by an edge |
+
+```
+  Connected          Disconnected        Strongly Connected    Weakly Connected
+  A─B─C              A─B    C─D           A ⇄ B                 A ──▶ B ──▶ C
+    │                                      ⤡ ⤢                  (can't return
+    D                (A can't reach C)      C  (all reach all)    C → A)
+```
+
+---
+
+## Minimum Spanning Tree (Preview)
+
+An **MST** is the cheapest set of edges that connects **all** vertices with **no cycles**.
+
+> **Analogy — wiring a neighborhood:** connect every house to the network using the least total cable. Any loop is wasteful (a redundant cable). The MST is the cheapest "backbone."
+
+```
+        (1)
+     A ─────── B          MST picks cheapest edges that add
+     │ \     / │          a new vertex without forming a cycle:
+  (4)│ (5)\/(2)│(6)         1. A–B (1)
+     │   /\    │            2. B–D (2)
+  (3)│  /  \   │            3. A–C (3)
+     C ─────── D          Total cost = 6   (see MST section for algorithms)
+        (7)
+```
 
 # **Patterns and Algorithms**
+
+## Which Graph Algorithm? — Decision Tree
+
+```
+What are you solving?
+│
+├─ Traversal / reachability / connected components
+│     ├─ Level-by-level or shortest hops ........... BFS
+│     └─ Go deep / explore fully ................... DFS
+│
+├─ Shortest path
+│     ├─ Unweighted ................................ BFS
+│     ├─ Weights 0/1 ............................... 0-1 BFS (deque)
+│     ├─ Non-negative weights ...................... Dijkstra
+│     ├─ Negative weights allowed .................. Bellman-Ford
+│     └─ All pairs ................................. Floyd-Warshall
+│
+├─ Ordering with dependencies (DAG) ............... Topological Sort (DFS or Kahn)
+│
+├─ Detect a cycle
+│     ├─ Undirected ................................ DFS + parent tracking / Union-Find
+│     └─ Directed .................................. DFS 3-color marking
+│
+├─ Connect all nodes at minimum cost .............. MST (Kruskal / Prim)
+│
+├─ Group / merge sets dynamically ................. Union-Find
+│
+└─ Strongly connected components .................. Kosaraju / Tarjan
+```
+
+## Complexity Cheat-Sheet
+
+| Algorithm | Time | Space | Handles |
+|---|---|---|---|
+| BFS / DFS | O(V + E) | O(V) | Unweighted traversal |
+| 0-1 BFS | O(V + E) | O(V) | Weights ∈ {0, 1} |
+| Dijkstra | O(E log V) | O(V) | Non-negative weights |
+| Bellman-Ford | O(V · E) | O(V) | Negative weights, detects neg cycles |
+| Floyd-Warshall | O(V³) | O(V²) | All-pairs shortest path |
+| Topological Sort | O(V + E) | O(V) | DAG ordering |
+| Kruskal (MST) | O(E log E) | O(V) | Sparse graphs |
+| Prim (MST) | O(E log V) | O(V) | Dense graphs |
+| Union-Find | O(α(V)) ≈ O(1) | O(V) | Dynamic connectivity |
+| Kosaraju / Tarjan | O(V + E) | O(V) | Strongly connected components |
+
 
 
 ## BFS Variations
@@ -398,7 +253,7 @@ public int[][] multiSourceBFS(char[][] grid) {
 
     for (int r = 0; r < rows; r++)
         for (int c = 0; c < cols; c++)
-            if (grid[r][c] == ‘S’) queue.offer(new int[]{r, c});
+            if (grid[r][c] == 'S') queue.offer(new int[]{r, c});
             else dist[r][c] = Integer.MAX_VALUE;
 
     int[][] dirs = {{0,1},{0,-1},{1,0},{-1,0}};

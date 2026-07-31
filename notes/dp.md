@@ -1,81 +1,94 @@
-# **Introduction**
+# Dynamic Programming
 
-🧩 1. **State**
+> **DP in one sentence:** solve a big problem by combining answers to overlapping subproblems, computing each subproblem **once** and reusing it.
 
-A **DP state** defines what subproblem you're solving.
+**When is it DP?** Two signals must both hold:
+- **Optimal substructure** — the answer is built from answers to smaller versions of the same problem.
+- **Overlapping subproblems** — the same subproblem is revisited many times (otherwise it's plain divide-and-conquer).
 
-**In other words:**
+## Table of Contents
+| Pattern | State | Signature Problems |
+|---|---|---|
+| [Linear DP](#linear-dp) | `dp[i]` | Climbing Stairs, House Robber, Kadane |
+| [Grid DP](#grid-dp) | `dp[i][j]` | Unique Paths, Min Path Sum |
+| [LIS](#lis-longest-increasing-subsequence) | `dp[i]` | Longest Increasing Subsequence |
+| [Bitmask DP](#bitmask) | `dp[mask]` | TSP, Assignment |
+| [Digit DP](#digit-dp) | `dp[pos][tight][…]` | Count numbers with digit property |
+| [Interval DP](#interval-dp) | `dp[i][j]` | Burst Balloons, Matrix Chain |
+| [Knapsack](#knapsack) | `dp[i][w]` | Subset Sum, Coin Change |
+| [State Machine DP](#state-machine-dp) | `dp[i][state]` | Stock Buy/Sell |
+| [String DP](#string-dp) | `dp[i][j]` | LCS, Edit Distance |
+| [Tree DP](#tree-dp) | `dp[node][state]` | Tree Diameter, House Robber III |
 
-> It is a representation of the problem with a subset of inputs that leads to the full solution.
-
-**Examples:**
-
-* `dp[i]` = the optimal solution (e.g., max/min/count/etc.) considering the first `i` elements.
-* `dp[i][j]` = the solution when considering the first `i` items and a total capacity of `j`.
-* `dp[mask]` = the result when a subset of elements (represented by bitmask `mask`) has been processed.
-* `F(n)` =the result (e.g., number of ways, max value, min cost, etc.) for input size or parameter n.
-
-**You choose a state by answering:**
-
-> What parameters do I need to uniquely define a subproblem?
-
-
-🔁 2. **Transition**
-
-A **transition** tells you how to compute the value of the current state using previously computed states.
-
-**In other words:**
-
-> It defines how to move from smaller subproblems to bigger ones.
-
-**Example:**
-
-If `dp[i]` is the number of ways to reach step `i`, and you can take 1 or 2 steps at a time:
+## Which DP Pattern? — Decision Tree
 
 ```
-dp[i] = dp[i-1] + dp[i-2]
+What does the input look like?
+│
+├─ Single sequence / array
+│    ├─ Answer depends on last 1–2 positions ....... Linear DP
+│    ├─ Longest increasing/chain relationship ...... LIS
+│    └─ Optimal over a contiguous range [i, j] ..... Interval DP
+│
+├─ Two sequences / strings ......................... String DP (LCS family)
+│
+├─ 2D grid, move corner → corner ................... Grid DP
+│
+├─ Pick items under a capacity/target .............. Knapsack
+│    ├─ Each item once ............................. 0/1
+│    └─ Items reusable ............................. Unbounded
+│
+├─ State changes by action each step ............... State Machine DP
+│
+├─ Count numbers in [L, R] w/ digit property ....... Digit DP
+│
+├─ Tree structure, answer from subtrees ............ Tree DP
+│
+└─ Subset of ≤ 20 items as state ................... Bitmask DP
 ```
 
-Transitions are based on:
+## Top-Down vs Bottom-Up
 
-* Choices you can make
-* Constraints of the problem
-* Recurrence relations
-    - Recurrence Relation is an equation that defines the solution to a larger problem in terms of the solutions to its smaller, overlapping subproblems.
-    - It defines the relationship between the problem and its subproblems
+Two ways to implement the same recurrence:
 
-Notes
-- A **transition rule** (or transition function) defines how a system moves from one state to another in response to an input or event.
+| | Top-Down (Memoization) | Bottom-Up (Tabulation) |
+|---|---|---|
+| **How** | Recursion + cache results | Iterative fill of a table |
+| **Order** | Natural (solve on demand) | Must order subproblems manually |
+| **Pros** | Easy from the recurrence; skips unused states | No recursion overhead; easy space optimization |
+| **Cons** | Stack depth, call overhead | Must compute all states |
+| **Analogy** | "Ask for what you need, remember answers" | "Build a reference table from smallest up" |
 
-- An **induction rule** is a method of mathematical proof used to establish that a given statement is true for all natural numbers (or any well-ordered set).
-
-    - **Key Idea:** It establishes a chain of reasoning. If the first case is true, and there's a rule that shows if any case is true then the next one must also be true, it follows that all subsequent cases are true.
-
-🧱 3. **Base Case**
-
-A **base case** is where your DP starts — the smallest or simplest subproblem that can be solved directly.
-
-**In other words:**
-
-> It provides the initial value(s) to build the rest of the DP table.
-
-**Example:**
-
-If you are counting the number of ways to climb stairs:
-
-```
-dp[0] = 1   # 1 way to stay at ground level (do nothing)
-dp[1] = 1   # 1 way to take the first step
+```java
+// Top-down: recurrence → add a cache
+int solve(int i, int[] memo) {
+    if (i <= 1) return 1;               // base case
+    if (memo[i] != 0) return memo[i];   // reuse
+    return memo[i] = solve(i-1, memo) + solve(i-2, memo);
+}
+// Bottom-up: same recurrence, filled iteratively (see Linear DP below)
 ```
 
-You **must always define** the base case correctly — it anchors your solution.
+---
+
+# The Three Ingredients of Any DP
+
+| Ingredient | Question it answers | Climbing Stairs example |
+|---|---|---|
+| 🧩 **State** | What parameters uniquely define a subproblem? | `dp[i]` = ways to reach step `i` |
+| 🔁 **Transition** | How do smaller subproblems build a bigger one? | `dp[i] = dp[i-1] + dp[i-2]` |
+| 🧱 **Base Case** | What's the smallest directly-solvable case? | `dp[0] = 1, dp[1] = 1` |
+
+> **State** is a snapshot of a subproblem using a subset of inputs (`dp[i]`, `dp[i][w]`, `dp[mask]`, …).
+> **Transition** is the recurrence relation — defining a larger problem in terms of smaller overlapping ones.
+> **Base Case** anchors the whole table; get it wrong and everything built on top is wrong.
 
 ---
 
 
-# State 
+# DP Pattern Catalog
 
-### Comprehensive DP State & Category Reference
+A full map of DP flavors and their canonical state (patterns marked ★ have dedicated sections below; the rest are rarer interview appearances).
 
 | Category | Typical State | Description |
 | :--- | :--- | :--- |

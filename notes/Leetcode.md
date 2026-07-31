@@ -1,404 +1,292 @@
 
 # Algorithms and Data Structures
 
+## Table of Contents
+- [String](#string)
+- [Binary Search](#binary-search)
+- [Linked List](#linked-list)
+- [Stack](#stack)
+- [Sliding Window](#sliding-window)
+- [Backtracking](#backtracking)
+- [Trie](#trie)
+
+---
+
 ## String
 
+### Pattern Selector
 
-### 1\. Hashing & Frequency Counting
+| If the problem is about... | Use | Complexity |
+|---|---|---|
+| Counting chars/words, anagrams, duplicates | Hashing / Frequency map | O(n) |
+| Palindrome check, in-place edit | Two Pointers | O(n), O(1) space |
+| All palindromic substrings | Expand Around Center | O(n²) |
+| Substring satisfying a condition | Sliding Window | O(n) |
+| Distance to nearest char | Two-Pass scan | O(n) |
+| Optimal transform between two strings | 2D DP | O(mn) |
+| Generate all valid strings | Backtracking | exponential |
+| Prefix / dictionary lookups | Trie | O(L) per op |
 
-This is the most frequent pattern. The core idea is to use a hash map (or an array as a frequency map) to store counts of characters or words.
+---
 
-**Key Data Structures:** `HashMap<Character, Integer>`, `int[26]`, `int[128]`, `HashSet`
+### 1. Hashing & Frequency Counting
 
-**Common Problems:**
+The most common string pattern — store counts of chars/words in a map or array.
 
-  * Anagram detection (`s1` and `s2` have the same character counts).
-  * Isomorphic strings (character mapping).
-  * Finding duplicates or the first unique character.
+**Structures:** `HashMap<Character,Integer>`, `int[26]`, `int[128]`, `HashSet`
+**Solves:** anagram detection, isomorphic strings, first unique / duplicate char.
 
-**[Top K Frequent Words](https://leetcode.com/problems/top-k-frequent-words/)**
-
-This problem is a classic combination of two patterns: **Hashing + Heap**.
-
-1.  **Hashing**: Use a `HashMap<String, Integer>` to store the frequency of each word.
-2.  **Heap (`PriorityQueue`)**: Use a `PriorityQueue` to find the top `k` elements efficiently. You need a custom comparator to handle the sorting logic.
-
-*Your code snippet is perfect for this:*
-
+**[Top K Frequent Words](https://leetcode.com/problems/top-k-frequent-words/) — Hashing + Heap:**
 ```java
-// Custom comparator for the PriorityQueue
-// 1. Sort by frequency in descending order.
-// 2. If frequencies are equal, sort alphabetically (lexicographically) in ascending order.
-Queue<String> queue = new PriorityQueue<>((a, b) -> {
-    if (map.get(a).equals(map.get(b))) {
-        return a.compareTo(b); 
-    } else {
-        return map.get(b) - map.get(a);
-    }
-});
+// 1. Frequency map, then 2. heap ordered by (freq desc, then lexicographic asc)
+Queue<String> queue = new PriorityQueue<>((a, b) ->
+    map.get(a).equals(map.get(b)) ? a.compareTo(b) : map.get(b) - map.get(a));
 ```
 
-### 2\. Two Pointers
+---
 
-This technique uses two pointers to iterate through the string, often leading to optimal $O(N)$ time and $O(1)$ space solutions.
+### 2. Two Pointers
 
-**Common Approaches:**
+Two indices traverse the string — often O(n) time, O(1) space.
 
-  * **Converging Pointers**: Pointers start at opposite ends and move toward the center (e.g., palindrome check).
-  * **Diverging Pointers**: Pointers start at the same place and move outwards (e.g., expand around center).
-  * **Read/Write Pointers**: One pointer reads ahead while the other writes to modify the string/array in place.
+| Variant | Movement | Example |
+|---|---|---|
+| **Converging** | Start at ends, move inward | Palindrome check |
+| **Diverging** | Start at center, move outward | Expand around center |
+| **Read/Write** | Reader scans ahead, writer compacts in place | String Compression |
 
-**[String Compression](https://leetcode.com/problems/string-compression/)**
+**[String Compression](https://leetcode.com/problems/string-compression/) — Read/Write pointers:** a `read` pointer counts consecutive identical chars via an inner loop; a `write` pointer emits the char + count.
 
-This is a perfect example of the **Read/Write Pointers** approach.
+---
 
-  * A `read` pointer scans the array to find groups of consecutive identical characters.
-  * A `write` pointer stays at the position where the next compressed character and count should be written.
-  * Your description is spot on: "Count the adjacent characters using a forward inner while loop then add the character and count to the result."
+### 3. Expand Around Center (Palindromes)
 
-### 3\. Palindrome-Specific Techniques
+**Idea:** Every palindrome has a center — a single char (odd, `"racecar"`) or a gap between two chars (even, `"aabb"`). Try all `2n-1` centers and expand while chars match.
 
-**[Palindromic Substrings](https://leetcode.com/problems/palindromic-substrings/)**
-
-Your approach is the standard and most efficient one for this problem.
-
-  * **Technique**: **Expand Around Center**.
-  * **Logic**: Every palindrome has a center. This center can be a single character (for odd-length palindromes like "racecar") or the space between two characters (for even-length palindromes like "aabbaa"). We iterate through all possible centers and expand outwards as long as the characters match.
-
-*Your code snippet is an excellent implementation:*
+```
+  "aba"          "aa"
+   ↑↑↑            ↑↑
+   l·r  (odd)     lr  (even)
+   expand out     expand out
+```
 
 ```java
 int countSubstrings(String s) {
-    int n = s.length();
     int ans = 0;
-    for (int i = 0; i < n; i++) {
-        // Expand around a single character center (odd length)
-        ans += expandAndCount(s, i, i);
-        // Expand around a two-character center (even length)
-        ans += expandAndCount(s, i, i + 1);
+    for (int i = 0; i < s.length(); i++) {
+        ans += expand(s, i, i);     // odd length
+        ans += expand(s, i, i + 1); // even length
     }
     return ans;
 }
-
-int expandAndCount(String s, int left, int right) {
+int expand(String s, int l, int r) {
     int count = 0;
-    while (left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
-        count++; // Found a valid palindrome
-        left--;
-        right++;
-    }
+    while (l >= 0 && r < s.length() && s.charAt(l--) == s.charAt(r++)) count++;
     return count;
 }
 ```
 
-### 4\. Sliding Window
+---
 
-A powerful technique for finding a substring that satisfies a certain condition. A "window" is maintained by two pointers, and it expands and contracts as it moves through the string.
+### 4. Sliding Window
 
-**Common Problems:**
+Maintain a window `[left, right]` that expands/contracts based on a condition. See the full [Sliding Window](#sliding-window) section for templates.
+**Solves:** longest substring without repeats, minimum window substring, find all anagrams.
 
-  * Longest Substring Without Repeating Characters.
-  * Minimum Window Substring.
-  * Finding all anagrams of a pattern string.
+---
 
-### 5\. Advanced Techniques & Unique Patterns
+### 5. Two-Pass Distance Scan
 
-**[Shortest Distance to a Character](https://leetcode.com/problems/shortest-distance-to-a-character/)**
+**[Shortest Distance to a Character](https://leetcode.com/problems/shortest-distance-to-a-character/):** find each index's distance to the nearest target char.
 
-This problem has several clever solutions.
+| Approach | Idea | Complexity |
+|---|---|---|
+| TreeSet | Store target indices; use `floor()` / `ceiling()` per index | O(n log k) |
+| **Two-Pass** ✅ | Sweep left→right (dist to previous), then right→left (min with next) | O(n) |
 
-  * **Your Approach (TreeSet)**: This is an interesting solution.
+```
+  s = "l o v e l e e t c o d e",  target = 'e'
+  L→R:  ∞ ∞ ∞ 0 1 0 0 1 2 3 4 0
+  R→L:  3 2 1 0 1 0 0 1 2 2 1 0   ← min of the two passes
+```
 
-    1.  Store the indices of the target character in a `TreeSet`.
-    2.  For each index `i` in the string, use `TreeSet.floor(i)` and `TreeSet.ceiling(i)` to find the nearest target indices on both sides. This works and has a time complexity of $O(N \log K)$, where K is the number of target characters.
+---
 
-  * **Alternative Common Pattern (Two-Pass)**: This is an important $O(N)$ pattern to know.
+### 6. DP on Strings
 
-    1.  **Left-to-Right Pass**: Iterate from left to right. `dist[i]` is the distance from `i` to the *previous* occurrence of the target character. `dist[i] = dist[i-1] + 1`.
-    2.  **Right-to-Left Pass**: Iterate from right to left. Update `dist[i]` by comparing with the distance to the *next* occurrence. `dist[i] = min(dist[i], dist[i+1] + 1)`.
+Build answers from subproblem solutions in a 2D table.
 
-### 6\. Dynamic Programming on Strings
+| Problem | State `dp[i][j]` |
+|---|---|
+| Longest Common Subsequence | LCS of `s1[0..i]`, `s2[0..j]` |
+| Edit Distance | min edits to turn `s1[0..i]` into `s2[0..j]` |
+| Word Break | `dp[i]` = can `s[0..i]` be segmented? (1D) |
 
-Used for optimization problems where the solution is built upon solutions to subproblems. Usually involves a 2D `dp` table.
+---
 
-**Common Problems:**
+### 7. Backtracking & Recursion
 
-  * **Longest Common Subsequence**: `dp[i][j]` = LCS of `s1[0..i]` and `s2[0..j]`.
-  * **Edit Distance**: `dp[i][j]` = min edits to make `s1[0..i]` equal to `s2[0..j]`.
-  * **Word Break**: `dp[i]` = true if `s[0..i]` can be segmented.
+Generate all strings satisfying a condition. See the full [Backtracking](#backtracking) section.
+**Solves:** Generate Parentheses, Letter Combinations of a Phone Number, Palindrome Partitioning.
 
-### 7\. Backtracking & Recursion
+---
 
-Used for generating all possible combinations or permutations of strings that satisfy a condition.
+### 8. Trie (Prefix Trees)
 
-**Common Problems:**
-
-  * Generate Parentheses.
-  * Letter Combinations of a Phone Number.
-  * Palindrome Partitioning.
-
-### 8\. Tries (Prefix Trees)
-
-A specialized tree data structure used for problems involving prefixes and dictionaries.
-
-**Common Problems:**
-
-  * Implement an Autocomplete System.
-  * Word Search II (finding words from a dictionary in a 2D grid).
+Tree for prefix/dictionary problems. See the full [Trie](#trie) section.
+**Solves:** Autocomplete, Word Search II.
 
 ---
 
 ## Binary Search
 
-### **Standard Binary Search & Its Variations**
+> **Core idea:** the search space is *monotonic* — a predicate flips `false → true` exactly once. Find that boundary in O(log n).
 
-#### Template 1: Exact Match (`while (low <= high)`)
+### Which Template?
 
-This template is ideal for when you are searching for an exact element and can exit as soon as it's found. The loop terminates when `low > high`.
+| Goal | Loop | Mid | Shrink |
+|---|---|---|---|
+| Exact match | `low <= high` | `low+(high-low)/2` | `low=mid+1` / `high=mid-1` |
+| First `>= target` (leftmost/ceil) | `low < high` | rounds **down** | `high=mid` / `low=mid+1` |
+| Last `<= target` (rightmost/floor) | `low < high` | rounds **up** `+1` | `low=mid` / `high=mid-1` |
 
+⚠️ Always use `mid = low + (high - low) / 2` to avoid integer overflow.
+
+---
+
+#### Template 1: Exact Match
 ```java
 int low = 0, high = nums.length - 1;
 while (low <= high) {
     int mid = low + (high - low) / 2;
-    if (nums[mid] == target) {
-        return mid; // Found
-    } else if (nums[mid] < target) {
-        low = mid + 1;
-    } else {
-        high = mid - 1;
-    }
+    if (nums[mid] == target) return mid;
+    else if (nums[mid] < target) low = mid + 1;
+    else high = mid - 1;
 }
-return -1; // Not found
+return -1;
 ```
 
-
-#### The "Leftmost" Boundary (Round Down)
-
-This template is designed to find the `lower_bound`—the index of the first element that is greater than or equal to the target.
-
+#### Template 2: Leftmost Boundary (first element `>= target`)
+Solves: first occurrence, `ceil`, search-insert position.
 ```java
-// Finds the FIRST element >= target
 int low = 0, high = nums.length - 1;
 while (low < high) {
-    int mid = low + (high - low) / 2; // Standard mid, rounds down
-    if (nums[mid] >= target) {
-        high = mid;
-    } else {
-        low = mid + 1;
-    }
+    int mid = low + (high - low) / 2;       // rounds down
+    if (nums[mid] >= target) high = mid;
+    else low = mid + 1;
 }
-// After loop, low == high. Check if this candidate is the target.
 return nums.length > 0 && nums[low] == target ? low : -1;
 ```
 
-**Use Cases for Template 2:**
-
-1.  **The first occurrence of an element.**
-2.  **The `ceil` of a number:** Finding the smallest element `>= target`.
-3.  **Search Insert Position:** This template directly solves this problem (the final `low` is the answer).
-4.  Any problem that requires finding the **leftmost boundary** or the first time a condition becomes true.
-
-
-#### The "Rightmost" Boundary (Round Up)
-
-This template is designed to find the index of the last element that is less than or equal to the target.
-
+#### Template 3: Rightmost Boundary (last element `<= target`)
+Solves: last occurrence, `floor`.
 ```java
-// Finds the LAST element <= target
 int low = 0, high = nums.length - 1;
 while (low < high) {
-    int mid = low + (high - low + 1) / 2; // CRITICAL: Rounds UP
-    if (nums[mid] <= target) {
-        low = mid;
-    } else {
-        high = mid - 1;
-    }
+    int mid = low + (high - low + 1) / 2;   // CRITICAL: rounds up
+    if (nums[mid] <= target) low = mid;
+    else high = mid - 1;
 }
-// After loop, low == high. Check if this candidate is the target.
 return nums.length > 0 && nums[low] == target ? low : -1;
 ```
+> **Why round up in Template 3?** With `low = mid`, rounding down can make `mid == low` when `high = low+1`, causing an infinite loop. `+1` forces progress.
 
-**Use Cases for Template 3:**
-
-1.  **The last occurrence of an element.**
-2.  **The `floor` of a number:** Finding the largest element `<= target`.
-3.  Any problem that requires finding the **rightmost boundary** or the last time a condition is true.
+---
 
 ### Binary Search on the Answer
 
-This is a powerful technique for optimization problems that ask for the "minimum possible" or "maximum possible" value that satisfies a certain condition.
+When asked for the *minimum/maximum value* satisfying a condition, binary search the **answer range** instead of an array. Works because feasibility is monotonic: if `X` works, everything "better" than `X` works too.
 
-**Explanation:**
-Instead of searching for an element in an array, you binary search on the *range of possible answers*. For each `mid` value (which is a potential answer), you have a validation function `isPossible(mid)` that checks if it's feasible to achieve the goal with that value. The search space is monotonic: if an answer `X` is possible, all answers "better" than `X` (e.g., `X+1` for maximization, `X-1` for minimization) are also possible.
+```
+1. Search space: [low, high] = [min possible, max possible answer]
+2. Predicate:    boolean isPossible(mid)
+3. isPossible(mid) true  → try better  (minimization: high = mid - 1)
+   isPossible(mid) false → try worse   (minimization: low  = mid + 1)
+```
 
-**Template:**
+| Problem | Answer Range | `isPossible(x)` |
+|---|---|---|
+| [Koko Eating Bananas](https://leetcode.com/problems/koko-eating-bananas/) | `1 .. max(piles)` | Eat all within `h` hours at speed `x`? |
+| [Ship Within D Days](https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/) | `max(w) .. sum(w)` | Ship all in `D` days at capacity `x`? |
+| [m Bouquets](https://leetcode.com/problems/minimum-number-of-days-to-make-m-bouquets/description/) | `1 .. max(bloom)` | Make `m` bouquets by day `x`? |
 
-1.  **Define the Search Space:** Determine the `low` (minimum possible answer) and `high` (maximum possible answer).
-2.  **Create a Validation Function:** `boolean isPossible(value)`.
-3.  **Binary Search:**
-    * If `isPossible(mid)` is true, it means `mid` is a potential answer. We try for a "better" one (e.g., smaller for minimization problems, so `high = mid - 1`).
-    * If `isPossible(mid)` is false, `mid` is not a valid answer, so we must consider "worse" answers (e.g., `low = mid + 1`).
+---
 
-**Examples:**
+### Rotated Sorted Arrays
 
-* [Koko Eating Bananas](https://leetcode.com/problems/koko-eating-bananas/):
-    * **Answer Range:** Speed `k` can be from `1` to `max(piles)`.
-    * **`isPossible(speed)`:** Can Koko eat all bananas within `h` hours at the given `speed`?
-* [Capacity to Ship Packages Within D Days](https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/):
-    * **Answer Range:** Capacity can be from `max(weights)` to `sum(weights)`.
-    * **`isPossible(capacity)`:** Can all packages be shipped within `D` days with the given `capacity`?
-* [Minimum Number of Days to Make m Bouquets](https://leetcode.com/problems/minimum-number-of-days-to-make-m-bouquets/description/):
-    * **Answer Range:** Days can be from `1` to `max(bloomDay)`.
-    * **`isPossible(days)`:** Can we make `m` bouquets if we wait for the given number of `days`?
+A sorted array rotated at a pivot = two sorted halves. At each step: **(1)** find the sorted half, **(2)** check if target lies in its range.
 
-### Searching in Rotated Sorted Arrays
-
-This pattern applies to an array that was sorted and then rotated some number of times. The array consists of two sorted subarrays.
-
-**Explanation:**
-
-At each step, perform two checks:
-
-1.  **Find the sorted half:** Is `[low...mid]` or `[mid...high]` sorted?
-    * For `nums = [4, 5, 6, 7, 0, 1, 2]`, if `mid` points to `7`, the left half `[4, 5, 6, 7]` is the sorted one.
-
-2.  **Locate the target:** Is the `target` within the range of that sorted half? If yes, search it; if no, search the other half.
-    * If `target = 5`, it is within the sorted half's range `[4...7]`, so you search that part.
-    * If `target = 1`, it is not in that range, so you must search the other half `[0, 1, 2]`.
-
-**Template:**
+```
+  [4, 5, 6, 7, 0, 1, 2]      mid=7 → left half [4..7] is sorted
+   └── sorted ──┘ └sorted┘    target=5 in [4,7)? yes → search left
+```
 
 ```java
 while (low <= high) {
     int mid = low + (high - low) / 2;
     if (nums[mid] == target) return mid;
-
-    // Check if the left half (low...mid) is sorted
-    if (nums[low] <= nums[mid]) {
-        if (target >= nums[low] && target < nums[mid]) {
-            high = mid - 1; // Target is in the sorted left half
-        } else {
-            low = mid + 1;  // Target is in the right half
-        }
-    } 
-    // Otherwise, the right half (mid...high) must be sorted
-    else {
-        if (target > nums[mid] && target <= nums[high]) {
-            low = mid + 1; // Target is in the sorted right half
-        } else {
-            high = mid - 1; // Target is in the left half
-        }
+    if (nums[low] <= nums[mid]) {              // left half sorted
+        if (target >= nums[low] && target < nums[mid]) high = mid - 1;
+        else low = mid + 1;
+    } else {                                   // right half sorted
+        if (target > nums[mid] && target <= nums[high]) low = mid + 1;
+        else high = mid - 1;
     }
 }
 ```
+Examples: [Search Rotated](https://leetcode.com/problems/search-in-rotated-sorted-array/), [Find Min](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/), [Find Min w/ Dups](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array-ii/)
 
-**Examples:**
+---
 
-* [Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/)
-* [Find Minimum in Rotated Sorted Array](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/)
-* [Find Minimum in Rotated Sorted Array (with Duplicates)](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array-ii/)
+### Peak Finding (Bitonic / Mountain Array)
 
-### Searching on Monotonic(Peaks/Valleys)
+Compare `nums[mid]` with `nums[mid+1]` to sense the slope, then climb toward the peak.
 
-This pattern is used on arrays where values increase and then decrease (a "mountain" or bitonic array), and the goal is to find the peak element.
-
-**Explanation:**
-
-The strategy is to find the peak by checking the "slope" at the midpoint. By comparing `nums[mid]` with its right neighbor `nums[mid+1]`, you can tell if you are on an upward or downward slope, allowing you to discard half the array.
-
-Let's use the example `nums = [0, 2, 4, 6, 3, 1]`. The peak is `6`.
-
-* **Initial Step:** `low = 0`, `high = 5`. Let's say `mid = 2` (`nums[mid] = 4`).
-
-    * We compare `nums[mid]` (4) with `nums[mid+1]` (6).
-    * Since `4 < 6`, we are on the **uphill** slope. This means the peak must be to the right of `mid`.
-    * **Action:** We discard the left half by setting `low = mid + 1`.
-
-* **Next Step:** The search space is now `[3, 5]`. Let's say `mid = 4` (`nums[mid] = 3`).
-
-    * We compare `nums[mid]` (3) with `nums[mid+1]` (1).
-    * Since `3 > 1`, we are on the **downhill** slope. This means `mid` could be the peak, or the peak is to its left.
-    * **Action:** We discard the right half by setting `high = mid`.
-
-The loop continues until `low` and `high` converge on the single index of the peak element.
-
-**Template:**
-
-This template uses the `while (low < high)` structure, which is perfect for converging on a single point.
+```
+  nums = [0, 2, 4, 6, 3, 1]       peak = 6
+  mid=4? nums[mid]<nums[mid+1] → uphill  → go right (low = mid+1)
+  mid=3? nums[mid]>nums[mid+1] → downhill → go left  (high = mid)
+```
 
 ```java
-/**
- * Finds the index of a peak element in a mountain array.
- */
 int findPeakElement(int[] nums) {
-    int low = 0;
-    int high = nums.length - 1;
-
+    int low = 0, high = nums.length - 1;
     while (low < high) {
         int mid = low + (high - low) / 2;
-        
-        // Check the slope at mid
-        if (nums[mid] < nums[mid + 1]) {
-            // Uphill slope: Peak is to the right of mid.
-            low = mid + 1;
-        } else {
-            // Downhill slope: mid could be the peak, or the peak is to the left.
-            high = mid;
-        }
+        if (nums[mid] < nums[mid + 1]) low = mid + 1; // uphill → peak on right
+        else high = mid;                              // downhill → peak here or left
     }
-    
-    // The loop terminates when low == high, which is the index of the peak.
     return low;
 }
 ```
 
+---
 
-### Searching in 2D Matrices
+### 2D Matrices
 
-Binary search can be adapted to 2D matrices that have specific sorting properties.
+| Property | Technique | Mapping |
+|---|---|---|
+| Row `i` end < row `i+1` start | Flatten to 1D, binary search | `matrix[mid / N][mid % N]` |
+| Rows & columns each sorted | Staircase search | Start top-right, move ↓ or ← |
 
-**Explanation:**
-There are two main sub-patterns:
+**Staircase (Search a 2D Matrix II):** from top-right — `target < curr` → `col--`; `target > curr` → `row++`. Eliminates a row or column each step, O(m+n).
 
-1.  **Matrix as a Flattened 1D Array:** If the matrix is sorted such that the last element of row `i` is less than the first element of row `i+1`, you can treat the entire `M x N` matrix as a single sorted array of length `M*N`. An index `mid` in this virtual array maps to `matrix[mid / N][mid % N]`.
+---
 
-    * **Example:** [Search a 2D Matrix](https://leetcode.com/problems/search-a-2d-matrix/)
+### Real Numbers (Continuous Range)
 
-2.  **Staircase / Saddleback Search:** If each row is sorted and each column is sorted, you can't flatten it. Instead, start at a strategic corner (e.g., top-right or bottom-left).
-
-    * From the **top-right** corner:
-        * If `target` is smaller than the current element, it can't be in this column (all elements below are larger), so move left (`col--`).
-        * If `target` is larger, it can't be in this row (all elements to the left are smaller), so move down (`row++`).
-    * This approach eliminates one row or one column at each step.
-    * **Example:** [Search a 2D Matrix II](https://leetcode.com/problems/search-a-2d-matrix-ii/)
-
-### Binary Search on Real Numbers**
-
-This pattern is for finding a value in a continuous range, like the square root of a number, where absolute precision is needed.
-
-**Explanation:**
-The core logic is the same, but the termination condition changes. Instead of the loop ending when `low` and `high` cross, it runs for a fixed number of iterations (e.g., 100) or until the search space `(high - low)` is smaller than a tiny epsilon value (e.g., `1e-7`). This guarantees the answer is found to the desired precision.
-
-**Template (for Square Root):**
+For continuous answers (e.g. square root), loop until the range is within `epsilon` (or a fixed iteration count) instead of pointer crossover.
 
 ```java
-double low = 0, high = x;
-double epsilon = 1e-7; // Desired precision
-
-while ((high - low) > epsilon) {
+double low = 0, high = x, eps = 1e-7;
+while (high - low > eps) {
     double mid = low + (high - low) / 2;
-    if (mid * mid > x) {
-        high = mid;
-    } else {
-        low = mid;
-    }
+    if (mid * mid > x) high = mid;
+    else low = mid;
 }
-// 'low' or 'high' is the answer to the required precision
+// low ≈ answer
 ```
-
-**Example:**
-
-* [Minimize Max Distance to Gas Station](https://leetcode.com/problems/minimize-max-distance-to-gas-station/description/)
+Example: [Minimize Max Distance to Gas Station](https://leetcode.com/problems/minimize-max-distance-to-gas-station/description/)
 
 ---
 
@@ -787,7 +675,9 @@ int[] maxSlidingWindow(int[] nums, int k) {
 ---
 ## Backtracking
 
-Backtracking = DFS + choose/explore/unchoose. Build candidates incrementally, abandon a path as soon as it can't lead to a valid solution.
+Backtracking = DFS + **choose / explore / unchoose**. Build candidates incrementally, abandon a path the moment it can't lead to a valid solution.
+
+> **Analogy:** Exploring a maze with a ball of string. At each junction you pick a path (choose), walk it (explore), and if it dead-ends you rewind the string to the last junction (unchoose) and try another.
 
 **Template:**
 
@@ -947,7 +837,9 @@ for (int i = start; i < nums.length; i++) {
 
 ## **Trie**
 
-A **Trie** (prefix tree) is a tree-like data structure where each node represents a single character. Paths from root to marked nodes form stored words. The key advantage: operations depend on **word length** $L$, not the number of stored words $n$.
+A **Trie** (prefix tree) is a tree where each node is a single character; a root-to-marked-node path spells a stored word. Operations cost O(L) — depending on **word length** `L`, not the number of words `n`.
+
+> **Analogy:** A physical dictionary's thumb-index tabs. To find "cat" you jump to the "c" tab, then "ca", never scanning unrelated words.
 
 **Time Complexity:**
 
