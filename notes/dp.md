@@ -120,6 +120,11 @@ The most fundamental DP pattern. Process elements **one by one** (left to right)
 
 ### Template — Climbing Stairs / Fibonacci Family
 
+> **Problem:** Count the number of distinct ways to climb an `n`-step staircase, taking 1 or 2 steps at a time.
+> **Input:** integer `n`. *Example:* `n = 5`.
+> **Output:** number of distinct ways. *Example:* `8` (i.e. 1+1+1+1+1, 1+1+1+2, … , 1+2+2).
+> **Constraints:** `1 ≤ n ≤ 45`.
+
 ```java
 // dp[i] = number of ways to reach step i (can take 1 or 2 steps)
 int[] dp = new int[n + 1];
@@ -144,7 +149,23 @@ for (int i = 2; i <= n; i++) {
 // Answer: prev1
 ```
 
+**Walkthrough — `n = 5`.** *Count the ways to reach step `n` taking 1 or 2 steps at a time.* Each cell is the sum of the two before it.
+
+```
+step i :  0    1    2    3    4    5
+dp[i]  :  1    1    2    3    5    8   ← answer
+                    │    │    │    └ dp[5]=dp[4]+dp[3]=5+3=8
+                    │    │    └────── dp[4]=dp[3]+dp[2]=3+2=5
+                    │    └─────────── dp[3]=dp[2]+dp[1]=2+1=3
+                    └──────────────── dp[2]=dp[1]+dp[0]=1+1=2
+```
+
 ### Template — Maximum Subarray (Kadane's Algorithm)
+
+> **Problem:** Find the contiguous subarray with the largest sum and return that sum.
+> **Input:** integer array `nums` (may contain negatives). *Example:* `nums = [-2, 1, -3, 4, -1, 2, 1, -5, 4]`.
+> **Output:** the maximum subarray sum. *Example:* `6` (subarray `[4, -1, 2, 1]`).
+> **Constraints:** `1 ≤ nums.length ≤ 10⁵`, `-10⁴ ≤ nums[i] ≤ 10⁴`.
 
 ```java
 // dp[i] = max sum of subarray ending at index i
@@ -159,7 +180,22 @@ for (int i = 1; i < nums.length; i++) {
 // Answer: maxSoFar
 ```
 
+**Walkthrough — `nums = [-2, 1, -3, 4, -1, 2, 1, -5, 4]`.** *Find the maximum-sum contiguous subarray.* At each `i`, either extend the running sum or restart at `nums[i]`; keep the global best.
+
+```
+i        :  0    1    2    3    4    5    6    7    8
+nums     : -2    1   -3    4   -1    2    1   -5    4
+endHere  : -2    1   -2    4    3    5    6    1    5    (restart when nums[i] alone wins)
+soFar    : -2    1    1    4    4    5    6    6    6  ← answer 6
+                              └──── best subarray [4,-1,2,1] = 6 ────┘
+```
+
 ### Template — House Robber (Take / Skip with Constraint)
+
+> **Problem:** Rob the maximum total money from a row of houses, but you cannot rob two adjacent houses.
+> **Input:** integer array `nums` where `nums[i]` is the money in house `i`. *Example:* `nums = [2, 7, 9, 3, 1]`.
+> **Output:** the maximum money you can rob. *Example:* `12` (rob houses `0, 2, 4` → `2 + 9 + 1`).
+> **Constraints:** `1 ≤ nums.length ≤ 100`, `0 ≤ nums[i] ≤ 400`.
 
 ```java
 // dp[i] = max money robbing from house 0..i (can't rob two adjacent)
@@ -174,6 +210,19 @@ for (int i = 2; i < n; i++) {
     );
 }
 // Answer: dp[n - 1]
+```
+
+**Walkthrough — `nums = [2, 7, 9, 3, 1]`.** *Rob the most money without robbing two adjacent houses.* Each cell = best of *skip* `dp[i-1]` vs *rob* `dp[i-2] + nums[i]`.
+
+```
+i     :  0    1    2    3    4
+nums  :  2    7    9    3    1
+dp    :  2    7   11   11   12  ← answer
+         │    │    │    │    └ max(dp[3]=11, dp[2]+1=12) = 12
+         │    │    │    └────── max(dp[2]=11, dp[1]+3=10) = 11
+         │    │    └─────────── max(dp[1]=7,  dp[0]+9=11) = 11
+         │    └──────────────── max(2, 7) = 7
+         └───────────────────── nums[0] = 2
 ```
 
 ### When to Use
@@ -221,6 +270,11 @@ graph TD
 
 ### Template — Unique Paths (Count)
 
+> **Problem:** A robot starts at the top-left of an `m × n` grid and can move only **right** or **down**. Count the distinct paths to the bottom-right corner.
+> **Input:** integers `m`, `n` (grid dimensions). *Example:* `m = 3, n = 3`.
+> **Output:** number of distinct paths. *Example:* `6`.
+> **Constraints:** `1 ≤ m, n ≤ 100`.
+
 ```java
 // dp[i][j] = number of ways to reach cell (i, j) moving only right or down
 int[][] dp = new int[m][n];
@@ -237,7 +291,22 @@ for (int i = 1; i < m; i++) {
 // Answer: dp[m-1][n-1]
 ```
 
+**Walkthrough — `3 × 3` grid.** *Count paths from top-left to bottom-right moving only right or down.* First row/column are all `1`; every other cell = top + left.
+
+```
+        j=0  j=1  j=2
+ i=0  [  1    1    1  ]   ← base row (only one way: keep going right)
+ i=1  [  1    2    3  ]   2 = 1+1,  3 = 2+1
+ i=2  [  1    3    6  ]   3 = 1+2,  6 = 3+3  ← answer 6
+        ↑ base col
+```
+
 ### Template — Minimum Path Sum
+
+> **Problem:** Move from the top-left to the bottom-right of a grid of non-negative costs, going only **right** or **down**, minimizing the sum of visited cells.
+> **Input:** `m × n` grid of non-negative integers. *Example:* `grid = [[1,3,1],[1,5,1],[4,2,1]]`.
+> **Output:** the minimum path sum. *Example:* `7` (path `1→3→1→1→1`).
+> **Constraints:** `1 ≤ m, n ≤ 200`, `0 ≤ grid[i][j] ≤ 200`.
 
 ```java
 // dp[i][j] = min cost to reach cell (i, j) from (0, 0)
@@ -253,6 +322,16 @@ for (int i = 1; i < m; i++) {
     }
 }
 // Answer: dp[m-1][n-1]
+```
+
+**Walkthrough.** *Reach the bottom-right with the minimum sum of visited cells.* Each cell adds its own cost to the cheaper of its top/left neighbour.
+
+```
+   grid                dp (min cost to reach cell)
+ 1  3  1            1   4   5      1, 1+3=4, 4+1=5
+ 1  5  1     →      2   7   6      1+1=2, min(4,2)+5=7, min(5,7)+1=6
+ 4  2  1            6   8   7      2+4=6, min(7,6)+2=8, min(6,8)+1=7 ← answer
+                                   best path 1→3→1→1→1 = 7
 ```
 
 > **Space optimization:** Since each row only depends on the current and previous row, use a 1D array of size `n`.
@@ -287,6 +366,11 @@ Find the **longest strictly increasing subsequence** in an array. A foundational
 
 ### Template — $O(n^2)$ DP
 
+> **Problem:** Return the **length** of the longest strictly increasing subsequence (elements keep their order but need not be contiguous).
+> **Input:** integer array `nums`. *Example:* `nums = [10, 9, 2, 5, 3, 7, 101, 18]`.
+> **Output:** length of the LIS. *Example:* `4` (e.g. `[2, 3, 7, 101]`).
+> **Constraints:** `1 ≤ nums.length ≤ 2500`, `-10⁴ ≤ nums[i] ≤ 10⁴`.
+
 ```java
 // dp[i] = length of LIS ending at index i
 int[] dp = new int[n];
@@ -304,7 +388,24 @@ for (int i = 1; i < n; i++) {
 // Answer: ans
 ```
 
+**Walkthrough — `nums = [10, 9, 2, 5, 3, 7, 101, 18]`.** *Length of the longest strictly increasing subsequence.* `dp[i]` = best chain ending at `i`; look back at every smaller earlier element.
+
+```
+i    :  0    1    2    3    4    5    6     7
+nums : 10    9    2    5    3    7  101    18
+dp   :  1    1    1    2    2    3    4     4  ← answer 4
+                       │    │    │    │
+                 5>2 → 1+1  7>2,3,5 → 2+1   101 > … → 3+1
+                            3>2 → 1+1        18 > 2,3,7 → 3+1
+              one LIS: [2, 3, 7, 101]  (or [2, 3, 7, 18])
+```
+
 ### Template — $O(n \log n)$ with Patience Sorting
+
+> **Problem:** Same as above — the **length** of the longest strictly increasing subsequence — but fast enough for large inputs.
+> **Input:** integer array `nums`. *Example:* `nums = [10, 9, 2, 5, 3, 7, 101, 18]`.
+> **Output:** length of the LIS. *Example:* `4`.
+> **Constraints:** `1 ≤ nums.length ≤ 10⁵` (the `O(n²)` DP is too slow here).
 
 Instead of storing LIS lengths, maintain `tails[]` where `tails[k]` = smallest ending element of any increasing subsequence of length `k+1`. Use binary search to place each element.
 
@@ -323,6 +424,21 @@ for (int num : nums) {
     }
 }
 // Answer: tails.size()
+```
+
+**Walkthrough — same `nums = [10, 9, 2, 5, 3, 7, 101, 18]`.** Binary-search each number into `tails`: extend if larger than all, else overwrite the first `≥` it (keeping tails as small as possible).
+
+```
+num    action                     tails
+ 10    append                     [10]
+  9    replace 10                 [9]
+  2    replace 9                  [2]
+  5    append (5 > 2)             [2, 5]
+  3    replace 5                  [2, 3]
+  7    append (7 > 3)             [2, 3, 7]
+101    append (101 > 7)           [2, 3, 7, 101]
+ 18    replace 101                [2, 3, 7, 18]
+                                   └ length 4 = LIS length ← answer
 ```
 
 > **Why this works:** `tails` is always sorted. Each element either extends the longest subsequence or makes an existing length's tail smaller (opening future possibilities). The length of `tails` equals the LIS length.
@@ -384,6 +500,11 @@ In our DP table, `dp[5]` would store the result for the state where A and C are 
 
 **Classic: TSP — shortest route visiting all cities exactly once**
 
+> **Problem:** Starting at city 0, visit every city exactly once and return to city 0 with the minimum total distance.
+> **Input:** `n × n` distance matrix `dist`. *Example:* `dist = [[0,10,15],[10,0,20],[15,20,0]]`.
+> **Output:** the minimum tour distance. *Example:* `45` (tour `0→1→2→0`).
+> **Constraints:** `1 ≤ n ≤ 20` (state space is `2ⁿ · n`).
+
 ```java
 // dp[mask][i] = min cost to visit the set of cities in 'mask', ending at city i
 int[][] dp = new int[1 << n][n];
@@ -413,7 +534,31 @@ for (int u = 0; u < n; u++) {
 }
 ```
 
+**Walkthrough — 3 cities, start at city 0.** *Shortest tour visiting every city once and returning.* `mask` bits = visited set; `dp[mask][i]` = cheapest way to have visited `mask` and be standing at `i`.
+
+```
+dist   0   1   2          mask in binary: bit0=city0, bit1=city1, bit2=city2
+  0 [  0  10  15 ]
+  1 [ 10   0  20 ]
+  2 [ 15  20   0 ]
+
+dp[001][0] = 0                              (start: only city 0 visited)
+ ├ go 0→1: dp[011][1] = 0 + 10 = 10
+ └ go 0→2: dp[101][2] = 0 + 15 = 15
+      dp[011][1] → 1→2: dp[111][2] = 10 + 20 = 30
+      dp[101][2] → 2→1: dp[111][1] = 15 + 20 = 35
+
+answer = min( dp[111][1] + dist[1][0],   dp[111][2] + dist[2][0] )
+       = min( 35 + 10,                   30 + 15 )
+       = min( 45, 45 ) = 45   (tour 0→1→2→0 or 0→2→1→0)
+```
+
 **Classic: Minimum Cost Assignment — assign n jobs to n workers**
+
+> **Problem:** Assign each of `n` workers exactly one distinct job so the total cost is minimized.
+> **Input:** `n × n` matrix `cost[worker][job]`. *Example:* `cost = [[9,2,7],[6,4,3],[5,8,1]]`.
+> **Output:** the minimum total assignment cost. *Example:* `9` (w0→job1, w1→job0, w2→job2 → `2 + 6 + 1`).
+> **Constraints:** `1 ≤ n ≤ 20`.
 
 ```java
 // dp[mask] = min cost to assign jobs in 'mask' to the first popcount(mask) workers
@@ -435,6 +580,26 @@ for (int mask = 0; mask < (1 << n); mask++) {
 }
 
 // Answer: dp[(1 << n) - 1]
+```
+
+**Walkthrough — 3 jobs, 3 workers.** *Assign each job to a distinct worker at minimum total cost.* `worker = popcount(mask)` is always the next worker to place; `mask` = jobs already handed out.
+
+```
+cost   job0 job1 job2
+ w0 [   9    2    7 ]
+ w1 [   6    4    3 ]
+ w2 [   5    8    1 ]
+
+dp[000]=0  (worker 0 picks a job)
+  → dp[001]=9   dp[010]=2   dp[100]=7
+
+worker 1 (masks with 1 bit set)
+  dp[010]=2 + w1·job0(6) → dp[011]=8      dp[010]=2 + w1·job2(3) → dp[110]=5
+  dp[001]=9 + w1·job2(3) → dp[101]=12
+
+worker 2 (masks with 2 bits set)
+  dp[011]=8 + w2·job2(1) → dp[111]=9  ← answer
+  (w0→job1=2, w1→job0=6, w2→job2=1  ⇒  total 9)
 ```
 
 ### When to Use
@@ -515,6 +680,11 @@ graph TD
 
 ### Template
 
+> **Problem:** Count how many integers in `[0, N]` satisfy a digit-level property (digit sum = K, no repeated digit, non-decreasing digits, …).
+> **Input:** upper bound `N` and a property. *Example:* count every integer in `[0, 13]` (property = "any number").
+> **Output:** count of valid integers. *Example:* `14` (the numbers `0` through `13`).
+> **Constraints:** `0 ≤ N ≤ 10¹⁸` (≈ 19 digit positions); use `count(R) - count(L-1)` for a range `[L, R]`.
+
 ```java
 // Count numbers from 0 to N that satisfy some property
 int[] digits; // digits of N
@@ -543,6 +713,20 @@ int solve(int pos, boolean tight, int state) {
 
 // For range [L, R]: answer = solve(R) - solve(L - 1)
 ```
+
+**Walkthrough — count all numbers `0 … 13`.** *(Property = "any number", so we just count — this isolates how `tight` works.)* `N = 13`, so `digits = [1, 3]`. `solve(pos, tight)` places one digit per level.
+
+```
+solve(pos=0, tight=T)                       limit = digits[0] = 1
+│
+├ d=0  (0 < limit ⇒ tight=F)  solve(1, F)   limit = 9  → d=0..9  = 10 numbers  (00..09)
+│
+└ d=1  (1 == limit ⇒ tight=T) solve(1, T)   limit = digits[1] = 3 → d=0..3  = 4 numbers (10,11,12,13)
+                                             the branch that stays tight is capped at 3
+total = 10 + 4 = 14   →  numbers 0..13 counted exactly once
+```
+
+*Reading it:* once a digit is placed **below** N's digit, `tight` drops to false and all remaining positions run `0..9` freely; staying `tight` keeps you clamped to N's digit, so the upper bound is never exceeded.
 
 ### When to Use
 
@@ -591,6 +775,11 @@ graph TD
 
 ### Template
 
+> **Problem:** Find the optimal cost of processing an entire range `[0, n-1]`, where the answer for a range is built by splitting it into two adjacent sub-ranges and paying a merge cost. *(Shown here: Matrix Chain Multiplication — order the products to minimize scalar multiplications.)*
+> **Input:** a sequence of `n` elements + a merge-cost rule. *Example:* matrix dims `[10, 20, 30, 40]` → matrices `A₀(10×20), A₁(20×30), A₂(30×40)`.
+> **Output:** the optimal cost over the full interval. *Example:* `18000` (multiply as `(A₀·A₁)·A₂`).
+> **Constraints:** typically `n ≤ 500` (the algorithm is `O(n³)`).
+
 ```java
 // dp[i][j] = optimal (minimum) cost to solve the subproblem over the interval [i..j]
 int[][] dp = new int[n][n];
@@ -623,6 +812,22 @@ for (int len = 2; len <= n; len++) {            // len = size of the interval
 
 // Final answer: optimal cost for the entire interval [0..n-1]
 return dp[0][n - 1];
+```
+
+**Walkthrough — Matrix Chain, dims `[10, 20, 30, 40]`.** *Parenthesize the product to minimize scalar multiplications.* Matrices `A₀(10×20), A₁(20×30), A₂(30×40)`; `dp[i][j]` = min cost to multiply `Aᵢ…Aⱼ`. Fill by increasing length; the diagonal (`len 1`) is `0`.
+
+```
+             j=0      j=1       j=2
+   i=0  [     0      6000     18000 ]  ← answer
+   i=1  [     -        0      24000 ]
+   i=2  [     -        -         0  ]
+
+len 2:  dp[0][1] = 10·20·30 = 6000        (A₀·A₁)
+        dp[1][2] = 20·30·40 = 24000       (A₁·A₂)
+len 3:  dp[0][2] = min over split k:
+          k=0: dp[0][0]+dp[1][2]+10·20·40 = 0+24000+8000 = 32000   (A₀·(A₁A₂))
+          k=1: dp[0][1]+dp[2][2]+10·30·40 = 6000+0+12000 = 18000   ((A₀A₁)·A₂) ✔
+        dp[0][2] = 18000
 ```
 
 ### When to Use
@@ -696,6 +901,17 @@ for (int i = 0; i < n; i++) {
 
 > **Why reverse?** Going left-to-right would let `dp[w - weight[i]]` use the *updated* value (item `i` already included) — effectively taking item `i` multiple times.
 
+**Walkthrough — `weight = [1, 3, 4]`, `value = [15, 20, 30]`, `capacity = 4`.** *Max value, each item at most once.* One row per item; sweep `w` from high to low.
+
+```
+                 w:  0    1    2    3    4
+ init               [0    0    0    0    0]
+ item0 (w1,v15)     [0   15   15   15   15]   dp[w]=max(dp[w], dp[w-1]+15)
+ item1 (w3,v20)     [0   15   15   20   35]   dp[4]=max(15, dp[1]+20=35); dp[3]=max(15,20)
+ item2 (w4,v30)     [0   15   15   20   35]   dp[4]=max(35, dp[0]+30=30) → stays 35
+                                        └ answer 35  (item0 + item1)
+```
+
 ### Unbounded Knapsack
 
 Each item can be taken **any number of times**.
@@ -721,6 +937,18 @@ for (int i = 0; i < n; i++) {
 }
 // Answer: dp[capacity]
 ```
+
+**Walkthrough — `weight = [2, 3]`, `value = [3, 5]`, `capacity = 6`.** *Max value, each item reusable.* Sweep `w` low → high so an item can stack on itself within the same row.
+
+```
+                 w:  0    1    2    3    4    5    6
+ init               [0    0    0    0    0    0    0]
+ item0 (w2,v3)      [0    0    3    3    6    6    9]   3=1×, 6=2×, 9=3× of item0
+ item1 (w3,v5)      [0    0    3    5    6    8   10]   dp[6]=max(9, dp[3]+5=10)
+                                                  └ answer 10  (two of item1: 5+5)
+```
+
+> On `item1`'s row, `dp[3]` is updated to `5` first, then `dp[6] = dp[3] + 5 = 10` **reuses** the same item — exactly what the left-to-right sweep allows.
 
 ### Direction Cheat Sheet
 
@@ -794,6 +1022,11 @@ ready[i] = max(ready[i-1], sold[i-1])                 // rest or come off cooldo
 
 ### Template
 
+> **Problem:** Maximize profit from unlimited buy/sell transactions, but you must sit out one day (cooldown) after every sale before buying again.
+> **Input:** array `prices` where `prices[i]` is the price on day `i`. *Example:* `prices = [1, 2, 3, 0, 2]`.
+> **Output:** the maximum profit. *Example:* `3` (buy@1, sell@3, cooldown, buy@0, sell@2).
+> **Constraints:** `1 ≤ prices.length ≤ 5000`, `0 ≤ prices[i] ≤ 1000`.
+
 ```java
 // Define one variable per state
 int hold  = Integer.MIN_VALUE; // haven't bought yet
@@ -811,6 +1044,19 @@ for (int price : prices) {
 }
 
 return Math.max(sold, ready); // must not be holding at the end
+```
+
+**Walkthrough — `prices = [1, 2, 3, 0, 2]`.** *Max profit with a 1-day cooldown after each sell.* Track the three states day by day (start `hold = -∞`, `sold = ready = 0`).
+
+```
+ price :   1     2     3     0     2
+ ─────────────────────────────────────
+ hold  :  -1    -1    -1     1     1     max(prevHold, prevReady - price)
+ sold  :  -∞     1     2    -1     3     prevHold + price
+ ready :   0     0     1     2     2     max(prevReady, prevSold)
+ ─────────────────────────────────────
+ answer = max(sold, ready) at end = max(3, 2) = 3
+          buy@1, sell@3 (+2), cooldown, buy@0, sell@2 (+2)  … best = 3
 ```
 
 ### How to Design a State Machine DP
@@ -852,6 +1098,11 @@ graph TD
 
 **Template — Longest Common Subsequence (LCS):**
 
+> **Problem:** Return the length of the longest subsequence common to two strings (characters keep order, need not be contiguous).
+> **Input:** strings `s1` (length `m`), `s2` (length `n`). *Example:* `s1 = "ABC"`, `s2 = "AC"`.
+> **Output:** length of the LCS. *Example:* `2` (the subsequence `"AC"`).
+> **Constraints:** `1 ≤ m, n ≤ 1000`.
+
 ```java
 int[][] dp = new int[m + 1][n + 1];
 // Base: dp[0][j] = 0, dp[i][0] = 0 (empty string)
@@ -868,11 +1119,26 @@ for (int i = 1; i <= m; i++) {
 // Answer: dp[m][n]
 ```
 
+**Walkthrough — `s1 = "ABC"`, `s2 = "AC"`.** *Longest common subsequence.* On a match take the diagonal `+1`; on a mismatch take the best of up/left.
+
+```
+          ""    A    C
+    ""  [  0    0    0 ]
+    A   [  0    1    1 ]   A=A → diag 0 +1 = 1
+    B   [  0    1    1 ]   B≠A,B≠C → max(up,left)
+    C   [  0    1    2 ]   C=C → diag 1 +1 = 2  ← answer "AC"
+```
+
 ### Single-String Problems (Palindrome Family)
 
 **State:** `dp[i][j]` = answer for substring `s[i..j]`
 
 **Template — Longest Palindromic Subsequence:**
+
+> **Problem:** Return the length of the longest subsequence of a string that reads the same forwards and backwards.
+> **Input:** string `s` (length `n`). *Example:* `s = "bbbab"`.
+> **Output:** length of the longest palindromic subsequence. *Example:* `4` (the subsequence `"bbbb"`).
+> **Constraints:** `1 ≤ n ≤ 1000`.
 
 ```java
 int[][] dp = new int[n][n];
@@ -893,7 +1159,27 @@ for (int len = 2; len <= n; len++) {
 // Answer: dp[0][n-1]
 ```
 
+**Walkthrough — `s = "bbbab"`.** *Longest palindromic subsequence.* `dp[i][j]` over substring `s[i..j]`; matching ends add `2` to the inner range, else shrink one side. Fill by increasing length (diagonal outward).
+
+```
+          j=0  j=1  j=2  j=3  j=4
+           b    b    b    a    b
+  i=0 b [   1    2    3    3    4 ]  ← answer 4 ("bbbb")
+  i=1 b [        1    2    2    3 ]
+  i=2 b [             1    1    3 ]
+  i=3 a [                  1    1 ]
+  i=4 b [                       1 ]
+
+ e.g. dp[0][4]: s[0]=s[4]=b → dp[1][3] + 2 = 2 + 2 = 4
+      dp[1][3]: s[1]=b ≠ s[3]=a → max(dp[2][3]=1, dp[1][2]=2) = 2
+```
+
 ### Edit Distance (Classic Two-String DP)
+
+> **Problem:** Find the minimum number of single-character **insert / delete / replace** operations to convert one string into another.
+> **Input:** strings `s1` (length `m`), `s2` (length `n`). *Example:* `s1 = "horse"`, `s2 = "ros"`.
+> **Output:** the minimum number of operations. *Example:* `3` (horse → rorse → rose → ros).
+> **Constraints:** `0 ≤ m, n ≤ 500`.
 
 ```java
 // dp[i][j] = min operations to convert s1[0..i-1] to s2[0..j-1]
@@ -916,6 +1202,20 @@ for (int i = 1; i <= m; i++) {
     }
 }
 ```
+
+**Walkthrough — `s1 = "horse"` → `s2 = "ros"`.** *Min insert/delete/replace ops.* Row 0 / column 0 = converting to/from empty. Match → copy diagonal; mismatch → `1 + min(diag replace, up delete, left insert)`.
+
+```
+          ""    r    o    s
+    ""  [  0    1    2    3 ]
+    h   [  1    1    2    3 ]
+    o   [  2    2    1    2 ]
+    r   [  3    2    2    2 ]
+    s   [  4    3    3    2 ]
+    e   [  5    4    4    3 ]  ← answer 3
+```
+
+*The 3 ops:* horse → **r**orse (replace h→r) → ro**s**e (replace r→s) → ros (delete e).
 
 ### Common Problems
 
@@ -957,6 +1257,11 @@ graph TD
 
 ### Template — Generic Tree DP
 
+> **Problem:** Compute an optimal value for a rooted tree, where each node's answer is assembled from its children's answers via a post-order DFS.
+> **Input:** tree as adjacency list `adj` with `n` nodes (+ a per-node base value). *Example:* a 5-node tree, task = "sum of all node values in each subtree".
+> **Output:** `dp[root]` — the combined answer at the root. *Example:* for subtree-sum, `dp[root]` = total of all values.
+> **Constraints:** `1 ≤ n ≤ 10⁵` (each node visited once).
+
 ```java
 int[] dp;
 List<List<Integer>> adj; // adjacency list
@@ -978,6 +1283,11 @@ void dfs(int node, int parent) {
 ```
 
 ### Classic Example: Tree Diameter (Longest Path)
+
+> **Problem:** Return the diameter of a tree — the number of edges on the longest path between any two nodes.
+> **Input:** tree as adjacency list, `n` nodes. *Example:* tree `1–2`, `1–3`, `2–4`, `2–5`.
+> **Output:** the longest path length in edges. *Example:* `3` (path `4–2–1–3`).
+> **Constraints:** `1 ≤ n ≤ 10⁴` (recursive DFS).
 
 ```java
 int diameter = 0;
@@ -1004,7 +1314,32 @@ int dfs(int node, int parent) {
 }
 ```
 
+**Walkthrough — the longest path (in edges) between any two nodes.**
+
+```
+        1                 post-order returns the deepest downward path;
+       / \                at each node, the two deepest child paths form
+      2   3               a candidate diameter passing through it.
+     / \
+    4   5
+
+ dfs(4)=0, dfs(5)=0                              (leaves)
+ dfs(2): childDepth(4)=1, childDepth(5)=1
+         → maxDepth1=1, maxDepth2=1
+         → diameter = 1+1 = 2 ;  returns 1
+ dfs(3)=0
+ dfs(1): childDepth(2)=1+1=2, childDepth(3)=0+1=1
+         → maxDepth1=2, maxDepth2=1
+         → diameter = max(2, 2+1) = 3 ;  returns 2
+ answer = 3   (path 4–2–1–3)
+```
+
 ### Classic Example: House Robber on Tree
+
+> **Problem:** Choose a set of tree nodes with no two directly connected (parent–child) that maximizes the total of their values.
+> **Input:** tree + node values. *Example:* root `3` with children `2` and `3`; the `2` has child `3`, the right `3` has child `1`.
+> **Output:** the maximum total value. *Example:* `7` (rob root `3` + the two leaves `3 + 1`).
+> **Constraints:** `1 ≤ n ≤ 10⁴`.
 
 Each node has a value. You can't rob two adjacent (parent-child) nodes.
 
@@ -1026,6 +1361,24 @@ void dfs(int node, int parent) {
     }
 }
 // Answer: max(dp[root][0], dp[root][1])
+```
+
+**Walkthrough — max sum with no parent–child pair chosen.** Each node returns two numbers: `[0]` = best if this node is skipped, `[1]` = best if it's robbed. Computed bottom-up.
+
+```
+        3                 (node values shown)
+       / \
+      2   3
+       \   \
+        3   1
+
+ leaf(3):  [0]=0            [1]=3
+ leaf(1):  [0]=0            [1]=1
+ node 2 :  [1]=2+leaf3[0]=2         [0]=max(leaf3[0],leaf3[1])=3
+ node 3r:  [1]=3+leaf1[0]=3         [0]=max(leaf1[0],leaf1[1])=1
+ root 3 :  [1]=3 + node2[0] + node3r[0] = 3+3+1 = 7   ← rob root, skip children
+           [0]=max(node2…)+max(node3r…) = 3 + 3       = 6
+ answer = max(7, 6) = 7   (rob root=3 and the two leaves 3+1)
 ```
 
 ### When to Use
